@@ -11,13 +11,15 @@ using System.Net.Security;
 using System.Net;
 using Unity.Services.Authentication;
 
-enum MenuState
+public enum MenuState
 {
     MainMenu, SettingsMenu, LobbySelectionMenu, CurrentLobbyMenu
 }
 
-public class MainMenuUI : NetworkBehaviour
+public class MainMenuUI : MonoBehaviour
 {
+    public static MainMenuUI instance;
+
     [SerializeField] private GameObject mainMenu, settingsMenu, lobbySelectionMenu, currentLobbyMenu;
     [SerializeField] private Button returnButton;
     [Space]
@@ -25,6 +27,7 @@ public class MainMenuUI : NetworkBehaviour
     [Header("Main Menu")]
     [SerializeField] private Button playButton;
     [SerializeField] private Button openSettings;
+    [SerializeField] private TextMeshProUGUI errorMessage;
     [Space]
 
     [Header("Settings Menu")]
@@ -40,24 +43,24 @@ public class MainMenuUI : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI errorText;
     [Space]
 
-    [Header("Current Lobby Buttons")]
-    [SerializeField] private Button startGameButton;
-
     private MenuState currentState;
     private Stack<MenuState> stateStack = new Stack<MenuState>();
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         // Main Menu & overall
         returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); });
         playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); });
         openSettings.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); });
 
         // Lobby Selection Menu
-        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); OpenNewMenu(MenuState.CurrentLobbyMenu); });
+        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); });
         joinLobby.onClick.AddListener(() => { OpenSubMenu(joinLobby.gameObject, joinMenu); });
         confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); });
-        //startButton.onClick.AddListener(() => { NetworkManager.SceneManager.LoadScene("GameScene", LoadSceneMode.Single); });
     }
     private void Start()
     {
@@ -66,15 +69,28 @@ public class MainMenuUI : NetworkBehaviour
         stateStack.Push(MenuState.MainMenu);
         MenuScreen();
     }
-    private void Update()
+    public void ReturnToPreviousMenu()
     {
-        if (currentState == MenuState.CurrentLobbyMenu)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                CheckForGameButton();
-            }
-        }
+        stateStack.Pop();
+        currentState = stateStack.Peek();
+        MenuScreen();
+    }
+    public void OpenNewMenu(MenuState givenState)
+    {
+        stateStack.Push(givenState);
+        currentState = givenState;
+        MenuScreen();
+    }
+    public void ShowErrorMessage(string message, int timeToExpire = 3)
+    {
+        StartCoroutine(ShowErrorMessageCoroutine(message, timeToExpire));
+    }
+    private IEnumerator ShowErrorMessageCoroutine(string message, int timeToExpire)
+    {
+        errorMessage.text = message;
+        errorMessage.gameObject.SetActive(true);
+        yield return new WaitForSeconds(timeToExpire);
+        errorMessage.gameObject.SetActive(false);
     }
     private void MenuScreen()
     {
@@ -100,18 +116,6 @@ public class MainMenuUI : NetworkBehaviour
                 break;
         }
     }
-    private void OpenNewMenu(MenuState givenState)
-    {
-        stateStack.Push(givenState);
-        currentState = givenState;
-        MenuScreen();
-    }
-    private void ReturnToPreviousMenu()
-    {
-        stateStack.Pop();
-        currentState = stateStack.Peek();
-        MenuScreen();
-    }
     private void DisableAllMenus()
     {
         foreach (Transform child in transform)
@@ -129,13 +133,18 @@ public class MainMenuUI : NetworkBehaviour
         // teen manuaalisesti kosk ei jaksa tehä kunnon funktion
         joinLobby.gameObject.SetActive(true);
         joinMenu.SetActive(false);
+        joinMenu.GetComponentInChildren<TMP_InputField>().text = string.Empty;
         errorText.gameObject.SetActive(false);
     }
     private async void AttemptJoinLobby()
     {
         try
         {
-            await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode.text);
+            JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions()
+            {
+                Player = LobbyManager.instance.CreatePlayer()
+            };
+            await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode.text, joinOptions);
             OpenNewMenu(MenuState.CurrentLobbyMenu);
         }
         catch
@@ -144,10 +153,5 @@ public class MainMenuUI : NetworkBehaviour
             errorText.color = Color.red;
             errorText.gameObject.SetActive(true);
         }
-    }
-    private async void CheckForGameButton()
-    {
-        var lobbyId = await LobbyService.Instance.GetJoinedLobbiesAsync();
-        // later
     }
 }
