@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Services.Authentication;
@@ -61,11 +62,6 @@ public class LobbyUI : MonoBehaviour
     }
     private async void OnPlayerLeft(List<int> left)
     {
-        Debug.Log(left);
-        for (int i = 0; i < left.Count; i++)
-        {
-            Debug.Log(left[i]);
-        }
         currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
         UpdatePlayerList();
     }
@@ -112,7 +108,27 @@ public class LobbyUI : MonoBehaviour
         //Poistaa ylimääräiset pelaajat
         if (playerBorder.transform.childCount > currentLobby.Players.Count)
         {
-            // Jatka tätä
+            List<string> removablePlayerTabs = new()
+            {
+                FindAnyObjectByType<PlayerLobbyInfo>().name
+            };
+
+            for (int i = 0; i < currentLobby.Players.Count; i++)
+            {
+                if (string.Compare(removablePlayerTabs[i], currentLobby.Players[i].Id) == 0)
+                {
+                    removablePlayerTabs.Remove(removablePlayerTabs[i]);
+                }
+                else
+                {
+                    Debug.Log("?");
+                }
+            }
+
+            foreach (var removableObject in removablePlayerTabs)
+            {
+                Destroy(GameObject.Find(removableObject));
+            }
         }
 
         // Tekee uuden pelaaja infon jos ei ole vielä olemassa
