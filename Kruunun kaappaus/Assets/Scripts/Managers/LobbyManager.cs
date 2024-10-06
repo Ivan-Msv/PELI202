@@ -12,7 +12,7 @@ public class LobbyManager : MonoBehaviour
     public static LobbyManager instance;
     private string randomName;
     [SerializeField] private float maxLobbyDecayTime = 15;
-    [field: SerializeField] public Lobby HostLobby { get; private set; }
+    public Lobby HostLobby;
     private float lobbyDecayTimer;
     async void Start()
     {
@@ -33,36 +33,25 @@ public class LobbyManager : MonoBehaviour
     }
     public async void CreateLobby(string lobbyName, int maxPlayers = 4)
     {
+        CreateLobbyOptions lobbyOptions = new CreateLobbyOptions()
+        {
+            Player = CreatePlayer()
+        };
         try
         {
-            CreateLobbyOptions lobbyOptions = new CreateLobbyOptions()
-            {
-                Player = CreatePlayer()
-            };
-
             Lobby newLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, lobbyOptions);
             HostLobby = newLobby;
             Debug.Log($"Created new lobby: {newLobby.Name}, and code being {newLobby.LobbyCode}");
-            MainMenuUI.instance.OpenNewMenu(MenuState.CurrentLobbyMenu);
-        } catch (LobbyServiceException e)
+        } 
+        catch (LobbyServiceException e)
         {
             string errorMessage = $"Unexpected error, couldn't create lobby ({e.ErrorCode})";
             MainMenuUI.instance.ShowErrorMessage(errorMessage);
         }
-    }
-    public async Task<bool> CheckForExistingLobby(string givenCode)
-    {
-        QueryResponse lobbyQuery = await LobbyService.Instance.QueryLobbiesAsync();
-        foreach (Lobby lobby in lobbyQuery.Results)
+        finally
         {
-            Debug.Log($"? {lobby.LobbyCode} ?? {lobby.Id}");
-            if (lobby.LobbyCode == givenCode)
-            {
-                return true;
-            }
+            MainMenuUI.instance.OpenNewMenu(MenuState.CurrentLobbyMenu);
         }
-
-        return false;
     }
     public Player CreatePlayer()
     {

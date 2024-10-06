@@ -7,15 +7,16 @@ using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Matchmaker.Models;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
 {
-    private ILobbyEvents lobbyEvents;
     private Lobby currentLobby;
     private string currentLobbyId;
+    private float pollingTimer;
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI loadingScreen;
     [SerializeField] private TextMeshProUGUI playerCount;
@@ -29,46 +30,56 @@ public class LobbyUI : MonoBehaviour
 
     async void OnEnable()
     {
-        var eventCallbacks = new LobbyEventCallbacks();
-
-        await Task.Delay(100); // Annetaan lobbyn valmistautuu kunnolla
+        pollingTimer = 0;
         var joinedLobbies = await LobbyService.Instance.GetJoinedLobbiesAsync();
-        currentLobbyId = joinedLobbies[0];
-        currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
-        lobbyEvents = await LobbyService.Instance.SubscribeToLobbyEventsAsync(currentLobby.Id, eventCallbacks);
-
-        eventCallbacks.PlayerJoined += OnPlayerJoined;
-        eventCallbacks.PlayerLeft += OnPlayerLeft;
-        ActivateLobby();
-    }
-    async void OnDisable()
-    {
-        string playerId = AuthenticationService.Instance.PlayerId;
-        DeactivateLobby();
+        currentLobbyId = joinedLobbies.Last();
         try
         {
-            await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
-            await lobbyEvents.UnsubscribeAsync();
+            currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
         }
         catch (LobbyServiceException e)
         {
-            Debug.LogWarning(e);
+            Debug.LogError(e.InnerException);
+        }
+        finally
+        {
+            ActivateLobby();
+        }
+    }
+    void OnDisable()
+    {
+        LeaveLobby();
+    }
+    private void Update()
+    {
+        HandleLobbyPollForUpdates();
+    }
+    private void PlayerList()
+    {
+        foreach (var player in currentLobby.Players)
+        {
+            Debug.Log($"Player {player.Data["PlayerName"].Value}");
+        }
+    }
+    private async void HandleLobbyPollForUpdates()
+    {
+        if (currentLobby != null)
+        {
+            pollingTimer += Time.deltaTime;
+
+            if (pollingTimer >= 1.1f)
+            {
+                pollingTimer = 0;
+                currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
+                UpdatePlayerList();
+                PlayerList();
+            }
         }
     }
     private void UpdatePlayerList()
     {
         playerCount.text = string.Format("Players: {0}/{1}", currentLobby.Players.Count, currentLobby.MaxPlayers);
         RefreshPlayerTab();
-    }
-    private async void OnPlayerLeft(List<int> left)
-    {
-        currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
-        UpdatePlayerList();
-    }
-    private async void OnPlayerJoined(List<LobbyPlayerJoined> joined)
-    {
-        currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
-        UpdatePlayerList();
     }
     private void ActivateLobby()
     {
@@ -89,7 +100,7 @@ public class LobbyUI : MonoBehaviour
         startGame.interactable = false;
         leaveLobby.interactable = true;
 
-        RefreshPlayerTab();
+        UpdatePlayerList();
 
         loadingScreen.gameObject.SetActive(false);
     }
@@ -105,40 +116,42 @@ public class LobbyUI : MonoBehaviour
     }
     private void RefreshPlayerTab()
     {
-        //Poistaa ylimääräiset pelaajat
-        if (playerBorder.transform.childCount > currentLobby.Players.Count)
-        {
-            List<string> removablePlayerTabs = new()
-            {
-                FindAnyObjectByType<PlayerLobbyInfo>().name
-            };
-
-            for (int i = 0; i < currentLobby.Players.Count; i++)
-            {
-                if (string.Compare(removablePlayerTabs[i], currentLobby.Players[i].Id) == 0)
-                {
-                    removablePlayerTabs.Remove(removablePlayerTabs[i]);
-                }
-                else
-                {
-                    Debug.Log("?");
-                }
-            }
-
-            foreach (var removableObject in removablePlayerTabs)
-            {
-                Destroy(GameObject.Find(removableObject));
-            }
-        }
-
         // Tekee uuden pelaaja infon jos ei ole vielä olemassa
         foreach (var player in currentLobby.Players)
         {
+            Debug.Log(player.AllocationId);
             if (GameObject.Find($"{player.Id}") == null)
             {
                 GameObject newPlayer = Instantiate(playerPrefab, playerBorder.transform);
                 newPlayer.GetComponent<PlayerLobbyInfo>().playerName = player.Data["PlayerName"].Value;
                 newPlayer.name = player.Id;
+            }
+
+
+            GameObject playerObject = GameObject.Find($"{player.Id}");
+            if (playerObject != null)
+            {
+                if (player.Id == currentLobby.HostId)
+                {
+                    playerObject.GetComponent<PlayerLobbyInfo>().hostText.gameObject.SetActive(true);
+                    LobbyManager.instance.HostLobby = currentLobby;
+                }
+                else
+                {
+                    playerObject.GetComponent<PlayerLobbyInfo>().hostText.gameObject.SetActive(false);
+                    LobbyManager.instance.HostLobby = null;
+                }
+            }
+        }
+
+        //Poistaa ylimääräiset pelaajat
+        foreach (Transform playerTab in playerBorder.transform)
+        {
+            bool playerExists = currentLobby.Players.Any(player => player.Id == playerTab.name);
+
+            if (!playerExists)
+            {
+                Destroy(playerTab.gameObject);
             }
         }
     }
@@ -149,10 +162,27 @@ public class LobbyUI : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+    private async void LeaveLobby()
+    {
+        try
+        {
+            await LobbyService.Instance.RemovePlayerAsync(currentLobbyId, AuthenticationService.Instance.PlayerId);
+            Debug.Log("Left lobby");
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.LogWarning(e);
+        }
+        finally
+        {
+            DeactivateLobby();
+            Debug.Log($"Disabled: {currentLobby.Name}");
+            LobbyManager.instance.HostLobby = null;
+        }
+    }
     private void OnApplicationQuit()
     {
-        string playerId = AuthenticationService.Instance.PlayerId;
-        LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
+        LeaveLobby();
     }
 
 }

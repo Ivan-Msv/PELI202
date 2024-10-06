@@ -10,6 +10,9 @@ using TMPro;
 using System.Net.Security;
 using System.Net;
 using Unity.Services.Authentication;
+using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 public enum MenuState
 {
@@ -138,20 +141,41 @@ public class MainMenuUI : MonoBehaviour
     }
     private async void AttemptJoinLobby()
     {
+        JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions()
+        {
+            Player = LobbyManager.instance.CreatePlayer()
+        };
+
         try
         {
-            JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions()
-            {
-                Player = LobbyManager.instance.CreatePlayer()
-            };
             await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode.text, joinOptions);
-            OpenNewMenu(MenuState.CurrentLobbyMenu);
         }
-        catch
+        catch (LobbyServiceException e)
         {
-            errorText.text = $"Failed to join a lobby using the code ({lobbyCode.text})";
-            errorText.color = Color.red;
+            switch (e.Reason)
+            {
+                case LobbyExceptionReason.InvalidJoinCode:
+                    errorText.text = $"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})";
+                    errorText.gameObject.SetActive(true);
+                    break;
+                case LobbyExceptionReason.LobbyFull:
+                    errorText.text = $"Lobby is already full";
+                    errorText.gameObject.SetActive(true);
+                    break;
+                case LobbyExceptionReason.LobbyConflict:
+                    Debug.LogWarning(e.Reason);
+                    break;
+            }
+        }
+        catch (ArgumentException ae)
+        {
+            Debug.LogError(ae);
+            errorText.text = $"Unexpected error, try again";
             errorText.gameObject.SetActive(true);
+        }
+        finally
+        {
+            OpenNewMenu(MenuState.CurrentLobbyMenu);
         }
     }
 }

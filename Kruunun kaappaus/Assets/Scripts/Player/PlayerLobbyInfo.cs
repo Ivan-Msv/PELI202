@@ -6,9 +6,12 @@ using UnityEngine;
 public class PlayerLobbyInfo : MonoBehaviour
 {
     public string playerName;
+    [SerializeField] private TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI hostText;
+
 
     void Start()
     {
-        GetComponentInChildren<TextMeshProUGUI>().text = playerName;
+        playerNameText.text = playerName;
     }
 }
