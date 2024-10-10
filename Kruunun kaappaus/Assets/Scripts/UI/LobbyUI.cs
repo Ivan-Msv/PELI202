@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -10,6 +11,7 @@ using Unity.Services.Matchmaker.Models;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
@@ -28,6 +30,10 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private GameObject playerBorder;
     [SerializeField] private GameObject playerPrefab;
 
+    private void Awake()
+    {
+        startGame.onClick.AddListener(() => { HostGame(); });
+    }
     async void OnEnable()
     {
         pollingTimer = 0;
@@ -48,18 +54,14 @@ public class LobbyUI : MonoBehaviour
     }
     void OnDisable()
     {
-        LeaveLobby();
+        if (!transform.IsUnityNull())
+        {
+            LeaveLobby();
+        }
     }
     private void Update()
     {
         HandleLobbyPollForUpdates();
-    }
-    private void PlayerList()
-    {
-        foreach (var player in currentLobby.Players)
-        {
-            Debug.Log($"Player {player.Data["PlayerName"].Value}");
-        }
     }
     private async void HandleLobbyPollForUpdates()
     {
@@ -70,9 +72,25 @@ public class LobbyUI : MonoBehaviour
             if (pollingTimer >= 1.1f)
             {
                 pollingTimer = 0;
-                currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
-                UpdatePlayerList();
-                PlayerList();
+                try
+                {
+                    currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobbyId);
+                }
+                catch (LobbyServiceException e)
+                {
+                    switch (e.Reason)
+                    {
+                        case LobbyExceptionReason.LobbyNotFound:
+                            MainMenuUI.instance.ReturnToPreviousMenu();
+                            MainMenuUI.instance.ShowErrorMessage("Lobby not found (Host Left?)");
+                            break;
+                    }
+                }
+                finally
+                {
+                    UpdatePlayerList();
+                    CheckIfGameStarted();
+                }
             }
         }
     }
@@ -92,12 +110,13 @@ public class LobbyUI : MonoBehaviour
         if (currentLobby.HostId == AuthenticationService.Instance.PlayerId)
         {
             startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Start Match";
-        }else
+            startGame.interactable = true;
+        }
+        else
         {
             startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Only host can start match";
+            startGame.interactable = false;
         }
-
-        startGame.interactable = false;
         leaveLobby.interactable = true;
 
         UpdatePlayerList();
@@ -119,7 +138,6 @@ public class LobbyUI : MonoBehaviour
         // Tekee uuden pelaaja infon jos ei ole vielä olemassa
         foreach (var player in currentLobby.Players)
         {
-            Debug.Log(player.AllocationId);
             if (GameObject.Find($"{player.Id}") == null)
             {
                 GameObject newPlayer = Instantiate(playerPrefab, playerBorder.transform);
@@ -145,13 +163,16 @@ public class LobbyUI : MonoBehaviour
         }
 
         //Poistaa ylimääräiset pelaajat
-        foreach (Transform playerTab in playerBorder.transform)
+        if (playerBorder.transform.childCount > currentLobby.Players.Count)
         {
-            bool playerExists = currentLobby.Players.Any(player => player.Id == playerTab.name);
-
-            if (!playerExists)
+            foreach (Transform playerTab in playerBorder.transform)
             {
-                Destroy(playerTab.gameObject);
+                bool playerExists = currentLobby.Players.Any(player => player.Id == playerTab.name);
+
+                if (!playerExists)
+                {
+                    Destroy(playerTab.gameObject);
+                }
             }
         }
     }
@@ -164,10 +185,18 @@ public class LobbyUI : MonoBehaviour
     }
     private async void LeaveLobby()
     {
+        bool isHost = AuthenticationService.Instance.PlayerId == currentLobby.HostId;
         try
         {
-            await LobbyService.Instance.RemovePlayerAsync(currentLobbyId, AuthenticationService.Instance.PlayerId);
-            Debug.Log("Left lobby");
+            switch (isHost)
+            {
+                case true:
+                    await LobbyService.Instance.DeleteLobbyAsync(currentLobbyId);
+                    break;
+                case false:
+                    await LobbyService.Instance.RemovePlayerAsync(currentLobbyId, AuthenticationService.Instance.PlayerId);
+                    break;
+            }
         }
         catch (LobbyServiceException e)
         {
@@ -176,8 +205,25 @@ public class LobbyUI : MonoBehaviour
         finally
         {
             DeactivateLobby();
-            Debug.Log($"Disabled: {currentLobby.Name}");
             LobbyManager.instance.HostLobby = null;
+        }
+    }
+    private void HostGame()
+    {
+        var newData = new Dictionary<string, PlayerDataObject>()
+        {
+            { "GameStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1") }
+        };
+        startGame.interactable = false;
+        startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting...";
+        LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, currentLobby.HostId, new UpdatePlayerOptions() { Data = newData });
+    }
+    private void CheckIfGameStarted()
+    {
+        var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
+        if (host.Data["GameStarted"].Value != "0")
+        {
+            SceneManager.LoadScene("GameScene");
         }
     }
     private void OnApplicationQuit()

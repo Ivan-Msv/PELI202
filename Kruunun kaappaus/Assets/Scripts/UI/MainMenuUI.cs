@@ -13,6 +13,7 @@ using Unity.Services.Authentication;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using Unity.Services.Core;
 
 public enum MenuState
 {
@@ -34,7 +35,8 @@ public class MainMenuUI : MonoBehaviour
     [Space]
 
     [Header("Settings Menu")]
-    // Lisää myöhemmin asetuksia
+    [SerializeField] private TextMeshProUGUI currentName;
+    [SerializeField] private TMP_InputField changeNameInput;
     [Space]
 
     [Header("Lobby Selection Menu")]
@@ -58,7 +60,10 @@ public class MainMenuUI : MonoBehaviour
         // Main Menu & overall
         returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); });
         playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); });
-        openSettings.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); });
+        openSettings.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); currentName.text = AuthenticationService.Instance.PlayerName.Substring(0, AuthenticationService.Instance.PlayerName.Length - 5); });
+
+        // Settings Menu
+        changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); });
 
         // Lobby Selection Menu
         createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); });
@@ -149,6 +154,7 @@ public class MainMenuUI : MonoBehaviour
         try
         {
             await LobbyService.Instance.JoinLobbyByCodeAsync(lobbyCode.text, joinOptions);
+            OpenNewMenu(MenuState.CurrentLobbyMenu);
         }
         catch (LobbyServiceException e)
         {
@@ -156,6 +162,10 @@ public class MainMenuUI : MonoBehaviour
             {
                 case LobbyExceptionReason.InvalidJoinCode:
                     errorText.text = $"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})";
+                    errorText.gameObject.SetActive(true);
+                    break;
+                case LobbyExceptionReason.LobbyNotFound:
+                    errorText.text = $"Lobby not found (Recently deleted)";
                     errorText.gameObject.SetActive(true);
                     break;
                 case LobbyExceptionReason.LobbyFull:
@@ -173,9 +183,22 @@ public class MainMenuUI : MonoBehaviour
             errorText.text = $"Unexpected error, try again";
             errorText.gameObject.SetActive(true);
         }
-        finally
+    }
+    private async void AttemptChangeName(string newName)
+    {
+        try
         {
-            OpenNewMenu(MenuState.CurrentLobbyMenu);
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(newName);
+            currentName.text = newName;
+            changeNameInput.text = null;
+        }
+        catch (RequestFailedException e)
+        {
+            // switch ei toimi error koodeissa jostain syystä (ei oo constant int)
+            if (e.ErrorCode == AuthenticationErrorCodes.InvalidParameters)
+            {
+                ShowErrorMessage(e.Message, 5);
+            }
         }
     }
 }

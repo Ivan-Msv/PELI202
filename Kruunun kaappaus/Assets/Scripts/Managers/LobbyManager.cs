@@ -25,7 +25,8 @@ public class LobbyManager : MonoBehaviour
         // delete later
         AuthenticationService.Instance.ClearSessionToken();
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        randomName = $"Player {Random.Range(1, 100)}";
+        randomName = $"Player_{Random.Range(1, 100)}";
+        await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
     }
     void Update()
     {
@@ -59,7 +60,8 @@ public class LobbyManager : MonoBehaviour
         {
             Data = new Dictionary<string, PlayerDataObject>
                     {
-                        { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, randomName) },
+                        { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, AuthenticationService.Instance.PlayerName) },
+                        { "GameStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
                     }
         };
     }
