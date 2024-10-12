@@ -26,13 +26,15 @@ public class LobbyUI : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button leaveLobby;
     [SerializeField] private Button startGame;
+    [SerializeField] private Button copyCode;
     [Header("Player")]
-    [SerializeField] private GameObject playerBorder;
+    [SerializeField] private GameObject playerTab;
     [SerializeField] private GameObject playerPrefab;
 
     private void Awake()
     {
         startGame.onClick.AddListener(() => { HostGame(); });
+        copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); });
     }
     async void OnEnable()
     {
@@ -140,7 +142,7 @@ public class LobbyUI : MonoBehaviour
         {
             if (GameObject.Find($"{player.Id}") == null)
             {
-                GameObject newPlayer = Instantiate(playerPrefab, playerBorder.transform);
+                GameObject newPlayer = Instantiate(playerPrefab, playerTab.transform);
                 newPlayer.GetComponent<PlayerLobbyInfo>().playerName = player.Data["PlayerName"].Value;
                 newPlayer.name = player.Id;
             }
@@ -151,21 +153,21 @@ public class LobbyUI : MonoBehaviour
             {
                 if (player.Id == currentLobby.HostId)
                 {
-                    playerObject.GetComponent<PlayerLobbyInfo>().hostText.gameObject.SetActive(true);
+                    playerObject.GetComponent<PlayerLobbyInfo>().SetPlayerAsHost(true);
                     LobbyManager.instance.HostLobby = currentLobby;
                 }
                 else
                 {
-                    playerObject.GetComponent<PlayerLobbyInfo>().hostText.gameObject.SetActive(false);
+                    playerObject.GetComponent<PlayerLobbyInfo>().SetPlayerAsHost(false);
                     LobbyManager.instance.HostLobby = null;
                 }
             }
         }
 
         //Poistaa ylimääräiset pelaajat
-        if (playerBorder.transform.childCount > currentLobby.Players.Count)
+        if (playerTab.transform.childCount > currentLobby.Players.Count)
         {
-            foreach (Transform playerTab in playerBorder.transform)
+            foreach (Transform playerTab in playerTab.transform)
             {
                 bool playerExists = currentLobby.Players.Any(player => player.Id == playerTab.name);
 
@@ -178,7 +180,7 @@ public class LobbyUI : MonoBehaviour
     }
     private void ClearPlayerList()
     {
-        foreach (Transform child in playerBorder.transform)
+        foreach (Transform child in playerTab.transform)
         {
             Destroy(child.gameObject);
         }
@@ -223,12 +225,24 @@ public class LobbyUI : MonoBehaviour
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
         if (host.Data["GameStarted"].Value != "0")
         {
+            // Vie tiedon pelaajista toiseen sceneen
+            playerTab.transform.SetParent(null);
+            DontDestroyOnLoad(playerTab);
             SceneManager.LoadScene("GameScene");
         }
+    }
+    private void CopyToClipboard(string text)
+    {
+        TextEditor textEditor = new TextEditor();
+        textEditor.text = text;
+        textEditor.SelectAll();
+        textEditor.Copy();
+
+        // Pitää vaihtaa myöhemmin kunnoliseen viestiin eikä error viestii
+        MainMenuUI.instance.ShowErrorMessage("Copied code to clipboard!");
     }
     private void OnApplicationQuit()
     {
         LeaveLobby();
     }
-
 }
