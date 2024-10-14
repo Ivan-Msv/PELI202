@@ -11,7 +11,9 @@ public class PlayerMovement2D : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float maxCoyoteTime;
+    [SerializeField] private float maxJumpBufferTime;
     private float coyoteTimer;
+    private float jumpBufferTimer;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,17 +22,8 @@ public class PlayerMovement2D : MonoBehaviour
 
     void Update()
     {
-        CoyoteCheck();
         Jump();
         AxisMovement();
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Time.timeScale = 0.1f;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Time.timeScale = 1;
-        }
     }
     private bool IsGrounded()
     {
@@ -41,6 +34,15 @@ public class PlayerMovement2D : MonoBehaviour
         float horizontal = Input.GetAxisRaw("Horizontal");
 
         rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
+    }
+    private void Jump()
+    {
+        CoyoteCheck();
+        JumpBuffer();
+        if (jumpBufferTimer > 0 && canJump)
+        {
+            rb.velocity = Vector3.up * jumpHeight;
+        }
     }
     private void CoyoteCheck()
     {
@@ -68,11 +70,12 @@ public class PlayerMovement2D : MonoBehaviour
             coyoteTimer = 0;
         }
     }
-    private void Jump()
+    private void JumpBuffer()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+        jumpBufferTimer -= Time.deltaTime;
+        if (Input.GetKey(KeyCode.Space))
         {
-            rb.velocity = Vector3.up * jumpHeight;
+            jumpBufferTimer = maxJumpBufferTime;
         }
     }
 }
