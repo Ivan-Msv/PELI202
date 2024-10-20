@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
@@ -11,11 +12,14 @@ public class LobbyManager : MonoBehaviour
 {
     public static LobbyManager instance;
     private string randomName;
+    private int randomIconIndex;
     [SerializeField] private float maxLobbyDecayTime = 15;
     public Lobby HostLobby;
     private float lobbyDecayTimer;
     async void Start()
     {
+        randomName = $"Player_{Random.Range(1, 100)}";
+        randomIconIndex = Random.Range(0, MainMenuUI.instance.PlayerIcons.Length);
         if (instance == null)
         {
             instance = this;
@@ -25,8 +29,8 @@ public class LobbyManager : MonoBehaviour
         // delete later
         AuthenticationService.Instance.ClearSessionToken();
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        randomName = $"Player_{Random.Range(1, 100)}";
         await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
+        MainMenuUI.instance.OpenNewMenu(MenuState.MainMenu);
     }
     void Update()
     {
@@ -46,6 +50,14 @@ public class LobbyManager : MonoBehaviour
         } 
         catch (LobbyServiceException e)
         {
+            switch (e.Reason)
+            {
+                case LobbyExceptionReason.RequestTimeOut:
+                    MainMenuUI.instance.ReturnToPreviousMenu();
+                    string errorMsg = $"Request timeout ({e.ErrorCode})";
+                    MainMenuUI.instance.ShowErrorMessage(errorMsg);
+                    break;
+            }
             string errorMessage = $"Unexpected error, couldn't create lobby ({e.ErrorCode})";
             MainMenuUI.instance.ShowErrorMessage(errorMessage);
         }
@@ -56,11 +68,14 @@ public class LobbyManager : MonoBehaviour
     }
     public Player CreatePlayer()
     {
+        string name = AuthenticationService.Instance.PlayerName.Substring(0, AuthenticationService.Instance.PlayerName.Length - 5);
         return new Player
         {
             Data = new Dictionary<string, PlayerDataObject>
                     {
-                        { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, AuthenticationService.Instance.PlayerName) },
+                        { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
+                        { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomIconIndex.ToString())},
+                        { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, Color.white.ToString())},
                         { "GameStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
                     }
         };

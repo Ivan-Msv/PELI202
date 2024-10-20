@@ -46,6 +46,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private TMP_InputField lobbyCode;
     [SerializeField] private Button confirmJoinLobby;
     [SerializeField] private TextMeshProUGUI errorText;
+
+    [field: SerializeField] public Sprite[] PlayerIcons { get; private set; }
     [Space]
 
     private MenuState currentState;
@@ -66,16 +68,9 @@ public class MainMenuUI : MonoBehaviour
         changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); });
 
         // Lobby Selection Menu
-        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); });
+        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; });
         joinLobby.onClick.AddListener(() => { OpenSubMenu(joinLobby.gameObject, joinMenu); });
         confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); });
-    }
-    private void Start()
-    {
-        // start the game on main menu
-        currentState = MenuState.MainMenu;
-        stateStack.Push(MenuState.MainMenu);
-        MenuScreen();
     }
     public void ReturnToPreviousMenu()
     {
@@ -143,6 +138,8 @@ public class MainMenuUI : MonoBehaviour
         joinMenu.SetActive(false);
         joinMenu.GetComponentInChildren<TMP_InputField>().text = string.Empty;
         errorText.gameObject.SetActive(false);
+
+        createLobby.interactable = true;
     }
     private async void AttemptJoinLobby()
     {

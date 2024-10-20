@@ -1,43 +1,61 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using Unity.Netcode;
 using Unity.Services.Authentication;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class PlayerManager : NetworkBehaviour
 {
-    // Start is called before the first frame update
+    public static PlayerManager instance;
+    [field: SerializeField] public Vector2 playerSpawnPoint { get; private set; }
+
     void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         StartConnection();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // testaa ping
-        }
-    }
-
     private void StartConnection()
     {
-        var allPlayers = GameObject.FindObjectsOfType<PlayerLobbyInfo>();
+        var allPlayers = FindObjectsOfType<PlayerLobbyInfo>();
         var currentPlayer = allPlayers.FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId);
 
-        if (currentPlayer.isHost)
+        NetworkManager.OnClientConnectedCallback += (clientid) =>
+        {
+            var player = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientid);
+            if (player.IsOwner)
+            {
+                RenamePlayerServerRpc(clientid, currentPlayer.name);
+            }
+        };
+
+        if (currentPlayer.IsHost)
         {
             NetworkManager.StartHost();
-            Debug.Log("Started host");
         }
         else
         {
             NetworkManager.StartClient();
-            Debug.Log("Started client");
         }
+    }
 
-        Destroy(allPlayers[0].transform.parent.gameObject);
+    [ServerRpc(RequireOwnership = false)]
+    private void RenamePlayerServerRpc(ulong clientid, string newPlayerName)
+    {
+        if (IsServer)
+        {
+            RenamePlayerClientRpc(clientid, newPlayerName);
+        }
+    }
+
+    [ClientRpc]
+    private void RenamePlayerClientRpc(ulong clientid, string newPlayerName)
+    {
+        NetworkManager.SpawnManager.GetPlayerNetworkObject(clientid).name = newPlayerName;
     }
 }

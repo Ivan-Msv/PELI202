@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerLobbyInfo : MonoBehaviour
 {
-    public string playerName;
-    [field: SerializeField] public bool isHost { get; private set; }
+    public Dictionary<string, PlayerDataObject> playerData;
+    public bool IsHost { get; private set; }
     [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private Image iconImage;
     public TextMeshProUGUI hostText;
     void Start()
     {
-        playerNameText.text = playerName;
+        playerNameText.text = playerData["PlayerName"].Value;
+        iconImage.sprite = MainMenuUI.instance.PlayerIcons[int.Parse(playerData["PlayerIconIndex"].Value)];
     }
 
     public void SetPlayerAsHost(bool apply)
@@ -19,11 +24,11 @@ public class PlayerLobbyInfo : MonoBehaviour
         switch (apply)
         {
             case true:
-                isHost = true;
+                IsHost = true;
                 hostText.gameObject.SetActive(true);
                 break;
             case false:
-                isHost = false;
+                IsHost = false;
                 hostText.gameObject.SetActive(false);
                 break;
         }

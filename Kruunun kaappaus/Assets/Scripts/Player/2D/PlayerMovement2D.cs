@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
-public class PlayerMovement2D : MonoBehaviour
+public class PlayerMovement2D : NetworkBehaviour
 {
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
@@ -12,6 +14,7 @@ public class PlayerMovement2D : MonoBehaviour
     [SerializeField] private float jumpHeight;
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
+    public Vector2 spawnPoint;
     private float coyoteTimer;
     private float jumpBufferTimer;
     void Start()
@@ -20,10 +23,18 @@ public class PlayerMovement2D : MonoBehaviour
         playerCollider = GetComponent<BoxCollider2D>();
     }
 
+    private void OnEnable()
+    {
+        spawnPoint = PlayerManager.instance.playerSpawnPoint;
+    }
+
     void Update()
     {
-        Jump();
-        AxisMovement();
+        if (NetworkObject.IsOwner)
+        {
+            Jump();
+            AxisMovement();
+        }
     }
     private bool IsGrounded()
     {
@@ -76,6 +87,14 @@ public class PlayerMovement2D : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             jumpBufferTimer = maxJumpBufferTime;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Death Trigger"))
+        {
+            transform.position = spawnPoint;
         }
     }
 }

@@ -143,10 +143,10 @@ public class LobbyUI : MonoBehaviour
             if (GameObject.Find($"{player.Id}") == null)
             {
                 GameObject newPlayer = Instantiate(playerPrefab, playerTab.transform);
-                newPlayer.GetComponent<PlayerLobbyInfo>().playerName = player.Data["PlayerName"].Value;
+                PlayerLobbyInfo playerInfo = newPlayer.GetComponent<PlayerLobbyInfo>();
+                playerInfo.playerData = player.Data;
                 newPlayer.name = player.Id;
             }
-
 
             GameObject playerObject = GameObject.Find($"{player.Id}");
             if (playerObject != null)
@@ -228,7 +228,7 @@ public class LobbyUI : MonoBehaviour
             // Vie tiedon pelaajista toiseen sceneen
             playerTab.transform.SetParent(null);
             DontDestroyOnLoad(playerTab);
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("ExampleLevel");
         }
     }
     private void CopyToClipboard(string text)
