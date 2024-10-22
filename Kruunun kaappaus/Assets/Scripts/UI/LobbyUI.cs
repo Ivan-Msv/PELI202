@@ -269,4 +269,9 @@ public class LobbyUI : NetworkBehaviour
         // Pitää vaihtaa myöhemmin kunnoliseen viestiin eikä error viestii
         MainMenuUI.instance.ShowErrorMessage("Copied code to clipboard!");
     }
+
+    private void OnApplicationQuit()
+    {
+        ClearPlayerList();
+    }
 }
