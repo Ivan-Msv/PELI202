@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6715766021003267619}
   - component: {fileID: 4814614572303131347}
-  - component: {fileID: 1474751335131603709}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -55,20 +54,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1474751335131603709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2090350418285127406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0096f835341d24748b2f47423bde67ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <MoneyAmount>k__BackingField:
-    m_InternalValue: 0
 --- !u!1 &5983956965538161455
 GameObject:
   m_ObjectHideFlags: 0

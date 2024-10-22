@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -14,7 +16,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LobbyUI : MonoBehaviour
+public class LobbyUI : NetworkBehaviour
 {
     private Lobby currentLobby;
     private string currentLobbyId;
@@ -56,14 +58,12 @@ public class LobbyUI : MonoBehaviour
     }
     void OnDisable()
     {
-        if (!transform.IsUnityNull())
-        {
-            LeaveLobby();
-        }
+        LeaveLobby();
     }
     private void Update()
     {
         HandleLobbyPollForUpdates();
+        CheckStartMatch();
     }
     private async void HandleLobbyPollForUpdates()
     {
@@ -91,7 +91,7 @@ public class LobbyUI : MonoBehaviour
                 finally
                 {
                     UpdatePlayerList();
-                    CheckIfGameStarted();
+                    CheckIfServerStarted();
                 }
             }
         }
@@ -212,23 +212,51 @@ public class LobbyUI : MonoBehaviour
     }
     private void HostGame()
     {
-        var newData = new Dictionary<string, PlayerDataObject>()
-        {
-            { "GameStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1") }
-        };
         startGame.interactable = false;
         startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting...";
+
+        var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
+        ushort.TryParse(host.Data["ServerPort"].Value, out ushort hostPort);
+
+        NetworkManager.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", hostPort);
+        NetworkManager.StartHost();
+        Debug.Log("Started host.");
+
+
+        var newData = new Dictionary<string, PlayerDataObject>()
+        {
+            { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1") }
+        };
         LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, currentLobby.HostId, new UpdatePlayerOptions() { Data = newData });
+
     }
-    private void CheckIfGameStarted()
+    private void CheckIfServerStarted()
     {
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
-        if (host.Data["GameStarted"].Value != "0")
+        if (host.Data["ServerStarted"].Value != "0" && !NetworkManager.IsConnectedClient)
         {
-            // Vie tiedon pelaajista toiseen sceneen
-            playerTab.transform.SetParent(null);
-            DontDestroyOnLoad(playerTab);
-            SceneManager.LoadScene("ExampleLevel");
+            ushort.TryParse(host.Data["ServerPort"].Value, out ushort hostPort);
+
+            NetworkManager.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", hostPort);
+            NetworkManager.StartClient();
+            Debug.Log("Started Client");
+        }
+    }
+    private void CheckStartMatch()
+    {
+        if (!IsHost)
+        {
+            return;
+        }
+
+        if (!NetworkManager.IsConnectedClient)
+        {
+            return;
+        }
+
+        if (NetworkManager.ConnectedClients.Count == currentLobby.Players.Count)
+        {
+            NetworkManager.SceneManager.LoadScene("ExampleLevel", LoadSceneMode.Single);
         }
     }
     private void CopyToClipboard(string text)
@@ -240,9 +268,5 @@ public class LobbyUI : MonoBehaviour
 
         // Pitää vaihtaa myöhemmin kunnoliseen viestiin eikä error viestii
         MainMenuUI.instance.ShowErrorMessage("Copied code to clipboard!");
-    }
-    private void OnApplicationQuit()
-    {
-        LeaveLobby();
     }
 }

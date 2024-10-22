@@ -13,6 +13,7 @@ public class LobbyManager : MonoBehaviour
     public static LobbyManager instance;
     private string randomName;
     private int randomIconIndex;
+    private int randomPort;
     [SerializeField] private float maxLobbyDecayTime = 15;
     public Lobby HostLobby;
     private float lobbyDecayTimer;
@@ -20,6 +21,7 @@ public class LobbyManager : MonoBehaviour
     {
         randomName = $"Player_{Random.Range(1, 100)}";
         randomIconIndex = Random.Range(0, MainMenuUI.instance.PlayerIcons.Length);
+        randomPort = Random.Range(1, 7778);
         if (instance == null)
         {
             instance = this;
@@ -76,7 +78,8 @@ public class LobbyManager : MonoBehaviour
                         { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
                         { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomIconIndex.ToString())},
                         { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, Color.white.ToString())},
-                        { "GameStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
+                        { "ServerPort", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomPort.ToString())},
+                        { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
                     }
         };
     }
