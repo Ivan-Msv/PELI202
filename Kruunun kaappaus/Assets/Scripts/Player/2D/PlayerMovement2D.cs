@@ -25,7 +25,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void OnEnable()
     {
-        spawnPoint = PlayerManager.instance.playerSpawnPoint;
+        // change spawnPoint = 
     }
 
     void Update()
