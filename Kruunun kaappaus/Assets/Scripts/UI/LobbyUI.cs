@@ -18,6 +18,7 @@ using UnityEngine.UI;
 
 public class LobbyUI : NetworkBehaviour
 {
+    public static LobbyUI instance;
     private Lobby currentLobby;
     private string currentLobbyId;
     private float pollingTimer;
@@ -35,6 +36,10 @@ public class LobbyUI : NetworkBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         startGame.onClick.AddListener(() => { HostGame(); });
         copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); });
     }
@@ -64,6 +69,14 @@ public class LobbyUI : NetworkBehaviour
     {
         HandleLobbyPollForUpdates();
         CheckStartMatch();
+    }
+    public void SelectSprite(string playerId, int index)
+    {
+        var newData = new Dictionary<string, PlayerDataObject>()
+        {
+            { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, index.ToString()) }
+        };
+        LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, playerId, new UpdatePlayerOptions() { Data = newData });
     }
     private async void HandleLobbyPollForUpdates()
     {
@@ -149,19 +162,28 @@ public class LobbyUI : NetworkBehaviour
             }
 
             GameObject playerObject = GameObject.Find($"{player.Id}");
-            if (playerObject != null)
+            if (playerObject == null)
             {
-                if (player.Id == currentLobby.HostId)
-                {
-                    playerObject.GetComponent<PlayerLobbyInfo>().SetPlayerAsHost(true);
-                    LobbyManager.instance.HostLobby = currentLobby;
-                }
-                else
-                {
-                    playerObject.GetComponent<PlayerLobbyInfo>().SetPlayerAsHost(false);
-                    LobbyManager.instance.HostLobby = null;
-                }
+                return;
             }
+            // päivittää player datan jos se vaihtu
+            playerObject.GetComponent<PlayerLobbyInfo>().playerData = player.Data;
+            
+            var lobbyInfo = playerObject.GetComponent<PlayerLobbyInfo>();
+            bool currentPlayer = player.Id == AuthenticationService.Instance.PlayerId;
+            // laittaa sprite valikko napin päälle jos on pelaajan id
+            lobbyInfo.SpriteSelectionButton.interactable = currentPlayer;
+
+            // päivittää pelaajan spriten muille pelaajille
+            if (!currentPlayer)
+            {
+                lobbyInfo.UpdateSprite();
+            }
+
+            // laittaa pelaajalle tekstin (host) jos on lobbyn host
+            bool playerIsHost = player.Id == currentLobby.HostId;
+            lobbyInfo.SetPlayerAsHost(playerIsHost);
+            LobbyManager.instance.HostLobby = playerIsHost ? currentLobby : null;
         }
 
         //Poistaa ylimääräiset pelaajat

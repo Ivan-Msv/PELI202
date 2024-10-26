@@ -28,10 +28,15 @@ public class LobbyManager : MonoBehaviour
         }
         await UnityServices.InitializeAsync();
         AuthenticationService.Instance.SignedIn += () => { Debug.Log($"Signed in {AuthenticationService.Instance.PlayerId}"); };
+
         // delete later
         AuthenticationService.Instance.ClearSessionToken();
+        bool tokenExists = AuthenticationService.Instance.SessionTokenExists;
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
+        if (!tokenExists)
+        {
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
+        }
         MainMenuUI.instance.OpenNewMenu(MenuState.MainMenu);
     }
     void Update()
