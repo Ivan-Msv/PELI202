@@ -1,4 +1,8 @@
+﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
+using Unity.Services.Authentication;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,42 +16,64 @@ public class PlayerSetup : NetworkBehaviour
     [SerializeField] private GameObject player2D;
     [SerializeField] private GameObject playerTopDown;
     private PlayerState currentState;
+    public Dictionary<string, PlayerDataObject> SavedData { get; private set; }
 
     private void Start()
     {
-        currentState = PlayerState.Menu;
-    }
-    private void Update()
-    {
-        CheckPlayerState();
-        UpdatePlayerState();
+        if (NetworkObject.IsOwner)
+        {
+            Debug.Log("test");
+            currentState = PlayerState.Menu;
+            SavedData = FindObjectsOfType<PlayerLobbyInfo>().FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
+            SceneManager.activeSceneChanged += ClearSubPlayers;
+        }
     }
 
-    private void CheckPlayerState()
+    private void UpdatePlayerState(Scene newScene)
+    {
+        if (newScene.name.Contains("level", System.StringComparison.OrdinalIgnoreCase))
+        {
+            currentState = PlayerState.Side;
+        }
+        else if (newScene.name.Contains("game", System.StringComparison.OrdinalIgnoreCase))
+        {
+            currentState = PlayerState.Topdown;
+        }
+        else
+        {
+            Debug.LogError("Error in updating player");
+        }
+    }
+    private void ClearSubPlayers(Scene current, Scene next)
+    {
+        if (!NetworkObject.IsOwner)
+        {
+            return;
+        }
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        UpdatePlayerState(next);
+
+        SpawnPlayerObjectServerRpc(OwnerClientId);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SpawnPlayerObjectServerRpc(ulong clientId)
     {
         switch (currentState)
         {
             case PlayerState.Topdown:
-                playerTopDown.SetActive(true);
                 break;
             case PlayerState.Side:
-                player2D.SetActive(true);
+                var playerPrefab = Instantiate(player2D);
+                playerPrefab.GetComponent<NetworkObject>().SpawnWithOwnership(clientId);
                 break;
-            case PlayerState.Menu:
-                player2D.SetActive(false);
-                playerTopDown.SetActive(false);
+            default:
                 break;
-        }
-    }
-    private void UpdatePlayerState()
-    {
-        if (SceneManager.GetActiveScene().name.Contains("level", System.StringComparison.OrdinalIgnoreCase))
-        {
-            currentState = PlayerState.Side;
-        }
-        else if (SceneManager.GetActiveScene().name.Contains("game", System.StringComparison.OrdinalIgnoreCase))
-        {
-            currentState = PlayerState.Topdown;
         }
     }
 }

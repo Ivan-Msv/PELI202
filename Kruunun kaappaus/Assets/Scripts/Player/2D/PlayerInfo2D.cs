@@ -12,9 +12,19 @@ public class PlayerInfo2D : NetworkBehaviour
     public Dictionary<string, PlayerDataObject> playerData;
     [SerializeField] private TextMeshProUGUI playerNameVisual;
 
-    private void Start()
+    private void OnTransformParentChanged()
     {
-        playerData = FindObjectsOfType<PlayerLobbyInfo>().FirstOrDefault(player => player.name == transform.name).playerData;
+        if (transform.parent == null)
+        {
+            return;
+        }
+        
+        if (!IsOwner)
+        {
+            return;
+        }
+
+        playerData = GetComponentInParent<PlayerSetup>().SavedData;
 
         playerNameVisual.text = playerData["PlayerName"].Value;
         GetComponent<SpriteRenderer>().sprite = MainMenuUI.instance.PlayerIcons[int.Parse(playerData["PlayerIconIndex"].Value)];
