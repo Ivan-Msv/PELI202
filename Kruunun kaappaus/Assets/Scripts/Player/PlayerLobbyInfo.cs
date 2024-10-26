@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,19 +23,6 @@ public class PlayerLobbyInfo : MonoBehaviour
     }
     void Start()
     {
-        foreach (var existingSprite in MainMenuUI.instance.PlayerIcons)
-        {
-            var spriteObject = Instantiate(spriteShowcase, spriteSelectionMenu.transform);
-            spriteObject.transform.GetChild(0).GetComponent<Image>().sprite = existingSprite;
-            // laittaa nimen indexin perusteella
-            int spriteIndex = Array.IndexOf(MainMenuUI.instance.PlayerIcons, existingSprite);
-
-            spriteObject.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                LobbyUI.instance.SelectSprite(transform.name, spriteIndex);
-                iconImage.sprite = existingSprite;
-            });
-        }
         playerNameText.text = playerData["PlayerName"].Value;
         iconImage.sprite = MainMenuUI.instance.PlayerIcons[int.Parse(playerData["PlayerIconIndex"].Value)];
     }
@@ -62,6 +49,50 @@ public class PlayerLobbyInfo : MonoBehaviour
     private void SpriteSelectionScreen()
     {
         bool activate = !spriteSelectionMenu.activeSelf;
+
+        switch (activate)
+        {
+            case true:
+                UpdateSelectionMenu();
+                break;
+            case false:
+                ClearSelectionMenu();
+                break;
+        }
+
         spriteSelectionMenu.SetActive(activate);
+    }
+
+    private void UpdateSelectionMenu()
+    {
+        foreach (var existingSprite in MainMenuUI.instance.PlayerIcons)
+        {
+            int spriteIndex = Array.IndexOf(MainMenuUI.instance.PlayerIcons, existingSprite);
+            Debug.Log(spriteIndex);
+
+            // jos sprite on jo valittu nii ei näytetä sitä
+            if (spriteIndex == int.Parse(playerData["PlayerIconIndex"].Value))
+            {
+                continue;
+            }
+
+            var spriteObject = Instantiate(spriteShowcase, spriteSelectionMenu.transform);
+            spriteObject.transform.GetChild(0).GetComponent<Image>().sprite = existingSprite;
+
+            spriteObject.GetComponent<Button>().onClick.AddListener(() =>
+            {
+                LobbyUI.instance.SelectSprite(transform.name, spriteIndex);
+                iconImage.sprite = existingSprite;
+                SpriteSelectionScreen();
+            });
+        }
+    }
+
+    private void ClearSelectionMenu()
+    {
+        foreach (Transform child in spriteSelectionMenu.transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 } 
