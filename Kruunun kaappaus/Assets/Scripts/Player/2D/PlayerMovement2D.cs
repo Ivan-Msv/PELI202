@@ -19,13 +19,10 @@ public class PlayerMovement2D : NetworkBehaviour
     private float jumpBufferTimer;
     void Start()
     {
+        spawnPoint = new Vector2(-7, -4);
+        transform.position = spawnPoint;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
-    }
-
-    private void OnEnable()
-    {
-        // change spawnPoint = 
     }
 
     void Update()
@@ -34,6 +31,7 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             Jump();
             AxisMovement();
+            ClampSpeed();
         }
     }
     private bool IsGrounded()
@@ -88,6 +86,12 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             jumpBufferTimer = maxJumpBufferTime;
         }
+    }
+    private void ClampSpeed()
+    {
+        float horizontalSpeed = Mathf.Clamp(rb.linearVelocity.x, -moveSpeed, moveSpeed);
+        float verticalSpeed = Mathf.Clamp(rb.linearVelocity.y, -jumpHeight, jumpHeight);
+        rb.linearVelocity = new Vector2(horizontalSpeed, verticalSpeed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
