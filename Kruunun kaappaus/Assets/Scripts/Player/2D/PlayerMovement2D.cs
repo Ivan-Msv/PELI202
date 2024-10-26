@@ -44,7 +44,7 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
 
-        rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(horizontal * moveSpeed, rb.linearVelocity.y);
     }
     private void Jump()
     {
@@ -52,7 +52,7 @@ public class PlayerMovement2D : NetworkBehaviour
         JumpBuffer();
         if (jumpBufferTimer > 0 && canJump)
         {
-            rb.velocity = Vector3.up * jumpHeight;
+            rb.linearVelocity = Vector3.up * jumpHeight;
         }
     }
     private void CoyoteCheck()
@@ -60,7 +60,7 @@ public class PlayerMovement2D : NetworkBehaviour
         if (!IsGrounded())
         {
             //tarkistaa että coyotetime toimii vaan jos yrität hyppää tippumisen jälkeen (ton koko pointti)
-            bool falling = rb.velocity.y <= 0;
+            bool falling = rb.linearVelocity.y <= 0;
             switch (falling)
             {
                 case true:
