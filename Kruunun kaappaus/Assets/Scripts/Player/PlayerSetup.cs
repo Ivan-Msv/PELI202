@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Services.Authentication;
@@ -24,7 +25,7 @@ public class PlayerSetup : NetworkBehaviour
         {
             Debug.Log("test");
             currentState = PlayerState.Menu;
-            SavedData = FindObjectsOfType<PlayerLobbyInfo>().FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
+            SavedData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
             SceneManager.activeSceneChanged += ClearSubPlayers;
         }
     }
@@ -58,19 +59,20 @@ public class PlayerSetup : NetworkBehaviour
 
         UpdatePlayerState(next);
 
-        SpawnPlayerObjectServerRpc(OwnerClientId);
+        SpawnPlayerObjectServerRpc(OwnerClientId, currentState);
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SpawnPlayerObjectServerRpc(ulong clientId)
+    private void SpawnPlayerObjectServerRpc(ulong clientId, PlayerState state)
     {
-        switch (currentState)
+        switch (state)
         {
             case PlayerState.Topdown:
                 break;
             case PlayerState.Side:
-                var playerPrefab = Instantiate(player2D);
-                playerPrefab.GetComponent<NetworkObject>().SpawnWithOwnership(clientId);
+                var playerPrefab = NetworkObject.InstantiateAndSpawn(player2D, NetworkManager, clientId);
+                var clientObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientId);
+                playerPrefab.TrySetParent(clientObject);
                 break;
             default:
                 break;
