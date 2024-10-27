@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using Unity.Networking.Transport.Relay;
 using Unity.Services.Authentication;
+using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Matchmaker.Models;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -235,23 +239,21 @@ public class LobbyUI : NetworkBehaviour
             LobbyManager.instance.HostLobby = null;
         }
     }
-    private void HostGame()
+    private async void HostGame()
     {
         startGame.interactable = false;
         startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting...";
 
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
 
-        NetworkManager.GetComponent<UnityTransport>().SetConnectionData(host.Data["ServerIP"].Value, 7777);
-        NetworkManager.StartHost();
-        Debug.Log("Started host.");
-
+        string allocationCode = await LobbyManager.instance.CreateRelay();
 
         var newData = new Dictionary<string, PlayerDataObject>()
         {
-            { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1") }
+            { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1") },
+            { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, allocationCode.ToString()) }
         };
-        LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, currentLobby.HostId, new UpdatePlayerOptions() { Data = newData });
+        await LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, currentLobby.HostId, new UpdatePlayerOptions() { Data = newData });
 
     }
     private void CheckIfServerStarted()
@@ -259,9 +261,7 @@ public class LobbyUI : NetworkBehaviour
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
         if (host.Data["ServerStarted"].Value != "0" && !NetworkManager.IsConnectedClient)
         {
-            NetworkManager.GetComponent<UnityTransport>().SetConnectionData(host.Data["ServerIP"].Value, 7777);
-            NetworkManager.StartClient();
-            Debug.Log("Started Client");
+            LobbyManager.instance.JoinRelay(host.Data["AllocationCode"].Value);
         }
     }
     private void CheckStartMatch()

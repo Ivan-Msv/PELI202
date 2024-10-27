@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Unity.Services.Relay.Models;
+using Unity.Services.Relay;
 using UnityEngine;
+using Unity.Networking.Transport.Relay;
 
-public class LobbyManager : MonoBehaviour
+public class LobbyManager : NetworkBehaviour
 {
     public static LobbyManager instance;
     private string randomName;
@@ -83,7 +87,7 @@ public class LobbyManager : MonoBehaviour
                         { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
                         { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomIconIndex.ToString())},
                         { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1")},
-                        { "ServerIP", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, GetLocalIP())},
+                        { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "")},
                         { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
                     }
         };
@@ -102,18 +106,36 @@ public class LobbyManager : MonoBehaviour
             }
         }
     }
-    private string GetLocalIP()
+
+    public async Task<string> CreateRelay()
     {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList)
+        try
         {
-            if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-            {
-                Debug.Log(ip.ToString());
-                return ip.ToString();
-            }
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(4);
+            var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
+
+            var returnString = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+
+            NetworkManager.StartHost();
+            Debug.Log("Started host.");
+
+            return returnString;
         }
-        Debug.LogError("Couldn't find any IPv4's");
+        catch (RelayServiceException e)
+        {
+            Debug.LogError(e);
+        }
         return null;
+    }
+
+    public async void JoinRelay(string allocationCode)
+    {
+        var joinAllocation = await RelayService.Instance.JoinAllocationAsync(allocationCode);
+
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(joinAllocation.ToRelayServerData("dtls"));
+
+        NetworkManager.StartClient();
+        Debug.Log("Started Client");
     }
 }
