@@ -82,7 +82,7 @@ public class LobbyManager : MonoBehaviour
                     {
                         { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
                         { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomIconIndex.ToString())},
-                        { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, Color.white.ToString())},
+                        { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1")},
                         { "ServerPort", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomPort.ToString())},
                         { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
                     }

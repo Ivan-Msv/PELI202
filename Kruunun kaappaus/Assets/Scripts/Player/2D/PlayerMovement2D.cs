@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerMovement2D : NetworkBehaviour
 {
+    public bool isGhost;
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
     private bool canJump;
@@ -27,22 +28,47 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
-        if (NetworkObject.IsOwner)
+        if (!NetworkObject.IsOwner)
+        {
+            return;
+        }
+
+        ClampSpeed();
+        if (isGhost)
+        {
+            GhostMovement();
+        }
+        else
         {
             Jump();
-            AxisMovement();
-            ClampSpeed();
+            PlayerMovement();
         }
     }
     private bool IsGrounded()
     {
         return Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.1f, ground);
     }
-    private void AxisMovement()
+    private void PlayerMovement()
     {
+        // pelaajan asetukset
+        rb.gravityScale = 5;
+        rb.excludeLayers = default;
+
         float horizontal = Input.GetAxisRaw("Horizontal");
 
         rb.linearVelocity = new Vector2(horizontal * moveSpeed, rb.linearVelocity.y);
+    }
+    private void GhostMovement()
+    {
+        // haamu asetukset
+        rb.excludeLayers = ground;
+        rb.gravityScale = 0;
+
+
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        rb.linearVelocity = new Vector2(horizontal * moveSpeed, vertical * moveSpeed);
     }
     private void Jump()
     {
@@ -96,6 +122,8 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (isGhost) { return; }
+
         if (collision.CompareTag("Death Trigger"))
         {
             transform.position = spawnPoint;

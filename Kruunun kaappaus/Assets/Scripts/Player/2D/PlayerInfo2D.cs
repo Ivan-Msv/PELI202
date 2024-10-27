@@ -8,20 +8,43 @@ using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
+public enum Colors
+{
+    White = 0, Red = 1, Green = 2, Blue = 3, Magenta = 4
+}
+
 public class PlayerInfo2D : NetworkBehaviour
 {
     public Dictionary<string, PlayerDataObject> playerData;
     [SerializeField] private TextMeshProUGUI playerNameVisual;
 
-    public NetworkVariable<FixedString64Bytes> playerName = new NetworkVariable<FixedString64Bytes>(writePerm: NetworkVariableWritePermission.Owner);
-    public NetworkVariable<int> playerSpriteIndex = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Owner);
+    [HideInInspector] public NetworkVariable<FixedString64Bytes> playerName = new(writePerm: NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> playerSpriteIndex = new(writePerm: NetworkVariableWritePermission.Owner);
+    public NetworkVariable<Colors> playerColor = new(writePerm: NetworkVariableWritePermission.Owner); 
+    public NetworkVariable<bool> playerIsGhost = new(writePerm: NetworkVariableWritePermission.Owner);
+
+    private SpriteRenderer spriteComponent;
+    void Awake()
+    {
+        spriteComponent = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        if (!NetworkObject.IsOwner)
+        {
+            return;
+        }
+
+        SwapSpriteAxis();
+    }
 
     public override void OnNetworkSpawn()
     {
-        // jos index on 0 niin se huomaa että index vaihtuu (muuten 0 = 0)
-        playerSpriteIndex.Value = -1;
         playerName.OnValueChanged += UpdatePlayerName;
         playerSpriteIndex.OnValueChanged += UpdatePlayerSprite;
+        playerColor.OnValueChanged += UpdatePlayerColor;
+        playerIsGhost.OnValueChanged += UpdatePlayerBoolean;
         base.OnNetworkSpawn();
     }
 
@@ -36,6 +59,7 @@ public class PlayerInfo2D : NetworkBehaviour
 
         playerName.Value = playerData["PlayerName"].Value;
         playerSpriteIndex.Value = int.Parse(playerData["PlayerIconIndex"].Value);
+        playerColor.Value = (Colors)int.Parse(playerData["PlayerColor"].Value);
     }
 
     private void UpdatePlayerName(FixedString64Bytes oldValue, FixedString64Bytes newValue)
@@ -48,9 +72,71 @@ public class PlayerInfo2D : NetworkBehaviour
 
         playerNameVisual.text = newValue.ToString();
     }
-
     private void UpdatePlayerSprite(int oldIndex, int newIndex)
     {
-        GetComponent<SpriteRenderer>().sprite = MainMenuUI.instance.PlayerIcons[newIndex];
+        spriteComponent.sprite = MainMenuUI.instance.PlayerIcons[newIndex];
+    }
+    private void UpdatePlayerColor(Colors oldColor, Colors newColor)
+    {
+        Debug.Log(oldColor);
+        Debug.Log(newColor);
+        Color assignedColor;
+        switch (newColor)
+        {
+            case Colors.White:
+                assignedColor = Color.white;
+                break;
+            case Colors.Red:
+                assignedColor = Color.red;
+                break;
+            case Colors.Green:
+                assignedColor = Color.green;
+                break;
+            case Colors.Blue:
+                assignedColor = Color.blue;
+                break;
+            case Colors.Magenta:
+                assignedColor = Color.magenta;
+                break;
+            default:
+                assignedColor = Color.white;
+                break;
+        }
+
+        spriteComponent.color = assignedColor;
+    }
+    private void UpdatePlayerBoolean(bool oldValue, bool newValue)
+    {
+        GetComponent<PlayerMovement2D>().isGhost = newValue;
+        var newColor = spriteComponent.color;
+        newColor.a = newValue ? 0.4f : 1;
+        spriteComponent.color = newColor;
+    }
+
+    private void SwapSpriteAxis()
+    {
+        float lastAxis = Input.GetAxisRaw("Horizontal");
+
+        switch (lastAxis)
+        {
+            case 1:
+                FlipServerRpc(false);
+                break;
+            case -1:
+                FlipServerRpc(true);
+                break;
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void FlipServerRpc(bool currentX)
+    {
+        FlipClientRpc(currentX);
+    }
+
+    [ClientRpc]
+    private void FlipClientRpc(bool currentX)
+    {
+        spriteComponent.flipX = currentX;
     }
 }

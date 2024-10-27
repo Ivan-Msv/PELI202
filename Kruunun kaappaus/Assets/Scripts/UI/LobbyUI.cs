@@ -70,11 +70,12 @@ public class LobbyUI : NetworkBehaviour
         HandleLobbyPollForUpdates();
         CheckStartMatch();
     }
-    public void SelectSprite(string playerId, int index)
+    public void SelectSprite(string playerId, int colorIndex, int index)
     {
         var newData = new Dictionary<string, PlayerDataObject>()
         {
-            { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, index.ToString()) }
+            { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, index.ToString()) },
+            { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, colorIndex.ToString()) }
         };
         LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, playerId, new UpdatePlayerOptions() { Data = newData });
     }

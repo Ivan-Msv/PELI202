@@ -117,7 +117,6 @@ GameObject:
   - component: {fileID: 757020774529065715}
   - component: {fileID: 1355854856914575653}
   - component: {fileID: 9174738505860144113}
-  - component: {fileID: 7376768892334935339}
   - component: {fileID: 4151534210416331775}
   - component: {fileID: 7942911339286493421}
   m_Layer: 3
@@ -187,7 +186,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -7990750155978559325, guid: ba7e7793af502704498edf23a2af900a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: be03faf446cbabb4ca59df6a4de6bf70, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -236,7 +235,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.1, y: 0.1}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -381,6 +380,10 @@ MonoBehaviour:
         byte0061: 0
   playerSpriteIndex:
     m_InternalValue: 0
+  playerColor:
+    m_InternalValue: 0
+  playerIsGhost:
+    m_InternalValue: 0
 --- !u!114 &9174738505860144113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isGhost: 0
   ground:
     serializedVersion: 2
     m_Bits: 1
@@ -402,19 +406,6 @@ MonoBehaviour:
   maxCoyoteTime: 0.1
   maxJumpBufferTime: 0.1
   spawnPoint: {x: 0, y: 0}
---- !u!114 &7376768892334935339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6658996084343075146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d3e1d331d2fa314ebe24e303f5d148f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &4151534210416331775
 MonoBehaviour:
   m_ObjectHideFlags: 0
