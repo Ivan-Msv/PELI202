@@ -23,7 +23,6 @@ public class PlayerSetup : NetworkBehaviour
     {
         if (NetworkObject.IsOwner)
         {
-            Debug.Log("test");
             currentState = PlayerState.Menu;
             SavedData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
             SceneManager.activeSceneChanged += ClearSubPlayers;

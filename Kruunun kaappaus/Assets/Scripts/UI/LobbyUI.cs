@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using TMPro;
 using Unity.Netcode;
@@ -239,9 +241,8 @@ public class LobbyUI : NetworkBehaviour
         startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting...";
 
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
-        ushort.TryParse(host.Data["ServerPort"].Value, out ushort hostPort);
 
-        NetworkManager.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", hostPort);
+        NetworkManager.GetComponent<UnityTransport>().SetConnectionData(host.Data["ServerIP"].Value, 7777);
         NetworkManager.StartHost();
         Debug.Log("Started host.");
 
@@ -258,9 +259,7 @@ public class LobbyUI : NetworkBehaviour
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
         if (host.Data["ServerStarted"].Value != "0" && !NetworkManager.IsConnectedClient)
         {
-            ushort.TryParse(host.Data["ServerPort"].Value, out ushort hostPort);
-
-            NetworkManager.GetComponent<UnityTransport>().SetConnectionData("127.0.0.1", hostPort);
+            NetworkManager.GetComponent<UnityTransport>().SetConnectionData(host.Data["ServerIP"].Value, 7777);
             NetworkManager.StartClient();
             Debug.Log("Started Client");
         }
@@ -292,7 +291,6 @@ public class LobbyUI : NetworkBehaviour
         // Pitää vaihtaa myöhemmin kunnoliseen viestiin eikä error viestii
         MainMenuUI.instance.ShowErrorMessage("Copied code to clipboard!");
     }
-
     private void OnApplicationQuit()
     {
         ClearPlayerList();

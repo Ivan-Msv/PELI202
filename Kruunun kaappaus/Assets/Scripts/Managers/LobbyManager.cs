@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Services.Authentication;
@@ -21,7 +22,6 @@ public class LobbyManager : MonoBehaviour
     {
         randomName = $"Player_{Random.Range(1, 100)}";
         randomIconIndex = Random.Range(0, MainMenuUI.instance.PlayerIcons.Length);
-        randomPort = Random.Range(1, 7778);
         if (instance == null)
         {
             instance = this;
@@ -83,7 +83,7 @@ public class LobbyManager : MonoBehaviour
                         { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
                         { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomIconIndex.ToString())},
                         { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1")},
-                        { "ServerPort", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomPort.ToString())},
+                        { "ServerIP", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, GetLocalIP())},
                         { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
                     }
         };
@@ -101,5 +101,19 @@ public class LobbyManager : MonoBehaviour
                 Debug.LogWarning($"Sent heartbeat ping to lobby {HostLobby.Name}");
             }
         }
+    }
+    private string GetLocalIP()
+    {
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            {
+                Debug.Log(ip.ToString());
+                return ip.ToString();
+            }
+        }
+        Debug.LogError("Couldn't find any IPv4's");
+        return null;
     }
 }
