@@ -7,6 +7,7 @@ using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public enum Colors
 {
@@ -22,10 +23,11 @@ public class PlayerInfo2D : NetworkBehaviour
     public NetworkVariable<int> playerSpriteIndex = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<Colors> playerColor = new(writePerm: NetworkVariableWritePermission.Owner); 
     public NetworkVariable<bool> playerIsGhost = new(writePerm: NetworkVariableWritePermission.Owner);
-
+    private SpriteLibrary spriteLibraryComponent;
     private SpriteRenderer spriteComponent;
     void Awake()
     {
+        spriteLibraryComponent = GetComponent<SpriteLibrary>();
         spriteComponent = GetComponent<SpriteRenderer>();
     }
 
@@ -75,6 +77,7 @@ public class PlayerInfo2D : NetworkBehaviour
     private void UpdatePlayerSprite(int oldIndex, int newIndex)
     {
         spriteComponent.sprite = MainMenuUI.instance.PlayerIcons[newIndex];
+        spriteLibraryComponent.spriteLibraryAsset = MainMenuUI.instance.PlayerSprites[newIndex];
     }
     private void UpdatePlayerColor(Colors oldColor, Colors newColor)
     {
@@ -112,7 +115,6 @@ public class PlayerInfo2D : NetworkBehaviour
         newColor.a = newValue ? 0.4f : 1;
         spriteComponent.color = newColor;
     }
-
     private void SwapSpriteAxis()
     {
         float lastAxis = Input.GetAxisRaw("Horizontal");

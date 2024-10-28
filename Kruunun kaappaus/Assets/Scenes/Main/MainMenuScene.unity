@@ -5197,8 +5197,11 @@ MonoBehaviour:
   confirmJoinLobby: {fileID: 1232749128}
   errorText: {fileID: 1437123073}
   <PlayerIcons>k__BackingField:
-  - {fileID: 21300000, guid: be03faf446cbabb4ca59df6a4de6bf70, type: 3}
-  - {fileID: 21300000, guid: c21206b163d57a84592a51433533034c, type: 3}
+  - {fileID: -176970846650142609, guid: 29adec917b32efe40bb835012da38f8e, type: 3}
+  - {fileID: -7329830083336869895, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+  <PlayerSprites>k__BackingField:
+  - {fileID: 7108339969198208228, guid: ded2e931cba371a4c984445b41d74779, type: 3}
+  - {fileID: 7108339969198208228, guid: a1b217d88cb59a14c9cad16545526ba4, type: 3}
 --- !u!114 &1840512695
 MonoBehaviour:
   m_ObjectHideFlags: 0

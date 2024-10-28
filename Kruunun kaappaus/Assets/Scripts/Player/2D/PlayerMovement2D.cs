@@ -4,6 +4,11 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 
+public enum PlayerMovementState
+{
+    Idle, IsMoving, InAir
+}
+
 public class PlayerMovement2D : NetworkBehaviour
 {
     public bool isGhost;
@@ -15,11 +20,14 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float jumpHeight;
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
+    private Animator animatorComponent;
     public Vector2 spawnPoint;
     private float coyoteTimer;
     private float jumpBufferTimer;
+    public PlayerMovementState currentPlayerState { get; private set; }
     void Start()
     {
+        animatorComponent = GetComponent<Animator>();
         spawnPoint = new Vector2(-7, -4);
         transform.position = spawnPoint;
         rb = GetComponent<Rigidbody2D>();
@@ -34,6 +42,7 @@ public class PlayerMovement2D : NetworkBehaviour
         }
 
         ClampSpeed();
+        PlayerStateManager();
         if (isGhost)
         {
             GhostMovement();
@@ -119,7 +128,33 @@ public class PlayerMovement2D : NetworkBehaviour
         float verticalSpeed = Mathf.Clamp(rb.linearVelocity.y, -jumpHeight, jumpHeight);
         rb.linearVelocity = new Vector2(horizontalSpeed, verticalSpeed);
     }
+    private void PlayerStateManager()
+    {
+        Debug.Log(currentPlayerState);
+        UpdateAnimation();
 
+        if (!IsGrounded())
+        {
+            currentPlayerState = PlayerMovementState.InAir;
+            return;
+        }
+        
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            currentPlayerState = PlayerMovementState.IsMoving;
+            return;
+        }
+        else
+        {
+            currentPlayerState = PlayerMovementState.Idle;
+        }
+    }
+    private void UpdateAnimation()
+    {
+        animatorComponent.SetBool("IsIdle", currentPlayerState == PlayerMovementState.Idle);
+        animatorComponent.SetBool("IsMoving", currentPlayerState == PlayerMovementState.IsMoving);
+        animatorComponent.SetBool("InAir", currentPlayerState == PlayerMovementState.InAir);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (isGhost) { return; }

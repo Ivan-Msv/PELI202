@@ -14,6 +14,7 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using Unity.Services.Core;
+using UnityEngine.U2D.Animation;
 
 public enum MenuState
 {
@@ -47,7 +48,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button confirmJoinLobby;
     [SerializeField] private TextMeshProUGUI errorText;
 
-    [field: SerializeField] public Sprite[] PlayerIcons { get; private set; }
+    [field: SerializeField] public Sprite[] PlayerIcons { get; private set; } // DEBUG DELETE LATER
+    [field: SerializeField] public SpriteLibraryAsset[] PlayerSprites { get; private set; }
     [Space]
 
     private MenuState currentState;
