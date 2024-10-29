@@ -24,6 +24,7 @@ public class PlayerMovement2D : NetworkBehaviour
     public Vector2 spawnPoint;
     private float coyoteTimer;
     private float jumpBufferTimer;
+    public int coinCount;
     public PlayerMovementState currentPlayerState { get; private set; }
     void Start()
     {
@@ -162,6 +163,16 @@ public class PlayerMovement2D : NetworkBehaviour
         if (collision.CompareTag("Death Trigger"))
         {
             transform.position = spawnPoint;
+        }
+        if (collision.CompareTag("Coin"))
+        {
+            GetComponent<PlayerInfo2D>().coinAmount.Value +=1;
+            Destroy(collision.gameObject);
+        }
+        if (collision.CompareTag("Crown"))
+        {
+            GetComponent<PlayerInfo2D>().crownAmount.Value += 1;
+            Destroy(collision.gameObject);
         }
     }
 }

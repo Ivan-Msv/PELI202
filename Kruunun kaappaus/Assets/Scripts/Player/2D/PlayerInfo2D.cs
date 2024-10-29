@@ -23,6 +23,9 @@ public class PlayerInfo2D : NetworkBehaviour
     public NetworkVariable<int> playerSpriteIndex = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<Colors> playerColor = new(writePerm: NetworkVariableWritePermission.Owner); 
     public NetworkVariable<bool> playerIsGhost = new(writePerm: NetworkVariableWritePermission.Owner);
+
+    public NetworkVariable<int> coinAmount = new(writePerm: NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> crownAmount = new(writePerm: NetworkVariableWritePermission.Owner);
     private SpriteLibrary spriteLibraryComponent;
     private SpriteRenderer spriteComponent;
     void Awake()
