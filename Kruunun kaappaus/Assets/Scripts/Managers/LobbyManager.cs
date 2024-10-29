@@ -17,7 +17,6 @@ public class LobbyManager : NetworkBehaviour
 {
     public static LobbyManager instance;
     private string randomName;
-    private int randomIconIndex;
     private int randomPort;
     [SerializeField] private float maxLobbyDecayTime = 15;
     public Lobby HostLobby;
@@ -25,7 +24,6 @@ public class LobbyManager : NetworkBehaviour
     async void Start()
     {
         randomName = $"Player_{Random.Range(1, 100)}";
-        randomIconIndex = Random.Range(0, MainMenuUI.instance.PlayerIcons.Length);
         if (instance == null)
         {
             instance = this;
@@ -85,7 +83,7 @@ public class LobbyManager : NetworkBehaviour
             Data = new Dictionary<string, PlayerDataObject>
                     {
                         { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
-                        { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, randomIconIndex.ToString())},
+                        { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")},
                         { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")},
                         { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "")},
                         { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
