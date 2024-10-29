@@ -140,7 +140,7 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
         
-        if (Input.GetAxisRaw("Horizontal") > 0)
+        if (Input.GetAxisRaw("Horizontal") != 0)
         {
             currentPlayerState = PlayerMovementState.IsMoving;
             return;
@@ -152,7 +152,6 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void UpdateAnimation()
     {
-        animatorComponent.SetBool("IsIdle", currentPlayerState == PlayerMovementState.Idle);
         animatorComponent.SetBool("IsMoving", currentPlayerState == PlayerMovementState.IsMoving);
         animatorComponent.SetBool("InAir", currentPlayerState == PlayerMovementState.InAir);
     }

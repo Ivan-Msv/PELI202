@@ -84,32 +84,7 @@ public class PlayerInfo2D : NetworkBehaviour
     }
     private void UpdatePlayerColor(Colors oldColor, Colors newColor)
     {
-        Debug.Log(oldColor);
-        Debug.Log(newColor);
-        Color assignedColor;
-        switch (newColor)
-        {
-            case Colors.White:
-                assignedColor = Color.white;
-                break;
-            case Colors.Red:
-                assignedColor = Color.red;
-                break;
-            case Colors.Green:
-                assignedColor = Color.green;
-                break;
-            case Colors.Blue:
-                assignedColor = Color.blue;
-                break;
-            case Colors.Magenta:
-                assignedColor = Color.magenta;
-                break;
-            default:
-                assignedColor = Color.white;
-                break;
-        }
-
-        spriteComponent.color = assignedColor;
+        spriteComponent.material.color = MainMenuUI.GetColor((int)newColor);
     }
     private void UpdatePlayerBoolean(bool oldValue, bool newValue)
     {

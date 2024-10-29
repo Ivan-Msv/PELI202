@@ -200,4 +200,33 @@ public class MainMenuUI : MonoBehaviour
             }
         }
     }
+
+    public static Color GetColor(int colorIndex)
+    {
+        var newColor = (Colors)colorIndex;
+        Color assignedColor;
+        switch (newColor)
+        {
+            case Colors.White:
+                assignedColor = Color.white;
+                break;
+            case Colors.Red:
+                assignedColor = Color.red;
+                break;
+            case Colors.Green:
+                assignedColor = Color.green;
+                break;
+            case Colors.Blue:
+                assignedColor = Color.blue;
+                break;
+            case Colors.Magenta:
+                assignedColor = Color.magenta;
+                break;
+            default:
+                assignedColor = Color.white;
+                break;
+        }
+
+        return assignedColor;
+    }
 }

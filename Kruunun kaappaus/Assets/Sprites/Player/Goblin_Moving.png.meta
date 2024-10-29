@@ -1,19 +1,25 @@
 fileFormatVersion: 2
-guid: 9c2978a6b4e08f149a106d86b9c16ea4
+guid: 8517b1baf60d94f418ea3c7be21ed4c1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8131503705654265419
-    second: spriteforivan_0
+      213: 7378276089761533363
+    second: SPRITE MOVING_0
   - first:
-      213: 2650720210436690326
-    second: spriteforivan_1
+      213: -774929330191373309
+    second: SPRITE MOVING_1
   - first:
-      213: -6768013785401656975
-    second: spriteforivan_2
+      213: -4244076293882517182
+    second: SPRITE MOVING_2
   - first:
-      213: -7221939496341750528
-    second: spriteforivan_3
+      213: -6135574993471118860
+    second: SPRITE MOVING_3
+  - first:
+      213: -462336026648139656
+    second: SPRITE MOVING_4
+  - first:
+      213: 110041503093960364
+    second: SPRITE MOVING_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Test_Sprite_2_Idle_0
+      name: Goblin_Moving_0
       rect:
         serializedVersion: 2
         x: 0
@@ -130,39 +136,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: 10, y: -9}
-        - {x: 10, y: -6}
-        - {x: 9, y: -5}
-        - {x: 9, y: 6}
-        - {x: 6, y: 9}
-        - {x: -6, y: 9}
-        - {x: -9, y: 7}
-        - {x: -10, y: 4}
-        - {x: -10, y: -1}
-        - {x: -9, y: -3}
-        - {x: -11, y: -5}
-        - {x: -11, y: -10}
-        - {x: -8, y: -13}
-        - {x: -5, y: -13}
-        - {x: -3, y: -15}
-        - {x: 1, y: -13}
-        - {x: 3, y: -15}
-        - {x: 4, y: -15}
+      outline: []
       physicsShape: []
-      tessellationDetail: 1
+      tessellationDetail: 0
       bones: []
-      spriteID: 902551bbb2134664ba2aef3dc6a0c1b9
-      internalID: 969648613
+      spriteID: fabb6bd18f82490498e059a0ecd613c7
+      internalID: 505001488
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Test_Sprite_2_Idle_1
+      name: Goblin_Moving_1
       rect:
         serializedVersion: 2
         x: 32
@@ -170,21 +158,43 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d9a1b2ce4b2c7346a74946052e0869f
-      internalID: -102185026
+      spriteID: c24c59d48bd18494cab94697bf6296c8
+      internalID: -1543486013
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Test_Sprite_2_Idle_2
+      name: Goblin_Moving_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3da90d1eafe2534d9787027b57c4401
+      internalID: 1642673962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Moving_3
       rect:
         serializedVersion: 2
         x: 0
@@ -192,21 +202,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7512879b5f60f047b2fd7715b369e8c
-      internalID: -664974877
+      spriteID: 175c6d64c53a27744949ee7a35045cbe
+      internalID: 2052917110
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Test_Sprite_2_Idle_3
+      name: Goblin_Moving_4
       rect:
         serializedVersion: 2
         x: 32
@@ -214,15 +224,37 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1399ed2a2d6574b4ba3d6a8d5144ac1c
-      internalID: 1166144701
+      spriteID: 434a54570d306d246961c910a731c715
+      internalID: 1932401584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Goblin_Moving_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 945f027e07ec16049ab250f59b5d4c30
+      internalID: 2076472625
       vertices: []
       indices: 
       edges: []
@@ -231,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: a2789792376e8ef4c93171b0df3bcc9f
+    spriteID: 796ab9cff6f158649b0b5edffcfb3c9f
     internalID: 0
     vertices: []
     indices: 
@@ -241,10 +273,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Test_Sprite_2_Idle_0: 969648613
-      Test_Sprite_2_Idle_1: -102185026
-      Test_Sprite_2_Idle_2: -664974877
-      Test_Sprite_2_Idle_3: 1166144701
+      Goblin_Moving_0: 505001488
+      Goblin_Moving_1: -1543486013
+      Goblin_Moving_2: 1642673962
+      Goblin_Moving_3: 2052917110
+      Goblin_Moving_4: 1932401584
+      Goblin_Moving_5: 2076472625
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

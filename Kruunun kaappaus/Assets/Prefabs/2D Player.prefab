@@ -169,7 +169,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5def9630989690140ae531c8c4af2fa4, type: 2}
+  - {fileID: 2100000, guid: 7781fe20d08131949a934890bd7da325, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -190,12 +190,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -7992763099550130100, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+  m_Sprite: {fileID: 505001488, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 1.6, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -235,17 +235,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.02493319, y: -0.17301297}
+  m_Offset: {x: 0.02493319, y: -0.1739524}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.6, y: 1.6}
-    newSize: {x: 0.2, y: 0.2}
+    newSize: {x: 1.6, y: 1.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.54974014, y: 0.954257}
+  m_Size: {x: 0.54974014, y: 0.95613587}
   m_EdgeRadius: 0
 --- !u!50 &4480672504656800610
 Rigidbody2D:
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 135388348
+  GlobalObjectIdHash: 3396764271
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -411,8 +411,8 @@ MonoBehaviour:
     m_Bits: 1
   moveSpeed: 6
   jumpHeight: 17
-  maxCoyoteTime: 0.1
-  maxJumpBufferTime: 0.1
+  maxCoyoteTime: 0.05
+  maxJumpBufferTime: 0.07
   spawnPoint: {x: 0, y: 0}
   coinCount: 0
 --- !u!114 &4151534210416331775
@@ -478,7 +478,7 @@ Animator:
   m_GameObject: {fileID: 6658996084343075146}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1f847990601b4564fa3e65e662893ad2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3a2a189f3ef976842b1f0ced43bf0200, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Library: []
-  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: ded2e931cba371a4c984445b41d74779, type: 3}
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: a1b217d88cb59a14c9cad16545526ba4, type: 3}
 --- !u!114 &4143617098312053293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,10 +516,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CategoryHash: 0.009161512
-  m_labelHash: 4.2140055e-14
+  m_CategoryHash: 0.00007481442
+  m_labelHash: 3.1654344e-21
   m_SpriteKey: 0
-  m_SpriteHash: 575823431
+  m_SpriteHash: 539038881
 --- !u!114 &4556504837116408228
 MonoBehaviour:
   m_ObjectHideFlags: 0

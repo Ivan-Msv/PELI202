@@ -76,15 +76,24 @@ public class LobbyUI : NetworkBehaviour
         HandleLobbyPollForUpdates();
         CheckStartMatch();
     }
-    public void SelectSprite(string playerId, int colorIndex, int index)
+    public async void SelectSprite(string playerId, int colorIndex, int iconIndex)
     {
         var newData = new Dictionary<string, PlayerDataObject>()
         {
-            { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, index.ToString()) },
+            { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, iconIndex.ToString()) },
             { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, colorIndex.ToString()) }
         };
-        LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, playerId, new UpdatePlayerOptions() { Data = newData });
+        
+        try
+        {
+            await LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, playerId, new UpdatePlayerOptions() { Data = newData });
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.LogError(e.InnerException);
+        }
     }
+
     private async void HandleLobbyPollForUpdates()
     {
         if (currentLobby != null)

@@ -17,28 +17,64 @@ MonoBehaviour:
     m_Hash: 1008081451
     m_CategoryList: []
     m_OverrideEntries:
-    - m_Name: TESTSPRITE 3_0
-      m_Hash: 808753559
-      m_Sprite: {fileID: -7329830083336869895, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+    - m_Name: Goblin_Idle_0
+      m_Hash: 383799113
+      m_Sprite: {fileID: 9130647759989690307, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 969648613, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
-    - m_Name: TESTSPRITE 3_1
-      m_Hash: 120826113
-      m_Sprite: {fileID: -7491822235722430375, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+      m_SpriteOverride: {fileID: -7329830083336869895, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+    - m_Name: Goblin_Idle_1
+      m_Hash: 568819679
+      m_Sprite: {fileID: 1368956883174936208, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: -102185026, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
-    - m_Name: TESTSPRITE 3_2
-      m_Hash: 507181243
-      m_Sprite: {fileID: 7374638151650502443, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+      m_SpriteOverride: {fileID: -7491822235722430375, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+    - m_Name: Goblin_Idle_2
+      m_Hash: 955133541
+      m_Sprite: {fileID: 6361711507835937641, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: -664974877, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
-    - m_Name: TESTSPRITE 3_3
-      m_Hash: 691914797
-      m_Sprite: {fileID: -7992763099550130100, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+      m_SpriteOverride: {fileID: 7374638151650502443, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+    - m_Name: Goblin_Idle_3
+      m_Hash: 266936051
+      m_Sprite: {fileID: 6260978701604189543, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 1166144701, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
+      m_SpriteOverride: {fileID: -7992763099550130100, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
     m_FromMain: 1
     m_EntryOverrideCount: 4
+  - m_Name: Moving
+    m_Hash: 949806512
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: Goblin_Moving_0
+      m_Hash: 493825128
+      m_Sprite: {fileID: 505001488, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 505001488, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+    - m_Name: Goblin_Moving_1
+      m_Hash: 711466238
+      m_Sprite: {fileID: -1543486013, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: -1543486013, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+    - m_Name: Goblin_Moving_2
+      m_Hash: 862014788
+      m_Sprite: {fileID: 1642673962, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1642673962, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+    - m_Name: Goblin_Moving_3
+      m_Hash: 73825746
+      m_Sprite: {fileID: 2052917110, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 2052917110, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+    - m_Name: Goblin_Moving_4
+      m_Hash: 436398193
+      m_Sprite: {fileID: 1932401584, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 1932401584, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+    - m_Name: Goblin_Moving_5
+      m_Hash: 755357927
+      m_Sprite: {fileID: 2076472625, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+      m_FromMain: 1
+      m_SpriteOverride: {fileID: 2076472625, guid: 8517b1baf60d94f418ea3c7be21ed4c1, type: 3}
+    m_FromMain: 1
+    m_EntryOverrideCount: 0
   m_PrimaryLibraryGUID: ded2e931cba371a4c984445b41d74779
-  m_ModificationHash: 638658060799575099
+  m_ModificationHash: 638658355795637950
   m_Version: 1
