@@ -29,7 +29,7 @@ public class PlayerMovement2D : NetworkBehaviour
     void Start()
     {
         animatorComponent = GetComponent<Animator>();
-        spawnPoint = new Vector2(-7, -4);
+        spawnPoint = LevelManager.instance.playerSpawnPoint[0];
         transform.position = spawnPoint;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
@@ -131,7 +131,6 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void PlayerStateManager()
     {
-        Debug.Log(currentPlayerState);
         UpdateAnimation();
 
         if (!IsGrounded())
@@ -162,6 +161,10 @@ public class PlayerMovement2D : NetworkBehaviour
         if (collision.CompareTag("Death Trigger"))
         {
             transform.position = spawnPoint;
+            if (LevelManager.instance.currentLevelType == LevelType.Challenge)
+            {
+                LevelManager.instance.LoseHeart();
+            }
         }
         if (collision.CompareTag("Coin"))
         {
