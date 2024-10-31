@@ -15,6 +15,7 @@ using System;
 using System.Threading.Tasks;
 using Unity.Services.Core;
 using UnityEngine.U2D.Animation;
+using System.Runtime.CompilerServices;
 
 public enum MenuState
 {
@@ -61,10 +62,11 @@ public class MainMenuUI : MonoBehaviour
         {
             instance = this;
         }
+
         // Main Menu & overall
         returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); });
         playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); });
-        openSettings.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); currentName.text = AuthenticationService.Instance.PlayerName.Substring(0, AuthenticationService.Instance.PlayerName.Length - 5); });
+        openSettings.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); });
 
         // Settings Menu
         changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); });
@@ -200,7 +202,26 @@ public class MainMenuUI : MonoBehaviour
             }
         }
     }
+    public async void SetNameAndStartMenu(bool tokenExists)
+    {
+        Debug.Log("test2");
+        string randomName = $"Player_{UnityEngine.Random.Range(1, 100)}";
 
+        Debug.Log(tokenExists);
+
+        if (!tokenExists)
+        {
+            await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
+            currentName.text = randomName;
+        }
+        else
+        {
+            currentName.text = AuthenticationService.Instance.PlayerName.Substring(0, AuthenticationService.Instance.PlayerName.Length - 5);
+        }
+
+        // Laittaa näkyviin vasta sen jälkeen kun asettaa nimen
+        OpenNewMenu(MenuState.MainMenu);
+    }
     public static Color GetColor(int colorIndex)
     {
         var newColor = (Colors)colorIndex;

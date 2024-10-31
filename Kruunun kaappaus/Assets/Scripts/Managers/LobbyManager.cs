@@ -16,30 +16,27 @@ using Unity.Networking.Transport.Relay;
 public class LobbyManager : NetworkBehaviour
 {
     public static LobbyManager instance;
-    private string randomName;
-    private int randomPort;
     [SerializeField] private float maxLobbyDecayTime = 15;
     public Lobby HostLobby;
     private float lobbyDecayTimer;
     async void Start()
     {
-        randomName = $"Player_{Random.Range(1, 100)}";
         if (instance == null)
         {
             instance = this;
         }
         await UnityServices.InitializeAsync();
-        AuthenticationService.Instance.SignedIn += () => { Debug.Log($"Signed in {AuthenticationService.Instance.PlayerId}"); };
 
         // delete later
         AuthenticationService.Instance.ClearSessionToken();
+
         bool tokenExists = AuthenticationService.Instance.SessionTokenExists;
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        if (!tokenExists)
+        AuthenticationService.Instance.SignedIn += () =>
         {
-            await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
-        }
-        MainMenuUI.instance.OpenNewMenu(MenuState.MainMenu);
+            MainMenuUI.instance.SetNameAndStartMenu(tokenExists);
+        };
+
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
     void Update()
     {
