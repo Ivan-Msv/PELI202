@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 6408978930940377679}
   - component: {fileID: 3947263335278082380}
   - component: {fileID: 4143617098312053293}
-  - component: {fileID: 4556504837116408228}
+  - component: {fileID: 2048038193042265351}
   m_Layer: 3
   m_Name: 2D Player
   m_TagString: Untagged
@@ -520,7 +520,7 @@ MonoBehaviour:
   m_labelHash: 3.1654344e-21
   m_SpriteKey: 0
   m_SpriteHash: 539038881
---- !u!114 &4556504837116408228
+--- !u!114 &2048038193042265351
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -529,7 +529,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6658996084343075146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ecaaafc96ebcc8409adce79bacc41c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1

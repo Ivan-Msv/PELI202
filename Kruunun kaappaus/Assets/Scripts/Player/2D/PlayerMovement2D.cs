@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum PlayerMovementState
 {
-    Idle, IsMoving, InAir
+    Idle, Moving, Jumping, Falling
 }
 
 public class PlayerMovement2D : NetworkBehaviour
@@ -135,13 +135,13 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (!IsGrounded())
         {
-            currentPlayerState = PlayerMovementState.InAir;
+            currentPlayerState = PlayerMovementState.Jumping;
             return;
         }
         
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
-            currentPlayerState = PlayerMovementState.IsMoving;
+            currentPlayerState = PlayerMovementState.Moving;
             return;
         }
         else
@@ -151,8 +151,9 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void UpdateAnimation()
     {
-        animatorComponent.SetBool("IsMoving", currentPlayerState == PlayerMovementState.IsMoving);
-        animatorComponent.SetBool("InAir", currentPlayerState == PlayerMovementState.InAir);
+        animatorComponent.SetBool("IsMoving", currentPlayerState == PlayerMovementState.Moving);
+        animatorComponent.SetBool("IsJumping", currentPlayerState == PlayerMovementState.Jumping);
+        animatorComponent.SetBool("IsFalling", currentPlayerState == PlayerMovementState.Falling);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -287,7 +287,7 @@ public class LobbyUI : NetworkBehaviour
 
         if (NetworkManager.ConnectedClients.Count == currentLobby.Players.Count)
         {
-            NetworkManager.SceneManager.LoadScene("Level Challenge2", LoadSceneMode.Single);
+            NetworkManager.SceneManager.LoadScene("ExampleLevel", LoadSceneMode.Single);
         }
     }
     private void CopyToClipboard(string text)

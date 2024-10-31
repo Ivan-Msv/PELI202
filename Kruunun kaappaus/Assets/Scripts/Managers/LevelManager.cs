@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using TMPro;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,11 +8,13 @@ public enum LevelType
     Challenge, Minigame
 }
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : NetworkBehaviour
 {
     public static LevelManager instance;
-    [SerializeField] private GameObject heartCanvas;
+    [SerializeField] private GameObject heartGrid;
     [SerializeField] private GameObject heartPrefab;
+    [SerializeField] private GameObject timerGrid;
+    private TextMeshProUGUI timerVisual;
 
     [Header("Main")]
     public Vector2[] playerSpawnPoint = new Vector2[1];
@@ -24,6 +27,7 @@ public class LevelManager : MonoBehaviour
     [Space]
     [Header("Jos minipeli")]
     public float levelDurationSeconds;
+    public float LevelTimer { get; private set; }
 
     private void Awake()
     {
@@ -31,24 +35,51 @@ public class LevelManager : MonoBehaviour
         {
             instance = this;
         }
+        timerVisual = timerGrid.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void Start()
     {
-        SpawnHearts();
+        Debug.Log(currentLevelType);
+        switch (currentLevelType)
+        {
+            case LevelType.Challenge:
+                heartGrid.SetActive(true);
+                SpawnHearts();
+                break;
+            case LevelType.Minigame:
+                LevelTimer = levelDurationSeconds;
+                timerGrid.SetActive(true);
+                break;
+        }
+    }
+
+    private void Update()
+    {
+        if (currentLevelType == LevelType.Minigame)
+        {
+            RunTimer();
+        }
     }
 
     public void LoseHeart()
     {
         lives.Value--;
-        Destroy(heartCanvas.transform.GetChild(0).gameObject);
+        Destroy(heartGrid.transform.GetChild(0).gameObject);
     }
-
     private void SpawnHearts()
     {
         for (int i = 0;  i < lives.Value; i++)
         {
-            Instantiate(heartPrefab, heartCanvas.transform);
+            Instantiate(heartPrefab, heartGrid.transform);
         }
+    }
+    private void RunTimer()
+    {
+        var timeInMinutes = Mathf.FloorToInt(LevelTimer / 60);
+        var timeInSeconds = Mathf.FloorToInt(LevelTimer - timeInMinutes * 60);
+        string timerText = string.Format("Time remaining: {0:00}:{1:00}", timeInMinutes, timeInSeconds);
+        LevelTimer -= Time.deltaTime;
+        timerVisual.text = timerText;
     }
 }
