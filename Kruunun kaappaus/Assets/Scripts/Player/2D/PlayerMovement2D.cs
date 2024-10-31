@@ -157,25 +157,27 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (isGhost) { return; }
+        // Jos on haamu tai ei ole pelaaja objektin omistaja, niin ei mennä eteenpäin.
+        if (isGhost || !NetworkObject.IsOwner) { return; }
 
         if (collision.CompareTag("Death Trigger"))
         {
             transform.position = spawnPoint;
             if (LevelManager.instance.currentLevelType == LevelType.Challenge)
             {
-                LevelManager.instance.LoseHeart();
+                LevelManager.instance.LoseHeartServerRpc();
             }
         }
         if (collision.CompareTag("Coin"))
         {
-            GetComponent<PlayerInfo2D>().coinAmount.Value +=1;
-            Destroy(collision.gameObject);
+            GetComponent<PlayerInfo2D>().coinAmount.Value += 1;
+            // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
+            collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
         }
         if (collision.CompareTag("Crown"))
         {
             GetComponent<PlayerInfo2D>().crownAmount.Value += 1;
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
         }
     }
 }

@@ -204,10 +204,7 @@ public class MainMenuUI : MonoBehaviour
     }
     public async void SetNameAndStartMenu(bool tokenExists)
     {
-        Debug.Log("test2");
         string randomName = $"Player_{UnityEngine.Random.Range(1, 100)}";
-
-        Debug.Log(tokenExists);
 
         if (!tokenExists)
         {

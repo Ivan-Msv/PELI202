@@ -52,7 +52,6 @@ public class LobbyManager : NetworkBehaviour
         {
             Lobby newLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, lobbyOptions);
             HostLobby = newLobby;
-            Debug.Log($"Created new lobby: {newLobby.Name}, and code being {newLobby.LobbyCode}");
         } 
         catch (LobbyServiceException e)
         {

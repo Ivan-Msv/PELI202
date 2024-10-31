@@ -36,6 +36,7 @@ public class LevelManager : NetworkBehaviour
             instance = this;
         }
         timerVisual = timerGrid.GetComponentInChildren<TextMeshProUGUI>();
+        lives.OnValueChanged += OnLoseHeart;
     }
 
     private void Start()
@@ -61,10 +62,8 @@ public class LevelManager : NetworkBehaviour
             RunTimer();
         }
     }
-
-    public void LoseHeart()
+    private void OnLoseHeart(int oldvalue, int newvalue)
     {
-        lives.Value--;
         Destroy(heartGrid.transform.GetChild(0).gameObject);
     }
     private void SpawnHearts()
@@ -76,10 +75,23 @@ public class LevelManager : NetworkBehaviour
     }
     private void RunTimer()
     {
+        if (LevelTimer < 1)
+        {
+            // Do something instead of empty return
+            return;
+        }
+
+        LevelTimer -= Time.deltaTime;
         var timeInMinutes = Mathf.FloorToInt(LevelTimer / 60);
         var timeInSeconds = Mathf.FloorToInt(LevelTimer - timeInMinutes * 60);
         string timerText = string.Format("Time remaining: {0:00}:{1:00}", timeInMinutes, timeInSeconds);
-        LevelTimer -= Time.deltaTime;
         timerVisual.text = timerText;
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    public void LoseHeartServerRpc()
+    {
+        lives.Value--;
     }
 }

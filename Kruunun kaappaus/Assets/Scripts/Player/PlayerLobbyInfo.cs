@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using UnityEngine.UI;
@@ -130,6 +131,11 @@ public class PlayerLobbyInfo : MonoBehaviour
             child.GetComponent<Outline>().enabled = isSelected;
         }
 
+        if (transform.name != AuthenticationService.Instance.PlayerId)
+        {
+            Destroy(spriteSelectionMenu);
+            return;
+        }
         LobbyUI.instance.SelectSprite(transform.name, selectedColorIndex, selectedPlayerIconIndex);
     }
 } 

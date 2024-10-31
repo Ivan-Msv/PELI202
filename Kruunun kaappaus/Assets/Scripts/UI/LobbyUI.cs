@@ -140,6 +140,7 @@ public class LobbyUI : NetworkBehaviour
 
         if (currentLobby.HostId == AuthenticationService.Instance.PlayerId)
         {
+            // myöhemmin myös tarkistus jos on ainakin 2 pelaajaa
             startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Start Match";
             startGame.interactable = true;
         }
