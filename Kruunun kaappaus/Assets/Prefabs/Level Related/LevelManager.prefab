@@ -145,8 +145,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8555879955884414745}
-  - component: {fileID: 1801563826459194643}
   - component: {fileID: 7838924780168179826}
+  - component: {fileID: 1801563826459194643}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -170,31 +170,6 @@ Transform:
   - {fileID: 7187104097215704017}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1801563826459194643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006120250650593450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c0d88577979fc445be696b0a0279058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  heartGrid: {fileID: 7951306608352202176}
-  heartPrefab: {fileID: 8587256020623841653, guid: dcedddbd383d9d94cbbb29c5809c595a, type: 3}
-  timerGrid: {fileID: 4202299352970997030}
-  playerSpawnPoint:
-  - {x: -7, y: -4}
-  ghostSpawnPoints:
-  - {x: 7, y: 5}
-  - {x: 5, y: 5}
-  - {x: 3, y: 5}
-  currentLevelType: 0
-  lives:
-    m_InternalValue: 3
-  levelDurationSeconds: 0
 --- !u!114 &7838924780168179826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +195,32 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &1801563826459194643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006120250650593450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c0d88577979fc445be696b0a0279058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  heartGrid: {fileID: 7951306608352202176}
+  heartPrefab: {fileID: 8587256020623841653, guid: dcedddbd383d9d94cbbb29c5809c595a, type: 3}
+  timerGrid: {fileID: 4202299352970997030}
+  playerSpawnPoint:
+  - {x: -7, y: -4}
+  ghostSpawnPoints:
+  - {x: 7, y: 5}
+  - {x: 5, y: 5}
+  - {x: 3, y: 5}
+  currentLevelType: 0
+  lives:
+    m_InternalValue: 3
+  levelDurationSeconds: 0
 --- !u!1 &4202299352970997030
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,9 +252,9 @@ RectTransform:
   - {fileID: 6342354892623043450}
   m_Father: {fileID: 7187104097215704017}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -6923, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6835976708200421509
@@ -335,7 +336,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96

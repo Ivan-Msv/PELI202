@@ -12,22 +12,25 @@ public enum PlayerMovementState
 public class PlayerMovement2D : NetworkBehaviour
 {
     public bool isGhost;
-    private Rigidbody2D rb;
-    private BoxCollider2D playerCollider;
     private bool canJump;
-    [SerializeField] private LayerMask ground;
+    [Header("Movement")]
     [SerializeField] private float moveSpeed;
+    [Header("Jump")]
+    [SerializeField] private LayerMask ground;
     [SerializeField] private float minJumpHeight;
     [SerializeField] private float maxJumpHeight;
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
     [SerializeField] private float maxJumpTime;
-    private Animator animatorComponent;
+    [Header("Player Effects")]
+    [SerializeField] private float trampolineJumpHeight;
     public Vector2 spawnPoint;
+    private Rigidbody2D rb;
+    private BoxCollider2D playerCollider;
+    private Animator animatorComponent;
     private float coyoteTimer;
     private float jumpBufferTimer;
     private float jumpTimer;
-    public int coinCount;
     public PlayerMovementState currentPlayerState { get; private set; }
     void Start()
     {
@@ -67,10 +70,7 @@ public class PlayerMovement2D : NetworkBehaviour
         rb.excludeLayers = default;
 
         float horizontal = Input.GetAxisRaw("Horizontal");
-
-        //rb.linearVelocityX = horizontal * moveSpeed;
         rb.linearVelocity = new Vector2(horizontal * moveSpeed, rb.linearVelocity.y);
-        Debug.Log(horizontal);
     }
     private void GhostMovement()
     {
@@ -199,6 +199,11 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             GetComponent<PlayerInfo2D>().crownAmount.Value += 1;
             collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
+        }
+        if (collision.CompareTag("Trampoline"))
+        {
+            rb.linearVelocityY = trampolineJumpHeight;
+            collision.gameObject.GetComponent<Animator>().Play("Trampoline_Used");
         }
     }
 }
