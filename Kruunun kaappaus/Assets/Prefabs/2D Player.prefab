@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 135388348
+  GlobalObjectIdHash: 3396764271
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -410,9 +410,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   moveSpeed: 6
-  jumpHeight: 17
+  minJumpHeight: 10
+  maxJumpHeight: 2200
   maxCoyoteTime: 0.05
-  maxJumpBufferTime: 0.07
+  maxJumpBufferTime: 0.11
+  maxJumpTime: 0.2
   spawnPoint: {x: 0, y: 0}
   coinCount: 0
 --- !u!114 &4151534210416331775

@@ -1090,6 +1090,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3680377682907368177, guid: 4c302742e8d5b714d8db19ab1b96cd7b, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1391586653
+      objectReference: {fileID: 0}
     - target: {fileID: 8636109521305510582, guid: 4c302742e8d5b714d8db19ab1b96cd7b, type: 3}
       propertyPath: m_Name
       value: Crown
@@ -1359,16 +1363,16 @@ CompositeCollider2D:
         Y: -90000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 17.999971, y: -10}
-      - {x: 17.999971, y: 6}
-      - {x: -11, y: 5.999971}
-      - {x: -10.99997, y: -10}
-    - - {x: 17, y: -8.99997}
-      - {x: -10, y: -8.99997}
-      - {x: -9.99997, y: 5}
-      - {x: 17, y: 4.9999704}
+    - - {x: 18, y: 6}
+      - {x: -11, y: 6}
+      - {x: -11, y: -10}
+      - {x: 18, y: -10}
+    - - {x: -10, y: -9}
+      - {x: -10, y: 5}
+      - {x: 17, y: 5}
+      - {x: 17, y: -9}
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 1368716004}
 --- !u!50 &1368716007
@@ -2753,45 +2757,45 @@ CompositeCollider2D:
         Y: -4375000
   m_CompositePaths:
     m_Paths:
-    - - {x: 14.999971, y: -8}
-      - {x: 14.999971, y: 4}
-      - {x: -9, y: 3.999971}
-      - {x: -8.99997, y: -8}
-    - - {x: 14, y: -4.9999704}
-      - {x: -8, y: -4.9999704}
-      - {x: -7.9999704, y: -3}
-      - {x: 6, y: -3.0000293}
-      - {x: 6.000029, y: -4}
-      - {x: 10, y: -3.999971}
-      - {x: 10.00003, y: -3.4375}
-      - {x: 10.937508, y: -3.4374924}
-      - {x: 11, y: -3.3749893}
-      - {x: 10.99997, y: -3}
-      - {x: 10, y: -2.9999707}
-      - {x: 9.99997, y: -2}
-      - {x: 9, y: -1.9999707}
-      - {x: 8.99997, y: -1}
-      - {x: 8, y: -0.9999706}
-      - {x: 7.9999704, y: 0}
-      - {x: 5, y: -0.000029300001}
-      - {x: 4.9999704, y: -1}
-      - {x: 4, y: -1.0000293}
-      - {x: 3.9999704, y: -2}
-      - {x: -8, y: -1.9999707}
-      - {x: -7.9999704, y: 0.5625}
-      - {x: -6.0624924, y: 0.5625076}
-      - {x: -6, y: 0.6250108}
-      - {x: -6.000029, y: 1}
-      - {x: -8, y: 1.0000294}
-      - {x: -7.9999704, y: 3}
-      - {x: 14, y: 2.9999707}
-    - - {x: -4.062511, y: -0.4375}
-      - {x: -4, y: -0.3749892}
-      - {x: -4.000029, y: 0}
-      - {x: -5, y: -0.000029300001}
-      - {x: -4.999971, y: -0.4375}
+    - - {x: 15, y: 4}
+      - {x: -9, y: 4}
+      - {x: -9, y: -8}
+      - {x: 15, y: -8}
+    - - {x: -8, y: -5}
+      - {x: -8, y: -3}
+      - {x: 6, y: -3}
+      - {x: 6, y: -4}
+      - {x: 10, y: -4}
+      - {x: 10, y: -3.4375}
+      - {x: 10.9375, y: -3.4375}
+      - {x: 11, y: -3.375}
+      - {x: 11, y: -3}
+      - {x: 10, y: -3}
+      - {x: 10, y: -2}
+      - {x: 9, y: -2}
+      - {x: 9, y: -1}
+      - {x: 8, y: -1}
+      - {x: 8, y: 0}
+      - {x: 5, y: 0}
+      - {x: 5, y: -1}
+      - {x: 4, y: -1}
+      - {x: 4, y: -2}
+      - {x: -8, y: -2}
+      - {x: -8, y: 0.5625}
+      - {x: -6.0625, y: 0.5625}
+      - {x: -6, y: 0.625}
+      - {x: -6, y: 1}
+      - {x: -8, y: 1}
+      - {x: -8, y: 3}
+      - {x: 14, y: 3}
+      - {x: 14, y: -5}
+    - - {x: -4, y: -0.375}
+      - {x: -4, y: 0}
+      - {x: -5, y: 0}
+      - {x: -5, y: -0.4375}
+      - {x: -4.0625, y: -0.4375}
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 1559226668}
 --- !u!50 &1559226671
@@ -27757,6 +27761,10 @@ PrefabInstance:
     - target: {fileID: 1006120250650593450, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7838924780168179826, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3950039263
       objectReference: {fileID: 0}
     - target: {fileID: 8555879955884414745, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_LocalPosition.x

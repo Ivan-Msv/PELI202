@@ -17,13 +17,16 @@ public class PlayerMovement2D : NetworkBehaviour
     private bool canJump;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpHeight;
+    [SerializeField] private float minJumpHeight;
+    [SerializeField] private float maxJumpHeight;
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
+    [SerializeField] private float maxJumpTime;
     private Animator animatorComponent;
     public Vector2 spawnPoint;
     private float coyoteTimer;
     private float jumpBufferTimer;
+    private float jumpTimer;
     public int coinCount;
     public PlayerMovementState currentPlayerState { get; private set; }
     void Start()
@@ -42,7 +45,6 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
-        ClampSpeed();
         PlayerStateManager();
         if (isGhost)
         {
@@ -66,7 +68,9 @@ public class PlayerMovement2D : NetworkBehaviour
 
         float horizontal = Input.GetAxisRaw("Horizontal");
 
+        //rb.linearVelocityX = horizontal * moveSpeed;
         rb.linearVelocity = new Vector2(horizontal * moveSpeed, rb.linearVelocity.y);
+        Debug.Log(horizontal);
     }
     private void GhostMovement()
     {
@@ -86,7 +90,25 @@ public class PlayerMovement2D : NetworkBehaviour
         JumpBuffer();
         if (jumpBufferTimer > 0 && canJump)
         {
-            rb.linearVelocity = Vector3.up * jumpHeight;
+            // min jump
+            rb.linearVelocity = Vector3.up * minJumpHeight;
+        }
+        MaxJumpTimer();
+    }
+
+    private void MaxJumpTimer()
+    {
+        jumpTimer -= Time.deltaTime;
+        bool falling = rb.linearVelocity.y <= 0;
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            jumpTimer = -1;
+        }
+
+        if (jumpTimer >= 0 && !falling && Input.GetKey(KeyCode.Space))
+        {
+            rb.AddForce(Vector3.up * maxJumpHeight * Time.deltaTime);
         }
     }
     private void CoyoteCheck()
@@ -112,22 +134,17 @@ public class PlayerMovement2D : NetworkBehaviour
         else
         {
             canJump = true;
+            jumpTimer = maxJumpTime;
             coyoteTimer = 0;
         }
     }
     private void JumpBuffer()
     {
         jumpBufferTimer -= Time.deltaTime;
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpBufferTimer = maxJumpBufferTime;
         }
-    }
-    private void ClampSpeed()
-    {
-        float horizontalSpeed = Mathf.Clamp(rb.linearVelocity.x, -moveSpeed, moveSpeed);
-        float verticalSpeed = Mathf.Clamp(rb.linearVelocity.y, -jumpHeight, jumpHeight);
-        rb.linearVelocity = new Vector2(horizontalSpeed, verticalSpeed);
     }
     private void PlayerStateManager()
     {
@@ -135,10 +152,10 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (!IsGrounded())
         {
-            currentPlayerState = PlayerMovementState.Jumping;
+            currentPlayerState = JumpOrFallCheck();
             return;
         }
-        
+
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             currentPlayerState = PlayerMovementState.Moving;
@@ -154,6 +171,10 @@ public class PlayerMovement2D : NetworkBehaviour
         animatorComponent.SetBool("IsMoving", currentPlayerState == PlayerMovementState.Moving);
         animatorComponent.SetBool("IsJumping", currentPlayerState == PlayerMovementState.Jumping);
         animatorComponent.SetBool("IsFalling", currentPlayerState == PlayerMovementState.Falling);
+    }
+    private PlayerMovementState JumpOrFallCheck()
+    {
+        return rb.linearVelocity.y > 0 ? PlayerMovementState.Jumping : PlayerMovementState.Falling;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
