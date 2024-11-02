@@ -6,12 +6,13 @@ using Unity.Collections;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
 public enum Colors
 {
-    White = 0, Red = 1, Green = 2, Blue = 3, Magenta = 4
+    None = 1, White = 2, Red = 3, Green = 4, Magenta = 5
 }
 
 public class PlayerInfo2D : NetworkBehaviour
@@ -20,17 +21,17 @@ public class PlayerInfo2D : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI playerNameVisual;
 
     [HideInInspector] public NetworkVariable<FixedString64Bytes> playerName = new(writePerm: NetworkVariableWritePermission.Owner);
-    public NetworkVariable<int> playerSpriteIndex = new(writePerm: NetworkVariableWritePermission.Owner);
-    public NetworkVariable<Colors> playerColor = new(writePerm: NetworkVariableWritePermission.Owner); 
+    public NetworkVariable<int> playerSpriteIndex = new(writePerm: NetworkVariableWritePermission.Owner, value: -1);
+    public NetworkVariable<int> playerColor = new(writePerm: NetworkVariableWritePermission.Owner, value: -1); 
     public NetworkVariable<bool> playerIsGhost = new(writePerm: NetworkVariableWritePermission.Owner);
 
     public NetworkVariable<int> coinAmount = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> crownAmount = new(writePerm: NetworkVariableWritePermission.Owner);
-    private SpriteLibrary spriteLibraryComponent;
+    private Animator animatorComponent;
     private SpriteRenderer spriteComponent;
     void Awake()
     {
-        spriteLibraryComponent = GetComponent<SpriteLibrary>();
+        animatorComponent = GetComponent<Animator>();
         spriteComponent = GetComponent<SpriteRenderer>();
     }
 
@@ -60,11 +61,16 @@ public class PlayerInfo2D : NetworkBehaviour
             return;
         }
 
-        playerData = GetComponentInParent<PlayerSetup>().SavedData;
+        transform.parent.TryGetComponent(out PlayerSetup playerInformation);
 
-        playerName.Value = playerData["PlayerName"].Value;
-        playerSpriteIndex.Value = int.Parse(playerData["PlayerIconIndex"].Value);
-        playerColor.Value = (Colors)int.Parse(playerData["PlayerColor"].Value);
+        if (playerInformation != null)
+        {
+            playerData = playerInformation.SavedData;
+
+            playerName.Value = playerData["PlayerName"].Value;
+            playerSpriteIndex.Value = int.Parse(playerData["PlayerIconIndex"].Value);
+            playerColor.Value = int.Parse(playerData["PlayerColor"].Value);
+        }
     }
 
     private void UpdatePlayerName(FixedString64Bytes oldValue, FixedString64Bytes newValue)
@@ -80,11 +86,15 @@ public class PlayerInfo2D : NetworkBehaviour
     private void UpdatePlayerSprite(int oldIndex, int newIndex)
     {
         spriteComponent.sprite = MainMenuUI.instance.PlayerIcons[newIndex];
-        spriteLibraryComponent.spriteLibraryAsset = MainMenuUI.instance.PlayerSprites[newIndex];
+        animatorComponent.runtimeAnimatorController = MainMenuUI.instance.PlayerAnimators[newIndex];
     }
-    private void UpdatePlayerColor(Colors oldColor, Colors newColor)
+    private void UpdatePlayerColor(int oldColor, int newColor)
     {
-        spriteComponent.material.color = MainMenuUI.GetColor((int)newColor);
+        if (newColor == (int)Colors.None)
+        {
+            spriteComponent.material.SetFloat("_Thickness", 0);
+        }
+        spriteComponent.material.color = MainMenuUI.GetColor(newColor);
     }
     private void UpdatePlayerBoolean(bool oldValue, bool newValue)
     {

@@ -41,7 +41,6 @@ public class LevelManager : NetworkBehaviour
 
     private void Start()
     {
-        Debug.Log(currentLevelType);
         switch (currentLevelType)
         {
             case LevelType.Challenge:
@@ -93,5 +92,12 @@ public class LevelManager : NetworkBehaviour
     public void LoseHeartServerRpc()
     {
         lives.Value--;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void PlayAnimationServerRpc(ulong objectId, string animation)
+    {
+        var animationObject = NetworkManager.SpawnManager.SpawnedObjects[objectId];
+        animationObject.GetComponent<Animator>().Play(animation);
     }
 }

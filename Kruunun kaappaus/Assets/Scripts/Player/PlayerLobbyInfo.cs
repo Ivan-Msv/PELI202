@@ -14,6 +14,7 @@ public class PlayerLobbyInfo : MonoBehaviour
     public bool IsHost { get; private set; }
     [SerializeField] private GameObject spriteSelectionMenu;
     [SerializeField] private GameObject spriteShowcase;
+    [SerializeField] private GameObject noColorButtonPrefab;
     [SerializeField] private GameObject colorButtonPrefab;
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private Image iconImage;
@@ -114,11 +115,20 @@ public class PlayerLobbyInfo : MonoBehaviour
         foreach (var colors in Enum.GetValues(typeof(Colors)))
         {
             Color currentColor = MainMenuUI.GetColor((int)colors);
-            var colorButton = Instantiate(colorButtonPrefab, spriteSelectionMenu.transform.GetChild(0));
-            colorButton.GetComponent<Image>().color = currentColor;
-            colorButton.name = $"{(int)colors}";
+            if ((int)colors == (int)Colors.None)
+            {
+                var noColorButton = Instantiate(noColorButtonPrefab, spriteSelectionMenu.transform.GetChild(0));
+                noColorButton.name = $"{(int)colors}";
+                noColorButton.GetComponent<Button>().onClick.AddListener(() => { UpdateSelectionMenuColors((int)colors); });
+            }
+            else
+            {
+                var colorButton = Instantiate(colorButtonPrefab, spriteSelectionMenu.transform.GetChild(0));
+                colorButton.GetComponent<Image>().color = currentColor;
+                colorButton.name = $"{(int)colors}";
 
-            colorButton.GetComponent<Button>().onClick.AddListener(() => { UpdateSelectionMenuColors((int)colors); });
+                colorButton.GetComponent<Button>().onClick.AddListener(() => { UpdateSelectionMenuColors((int)colors); });
+            }
         }
     }
     private void UpdateSelectionMenuColors(int colorIndex)

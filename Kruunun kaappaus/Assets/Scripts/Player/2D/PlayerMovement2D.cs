@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Netcode;
 using Unity.Netcode.Components;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum PlayerMovementState
@@ -31,12 +32,14 @@ public class PlayerMovement2D : NetworkBehaviour
     private float coyoteTimer;
     private float jumpBufferTimer;
     private float jumpTimer;
+    private Transform spawnParent;
     public PlayerMovementState currentPlayerState { get; private set; }
     void Start()
     {
         animatorComponent = GetComponent<Animator>();
         spawnPoint = LevelManager.instance.playerSpawnPoint[0];
         transform.position = spawnPoint;
+        spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
     }
@@ -47,7 +50,6 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             return;
         }
-
         PlayerStateManager();
         if (isGhost)
         {
@@ -55,6 +57,7 @@ public class PlayerMovement2D : NetworkBehaviour
         }
         else
         {
+            StuckCheck();
             Jump();
             PlayerMovement();
         }
@@ -62,6 +65,18 @@ public class PlayerMovement2D : NetworkBehaviour
     private bool IsGrounded()
     {
         return Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.1f, ground);
+    }
+
+    private bool InsideGround()
+    {
+        return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, ground);
+    }
+    private void StuckCheck()
+    {
+        if (InsideGround())
+        {
+            transform.position = spawnPoint;
+        }
     }
     private void PlayerMovement()
     {
@@ -181,6 +196,9 @@ public class PlayerMovement2D : NetworkBehaviour
         // Jos on haamu tai ei ole pelaaja objektin omistaja, niin ei mennä eteenpäin.
         if (isGhost || !NetworkObject.IsOwner) { return; }
 
+        collision.TryGetComponent(out NetworkObject containsNetworkObject);
+        var collisionObjectId = containsNetworkObject.IsUnityNull() ? 0 : containsNetworkObject.NetworkObjectId;
+
         if (collision.CompareTag("Death Trigger"))
         {
             transform.position = spawnPoint;
@@ -203,7 +221,20 @@ public class PlayerMovement2D : NetworkBehaviour
         if (collision.CompareTag("Trampoline"))
         {
             rb.linearVelocityY = trampolineJumpHeight;
-            collision.gameObject.GetComponent<Animator>().Play("Trampoline_Used");
+            LevelManager.instance.PlayAnimationServerRpc(collisionObjectId, "Trampoline_Used");
+        }
+        if (collision.CompareTag("Platform"))
+        {
+            NetworkObject.TrySetParent(collision.transform);
+            collision.GetComponent<Platform>().SwitchStateServerRpc();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (!NetworkObject.IsOwner) { return; }
+        if (collision.CompareTag("Platform"))
+        {
+            NetworkObject.TrySetParent(spawnParent);
         }
     }
 }

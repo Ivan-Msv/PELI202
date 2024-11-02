@@ -80,7 +80,7 @@ public class LobbyManager : NetworkBehaviour
                     {
                         { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
                         { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")},
-                        { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")},
+                        { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1")},
                         { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "")},
                         { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
                     }

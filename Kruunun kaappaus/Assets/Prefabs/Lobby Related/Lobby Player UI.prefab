@@ -499,6 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteSelectionMenu: {fileID: 342678894164970334}
   spriteShowcase: {fileID: 4917272896937561859, guid: dcd9878275097d445ba5f8034f8323d6, type: 3}
+  noColorButtonPrefab: {fileID: 9000995799977288011, guid: bee8c94e42b7a9441864ad4a2724c872, type: 3}
   colorButtonPrefab: {fileID: 7669590812712495374, guid: 8bd2d18bb94d4c34b90e18fd6435061a, type: 3}
   playerNameText: {fileID: 6345550585053389340}
   iconImage: {fileID: 4439819574320796261}

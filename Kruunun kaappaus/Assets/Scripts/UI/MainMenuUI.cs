@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Unity.Services.Core;
 using UnityEngine.U2D.Animation;
 using System.Runtime.CompilerServices;
+using UnityEditor.Animations;
 
 public enum MenuState
 {
@@ -50,7 +51,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI errorText;
 
     [field: SerializeField] public Sprite[] PlayerIcons { get; private set; } // DEBUG DELETE LATER
-    [field: SerializeField] public SpriteLibraryAsset[] PlayerSprites { get; private set; }
+    [field: SerializeField] public AnimatorController[] PlayerAnimators { get; private set; }
     [Space]
 
     private MenuState currentState;
@@ -225,6 +226,9 @@ public class MainMenuUI : MonoBehaviour
         Color assignedColor;
         switch (newColor)
         {
+            case Colors.None:
+                assignedColor = new Color(1, 1, 1, 0);
+                break;
             case Colors.White:
                 assignedColor = Color.white;
                 break;
@@ -234,14 +238,11 @@ public class MainMenuUI : MonoBehaviour
             case Colors.Green:
                 assignedColor = Color.green;
                 break;
-            case Colors.Blue:
-                assignedColor = Color.blue;
-                break;
             case Colors.Magenta:
                 assignedColor = Color.magenta;
                 break;
             default:
-                assignedColor = Color.white;
+                assignedColor = new Color(1, 1, 1, 0);
                 break;
         }
 

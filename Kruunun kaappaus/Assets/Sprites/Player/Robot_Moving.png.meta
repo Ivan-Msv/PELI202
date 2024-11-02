@@ -1,19 +1,49 @@
 fileFormatVersion: 2
-guid: e7038782e8859b14da0b4f37895a622c
+guid: f5a15678713ab764295e8c31aeefb939
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7329830083336869895
-    second: TESTSPRITE 3_0
+      213: 914513602727155830
+    second: Robot_Moving_0
   - first:
-      213: -7491822235722430375
-    second: TESTSPRITE 3_1
+      213: 3155320820167359412
+    second: Robot_Moving_1
   - first:
-      213: 7374638151650502443
-    second: TESTSPRITE 3_2
+      213: 3360578850907890251
+    second: Robot_Moving_2
   - first:
-      213: -7992763099550130100
-    second: TESTSPRITE 3_3
+      213: 7452720061124748357
+    second: Robot_Moving_3
+  - first:
+      213: -5928949295469564740
+    second: Robot_Moving_4
+  - first:
+      213: -3967186982664334711
+    second: Robot_Moving_5
+  - first:
+      213: 6623120454258728209
+    second: Robot_Moving_6
+  - first:
+      213: 3166092091849751190
+    second: Robot_Moving_7
+  - first:
+      213: -2075700858478654249
+    second: Robot_Moving_8
+  - first:
+      213: -3741842014169605365
+    second: Robot_Moving_9
+  - first:
+      213: 1930534802322696278
+    second: Robot_Moving_10
+  - first:
+      213: 6140205724152205788
+    second: Robot_Moving_11
+  - first:
+      213: 9068081179992236223
+    second: Robot_Moving_12
+  - first:
+      213: 1968895686356764596
+    second: Robot_Moving_13
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -56,7 +86,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 0
+  spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -122,7 +152,73 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TESTSPRITE 3_0
+      name: Robot_Moving_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67890d0c64101bc00800000000000000
+      internalID: 914513602727155830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Robot_Moving_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bb387e7193f9cb20800000000000000
+      internalID: 3155320820167359412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Robot_Moving_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b422e08e8ac23ae20800000000000000
+      internalID: 3360578850907890251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Robot_Moving_3
       rect:
         serializedVersion: 2
         x: 0
@@ -130,31 +226,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: 10, y: -11}
-        - {x: 10, y: 0}
-        - {x: 9, y: 6}
-        - {x: 6, y: 9}
-        - {x: -7, y: 9}
-        - {x: -11, y: 4}
-        - {x: -11, y: -1}
-        - {x: -9, y: -9}
-        - {x: -3, y: -15}
-        - {x: 5, y: -15}
+      outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9f7ebb2df56374a90800000000000000
-      internalID: -7329830083336869895
+      spriteID: 544a4cdc8616d6760800000000000000
+      internalID: 7452720061124748357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TESTSPRITE 3_1
+      name: Robot_Moving_4
       rect:
         serializedVersion: 2
         x: 32
@@ -162,29 +248,43 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: 10, y: -11}
-        - {x: 10, y: 7}
-        - {x: 7, y: 8}
-        - {x: -9, y: 8}
-        - {x: -11, y: 4}
-        - {x: -11, y: -11}
-        - {x: -3, y: -15}
-        - {x: 7, y: -15}
+      outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 9584467be53b70890800000000000000
-      internalID: -7491822235722430375
+      spriteID: cbceb38570428bda0800000000000000
+      internalID: -5928949295469564740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TESTSPRITE 3_2
+      name: Robot_Moving_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9821db45578b1f8c0800000000000000
+      internalID: -3967186982664334711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Robot_Moving_6
       rect:
         serializedVersion: 2
         x: 0
@@ -192,54 +292,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
-      outline:
-      - - {x: 10, y: -12}
-        - {x: 10, y: 6}
-        - {x: 6, y: 8}
-        - {x: -7, y: 8}
-        - {x: -11, y: 3}
-        - {x: -11, y: -2}
-        - {x: -9, y: -10}
-        - {x: -3, y: -15}
-        - {x: 4, y: -15}
+      outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: b27eb20935af75660800000000000000
-      internalID: 7374638151650502443
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TESTSPRITE 3_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline:
-      - - {x: 10, y: -12}
-        - {x: 10, y: 8}
-        - {x: 6, y: 9}
-        - {x: -9, y: 9}
-        - {x: -11, y: 5}
-        - {x: -11, y: -12}
-        - {x: -4, y: -15}
-        - {x: 8, y: -15}
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c40e675fe40041190800000000000000
-      internalID: -7992763099550130100
+      spriteID: 11d17bc56fc0aeb50800000000000000
+      internalID: 6623120454258728209
       vertices: []
       indices: 
       edges: []
@@ -248,7 +309,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e18d7574259db47469752db586cd78af
+    spriteID: 0102235447bfaed4d8f454f91dd3d885
     internalID: 0
     vertices: []
     indices: 
@@ -258,10 +319,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      TESTSPRITE 3_0: -7329830083336869895
-      TESTSPRITE 3_1: -7491822235722430375
-      TESTSPRITE 3_2: 7374638151650502443
-      TESTSPRITE 3_3: -7992763099550130100
+      Robot_Moving_0: 914513602727155830
+      Robot_Moving_1: 3155320820167359412
+      Robot_Moving_2: 3360578850907890251
+      Robot_Moving_3: 7452720061124748357
+      Robot_Moving_4: -5928949295469564740
+      Robot_Moving_5: -3967186982664334711
+      Robot_Moving_6: 6623120454258728209
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

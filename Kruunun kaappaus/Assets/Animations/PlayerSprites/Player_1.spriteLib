@@ -21,24 +21,119 @@ MonoBehaviour:
       m_Hash: 383799113
       m_Sprite: {fileID: 9130647759989690307, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: -7329830083336869895, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+      m_SpriteOverride: {fileID: 356012182521869387, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
     - m_Name: Goblin_Idle_1
       m_Hash: 568819679
       m_Sprite: {fileID: 1368956883174936208, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: -7491822235722430375, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+      m_SpriteOverride: {fileID: -3617390182378467331, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
     - m_Name: Goblin_Idle_2
       m_Hash: 955133541
       m_Sprite: {fileID: 6361711507835937641, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 7374638151650502443, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+      m_SpriteOverride: {fileID: 2313308341071884494, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
     - m_Name: Goblin_Idle_3
       m_Hash: 266936051
       m_Sprite: {fileID: 6260978701604189543, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: -7992763099550130100, guid: e7038782e8859b14da0b4f37895a622c, type: 3}
+      m_SpriteOverride: {fileID: 8639674888104648523, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_4
+      m_Hash: 610828921
+      m_Sprite: {fileID: -8432569098682961038, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -8432569098682961038, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_5
+      m_Hash: 326087407
+      m_Sprite: {fileID: 5135778425487339115, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 5135778425487339115, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_6
+      m_Hash: 174515029
+      m_Sprite: {fileID: 4886673732623866884, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 4886673732623866884, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_7
+      m_Hash: 1029821379
+      m_Sprite: {fileID: 1055297296698185886, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1055297296698185886, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_8
+      m_Hash: 769576530
+      m_Sprite: {fileID: 2939248739333475278, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2939248739333475278, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_9
+      m_Hash: 450494148
+      m_Sprite: {fileID: -1534444070185173482, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1534444070185173482, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_10
+      m_Hash: 550603390
+      m_Sprite: {fileID: 203186776848199771, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 203186776848199771, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_11
+      m_Hash: 399948520
+      m_Sprite: {fileID: -671000191464416427, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -671000191464416427, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_12
+      m_Hash: 249555794
+      m_Sprite: {fileID: 2047670559415210851, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 2047670559415210851, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_13
+      m_Hash: 970513348
+      m_Sprite: {fileID: -531705474515827649, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -531705474515827649, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_14
+      m_Hash: 666652263
+      m_Sprite: {fileID: -5272954439223654167, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -5272954439223654167, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_15
+      m_Hash: 280723185
+      m_Sprite: {fileID: 1473297312615932920, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1473297312615932920, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_16
+      m_Hash: 162672459
+      m_Sprite: {fileID: -1508325329052640017, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1508325329052640017, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_17
+      m_Hash: 1052057565
+      m_Sprite: {fileID: -5744096970419484967, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -5744096970419484967, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_18
+      m_Hash: 772407884
+      m_Sprite: {fileID: -3913059798603705513, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3913059798603705513, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_19
+      m_Hash: 420295386
+      m_Sprite: {fileID: 3949316549978627499, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 3949316549978627499, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_20
+      m_Hash: 201120189
+      m_Sprite: {fileID: -1359875238320634427, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -1359875238320634427, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_21
+      m_Hash: 1023142187
+      m_Sprite: {fileID: -3203246357453271356, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -3203246357453271356, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+    - m_Name: Robot_Idle_22
+      m_Hash: 636663953
+      m_Sprite: {fileID: -6776927468461529834, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -6776927468461529834, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
     m_FromMain: 1
-    m_EntryOverrideCount: 4
+    m_EntryOverrideCount: 23
   - m_Name: Moving
     m_Hash: 949806512
     m_CategoryList: []
@@ -76,5 +171,5 @@ MonoBehaviour:
     m_FromMain: 1
     m_EntryOverrideCount: 0
   m_PrimaryLibraryGUID: ded2e931cba371a4c984445b41d74779
-  m_ModificationHash: 638658355795637950
+  m_ModificationHash: 638660921947344180
   m_Version: 1
