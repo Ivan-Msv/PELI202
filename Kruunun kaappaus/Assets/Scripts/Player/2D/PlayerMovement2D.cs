@@ -23,8 +23,6 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
     [SerializeField] private float maxJumpTime;
-    [Header("Player Effects")]
-    [SerializeField] private float trampolineJumpHeight;
     public Vector2 spawnPoint;
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
@@ -46,7 +44,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
-        if (!NetworkObject.IsOwner)
+        if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState != LevelState.InProgress)
         {
             return;
         }
@@ -156,7 +154,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private void JumpBuffer()
     {
         jumpBufferTimer -= Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && currentPlayerState != PlayerMovementState.Jumping)
         {
             jumpBufferTimer = maxJumpBufferTime;
         }
@@ -218,14 +216,10 @@ public class PlayerMovement2D : NetworkBehaviour
             GetComponent<PlayerInfo2D>().crownAmount.Value += 1;
             collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
         }
-        if (collision.CompareTag("Trampoline"))
-        {
-            rb.linearVelocityY = trampolineJumpHeight;
-            LevelManager.instance.PlayAnimationServerRpc(collisionObjectId, "Trampoline_Used");
-        }
         if (collision.CompareTag("Platform"))
         {
             NetworkObject.TrySetParent(collision.transform);
+            rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
             collision.GetComponent<Platform>().SwitchStateServerRpc();
         }
     }
@@ -234,6 +228,7 @@ public class PlayerMovement2D : NetworkBehaviour
         if (!NetworkObject.IsOwner) { return; }
         if (collision.CompareTag("Platform"))
         {
+            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
             NetworkObject.TrySetParent(spawnParent);
         }
     }

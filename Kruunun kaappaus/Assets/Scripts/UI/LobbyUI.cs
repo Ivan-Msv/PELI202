@@ -69,6 +69,7 @@ public class LobbyUI : NetworkBehaviour
     }
     void OnDisable()
     {
+        DisableListeners();
         LeaveLobby();
     }
     private void Update()
@@ -93,7 +94,6 @@ public class LobbyUI : NetworkBehaviour
             Debug.LogError(e.InnerException);
         }
     }
-
     private async void HandleLobbyPollForUpdates()
     {
         if (currentLobby != null)
@@ -288,8 +288,13 @@ public class LobbyUI : NetworkBehaviour
 
         if (NetworkManager.ConnectedClients.Count == currentLobby.Players.Count)
         {
-            NetworkManager.SceneManager.LoadScene("DebugLevel", LoadSceneMode.Single);
+            NetworkManager.SceneManager.LoadScene("ChallengeLevel1", LoadSceneMode.Single);
         }
+    }
+    private void DisableListeners()
+    {
+        startGame.onClick.RemoveAllListeners();
+        copyCode.onClick.RemoveAllListeners();
     }
     private void CopyToClipboard(string text)
     {

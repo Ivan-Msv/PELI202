@@ -29,6 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3200182165045257529}
   - {fileID: 5542686416610422112}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,8 +61,7 @@ Transform:
   m_LocalPosition: {x: 3.5, y: -1.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 3200182165045257529}
+  m_Children: []
   m_Father: {fileID: 4071826462923201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5710946686380663747
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 8265089655543562221}
   - component: {fileID: 4400850486635422358}
   - component: {fileID: 1860517271563703115}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Spiked Ball
   m_TagString: Death Trigger
   m_Icon: {fileID: 0}
@@ -196,12 +196,12 @@ Transform:
   m_GameObject: {fileID: 7063167431170972718}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -1.52, z: -0.06692727}
+  m_LocalPosition: {x: 2, y: -3, z: -0.06692727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8901926787599169065}
-  m_Father: {fileID: 5542686416610422112}
+  m_Father: {fileID: 4071826462923201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &402740465640178273
 SpriteRenderer:

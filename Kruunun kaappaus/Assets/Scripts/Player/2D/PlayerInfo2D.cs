@@ -34,6 +34,14 @@ public class PlayerInfo2D : NetworkBehaviour
         animatorComponent = GetComponent<Animator>();
         spriteComponent = GetComponent<SpriteRenderer>();
     }
+    private void Start()
+    {
+        if (NetworkObject.IsOwner)
+        {
+            LevelManager.instance.SetCamera(transform);
+            LevelManager.instance.LoadPlayerServerRpc();
+        }
+    }
 
     private void Update()
     {
