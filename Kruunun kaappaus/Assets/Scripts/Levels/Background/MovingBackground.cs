@@ -17,7 +17,7 @@ public class MovingBackground : MonoBehaviour
 
     private void Update()
     {
-        offset = xDirection + yDirection == 2 ? 1.4f : 1;
+        offset = Mathf.Abs(xDirection) + Mathf.Abs(yDirection) == 2 ? 1.4f : 1;
         transform.position += new Vector3(xDirection, yDirection, transform.position.z) * moveSpeed * Time.deltaTime;
 
         if (Vector2.Distance(startPos, transform.position) > offset)

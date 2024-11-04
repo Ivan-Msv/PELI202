@@ -288,7 +288,7 @@ public class LobbyUI : NetworkBehaviour
 
         if (NetworkManager.ConnectedClients.Count == currentLobby.Players.Count)
         {
-            NetworkManager.SceneManager.LoadScene("ChallengeLevel1", LoadSceneMode.Single);
+            NetworkManager.SceneManager.LoadScene("ChallengeLevel2", LoadSceneMode.Single);
         }
     }
     private void DisableListeners()
