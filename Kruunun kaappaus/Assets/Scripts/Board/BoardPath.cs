@@ -18,6 +18,7 @@ public class BoardPath : MonoBehaviour
 
     private void UpdatePath()
     {
+        // Jos ei poista, niin gizmo lisää niitä ikuisesti
         tiles.Clear();
         // Lisää uusii tilei listalle
         foreach (Transform child in transform)
