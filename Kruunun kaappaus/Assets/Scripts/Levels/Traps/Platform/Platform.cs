@@ -116,4 +116,10 @@ public class Platform : NetworkBehaviour
                 break;
         }
     }
+    private void OnDrawGizmos()
+    {
+        startPosition = transform.position;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(startPosition, endPosition);
+    }
 }
