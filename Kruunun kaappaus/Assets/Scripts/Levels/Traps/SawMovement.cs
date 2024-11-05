@@ -14,6 +14,7 @@ public class SawMovement : MonoBehaviour
     private void Start()
     {
         currentPoint = endPoint.position;
+        paused = true;
         transform.position = startPoint.position;
     }
 
@@ -34,7 +35,7 @@ public class SawMovement : MonoBehaviour
         float distance = Vector2.Distance(transform.position, currentPoint);
         bool closeToPoints = Mathf.Min(Vector2.Distance(transform.position, startPoint.position), Vector2.Distance(transform.position, endPoint.position)) < slowDistance;
         transform.position = Vector2.MoveTowards(transform.position, currentPoint, (closeToPoints ? moveSpeed / 2 : moveSpeed) * Time.deltaTime);
-        if (distance < 0.1f)
+        if (distance <= 0)
         {
             paused = true;
             ChangeCurrentPoint();

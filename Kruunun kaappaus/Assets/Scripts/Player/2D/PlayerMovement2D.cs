@@ -16,6 +16,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private bool canJump;
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float xAxisDrag;
     [Header("Jump")]
     [SerializeField] private LayerMask ground;
     [SerializeField] private float minJumpHeight;
@@ -44,11 +45,33 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Time.timeScale = 10;
+        }        
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            Time.timeScale = 1.0f;
+        }
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            Application.targetFrameRate = 30;
+        }
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            Application.targetFrameRate = -1;
+        }
+        PlayerStateManager();
+        CoyoteCheck();
+        JumpBuffer();
+    }
+
+    private void FixedUpdate()
+    {
         if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState != LevelState.InProgress)
         {
             return;
         }
-        PlayerStateManager();
         if (isGhost)
         {
             GhostMovement();
@@ -59,12 +82,13 @@ public class PlayerMovement2D : NetworkBehaviour
             Jump();
             PlayerMovement();
         }
+        PlayerMovement();
     }
+
     private bool IsGrounded()
     {
         return Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.1f, ground);
     }
-
     private bool InsideGround()
     {
         return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, ground);
@@ -83,7 +107,8 @@ public class PlayerMovement2D : NetworkBehaviour
         rb.excludeLayers = default;
 
         float horizontal = Input.GetAxisRaw("Horizontal");
-        rb.linearVelocity = new Vector2(horizontal * moveSpeed, rb.linearVelocity.y);
+        rb.linearVelocityX = rb.linearVelocity.x / (xAxisDrag + 1);
+        rb.linearVelocityX += horizontal * moveSpeed;
     }
     private void GhostMovement()
     {
@@ -99,12 +124,10 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void Jump()
     {
-        CoyoteCheck();
-        JumpBuffer();
         if (jumpBufferTimer > 0 && canJump)
         {
             // min jump
-            rb.linearVelocity = Vector3.up * minJumpHeight;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, minJumpHeight);
         }
         MaxJumpTimer();
     }
@@ -121,7 +144,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (jumpTimer >= 0 && !falling && Input.GetKey(KeyCode.Space))
         {
-            rb.AddForce(Vector3.up * maxJumpHeight * Time.deltaTime);
+            rb.AddRelativeForce(Vector3.up * maxJumpHeight * Time.deltaTime);
         }
     }
     private void CoyoteCheck()
@@ -219,7 +242,7 @@ public class PlayerMovement2D : NetworkBehaviour
         if (collision.CompareTag("Platform"))
         {
             NetworkObject.TrySetParent(collision.transform);
-            rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
+            rb.interpolation = RigidbodyInterpolation2D.None;
             collision.GetComponent<Platform>().SwitchStateServerRpc();
         }
     }

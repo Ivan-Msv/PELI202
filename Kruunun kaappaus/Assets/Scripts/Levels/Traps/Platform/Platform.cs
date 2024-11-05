@@ -32,10 +32,7 @@ public class Platform : NetworkBehaviour
 
     private void Update()
     {
-        if (IsServer)
-        {
-            StateMovement();
-        }
+        StateMovement();
     }
     private void StateMovement()
     {
@@ -53,6 +50,7 @@ public class Platform : NetworkBehaviour
                 FallingState();
                 break;
             case PlatformState.Cooldown:
+                animatorComponent.Play("Platform_Used");
                 CooldownState();
                 break;
             case PlatformState.Returning:
@@ -78,7 +76,7 @@ public class Platform : NetworkBehaviour
     private void FallingState()
     {
         transform.position = Vector2.MoveTowards(transform.position, endPosition, moveSpeed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, endPosition) < 0.2f)
+        if (Vector2.Distance(transform.position, endPosition) <= 0)
         {
             currentState = PlatformState.Cooldown;
         }
@@ -95,7 +93,7 @@ public class Platform : NetworkBehaviour
     private void ReturningState()
     {
         transform.position = Vector2.MoveTowards(transform.position, startPosition, moveSpeed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, startPosition) < 0.1f)
+        if (Vector2.Distance(transform.position, startPosition) <= 0)
         {
             currentState = autonomousMovement ? PlatformState.Starting : PlatformState.Idle;
         }

@@ -404,7 +404,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   isGhost: 0
-  moveSpeed: 6
+  moveSpeed: 1
+  xAxisDrag: 0.2
   ground:
     serializedVersion: 2
     m_Bits: 1
@@ -413,7 +414,6 @@ MonoBehaviour:
   maxCoyoteTime: 0.05
   maxJumpBufferTime: 0.11
   maxJumpTime: 0.2
-  trampolineJumpHeight: 20
   spawnPoint: {x: 0, y: 0}
 --- !u!114 &4151534210416331775
 MonoBehaviour:
