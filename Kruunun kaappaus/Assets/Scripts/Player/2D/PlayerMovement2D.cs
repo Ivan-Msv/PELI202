@@ -45,6 +45,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
+        // Delete later
         if (Input.GetKeyDown(KeyCode.F1))
         {
             Time.timeScale = 10;
@@ -61,7 +62,11 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             Application.targetFrameRate = -1;
         }
-        PlayerStateManager();
+
+        if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState != LevelState.InProgress)
+        {
+            return;
+        }
         CoyoteCheck();
         JumpBuffer();
     }
@@ -72,6 +77,7 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             return;
         }
+        PlayerStateManager();
         if (isGhost)
         {
             GhostMovement();

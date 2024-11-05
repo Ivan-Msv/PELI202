@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChainGeneration : MonoBehaviour
@@ -19,5 +20,11 @@ public class ChainGeneration : MonoBehaviour
         float distance = Vector2.Distance(startPoint.transform.position, endPoint.transform.position);
         
         GetComponent<SpriteRenderer>().size += new Vector2(0, distance);
+    }
+
+    private void OnDrawGizmos()
+    {
+        GetComponent<SpriteRenderer>().size = new Vector2(0.5f, 0.5f);
+        GenerateChain();
     }
 }
