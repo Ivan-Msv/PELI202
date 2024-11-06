@@ -50,7 +50,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button confirmJoinLobby;
     [SerializeField] private TextMeshProUGUI errorText;
 
-    [field: SerializeField] public Sprite[] PlayerIcons { get; private set; } // DEBUG DELETE LATER
+    [field: SerializeField] public Sprite[] PlayerIcons { get; private set; }
     [field: SerializeField] public AnimatorController[] PlayerAnimators { get; private set; }
     [Space]
 

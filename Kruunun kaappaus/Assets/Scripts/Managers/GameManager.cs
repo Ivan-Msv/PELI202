@@ -3,6 +3,7 @@
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public BoardPath currentPath;
     private void Awake()
     {
         if (instance == null)
@@ -15,5 +16,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void Start()
+    {
+        
+    }
+
     // Kaikki liittyen peliin tulee tähän
 }

@@ -5,16 +5,6 @@ using UnityEngine;
 public class BoardPath : MonoBehaviour
 {
     public List<GameObject> tiles = new List<GameObject>();
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void UpdatePath()
     {
@@ -30,5 +20,10 @@ public class BoardPath : MonoBehaviour
     private void OnDrawGizmos()
     {
         UpdatePath();
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            Gizmos.DrawLine(tiles[i].transform.position, tiles[(i + 1) % tiles.Count].transform.position);
+        }
     }
 }
