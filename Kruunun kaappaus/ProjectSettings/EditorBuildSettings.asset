@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main/MainMenuScene.unity
     guid: b79faaf14d4672840a3bdfc60badec4c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main/GameScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -41,5 +41,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Challenge Levels/Level Challenge4.unity
     guid: 6ececa865ddb79347973602b1e67cf5f
+  - enabled: 1
+    path: Assets/Scenes/Minigame Levels/Level minigame4.unity
+    guid: 5fc42f7fe2b36c04084f2d36c2dc5eb5
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
