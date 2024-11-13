@@ -3,14 +3,11 @@ using UnityEngine;
 
 public class BoardPlayerMovement : MonoBehaviour
 {
-    // delete later
-    [SerializeField] private BoardPlayerInfo player;
-
-    private BoardPath currentPath;
-    public bool alreadyMoving;
+    public BoardPath currentPath;
     [SerializeField] private float moveSpeed;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private bool alreadyMoving;
+
+    void Awake()
     {
         currentPath = GetComponent<BoardPath>();
     }
@@ -20,7 +17,8 @@ public class BoardPlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            MovePlayer(player, 1);
+            Debug.Log("test");
+            MovePlayer(GameManager.instance.currentPlayer, 1);
         }
     }
 
@@ -39,7 +37,7 @@ public class BoardPlayerMovement : MonoBehaviour
 
         while (steps > 0)
         {
-            var index = (player.currentPosition + 1) % currentPath.tiles.Count;
+            int index = (player.currentPosition + 1) % currentPath.tiles.Count;
             Vector3 nextTilePosition = currentPath.tiles[index].transform.position;
             while (player.transform.position != nextTilePosition)
             {
@@ -47,11 +45,37 @@ public class BoardPlayerMovement : MonoBehaviour
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
-            player.currentPosition++;
+            player.currentPosition = index;
             steps--;
         }
 
         currentPath.tiles[player.currentPosition].GetComponent<BoardTile>().InvokeTile();
         alreadyMoving = false;
     }
+
+    //private int GetNextIndexAndDirection(BoardPlayerInfo player)
+    //{
+    //    int index;
+
+    //    if (player.currentPosition == 0)
+    //    {
+    //        player.movingForward = true;
+    //    }
+    //    else if (player.currentPosition == currentPath.tiles.Count - 1 && currentPath.hasDeadEnd)
+    //    {
+    //        player.movingForward = false;
+    //    }
+
+    //    switch (player.movingForward)
+    //    {
+    //        case true:
+    //            index = (player.currentPosition + 1) % currentPath.tiles.Count;
+    //            break;
+    //        case false:
+    //            index = (player.currentPosition - 1 + currentPath.tiles.Count) % currentPath.tiles.Count;
+    //            break;
+    //    }
+
+    //    return index;
+    //}
 }
