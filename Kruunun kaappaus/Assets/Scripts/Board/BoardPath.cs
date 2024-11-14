@@ -6,7 +6,7 @@ public class BoardPath : MonoBehaviour
 {
     public List<GameObject> tiles = new List<GameObject>();
 
-    private void UpdatePath()
+    private void UpdateTiles()
     {
         // Jos ei poista, niin gizmo lisää niitä ikuisesti
         tiles.Clear();
@@ -19,7 +19,7 @@ public class BoardPath : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        UpdatePath();
+        UpdateTiles();
 
         for (int i = 0; i < tiles.Count; i++)
         {

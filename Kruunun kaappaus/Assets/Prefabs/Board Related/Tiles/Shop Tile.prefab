@@ -981,8 +981,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.018627405, a: 1}
+  m_Sprite: {fileID: 21300000, guid: d89dbddb137d054409164bb0e3167496, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1004,7 +1004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14579feadcab94b4089637450e05d824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShopUI: {fileID: 0}
+  tileSprite: {fileID: 21300000, guid: d89dbddb137d054409164bb0e3167496, type: 3}
+  ShopUI: {fileID: 8346885383551783629}
 --- !u!1 &8139021025765779134
 GameObject:
   m_ObjectHideFlags: 0
