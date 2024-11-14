@@ -17,7 +17,6 @@ public class BoardPlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("test");
             MovePlayer(GameManager.instance.currentPlayer, 1);
         }
     }
