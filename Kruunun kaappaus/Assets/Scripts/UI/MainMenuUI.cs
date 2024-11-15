@@ -51,7 +51,7 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI errorText;
 
     [field: SerializeField] public Sprite[] PlayerIcons { get; private set; }
-    [field: SerializeField] public AnimatorController[] PlayerAnimators { get; private set; }
+    [field: SerializeField] public RuntimeAnimatorController[] PlayerAnimators { get; private set; }
     [Space]
 
     private MenuState currentState;
