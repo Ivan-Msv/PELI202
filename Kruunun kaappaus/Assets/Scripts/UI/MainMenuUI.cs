@@ -1,22 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Unity.Services.Lobbies;
-using Unity.Services.Lobbies.Models;
 using TMPro;
-using System.Net.Security;
-using System.Net;
 using Unity.Services.Authentication;
-using System.Linq;
 using System;
-using System.Threading.Tasks;
 using Unity.Services.Core;
-using UnityEngine.U2D.Animation;
-using System.Runtime.CompilerServices;
-using UnityEditor.Animations;
 
 public enum MenuState
 {

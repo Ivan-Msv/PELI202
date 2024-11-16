@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -11,7 +9,6 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
 using UnityEngine;
-using Unity.Networking.Transport.Relay;
 
 public class LobbyManager : NetworkBehaviour
 {

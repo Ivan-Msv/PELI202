@@ -1,14 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
-using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.U2D.Animation;
 
 public enum Colors
 {

@@ -45,24 +45,6 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
-        // Delete later
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            Time.timeScale = 10;
-        }        
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            Time.timeScale = 1.0f;
-        }
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            Application.targetFrameRate = 30;
-        }
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            Application.targetFrameRate = -1;
-        }
-
         if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState != LevelState.InProgress)
         {
             return;
