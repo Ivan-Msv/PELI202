@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,9 +12,10 @@ public class ChallengeTile : BoardTile
     }
     public override void InvokeTile()
     {
-        Debug.Log("Tän tilalla vaihtaa random olevaan challenge levuu");
         ReplaceWithEmptyTile();
         ReplaceExistingWhiteTile();
+        //temporary DELETE LATER
+        NetworkManager.Singleton.SceneManager.LoadScene("1v1ChallengeLevel1", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void ReplaceWithEmptyTile()

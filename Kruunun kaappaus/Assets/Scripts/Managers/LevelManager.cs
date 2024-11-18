@@ -99,21 +99,24 @@ public class LevelManager : NetworkBehaviour
     }
     private void PlayerLoadState()
     {
-        if (playersLoaded.Value >= NetworkManager.Singleton.SpawnManager.GetConnectedPlayers().Count)
+        if (playersLoaded.Value < NetworkManager.Singleton.SpawnManager.GetConnectedPlayers().Count)
         {
-            switch (currentLevelType)
-            {
-                case LevelType.Challenge:
-                    StartCoroutine(CameraAnimation());
-                    break;
-                case LevelType.Minigame:
-                    // skippaa kameran animaation sillä ei tarvi nähdä "endgoal"
-                    goTimerUI.gameObject.SetActive(true);
-                    break;
-            }
-            CurrentGameState = LevelState.Starting;
-            blackScreenUI.SetActive(false);
+            Time.timeScale = 0;
         }
+
+        Time.timeScale = 1;
+        switch (currentLevelType)
+        {
+            case LevelType.Challenge:
+                StartCoroutine(CameraAnimation());
+                break;
+            case LevelType.Minigame:
+                // skippaa kameran animaation sillä ei tarvi nähdä "endgoal"
+                goTimerUI.gameObject.SetActive(true);
+                break;
+        }
+        CurrentGameState = LevelState.Starting;
+        blackScreenUI.SetActive(false);
     }
     public void SetCamera(Transform player)
     {

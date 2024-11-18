@@ -34,7 +34,7 @@ public class PlayerSetup : NetworkBehaviour
         {
             currentState = PlayerState.Side;
         }
-        else if (newScene.name.Contains("game", System.StringComparison.OrdinalIgnoreCase))
+        else if (newScene.name.Contains("board", System.StringComparison.OrdinalIgnoreCase))
         {
             currentState = PlayerState.Topdown;
         }
@@ -66,11 +66,14 @@ public class PlayerSetup : NetworkBehaviour
         switch (state)
         {
             case PlayerState.Topdown:
+                var playerTD = NetworkObject.InstantiateAndSpawn(playerTopDown, NetworkManager, clientId);
+                var clientObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientId);
+                playerTD.TrySetParent(clientObject);
                 break;
             case PlayerState.Side:
-                var playerPrefab = NetworkObject.InstantiateAndSpawn(player2D, NetworkManager, clientId);
-                var clientObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientId);
-                playerPrefab.TrySetParent(clientObject);
+                var player2d = NetworkObject.InstantiateAndSpawn(player2D, NetworkManager, clientId);
+                var player2dObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientId);
+                player2d.TrySetParent(player2dObject);
                 break;
             default:
                 break;

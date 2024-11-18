@@ -20,8 +20,8 @@ public class Platform : NetworkBehaviour
     [SerializeField] private float moveSpeed;
     private Animator animatorComponent;
     private Vector2 startPosition;
-    private float startingTimer;
-    private float cooldownTimer;
+    [SerializeField] private float startingTimer;
+    [SerializeField] private float cooldownTimer;
     private PlatformState currentState;
     private void Start()
     {
@@ -115,11 +115,5 @@ public class Platform : NetworkBehaviour
                 currentState = PlatformState.Starting;
                 break;
         }
-    }
-    private void OnDrawGizmos()
-    {
-        startPosition = transform.position;
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(startPosition, endPosition);
     }
 }
