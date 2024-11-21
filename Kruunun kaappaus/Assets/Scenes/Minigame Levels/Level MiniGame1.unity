@@ -27513,33 +27513,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1801563826459194643, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: currentLevelType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1801563826459194643, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: levelDurationSeconds
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: Lookahead.IgnoreY
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3651792370148423995, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3651792370148423995, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.1999989
-      objectReference: {fileID: 0}
     - target: {fileID: 7838924780168179826, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2617851728
-      objectReference: {fileID: 0}
-    - target: {fileID: 7838924780168179826, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 1216056924
       objectReference: {fileID: 0}
     - target: {fileID: 8555879955884414745, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27580,14 +27556,6 @@ PrefabInstance:
     - target: {fileID: 8555879955884414745, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8573291368190079718, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8573291368190079718, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
