@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using TMPro;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,18 +19,19 @@ public class BoardUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinCounter;
     [SerializeField] private TextMeshProUGUI crownCounter;
     [SerializeField] private TextMeshProUGUI playerTurn;
+    [SerializeField] private string currentTurnPlayerName;
 
 
-    private void Start()
+    private void Awake()
     {
-        StartCoroutine(LateInit());
+        GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
+        GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
     }
 
     private void Update()
     {
         if (localParent == null)
         {
-
             return;
         }
         UpdateButtons();
@@ -54,17 +56,18 @@ public class BoardUIManager : MonoBehaviour
         coinCounter.text = $"Coins: {localParent.coinAmount.Value}";
         crownCounter.text = $"Crowns: {localParent.crownAmount.Value}";
 
-        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : GameManager.instance.currentPlayer) } turn: {(int)GameManager.instance.TurnTimer} sec left";
+        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : currentTurnPlayerName) } turn: {(int)GameManager.instance.TurnTimer} sec left";
     }
 
-    private IEnumerator LateInit()
+    private void UpdateLocalPlayers()
     {
-        // jatka tätä
-        yield return new WaitForEndOfFrame();
-        localPlayer = GameManager.instance.availablePlayers.FirstOrDefault(player => player.NetworkObject.OwnerClientId == NetworkManager.Singleton.LocalClientId);
+        localPlayer = GameManager.instance.availablePlayers.Find(player => player.OwnerClientId == NetworkManager.Singleton.LocalClientId);
         localParent = localPlayer.GetComponentInParent<MainPlayerInfo>();
     }
-
+    private void UpdateCurrentPlayerName(FixedString64Bytes newName)
+    {
+        currentTurnPlayerName = newName.ToString();
+    }
     private bool LocalPlayerTurn()
     {
         return localPlayer == GameManager.instance.currentPlayer;

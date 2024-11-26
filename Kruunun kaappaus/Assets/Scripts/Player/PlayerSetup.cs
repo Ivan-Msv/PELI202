@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using Unity.Services.Authentication;
@@ -20,14 +22,30 @@ public class PlayerSetup : NetworkBehaviour
 
     private void Start()
     {
-        if (NetworkObject.IsOwner)
+        if (!NetworkObject.IsOwner)
         {
-            currentState = PlayerState.Menu;
-            SavedData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
-            SceneManager.activeSceneChanged += ClearSubPlayers;
+            return;
         }
+        currentState = PlayerState.Menu;
+        SavedData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
+        SceneManager.activeSceneChanged += ClearSubPlayers;
+        //NetworkManager.OnClientStopped += ReturnToLobby;
+        NetworkManager.OnClientDisconnectCallback += ReturnToLobby;
     }
-
+    private void ReturnToLobby(ulong action)
+    {
+        //NetworkManager.OnClientStopped -= ReturnToLobby;
+        NetworkManager.OnClientDisconnectCallback -= ReturnToLobby;
+        SceneManager.activeSceneChanged -= ClearSubPlayers;
+        NetworkManager.Shutdown();
+        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+        StartCoroutine(DelayedErrorMessage());
+    }
+    private IEnumerator DelayedErrorMessage()
+    {
+        yield return new WaitForSeconds(0.1f);
+        MainMenuUI.instance.ShowErrorMessage("Test2");
+    }
     private void UpdatePlayerState(Scene newScene)
     {
         if (newScene.name.Contains("level", System.StringComparison.OrdinalIgnoreCase))

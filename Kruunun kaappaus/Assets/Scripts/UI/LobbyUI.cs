@@ -5,6 +5,7 @@ using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -232,8 +233,11 @@ public class LobbyUI : NetworkBehaviour
         }
         finally
         {
-            DeactivateLobby();
-            LobbyManager.instance.HostLobby = null;
+            if (!this.IsUnityNull())
+            {
+                DeactivateLobby();
+                LobbyManager.instance.HostLobby = null;
+            }
         }
     }
     private async void HostGame()

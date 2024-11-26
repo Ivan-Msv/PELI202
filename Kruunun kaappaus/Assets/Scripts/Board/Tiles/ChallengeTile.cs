@@ -21,7 +21,7 @@ public class ChallengeTile : BoardTile
         ReplaceWithEmptyTile();
         ReplaceExistingWhiteTile();
         //temporary loadscene, CHANGE TO LEVEL SELECTION FUNCTION
-        NetworkManager.Singleton.SceneManager.LoadScene("1v1ChallengeLevel1", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        //NetworkManager.Singleton.SceneManager.LoadScene("1v1ChallengeLevel1", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void ReplaceWithEmptyTile()

@@ -13,19 +13,27 @@ using UnityEngine;
 public class LobbyManager : NetworkBehaviour
 {
     public static LobbyManager instance;
+    [SerializeField] private GameObject networkManagerPrefab;
     [SerializeField] private float maxLobbyDecayTime = 15;
     public Lobby HostLobby;
     private float lobbyDecayTimer;
     async void Start()
     {
+        if (NetworkManager.Singleton == null)
+        {
+            Instantiate(networkManagerPrefab);
+        }
         if (instance == null)
         {
             instance = this;
         }
-        await UnityServices.InitializeAsync();
+        if (UnityServices.State == ServicesInitializationState.Uninitialized)
+        {
+            await UnityServices.InitializeAsync();
 
-        // delete later
-        AuthenticationService.Instance.ClearSessionToken();
+            // delete later
+            AuthenticationService.Instance.ClearSessionToken();
+        }
 
         bool tokenExists = AuthenticationService.Instance.SessionTokenExists;
         AuthenticationService.Instance.SignedIn += () =>
@@ -33,6 +41,11 @@ public class LobbyManager : NetworkBehaviour
             MainMenuUI.instance.SetNameAndStartMenu(tokenExists);
         };
 
+        if (AuthenticationService.Instance.IsSignedIn)
+        {
+            MainMenuUI.instance.OpenNewMenu(MenuState.MainMenu);
+            return;
+        }
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
     void Update()

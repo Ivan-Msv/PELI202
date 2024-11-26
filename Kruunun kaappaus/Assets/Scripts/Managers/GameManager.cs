@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +32,10 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private BoardState currentState;
     private NetworkVariable<int> playersLoaded = new();
     public List<BoardPlayerInfo> availablePlayers = new();
+    public delegate void OnPlayerValueChangeDelegate();
+    public delegate void OnCurrentPlayerChangeDelegate(FixedString64Bytes playerName);
+    public event OnPlayerValueChangeDelegate OnPlayerValueChange;
+    public event OnCurrentPlayerChangeDelegate OnCurrentPlayerChange;
 
     private void Awake()
     {
@@ -92,11 +97,16 @@ public class GameManager : NetworkBehaviour
         {
             availablePlayers.Add(player);
         }
+
+        OnPlayerValueChange?.Invoke();
     }
     private void PlayerSelection()
     {
         TurnTimer = playerTurnTime;
+
         currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
+        OnCurrentPlayerChange?.Invoke(currentPlayer.GetComponentInParent<MainPlayerInfo>().playerName.Value);
+
         playerTurn++;
         currentState = BoardState.PlayerTurnCount;
     }
@@ -113,6 +123,7 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RollDiceServerRpc()
     {
+        Debug.Log("?");
         playerMovement.MovePlayer(currentPlayer, 1);
     }
 
