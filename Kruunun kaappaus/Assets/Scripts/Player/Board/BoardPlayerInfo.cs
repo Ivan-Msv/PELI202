@@ -12,6 +12,8 @@ public class BoardPlayerInfo : NetworkBehaviour
         {
             transform.position = GameManager.instance.currentPath.tiles[currentPosition].transform.position;
             GameManager.instance.LoadPlayerServerRpc();
+
+            this.name = GetComponentInParent<PlayerSetup>().SavedData["PlayerName"].Value;
         }
     }
 }

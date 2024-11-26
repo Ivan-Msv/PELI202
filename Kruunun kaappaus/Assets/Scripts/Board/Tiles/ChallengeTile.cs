@@ -12,9 +12,15 @@ public class ChallengeTile : BoardTile
     }
     public override void InvokeTile()
     {
+        InvokeTileServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void InvokeTileServerRpc()
+    {
         ReplaceWithEmptyTile();
         ReplaceExistingWhiteTile();
-        //temporary DELETE LATER
+        //temporary loadscene, CHANGE TO LEVEL SELECTION FUNCTION
         NetworkManager.Singleton.SceneManager.LoadScene("1v1ChallengeLevel1", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 

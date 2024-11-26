@@ -50,16 +50,21 @@ public class PlayerSetup : NetworkBehaviour
             return;
         }
 
-        foreach (Transform child in transform)
+        UpdatePlayerState(next);
+
+        DestroyPreviousChildrenServerRpc(NetworkObject.NetworkObjectId);
+
+        SpawnPlayerObjectServerRpc(NetworkObject.OwnerClientId, currentState);
+    }
+    [ServerRpc(RequireOwnership = false)]
+    private void DestroyPreviousChildrenServerRpc(ulong transformId)
+    {
+        Transform givenTransform = NetworkManager.SpawnManager.SpawnedObjects.FirstOrDefault(transform => transform.Key == transformId).Value.transform;
+        foreach (Transform child in givenTransform)
         {
             Destroy(child.gameObject);
         }
-
-        UpdatePlayerState(next);
-
-        SpawnPlayerObjectServerRpc(OwnerClientId, currentState);
     }
-
     [ServerRpc(RequireOwnership = false)]
     private void SpawnPlayerObjectServerRpc(ulong clientId, PlayerState state)
     {

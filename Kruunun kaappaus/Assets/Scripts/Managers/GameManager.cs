@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum BoardState
 {
@@ -14,8 +15,9 @@ public class GameManager : NetworkBehaviour
     [Header("Player Related")]
     public BoardPath currentPath;
     public BoardPlayerInfo currentPlayer;
+    private BoardPlayerMovement playerMovement;
     [SerializeField] private float playerTurnTime;
-    private float turnTimer;
+    public float TurnTimer { get; private set; }
     private int playerTurn;
     [Header("Tiles")]
     public BoardTile emptyTile;
@@ -23,12 +25,17 @@ public class GameManager : NetworkBehaviour
     public BoardTile challengeTile;
     public BoardTile shopTile;
 
+    [Header("UI")]
+    // Add UI here maybe?
+
     [SerializeField] private BoardState currentState;
     private NetworkVariable<int> playersLoaded = new();
-    private List<BoardPlayerInfo> availablePlayers = new List<BoardPlayerInfo>();
+    public List<BoardPlayerInfo> availablePlayers = new();
 
     private void Awake()
     {
+        currentState = BoardState.WaitingForPlayers;
+        playerMovement = GetComponent<BoardPlayerMovement>();
         if (instance == null)
         {
             instance = this;
@@ -37,18 +44,19 @@ public class GameManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
-        NetworkObject.Spawn();
-    }
+        if (!IsServer)
+        {
+            return;
+        }
 
-    private void Start()
-    {
-        currentState = BoardState.WaitingForPlayers;
+        NetworkObject.Spawn();
     }
 
     private void Update()
     {
         GameLoop();
     }
+
     private void GameLoop()
     {
         switch (currentState)
@@ -60,6 +68,7 @@ public class GameManager : NetworkBehaviour
                 PlayerSelection();
                 break;
             case BoardState.PlayerTurnCount:
+                PlayerTurnState();
                 break;
             case BoardState.PlayerMoving:
                 break;
@@ -86,15 +95,30 @@ public class GameManager : NetworkBehaviour
     }
     private void PlayerSelection()
     {
-        turnTimer = playerTurnTime;
+        TurnTimer = playerTurnTime;
         currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
         playerTurn++;
         currentState = BoardState.PlayerTurnCount;
     }
+    private void PlayerTurnState()
+    {
+        TurnTimer -= Time.deltaTime;
+
+        if (TurnTimer <= 0)
+        {
+            currentState = BoardState.SelectingPlayer;
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void RollDiceServerRpc()
+    {
+        playerMovement.MovePlayer(currentPlayer, 1);
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void LoadPlayerServerRpc()
     {
         playersLoaded.Value++;
     }
-    // Kaikki liittyen peliin tulee tähän
 }

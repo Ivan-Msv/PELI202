@@ -1,24 +1,16 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
 public class BoardPlayerMovement : MonoBehaviour
 {
-    public BoardPath currentPath;
+    private BoardPath currentPath;
     [SerializeField] private float moveSpeed;
     private bool alreadyMoving;
 
     void Awake()
     {
-        currentPath = GetComponent<BoardPath>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            MovePlayer(GameManager.instance.currentPlayer, 1);
-        }
+        currentPath = GameManager.instance.currentPath;
     }
 
     public void MovePlayer(BoardPlayerInfo player, int steps)

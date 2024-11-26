@@ -218,13 +218,13 @@ public class PlayerMovement2D : NetworkBehaviour
         }
         if (collision.CompareTag("Coin"))
         {
-            GetComponent<PlayerInfo2D>().coinAmount.Value += 1;
+            GetComponentInParent<MainPlayerInfo>().coinAmount.Value += 1;
             // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
             collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
         }
         if (collision.CompareTag("Crown"))
         {
-            GetComponent<PlayerInfo2D>().crownAmount.Value += 1;
+            GetComponentInParent<MainPlayerInfo>().crownAmount.Value += 1;
             collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
         }
         if (collision.CompareTag("Platform"))

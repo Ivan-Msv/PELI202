@@ -102,6 +102,7 @@ public class LevelManager : NetworkBehaviour
         if (playersLoaded.Value < NetworkManager.Singleton.SpawnManager.GetConnectedPlayers().Count)
         {
             Time.timeScale = 0;
+            return;
         }
 
         Time.timeScale = 1;

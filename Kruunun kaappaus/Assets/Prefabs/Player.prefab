@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6715766021003267619}
   - component: {fileID: -7834865001300675039}
+  - component: {fileID: 5747726142727762214}
   - component: {fileID: -7004134257072930664}
   m_Layer: 3
   m_Name: Player
@@ -58,6 +59,22 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &5747726142727762214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090350418285127406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba5ac80b6987a847ace6d07beda83dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinAmount:
+    m_InternalValue: 0
+  crownAmount:
+    m_InternalValue: 0
 --- !u!114 &-7004134257072930664
 MonoBehaviour:
   m_ObjectHideFlags: 0
