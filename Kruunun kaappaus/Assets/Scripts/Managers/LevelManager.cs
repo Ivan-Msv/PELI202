@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
+using Unity.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -45,6 +46,10 @@ public class LevelManager : NetworkBehaviour
     [Header("Jos minipeli")]
     public float levelDurationSeconds;
     public float LevelTimer { get; private set; }
+
+    //Events
+    public delegate void OnPlayerValueChangeDelegate();
+    public event OnPlayerValueChangeDelegate OnPlayerValueChange;
 
     private void Awake()
     {
@@ -118,6 +123,8 @@ public class LevelManager : NetworkBehaviour
         }
         CurrentGameState = LevelState.Starting;
         blackScreenUI.SetActive(false);
+
+        OnPlayerValueChange?.Invoke();
     }
     public void SetCamera(Transform player)
     {

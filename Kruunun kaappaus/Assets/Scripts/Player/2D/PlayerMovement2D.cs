@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using Unity.VisualScripting;
@@ -200,6 +201,22 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         return rb.linearVelocity.y > 0 ? PlayerMovementState.Jumping : PlayerMovementState.Falling;
     }
+
+    [ServerRpc]
+    private void DestroyCoinServerRpc(ulong collisionObjectId)
+    {
+        var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
+        // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
+        collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
+    }
+
+    [ServerRpc]
+    private void DestroyCrownServerRpc(ulong collisionObjectId)
+    {
+        var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
+        // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
+        collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Jos on haamu tai ei ole pelaaja objektin omistaja, niin ei mennä eteenpäin.
@@ -219,13 +236,12 @@ public class PlayerMovement2D : NetworkBehaviour
         if (collision.CompareTag("Coin"))
         {
             GetComponentInParent<MainPlayerInfo>().coinAmount.Value += 1;
-            // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
-            collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
+            DestroyCoinServerRpc(collisionObjectId);
         }
         if (collision.CompareTag("Crown"))
         {
             GetComponentInParent<MainPlayerInfo>().crownAmount.Value += 1;
-            collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
+            DestroyCrownServerRpc(collisionObjectId);
         }
         if (collision.CompareTag("Platform"))
         {
