@@ -9,6 +9,10 @@ public enum BoardState
 {
     WaitingForPlayers, SelectingPlayer, PlayerTurnCount, PlayerMoving, Idle
 }
+public enum DiceIndex
+{
+    DefaultDice = 1, GambleDice = 2,
+}
 
 public class GameManager : NetworkBehaviour
 {
@@ -26,8 +30,9 @@ public class GameManager : NetworkBehaviour
     public BoardTile challengeTile;
     public BoardTile shopTile;
 
-    [Header("UI")]
-    // Add UI here maybe?
+    [Header("Dice")]
+    public BoardDice defaultDice;
+    public BoardDice gambleDice;
 
     [SerializeField] private BoardState currentState;
     private NetworkVariable<int> playersLoaded = new();
@@ -93,7 +98,7 @@ public class GameManager : NetworkBehaviour
     }
     private void GetAllPlayers()
     {
-        foreach (BoardPlayerInfo player in FindObjectsByType<BoardPlayerInfo>(FindObjectsSortMode.None))
+        foreach (BoardPlayerInfo player in FindObjectsByType<BoardPlayerInfo>(FindObjectsSortMode.InstanceID))
         {
             availablePlayers.Add(player);
         }
