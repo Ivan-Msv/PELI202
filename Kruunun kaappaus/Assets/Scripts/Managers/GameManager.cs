@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Netcode;
@@ -20,10 +21,12 @@ public class GameManager : NetworkBehaviour
     [Header("Player Related")]
     public BoardPath currentPath;
     public BoardPlayerInfo currentPlayer;
-    private BoardPlayerMovement playerMovement;
+    public MainPlayerInfo currentPlayerInfo;
+    public BoardPlayerMovement playerMovement;
     [SerializeField] private float playerTurnTime;
-    public float TurnTimer { get; private set; }
+    public NetworkVariable<float> TurnTimer = new();
     private int playerTurn;
+
     [Header("Tiles")]
     public BoardTile emptyTile;
     public BoardTile minigameTile;
@@ -31,10 +34,11 @@ public class GameManager : NetworkBehaviour
     public BoardTile shopTile;
 
     [Header("Dice")]
-    public BoardDice defaultDice;
-    public BoardDice gambleDice;
+    [SerializeField] private float afterDiceDelaySeconds;
+    public Animator diceAnimator;
+    public NetworkVariable<int> lastRolledNumber = new();
 
-    [SerializeField] private BoardState currentState;
+    [SerializeField] private NetworkVariable<BoardState> currentState = new();
     private NetworkVariable<int> playersLoaded = new();
     public List<BoardPlayerInfo> availablePlayers = new();
     public delegate void OnPlayerValueChangeDelegate();
@@ -44,7 +48,6 @@ public class GameManager : NetworkBehaviour
 
     private void Awake()
     {
-        currentState = BoardState.WaitingForPlayers;
         playerMovement = GetComponent<BoardPlayerMovement>();
         if (instance == null)
         {
@@ -54,28 +57,29 @@ public class GameManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
-        if (!IsServer)
+        if (IsServer)
         {
-            return;
+            NetworkObject.Spawn();
         }
-
-        NetworkObject.Spawn();
     }
 
     private void Update()
     {
-        GameLoop();
+        if (IsServer)
+        {
+            GameLoop();
+        }
     }
 
     private void GameLoop()
     {
-        switch (currentState)
+        switch (currentState.Value)
         {
             case BoardState.WaitingForPlayers:
                 PlayerLoadState();
                 break;
             case BoardState.SelectingPlayer:
-                PlayerSelection();
+                PlayerSelectionClientRpc();
                 break;
             case BoardState.PlayerTurnCount:
                 PlayerTurnState();
@@ -93,10 +97,35 @@ public class GameManager : NetworkBehaviour
         }
 
         Time.timeScale = 1;
-        GetAllPlayers();
-        currentState = BoardState.SelectingPlayer;
+        GetAllPlayersClientRpc();
+        currentState.Value = BoardState.SelectingPlayer;
     }
-    private void GetAllPlayers()
+    [ClientRpc]
+    private void PlayerSelectionClientRpc()
+    {
+        currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
+        currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
+        OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
+
+        playerTurn++;
+
+        if (IsServer)
+        {
+            TurnTimer.Value = playerTurnTime;
+            currentState.Value = BoardState.PlayerTurnCount;
+        }
+    }
+    private void PlayerTurnState()
+    {
+        TurnTimer.Value -= Time.deltaTime;
+
+        if (TurnTimer.Value <= 0)
+        {
+            RollDiceServerRpc();
+        }
+    }
+    [ClientRpc]
+    private void GetAllPlayersClientRpc()
     {
         foreach (BoardPlayerInfo player in FindObjectsByType<BoardPlayerInfo>(FindObjectsSortMode.InstanceID))
         {
@@ -105,33 +134,27 @@ public class GameManager : NetworkBehaviour
 
         OnPlayerValueChange?.Invoke();
     }
-    private void PlayerSelection()
-    {
-        TurnTimer = playerTurnTime;
-
-        currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
-        OnCurrentPlayerChange?.Invoke(currentPlayer.GetComponentInParent<MainPlayerInfo>().playerName.Value);
-
-        playerTurn++;
-        currentState = BoardState.PlayerTurnCount;
-    }
-    private void PlayerTurnState()
-    {
-        TurnTimer -= Time.deltaTime;
-
-        if (TurnTimer <= 0)
-        {
-            currentState = BoardState.SelectingPlayer;
-        }
-    }
-
     [ServerRpc(RequireOwnership = false)]
     public void RollDiceServerRpc()
     {
-        Debug.Log("?");
-        playerMovement.MovePlayer(currentPlayer, 1);
+        currentState.Value = BoardState.Idle;
+        lastRolledNumber.Value = currentPlayerInfo.test.RollDiceNumber();
+        DiceAnimationClientRpc(lastRolledNumber.Value);
     }
 
+    [ClientRpc]
+    public void DiceAnimationClientRpc(int number)
+    {
+        string animString = currentPlayerInfo.test.DiceAnimationString(number);
+        diceAnimator.gameObject.SetActive(true);
+        diceAnimator.Play(animString);
+    }
+    public IEnumerator AnimationEventCoroutine()
+    {
+        yield return new WaitForSeconds(afterDiceDelaySeconds);
+        diceAnimator.gameObject.SetActive(false);
+        playerMovement.MovePlayer(currentPlayer, lastRolledNumber.Value);
+    }
     [ServerRpc(RequireOwnership = false)]
     public void LoadPlayerServerRpc()
     {

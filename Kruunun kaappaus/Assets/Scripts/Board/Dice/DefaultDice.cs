@@ -5,13 +5,11 @@ public class DefaultDice : BoardDice
     public override int RollDiceNumber()
     {
         Debug.Log("Default Dice Rolled");
-        Debug.Log(availableNumbers[Random.Range(0, availableNumbers.Length)]);
-        // play animation here
-        return 0;
+        return availableNumbers[Random.Range(0, availableNumbers.Length)];
     }
 
-    public override void DiceAnimation()
+    public override string DiceAnimationString(int rolledNumber)
     {
-        throw new System.NotImplementedException();
+        return $"default_dice_{rolledNumber}";
     }
 }

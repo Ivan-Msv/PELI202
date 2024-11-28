@@ -56,7 +56,7 @@ public class BoardUIManager : MonoBehaviour
         coinCounter.text = $"Coins: {localParent.coinAmount.Value}";
         crownCounter.text = $"Crowns: {localParent.crownAmount.Value}";
 
-        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : currentTurnPlayerName) } turn: {(int)GameManager.instance.TurnTimer} sec left";
+        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : currentTurnPlayerName) } turn: {(int)GameManager.instance.TurnTimer.Value + 1} sec left";
     }
 
     private void UpdateLocalPlayers()
