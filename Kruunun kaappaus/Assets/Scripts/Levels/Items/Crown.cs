@@ -30,7 +30,6 @@ public class Crown : MonoBehaviour
     private void Movement()
     {
         float offset = height * Mathf.Sin(2 * Mathf.PI * frequency * Time.time);
-        Debug.Log(offset);
         transform.position = startPosition + Vector2.up * offset;
     }
 }

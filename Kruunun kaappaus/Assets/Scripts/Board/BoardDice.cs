@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public abstract class BoardDice : MonoBehaviour
 {
     public int[] availableNumbers;
     public abstract int RollDiceNumber();
-    public abstract void DiceAnimation();
+    public abstract string DiceAnimationString(int rolledNumber);
 }

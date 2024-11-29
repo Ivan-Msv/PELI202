@@ -10,6 +10,8 @@ public class MainPlayerInfo : NetworkBehaviour
     public NetworkVariable<FixedString64Bytes> playerName = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> coinAmount = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> crownAmount = new(writePerm: NetworkVariableWritePermission.Owner);
+
+    public BoardDice test;
     private void Start()
     {
         if (!NetworkObject.IsOwner)
