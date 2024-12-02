@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2390891645069398362}
   - component: {fileID: 3059436255355199960}
-  - component: {fileID: 6746818145810943220}
   - component: {fileID: 82555791792150227}
   m_Layer: 0
   m_Name: Path
@@ -103,6 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe05a5a162e63547993febf1a4e156e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   tiles:
   - {fileID: 2926481395360505888}
   - {fileID: 8804029265359171417}
@@ -161,19 +161,6 @@ MonoBehaviour:
   - {fileID: 1380638977186857061}
   - {fileID: 3386979150671947395}
   - {fileID: 2984740512473756069}
---- !u!114 &6746818145810943220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266029222471388680}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 732a41ff825355246bc855bee7d809ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2.5
 --- !u!114 &82555791792150227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3533862466
+  GlobalObjectIdHash: 4047754461
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1

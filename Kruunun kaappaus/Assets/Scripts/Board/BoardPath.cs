@@ -30,6 +30,12 @@ public class BoardPath : NetworkBehaviour
         tilesIndex.OnListChanged += UpdateTiles;
     }
 
+    public override void OnNetworkDespawn()
+    {
+        tilesIndex.OnListChanged -= UpdateTiles;
+        base.OnNetworkDespawn();
+    }
+
     public void UpdateTiles(NetworkListEvent<int> changed)
     {
         // mul kesti 6 tuntii tajuu et se triggeraa eventin joka vaihetusta numerosta
