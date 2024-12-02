@@ -26,9 +26,13 @@ public class BoardPlayerMovement : MonoBehaviour
         }
         alreadyMoving = true;
 
+        bool forward = steps > 0;
+
+        steps = Mathf.Abs(steps);
+
         while (steps > 0)
         {
-            int index = (player.currentPosition + 1) % currentPath.tiles.Count;
+            int index = GetIndexDirection(player.currentPosition, forward);
             Vector3 nextTilePosition = currentPath.tiles[index].transform.position;
             while (player.transform.position != nextTilePosition)
             {
@@ -44,29 +48,20 @@ public class BoardPlayerMovement : MonoBehaviour
         alreadyMoving = false;
     }
 
-    //private int GetNextIndexAndDirection(BoardPlayerInfo player)
-    //{
-    //    int index;
+    private int GetIndexDirection(int currentPosition, bool forward)
+    {
+        int index;
 
-    //    if (player.currentPosition == 0)
-    //    {
-    //        player.movingForward = true;
-    //    }
-    //    else if (player.currentPosition == currentPath.tiles.Count - 1 && currentPath.hasDeadEnd)
-    //    {
-    //        player.movingForward = false;
-    //    }
+        switch (forward)
+        {
+            case true:
+                index = (currentPosition + 1) % currentPath.tiles.Count;
+                break;
+            case false:
+                index = (currentPosition - 1 + currentPath.tiles.Count) % currentPath.tiles.Count;
+                break;
+        }
 
-    //    switch (player.movingForward)
-    //    {
-    //        case true:
-    //            index = (player.currentPosition + 1) % currentPath.tiles.Count;
-    //            break;
-    //        case false:
-    //            index = (player.currentPosition - 1 + currentPath.tiles.Count) % currentPath.tiles.Count;
-    //            break;
-    //    }
-
-    //    return index;
-    //}
+        return index;
+    }
 }

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4889484910650766254}
-  - component: {fileID: 8292268755034354118}
+  - component: {fileID: 2470433290133866198}
   m_Layer: 0
-  m_Name: Player Default Dice
+  m_Name: Player Gamble Dice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8292268755034354118
+--- !u!114 &2470433290133866198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 883787107844839404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9654c2a31039a546b0e0d59d1c146d1, type: 3}
+  m_Script: {fileID: 11500000, guid: d99c4ab319da5a146917ce216a1851bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableNumbers: 010000000200000003000000040000000500000006000000
+  availableNumbers: 00000000000000000000000000000000000000000a000000

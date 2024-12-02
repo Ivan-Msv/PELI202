@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DefaultDice : BoardDice
+public class MinusDice : BoardDice
 {
     public override int RollDiceNumber()
     {
@@ -9,6 +9,7 @@ public class DefaultDice : BoardDice
 
     public override string DiceAnimationString(int rolledNumber)
     {
-        return $"default_dice_{rolledNumber}";
+        // Change later as well
+        return $"default_dice_1";
     }
 }
