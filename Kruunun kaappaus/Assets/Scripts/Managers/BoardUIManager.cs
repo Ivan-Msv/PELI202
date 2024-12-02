@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class BoardUIManager : MonoBehaviour
 {
-    [SerializeField] private BoardPlayerInfo localPlayer;
-    [SerializeField] private MainPlayerInfo localParent;
+    public static BoardUIManager instance;
+    public BoardPlayerInfo localPlayer;
+    public MainPlayerInfo localParent;
 
     [Header("Buttons")]
     [SerializeField] private Button rollButton;
@@ -24,6 +25,10 @@ public class BoardUIManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
     }

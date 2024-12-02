@@ -67,15 +67,15 @@ public class BoardPath : NetworkBehaviour
     }
     private BoardTile GetIndexTile(int index)
     {
-        switch (index)
+        switch ((Tiles)index)
         {
-            case 0:
+            case Tiles.EmptyTile:
                 return GameManager.instance.emptyTile;
-            case 1:
+            case Tiles.MinigameTile:
                 return GameManager.instance.minigameTile;
-            case 2:
+            case Tiles.ChallengeTile:
                 return GameManager.instance.challengeTile;
-            case 3:
+            case Tiles.ShopTile:
                 return GameManager.instance.shopTile;
         }
 

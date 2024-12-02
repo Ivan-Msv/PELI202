@@ -12,7 +12,7 @@ public enum BoardState
 }
 public enum DiceIndex
 {
-    DefaultDice = 1, GambleDice = 2,
+    DefaultDice = 1, GambleDice = 2, MinusDice = 3
 }
 
 public class GameManager : NetworkBehaviour
@@ -37,6 +37,10 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private float afterDiceDelaySeconds;
     public Animator diceAnimator;
     public NetworkVariable<int> lastRolledNumber = new();
+    [Space]
+    public DefaultDice defaultDice;
+    public GambleDice gambleDice;
+    public MinusDice minusDice;
 
     [SerializeField] private NetworkVariable<BoardState> currentState = new();
     private NetworkVariable<int> playersLoaded = new();
@@ -138,14 +142,29 @@ public class GameManager : NetworkBehaviour
     public void RollDiceServerRpc()
     {
         currentState.Value = BoardState.Idle;
-        lastRolledNumber.Value = currentPlayerInfo.test.RollDiceNumber();
-        DiceAnimationClientRpc(lastRolledNumber.Value);
+        int diceIndex = UseDice();
+        Debug.Log(diceIndex);
+        lastRolledNumber.Value = GetDiceFromIndex(diceIndex).RollDiceNumber();
+        DiceAnimationClientRpc(diceIndex, lastRolledNumber.Value);
+    }
+    
+    private int UseDice()
+    {
+        switch (currentPlayerInfo.specialDiceEnabled.Value)
+        {
+            case true:
+                var specialDiceValue = currentPlayerInfo.specialDiceIndex.Value;
+                currentPlayerInfo.specialDiceIndex.Value = 0;
+                return specialDiceValue;
+            case false:
+                return (int)DiceIndex.DefaultDice;
+        }
     }
 
     [ClientRpc]
-    public void DiceAnimationClientRpc(int number)
+    public void DiceAnimationClientRpc(int diceIndex, int number)
     {
-        string animString = currentPlayerInfo.test.DiceAnimationString(number);
+        string animString = GetDiceFromIndex(diceIndex).DiceAnimationString(number);
         diceAnimator.gameObject.SetActive(true);
         diceAnimator.Play(animString);
     }
@@ -163,5 +182,21 @@ public class GameManager : NetworkBehaviour
     public void LoadPlayerServerRpc()
     {
         playersLoaded.Value++;
+    }
+
+    public BoardDice GetDiceFromIndex(int index)
+    {
+        switch ((DiceIndex)index)
+        {
+            case DiceIndex.DefaultDice:
+                return defaultDice;
+            case DiceIndex.GambleDice:
+                return gambleDice;
+            case DiceIndex.MinusDice:
+                return minusDice;
+        }
+
+        Debug.LogError("Couldn't find from given index, returning default");
+        return defaultDice;
     }
 }
