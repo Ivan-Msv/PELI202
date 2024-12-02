@@ -153,7 +153,11 @@ public class GameManager : NetworkBehaviour
     {
         yield return new WaitForSeconds(afterDiceDelaySeconds);
         diceAnimator.gameObject.SetActive(false);
-        playerMovement.MovePlayer(currentPlayer, lastRolledNumber.Value);
+
+        if (currentPlayer.OwnerClientId == NetworkManager.LocalClientId)
+        {
+            playerMovement.MovePlayer(currentPlayer, lastRolledNumber.Value);
+        }
     }
     [ServerRpc(RequireOwnership = false)]
     public void LoadPlayerServerRpc()
