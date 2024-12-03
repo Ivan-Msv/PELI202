@@ -26,7 +26,7 @@ public class BoardPlayerMovement : MonoBehaviour
 
         while (steps > 0)
         {
-            int index = GetIndexDirection(player.currentPosition, forward);
+            int index = GetIndexDirection(player.playerInfo.currentBoardPosition.Value, forward);
             Vector3 nextTilePosition = BoardPath.instance.tiles[index].transform.position;
             while (player.transform.position != nextTilePosition)
             {
@@ -34,11 +34,11 @@ public class BoardPlayerMovement : MonoBehaviour
                 yield return null;
             }
             yield return new WaitForSeconds(0.1f);
-            player.currentPosition = index;
+            player.playerInfo.currentBoardPosition.Value = index;
             steps--;
         }
 
-        BoardPath.instance.tiles[player.currentPosition].GetComponent<BoardTile>().InvokeTile();
+        BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
         alreadyMoving = false;
     }
 
