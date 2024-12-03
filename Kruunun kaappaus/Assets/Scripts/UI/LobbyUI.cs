@@ -57,8 +57,12 @@ public class LobbyUI : NetworkBehaviour
     }
     void OnDisable()
     {
-        DisableListeners();
         LeaveLobby();
+    }
+    public override void OnDestroy()
+    {
+        DisableListeners();
+        base.OnDestroy();
     }
     private void Update()
     {

@@ -35,7 +35,6 @@ public class BoardUIManager : MonoBehaviour
         {
             instance = this;
         }
-        Debug.Log(GameManager.instance);
         GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
 
