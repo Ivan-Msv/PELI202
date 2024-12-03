@@ -12,6 +12,12 @@ public class BoardUIManager : MonoBehaviour
     public BoardPlayerInfo localPlayer;
     public MainPlayerInfo localParent;
 
+    public bool onShopTile;
+
+    [Header("UI")]
+    public GameObject shopUI;
+    public Animator diceAnimator;
+
     [Header("Buttons")]
     [SerializeField] private Button rollButton;
     [SerializeField] private Button openStoreButton;
@@ -29,8 +35,12 @@ public class BoardUIManager : MonoBehaviour
         {
             instance = this;
         }
+        Debug.Log(GameManager.instance);
         GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
+
+        rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); });
+        openStoreButton.onClick.AddListener(() => { GameManager.instance.OpenStore(); });
     }
 
     private void Update()
@@ -48,12 +58,10 @@ public class BoardUIManager : MonoBehaviour
         if (!LocalPlayerTurn())
         {
             rollButton.interactable = false;
-            openStoreButton.interactable = false;
             return;
         }
 
         rollButton.interactable = true;
-        openStoreButton.interactable = true;
     }
 
     private void UpdateText()

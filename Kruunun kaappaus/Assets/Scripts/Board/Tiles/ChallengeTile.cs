@@ -13,17 +13,15 @@ public class ChallengeTile : BoardTile
 
     public override void InvokeTile()
     {
-        var emptyTiles = GameManager.instance.currentPath.tiles.FindAll(tile => tile.GetComponent<EmptyTile>());
+        var emptyTiles = BoardPath.instance.tiles.FindAll(tile => tile.GetComponent<EmptyTile>());
 
         int randomIndex = Random.Range(0, emptyTiles.Count);
-        var newIndex = GameManager.instance.currentPath.tiles.IndexOf(emptyTiles[randomIndex]);
+        var newIndex = BoardPath.instance.tiles.IndexOf(emptyTiles[randomIndex]);
 
-        // Käytetään array jotta ei tulis monta ServerRpc syötettä pienessä ajassa.
-        int[] indexArray = { transform.GetSiblingIndex(), newIndex };
+        BoardPath.instance.ChangeTileIndexServerRpc(transform.GetSiblingIndex(), (int)Tiles.EmptyTile);
+        BoardPath.instance.ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
 
-        // Käytin enum jotta olisi helpompi ymmärtää, numerot riittää
-        int[] tileIndexArray = { (int)Tiles.EmptyTile, (int)Tiles.ChallengeTile };
-
-        GameManager.instance.currentPath.ChangeTileIndexServerRpc(indexArray, tileIndexArray);
+        // Change later to challegne selection
+        GameManager.instance.LoadSceneServerRpc("Level MiniGame1");
     }
 }

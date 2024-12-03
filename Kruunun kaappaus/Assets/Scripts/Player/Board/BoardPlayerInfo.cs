@@ -10,7 +10,6 @@ public class BoardPlayerInfo : NetworkBehaviour
     {
         if (NetworkObject.IsOwner)
         {
-            transform.position = GameManager.instance.currentPath.tiles[currentPosition].transform.position;
             GameManager.instance.LoadPlayerServerRpc();
         }
     }

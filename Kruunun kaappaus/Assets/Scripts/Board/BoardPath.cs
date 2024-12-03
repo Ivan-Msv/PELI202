@@ -11,29 +11,68 @@ public enum Tiles
 }
 public class BoardPath : NetworkBehaviour
 {
-    public List<GameObject> tiles = new();
-    public NetworkList<int> tilesIndex = new();
+    public static BoardPath instance;
+    public List<GameObject> tiles;
+
+    private void Awake()
+    {
+        tiles = new();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        InitTiles();
+    }
 
     private void Start()
+    {
+        if (GameManager.instance.tilesIndex.Count < 1)
+        {
+            AddNetworkTiles();
+        }
+        else
+        {
+            ResetTiles();
+        }
+        GameManager.instance.tilesIndex.OnListChanged += UpdateTiles;
+    }
+
+
+
+    public void InitTiles()
     {
         tiles.Clear();
         foreach (Transform tile in transform)
         {
-            var tileComponent = tile.GetComponent<BoardTile>();
             tiles.Add(tile.gameObject);
-            if (IsServer)
-            {
-                tilesIndex.Add(GetTileIndex(tileComponent));
-            }
         }
-
-        tilesIndex.OnListChanged += UpdateTiles;
     }
 
-    public override void OnNetworkDespawn()
+    private void AddNetworkTiles()
     {
-        tilesIndex.OnListChanged -= UpdateTiles;
-        base.OnNetworkDespawn();
+        foreach (var tile in tiles)
+        {
+            GameManager.instance.tilesIndex.Add(GetTileIndex(tile.GetComponent<BoardTile>()));
+        }
+    }
+
+    public void ResetTiles()
+    {
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            BoardTile tileComponent = tiles[i].GetComponent<BoardTile>();
+            if (GetTileIndex(tileComponent) == GameManager.instance.tilesIndex[i])
+            {
+                continue;
+            }
+
+            ReplaceTile(i, GetIndexTile(GameManager.instance.tilesIndex[i]));
+        }
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.tilesIndex.OnListChanged -= UpdateTiles;
     }
 
     public void UpdateTiles(NetworkListEvent<int> changed)
@@ -44,9 +83,9 @@ public class BoardPath : NetworkBehaviour
     }
     private void ReplaceTile(int currentTileIndex, BoardTile newTile)
     {
-        GameObject selectedTile = tiles[currentTileIndex];
-        Destroy(selectedTile.GetComponent<BoardTile>());
-        selectedTile.AddComponent(newTile.GetType());
+        var oldComponent = tiles[currentTileIndex].GetComponent<BoardTile>();
+        DestroyImmediate(oldComponent);
+        tiles[currentTileIndex].AddComponent(newTile.GetType());
     }
     private int GetTileIndex(BoardTile tile)
     {
@@ -83,15 +122,9 @@ public class BoardPath : NetworkBehaviour
         return GameManager.instance.emptyTile;
     }
     [ServerRpc(RequireOwnership = false)]
-    public void ChangeTileIndexServerRpc(int[] indexArray, int[] newNumberArray)
+    public void ChangeTileIndexServerRpc(int index, int newNumber)
     {
-        NetworkList<int> temp = tilesIndex;
-        for (int i = 0; i < indexArray.Length; i++)
-        {
-            temp[indexArray[i]] = newNumberArray[i];
-        }
-
-        tilesIndex = temp;
+        GameManager.instance.tilesIndex[index] = newNumber;
     }
 
     private void OnDrawGizmos()

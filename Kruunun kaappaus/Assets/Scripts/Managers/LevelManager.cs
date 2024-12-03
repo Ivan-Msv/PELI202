@@ -13,7 +13,7 @@ public enum LevelType
 }
 public enum LevelState
 {
-    LoadingPlayers, Starting, InProgress, Ending
+    LoadingPlayers, Starting, InProgress, Ending, Idle
 }
 
 public class LevelManager : NetworkBehaviour
@@ -98,7 +98,13 @@ public class LevelManager : NetworkBehaviour
                 // Run everything for the game
                 break;
             case LevelState.Ending:
-                // Do something
+                // Play animation and switch to idle (BELOW IS TEMPORARY)
+                if (!IsServer)
+                {
+                    return;
+                }
+                NetworkManager.SceneManager.LoadScene("MainBoard", UnityEngine.SceneManagement.LoadSceneMode.Single);
+                CurrentGameState = LevelState.Idle;
                 break;
         }
     }

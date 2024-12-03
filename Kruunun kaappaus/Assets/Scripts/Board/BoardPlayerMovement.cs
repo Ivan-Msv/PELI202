@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class BoardPlayerMovement : MonoBehaviour
 {
-    private BoardPath currentPath;
     [SerializeField] private float moveSpeed;
     private bool alreadyMoving;
-
-    void Awake()
-    {
-        currentPath = GameManager.instance.currentPath;
-    }
 
     public void MovePlayer(BoardPlayerInfo player, int steps)
     {
@@ -33,7 +27,7 @@ public class BoardPlayerMovement : MonoBehaviour
         while (steps > 0)
         {
             int index = GetIndexDirection(player.currentPosition, forward);
-            Vector3 nextTilePosition = currentPath.tiles[index].transform.position;
+            Vector3 nextTilePosition = BoardPath.instance.tiles[index].transform.position;
             while (player.transform.position != nextTilePosition)
             {
                 player.transform.position = Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime);
@@ -44,7 +38,7 @@ public class BoardPlayerMovement : MonoBehaviour
             steps--;
         }
 
-        currentPath.tiles[player.currentPosition].GetComponent<BoardTile>().InvokeTile();
+        BoardPath.instance.tiles[player.currentPosition].GetComponent<BoardTile>().InvokeTile();
         alreadyMoving = false;
     }
 
@@ -55,10 +49,10 @@ public class BoardPlayerMovement : MonoBehaviour
         switch (forward)
         {
             case true:
-                index = (currentPosition + 1) % currentPath.tiles.Count;
+                index = (currentPosition + 1) % BoardPath.instance.tiles.Count;
                 break;
             case false:
-                index = (currentPosition - 1 + currentPath.tiles.Count) % currentPath.tiles.Count;
+                index = (currentPosition - 1 + BoardPath.instance.tiles.Count) % BoardPath.instance.tiles.Count;
                 break;
         }
 

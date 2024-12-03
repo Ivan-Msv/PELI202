@@ -27376,6 +27376,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1801563826459194643, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
+      propertyPath: levelDurationSeconds
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7838924780168179826, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2617851728

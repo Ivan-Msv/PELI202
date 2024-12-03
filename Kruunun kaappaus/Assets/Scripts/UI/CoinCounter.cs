@@ -29,7 +29,6 @@ public class CoinCounter : MonoBehaviour
     {
         foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            Debug.Log("Test");
             player.GetComponentInParent<MainPlayerInfo>().coinAmount.OnValueChanged += AddCollectedCoin;
         }
     }

@@ -28,15 +28,14 @@ public class PlayerSetup : NetworkBehaviour
         }
         currentState = PlayerState.Menu;
         SavedData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
-        SceneManager.activeSceneChanged += ClearSubPlayers;
+        SceneManager.sceneLoaded += ClearSubPlayers;
         //NetworkManager.OnClientStopped += ReturnToLobby;
         NetworkManager.OnClientDisconnectCallback += ReturnToLobby;
     }
     private void ReturnToLobby(ulong action)
     {
-        //NetworkManager.OnClientStopped -= ReturnToLobby;
         NetworkManager.OnClientDisconnectCallback -= ReturnToLobby;
-        SceneManager.activeSceneChanged -= ClearSubPlayers;
+        SceneManager.sceneLoaded -= ClearSubPlayers;
         NetworkManager.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
         StartCoroutine(DelayedErrorMessage());
@@ -61,7 +60,7 @@ public class PlayerSetup : NetworkBehaviour
             Debug.LogError("Error in updating player");
         }
     }
-    private void ClearSubPlayers(Scene current, Scene next)
+    private void ClearSubPlayers(Scene next, LoadSceneMode sceneMode)
     {
         if (!NetworkObject.IsOwner)
         {

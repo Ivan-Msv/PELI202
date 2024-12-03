@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum BoardState
@@ -19,7 +21,6 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
     [Header("Player Related")]
-    public BoardPath currentPath;
     public BoardPlayerInfo currentPlayer;
     public MainPlayerInfo currentPlayerInfo;
     public BoardPlayerMovement playerMovement;
@@ -32,8 +33,9 @@ public class GameManager : NetworkBehaviour
     public BoardTile minigameTile;
     public BoardTile challengeTile;
     public BoardTile shopTile;
+    public NetworkList<int> tilesIndex = new();
 
-    [Header("Dice")]
+    [Header("Dice & UI")]
     [SerializeField] private float afterDiceDelaySeconds;
     public Animator diceAnimator;
     public NetworkVariable<int> lastRolledNumber = new();
@@ -41,6 +43,8 @@ public class GameManager : NetworkBehaviour
     public DefaultDice defaultDice;
     public GambleDice gambleDice;
     public MinusDice minusDice;
+    [Space]
+    public GameObject shopUI;
 
     [SerializeField] private NetworkVariable<BoardState> currentState = new();
     private NetworkVariable<int> playersLoaded = new();
@@ -53,6 +57,7 @@ public class GameManager : NetworkBehaviour
     private void Awake()
     {
         playerMovement = GetComponent<BoardPlayerMovement>();
+
         if (instance == null)
         {
             instance = this;
@@ -64,6 +69,61 @@ public class GameManager : NetworkBehaviour
         if (IsServer)
         {
             NetworkObject.Spawn();
+            NetworkObject.DestroyWithScene = false;
+        }
+    }
+
+    private void Start()
+    {
+        if (IsServer)
+        {
+            SceneManager.activeSceneChanged += OnSceneChangedServer;
+        }
+        ComponentInitialization();
+        SceneManager.sceneLoaded += OnSceneChanged;
+        BoardPath.instance.InitTiles();
+    }
+
+    private void OnSceneChanged(Scene newScene, LoadSceneMode arg1)
+    {
+        if (newScene.name.Contains("level", StringComparison.OrdinalIgnoreCase))
+        {
+            availablePlayers.Clear();
+        }
+        else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
+        {
+            ComponentInitialization();
+        }
+    }
+
+    private void ComponentInitialization()
+    {
+        Debug.Log("initialized components.");
+        BoardPath.instance = GameObject.FindGameObjectWithTag("Board Path").GetComponent<BoardPath>();
+        diceAnimator = BoardUIManager.instance.diceAnimator;
+        shopUI = BoardUIManager.instance.shopUI;
+    }
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        NetworkObject.DestroyWithScene = false;
+        DontDestroyOnLoad(this);
+    }
+
+    private void OnSceneChangedServer(Scene oldScene, Scene newScene)
+    {
+        if (newScene.name.Contains("level", StringComparison.OrdinalIgnoreCase) && IsServer)
+        {
+            playersLoaded.Value = 0;
+            currentState.Value = BoardState.Idle;
+        }
+        else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
+        {
+            currentState.Value = BoardState.WaitingForPlayers;
+        }
+        else
+        {
+            Debug.LogError("Error in updating scene (Server)");
         }
     }
 
@@ -143,11 +203,9 @@ public class GameManager : NetworkBehaviour
     {
         currentState.Value = BoardState.Idle;
         int diceIndex = UseDice();
-        Debug.Log(diceIndex);
         lastRolledNumber.Value = GetDiceFromIndex(diceIndex).RollDiceNumber();
         DiceAnimationClientRpc(diceIndex, lastRolledNumber.Value);
     }
-    
     private int UseDice()
     {
         switch (currentPlayerInfo.specialDiceEnabled.Value)
@@ -160,7 +218,6 @@ public class GameManager : NetworkBehaviour
                 return (int)DiceIndex.DefaultDice;
         }
     }
-
     [ClientRpc]
     public void DiceAnimationClientRpc(int diceIndex, int number)
     {
@@ -183,7 +240,29 @@ public class GameManager : NetworkBehaviour
     {
         playersLoaded.Value++;
     }
-
+    [ServerRpc(RequireOwnership = false)]
+    public void LoadSceneServerRpc(string sceneName)
+    {
+        ChangeSceneClientRpc(sceneName);
+    }
+    [ClientRpc]
+    private void ChangeSceneClientRpc(string sceneName)
+    {
+        StartCoroutine(SceneChangeCoroutine(sceneName));
+    }
+    private IEnumerator SceneChangeCoroutine(string sceneName)
+    {
+        // Play animation for everyone
+        yield return new WaitForSeconds(1);
+        if (IsServer)
+        {
+            NetworkManager.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        }
+    }
+    public void OpenStore()
+    {
+        shopUI.SetActive(!shopUI.activeSelf);
+    }
     public BoardDice GetDiceFromIndex(int index)
     {
         switch ((DiceIndex)index)

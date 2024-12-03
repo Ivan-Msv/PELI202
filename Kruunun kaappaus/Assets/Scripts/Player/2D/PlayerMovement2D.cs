@@ -36,6 +36,10 @@ public class PlayerMovement2D : NetworkBehaviour
     public PlayerMovementState currentPlayerState { get; private set; }
     void Start()
     {
+        if (!NetworkObject.IsOwner)
+        {
+            return;
+        }
         animatorComponent = GetComponent<Animator>();
         spawnPoint = LevelManager.instance.playerSpawnPoint[0];
         transform.position = spawnPoint;

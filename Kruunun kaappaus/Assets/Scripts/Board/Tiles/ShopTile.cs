@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ShopTile : BoardTile
 {
-    [SerializeField] private GameObject ShopUI;
     public override void SetupTile()
     {
         tileSprite = GameManager.instance.shopTile.tileSprite;
@@ -11,6 +10,6 @@ public class ShopTile : BoardTile
     }
     public override void InvokeTile()
     {
-        ShopUI.SetActive(true);
+        Debug.Log("Shop tile invoked!");
     }
 }
