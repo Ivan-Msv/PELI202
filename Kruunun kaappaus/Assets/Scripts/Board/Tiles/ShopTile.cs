@@ -10,6 +10,6 @@ public class ShopTile : BoardTile
     }
     public override void InvokeTile()
     {
-        Debug.Log("Shop tile invoked!");
+        Debug.Log("This tile doesn't actually do anything on it's own...");
     }
 }

@@ -11,11 +11,11 @@ public class BoardUIManager : MonoBehaviour
     public static BoardUIManager instance;
     public BoardPlayerInfo localPlayer;
     public MainPlayerInfo localParent;
-
     public bool onShopTile;
+    public bool localPlayerTurn;
 
     [Header("UI")]
-    public GameObject shopUI;
+    public BoardShop shopUI;
     public Animator diceAnimator;
 
     [Header("Buttons")]
@@ -39,7 +39,7 @@ public class BoardUIManager : MonoBehaviour
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
 
         rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); });
-        openStoreButton.onClick.AddListener(() => { GameManager.instance.OpenStore(); });
+        openStoreButton.onClick.AddListener(() => { shopUI.OpenStore(); });
     }
 
     private void Update()
@@ -50,6 +50,8 @@ public class BoardUIManager : MonoBehaviour
         }
         UpdateButtons();
         UpdateText();
+        onShopTile = LocalPlayerOnShopTile();
+        localPlayerTurn = LocalPlayerTurn();
     }
 
     private void UpdateButtons()
@@ -70,7 +72,6 @@ public class BoardUIManager : MonoBehaviour
 
         playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : currentTurnPlayerName) } turn: {(int)GameManager.instance.TurnTimer.Value + 1} sec left";
     }
-
     private void UpdateLocalPlayers()
     {
         localPlayer = GameManager.instance.availablePlayers.Find(player => player.OwnerClientId == NetworkManager.Singleton.LocalClientId);
@@ -83,5 +84,9 @@ public class BoardUIManager : MonoBehaviour
     private bool LocalPlayerTurn()
     {
         return localPlayer == GameManager.instance.currentPlayer;
+    }
+    public bool LocalPlayerOnShopTile()
+    {
+        return BoardPath.instance.GetIndexTile(GameManager.instance.tilesIndex[localParent.currentBoardPosition.Value]) == GameManager.instance.shopTile;
     }
 }

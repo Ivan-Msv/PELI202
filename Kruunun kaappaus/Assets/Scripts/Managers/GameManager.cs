@@ -14,7 +14,7 @@ public enum BoardState
 }
 public enum DiceIndex
 {
-    DefaultDice = 1, GambleDice = 2, MinusDice = 3
+    DefaultDice = 1, GambleDice = 2, MinusDice = 3, TeleportDice = 4, SmallDice = 5
 }
 
 public class GameManager : NetworkBehaviour
@@ -44,7 +44,6 @@ public class GameManager : NetworkBehaviour
     public GambleDice gambleDice;
     public MinusDice minusDice;
     [Space]
-    public GameObject shopUI;
 
     [SerializeField] private NetworkVariable<BoardState> currentState = new();
     private NetworkVariable<int> playersLoaded = new();
@@ -101,7 +100,6 @@ public class GameManager : NetworkBehaviour
         Debug.Log("initialized components.");
         BoardPath.instance = GameObject.FindGameObjectWithTag("Board Path").GetComponent<BoardPath>();
         diceAnimator = BoardUIManager.instance.diceAnimator;
-        shopUI = BoardUIManager.instance.shopUI;
     }
     public override void OnNetworkSpawn()
     {
@@ -170,7 +168,7 @@ public class GameManager : NetworkBehaviour
         currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
         currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
-
+        BoardUIManager.instance.shopUI.UpdateItems();
         playerTurn++;
 
         if (IsServer)
@@ -213,6 +211,7 @@ public class GameManager : NetworkBehaviour
             case true:
                 var specialDiceValue = currentPlayerInfo.specialDiceIndex.Value;
                 currentPlayerInfo.specialDiceIndex.Value = 0;
+                currentPlayerInfo.specialDiceEnabled.Value = false;
                 return specialDiceValue;
             case false:
                 return (int)DiceIndex.DefaultDice;
@@ -259,12 +258,9 @@ public class GameManager : NetworkBehaviour
             NetworkManager.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
     }
-    public void OpenStore()
-    {
-        shopUI.SetActive(!shopUI.activeSelf);
-    }
     public BoardDice GetDiceFromIndex(int index)
     {
+        Debug.Log((DiceIndex)index);
         switch ((DiceIndex)index)
         {
             case DiceIndex.DefaultDice:

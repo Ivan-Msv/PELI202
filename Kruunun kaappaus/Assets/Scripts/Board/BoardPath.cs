@@ -87,7 +87,7 @@ public class BoardPath : NetworkBehaviour
         DestroyImmediate(oldComponent);
         tiles[currentTileIndex].AddComponent(newTile.GetType());
     }
-    private int GetTileIndex(BoardTile tile)
+    public int GetTileIndex(BoardTile tile)
     {
         switch (tile)
         {
@@ -104,7 +104,7 @@ public class BoardPath : NetworkBehaviour
         Debug.LogError("Couldn't find tile, returning empty");
         return 0;
     }
-    private BoardTile GetIndexTile(int index)
+    public BoardTile GetIndexTile(int index)
     {
         switch ((Tiles)index)
         {
