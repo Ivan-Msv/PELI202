@@ -9,6 +9,7 @@ public class MainPlayerInfo : NetworkBehaviour
 
     public NetworkVariable<FixedString64Bytes> playerName = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> currentBoardPosition = new(writePerm: NetworkVariableWritePermission.Owner);
+    public NetworkVariable<bool> isGhost = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> coinAmount = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> crownAmount = new(writePerm: NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> specialDiceIndex = new(writePerm: NetworkVariableWritePermission.Owner);

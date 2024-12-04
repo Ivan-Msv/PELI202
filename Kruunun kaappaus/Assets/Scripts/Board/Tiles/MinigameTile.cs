@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -21,14 +22,23 @@ public class MinigameTile : BoardTile
     {
         string newScene;
         int playersOnTile = 0;
+        List<int> ghosts = new List<int>();
+        List<int> players = new List<int>();
 
-        foreach (var player in GameManager.instance.availablePlayers)
+        for (int i = 0; i < GameManager.instance.availablePlayers.Count; i++)
         {
-            if (currentIndex == player.GetComponentInParent<MainPlayerInfo>().currentBoardPosition.Value)
+            if (currentIndex == GameManager.instance.availablePlayers[i].GetComponentInParent<MainPlayerInfo>().currentBoardPosition.Value)
             {
                 playersOnTile++;
+                players.Add(i);
+            }
+            else
+            {
+                ghosts.Add(i);
             }
         }
+
+        GameManager.instance.FromGhostToPlayerServerRpc(ghosts.ToArray(), players.ToArray());
 
         switch (playersOnTile)
         {

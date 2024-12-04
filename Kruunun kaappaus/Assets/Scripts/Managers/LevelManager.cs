@@ -22,8 +22,6 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private CinemachineCamera playerCamera;
     [SerializeField] private CinemachineCamera endingCamera;
     [Header("UI")]
-    [SerializeField] private GameObject heartGrid;
-    [SerializeField] private GameObject heartPrefab;
     [SerializeField] private GameObject timerGrid;
     [SerializeField] private GameObject blackScreenUI;
     [SerializeField] private TextMeshProUGUI goTimerUI;
@@ -35,16 +33,9 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private float cameraAnimationSeconds;
     public Vector2[] playerSpawnPoint = new Vector2[1];
     public Vector2[] ghostSpawnPoints = new Vector2[3];
+    public float levelDurationSeconds;
     public LevelType currentLevelType;
     public LevelState CurrentGameState { get; private set; }
-    [Space]
-
-    [Header("Jos Haaste")]
-    public NetworkVariable<int> lives = new(value: 3);
-    [Space]
-
-    [Header("Jos minipeli")]
-    public float levelDurationSeconds;
     public float LevelTimer { get; private set; }
 
     //Events
@@ -58,22 +49,12 @@ public class LevelManager : NetworkBehaviour
             instance = this;
         }
         timerVisual = timerGrid.GetComponentInChildren<TextMeshProUGUI>();
-        lives.OnValueChanged += OnLoseHeart;
     }
 
     private void Start()
     {
-        switch (currentLevelType)
-        {
-            case LevelType.Challenge:
-                heartGrid.SetActive(true);
-                SpawnHearts();
-                break;
-            case LevelType.Minigame:
-                LevelTimer = levelDurationSeconds;
-                timerGrid.SetActive(true);
-                break;
-        }
+        LevelTimer = levelDurationSeconds;
+        timerGrid.SetActive(true);
     }
 
     private void Update()
@@ -127,6 +108,26 @@ public class LevelManager : NetworkBehaviour
                 goTimerUI.gameObject.SetActive(true);
                 break;
         }
+
+        int playerCount = 0;
+        int ghostCount = 0;
+
+        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PlayerMovement2D playerComponent = player.GetComponent<PlayerMovement2D>();
+            if (player.GetComponentInParent<MainPlayerInfo>().isGhost.Value)
+            {
+                playerComponent.spawnPoint = ghostSpawnPoints[ghostCount];
+                player.transform.position = playerComponent.spawnPoint;
+                ghostCount++;
+                continue;
+            }
+
+            playerComponent.spawnPoint = playerSpawnPoint[playerCount];
+            player.transform.position = playerComponent.spawnPoint;
+            playerCount++;
+        }
+
         CurrentGameState = LevelState.Starting;
         blackScreenUI.SetActive(false);
 
@@ -135,17 +136,6 @@ public class LevelManager : NetworkBehaviour
     public void SetCamera(Transform player)
     {
         playerCamera.Follow = player;
-    }
-    private void OnLoseHeart(int oldvalue, int newvalue)
-    {
-        Destroy(heartGrid.transform.GetChild(0).gameObject);
-    }
-    private void SpawnHearts()
-    {
-        for (int i = 0;  i < lives.Value; i++)
-        {
-            Instantiate(heartPrefab, heartGrid.transform);
-        }
     }
     private void RunTimer()
     {
@@ -192,11 +182,6 @@ public class LevelManager : NetworkBehaviour
     public void LoadPlayerServerRpc()
     {
         playersLoaded.Value++;
-    }
-    [ServerRpc(RequireOwnership = false)]
-    public void LoseHeartServerRpc()
-    {
-        lives.Value--;
     }
 
     [ServerRpc(RequireOwnership = false)]

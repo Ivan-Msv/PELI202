@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChallengeTile : BoardTile
 {
-    [SerializeField] private string[] sceneNames1v1;
-    [SerializeField] private string[] sceneNames;
+    public string[] sceneNamesTwoPlayers;
+    public string[] sceneNames;
     public override void SetupTile()
     {
+        // Tajusin vast nyt kuink huonosti toi on tehty, vihaan sitä 👍 (4/12/2024)
         tileSprite = GameManager.instance.challengeTile.tileSprite;
         tileName = GameManager.instance.challengeTile.name;
+        sceneNamesTwoPlayers = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNamesTwoPlayers;
+        sceneNames = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames;
     }
 
     public override void InvokeTile()
@@ -24,7 +28,6 @@ public class ChallengeTile : BoardTile
         BoardPath.instance.ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
         BoardPath.instance.ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
 
-        // Change later to challegne selection
         SelectRandomChallenge(thisIndex);
     }
 
@@ -32,18 +35,27 @@ public class ChallengeTile : BoardTile
     {
         string newScene;
         int playersOnTile = 0;
+        List<int> ghosts = new List<int>();
+        List<int> players = new List<int>();
 
-        foreach (var player in GameManager.instance.availablePlayers)
+        for (int i = 0; i < GameManager.instance.availablePlayers.Count; i++)
         {
-            if (currentIndex == player.GetComponentInParent<MainPlayerInfo>().currentBoardPosition.Value)
+            if (currentIndex == GameManager.instance.availablePlayers[i].GetComponentInParent<MainPlayerInfo>().currentBoardPosition.Value)
             {
                 playersOnTile++;
+                players.Add(i);
+            }
+            else
+            {
+                ghosts.Add(i);
             }
         }
 
+        GameManager.instance.FromGhostToPlayerServerRpc(ghosts.ToArray(), players.ToArray());
+
         if (playersOnTile > 1)
         {
-            newScene = sceneNames1v1[Random.Range(0, sceneNames1v1.Length)];
+            newScene = sceneNamesTwoPlayers[Random.Range(0, sceneNamesTwoPlayers.Length)];
         }
         else
         {

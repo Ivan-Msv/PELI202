@@ -41,8 +41,6 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
         animatorComponent = GetComponent<Animator>();
-        spawnPoint = LevelManager.instance.playerSpawnPoint[0];
-        transform.position = spawnPoint;
         spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();

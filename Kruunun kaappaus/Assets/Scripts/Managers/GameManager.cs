@@ -244,6 +244,19 @@ public class GameManager : NetworkBehaviour
     {
         ChangeSceneClientRpc(sceneName);
     }
+    [ServerRpc(RequireOwnership = false)]
+    public void FromGhostToPlayerServerRpc(int[] ghosts, int[] players)
+    {
+        foreach (var index in ghosts)
+        {
+            GameManager.instance.availablePlayers[index].GetComponentInParent<MainPlayerInfo>().isGhost.Value = true;
+        }
+
+        foreach (var index in players)
+        {
+            GameManager.instance.availablePlayers[index].GetComponentInParent<MainPlayerInfo>().isGhost.Value = false;
+        }
+    }
     [ClientRpc]
     private void ChangeSceneClientRpc(string sceneName)
     {
