@@ -260,7 +260,6 @@ public class GameManager : NetworkBehaviour
     }
     public BoardDice GetDiceFromIndex(int index)
     {
-        Debug.Log((DiceIndex)index);
         switch ((DiceIndex)index)
         {
             case DiceIndex.DefaultDice:
