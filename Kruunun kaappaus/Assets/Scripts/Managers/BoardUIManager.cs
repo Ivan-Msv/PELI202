@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BoardUIManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class BoardUIManager : MonoBehaviour
 
     [Header("UI")]
     public BoardShop shopUI;
+    public GameObject gameEndUI;
     public SpecialDiceUI diceUI;
     public BoardCamera virtualCamera;
     public Animator diceAnimator;
@@ -86,6 +88,7 @@ public class BoardUIManager : MonoBehaviour
         localParent = localPlayer.GetComponentInParent<MainPlayerInfo>();
 
         diceUI.AddEvent();
+        CheckForGameEnd();
     }
     private void UpdateCurrentPlayerName(FixedString64Bytes newName)
     {
@@ -98,5 +101,26 @@ public class BoardUIManager : MonoBehaviour
     public bool LocalPlayerOnShopTile()
     {
         return BoardPath.instance.GetIndexTile(GameManager.instance.tilesIndex[localParent.currentBoardPosition.Value]) == GameManager.instance.shopTile;
+    }
+
+    private void CheckForGameEnd()
+    {
+        if (localParent.crownAmount.Value >= 0)
+        {
+            GameManager.instance.TriggerGameEndServerRpc();
+        }
+    }
+
+    public void ShowEndMenu()
+    {
+        NetworkManager.Singleton.OnClientDisconnectCallback -= localParent.GetComponent<PlayerSetup>().ReturnToLobby;
+        gameEndUI.GetComponentInChildren<Button>().onClick.AddListener(() => { DisconnectClient(); });
+        gameEndUI.SetActive(true);
+    }
+
+    private void DisconnectClient()
+    {
+        NetworkManager.Singleton.Shutdown();
+        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
 }

@@ -16,6 +16,6 @@ public class BoardCamera : MonoBehaviour
         {
             return;
         }
-        //virtualCamera.Follow = GameManager.instance.currentPlayer.transform;
+        virtualCamera.Follow = GameManager.instance.currentPlayer.transform;
     }
 }

@@ -29,22 +29,21 @@ public class PlayerSetup : NetworkBehaviour
         currentState = PlayerState.Menu;
         SavedData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
         SceneManager.sceneLoaded += ClearSubPlayers;
-        //NetworkManager.OnClientStopped += ReturnToLobby;
         NetworkManager.OnClientDisconnectCallback += ReturnToLobby;
     }
-    private void ReturnToLobby(ulong action)
+    public void ReturnToLobby(ulong action)
     {
-        NetworkManager.OnClientDisconnectCallback -= ReturnToLobby;
-        SceneManager.sceneLoaded -= ClearSubPlayers;
         NetworkManager.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
-        StartCoroutine(DelayedErrorMessage());
     }
-    private IEnumerator DelayedErrorMessage()
+
+    public override void OnNetworkDespawn()
     {
-        yield return new WaitForSeconds(0.1f);
-        MainMenuUI.instance.ShowErrorMessage("Test2");
+        base.OnNetworkDespawn();
+        NetworkManager.OnClientDisconnectCallback -= ReturnToLobby;
+        SceneManager.sceneLoaded -= ClearSubPlayers;
     }
+
     private void UpdatePlayerState(Scene newScene)
     {
         if (newScene.name.Contains("level", System.StringComparison.OrdinalIgnoreCase))

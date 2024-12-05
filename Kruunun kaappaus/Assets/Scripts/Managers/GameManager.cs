@@ -83,6 +83,14 @@ public class GameManager : NetworkBehaviour
         BoardPath.instance.InitTiles();
     }
 
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+        SceneManager.sceneLoaded -= OnSceneChanged;
+        SceneManager.activeSceneChanged -= OnSceneChangedServer;
+        Destroy(gameObject);
+    }
+
     private void OnSceneChanged(Scene newScene, LoadSceneMode arg1)
     {
         if (newScene.name.Contains("level", StringComparison.OrdinalIgnoreCase))
@@ -118,7 +126,6 @@ public class GameManager : NetworkBehaviour
         else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
         {
             currentState.Value = BoardState.WaitingForPlayers;
-            BoardUIManager.instance.virtualCamera.SetCameraPosition();
         }
         else
         {
@@ -169,6 +176,7 @@ public class GameManager : NetworkBehaviour
         currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
         currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
+        BoardUIManager.instance.virtualCamera.SetCameraPosition();
         BoardUIManager.instance.shopUI.UpdateItems();
         playerTurn++;
 
@@ -262,6 +270,17 @@ public class GameManager : NetworkBehaviour
     private void ChangeSceneClientRpc(string sceneName)
     {
         StartCoroutine(SceneChangeCoroutine(sceneName));
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void TriggerGameEndServerRpc()
+    {
+        TriggerGameEndClientRpc();
+        currentState.Value = BoardState.Idle;
+    }
+    [ClientRpc]
+    private void TriggerGameEndClientRpc()
+    {
+        BoardUIManager.instance.ShowEndMenu();
     }
     private IEnumerator SceneChangeCoroutine(string sceneName)
     {
