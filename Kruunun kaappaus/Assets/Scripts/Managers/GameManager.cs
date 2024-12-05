@@ -275,6 +275,8 @@ public class GameManager : NetworkBehaviour
     public void TriggerGameEndServerRpc()
     {
         TriggerGameEndClientRpc();
+        Debug.Log("Changed state to idle");
+        Time.timeScale = 0;
         currentState.Value = BoardState.Idle;
     }
     [ClientRpc]

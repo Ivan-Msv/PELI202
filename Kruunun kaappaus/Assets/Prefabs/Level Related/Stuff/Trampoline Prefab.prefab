@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2261702602513459533}
   - component: {fileID: -2725792418976239320}
   - component: {fileID: 7022371540613267000}
-  m_Layer: 1
+  m_Layer: 0
   m_Name: Trampoline Prefab
   m_TagString: Trampoline
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.029017687, y: -0.59841037}
+  m_Offset: {x: -0.029017687, y: -0.62838876}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -159,7 +159,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4404788, y: 0.57252455}
+  m_Size: {x: 1.4404788, y: 0.5125677}
   m_EdgeRadius: 0
 --- !u!61 &7010405592573582284
 BoxCollider2D:
@@ -195,7 +195,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.029649258, y: -0.2905807}
+  m_Offset: {x: -0.029649258, y: -0.31429222}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -205,7 +205,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.4417667, y: 0.037054867}
+  m_Size: {x: 1.4417667, y: 0.11797494}
   m_EdgeRadius: 0
 --- !u!114 &-2261702602513459533
 MonoBehaviour:
@@ -261,4 +261,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xDirection: 0
   yDirection: 0
-  jumpHeight: 20
+  xBounce: 0
+  yBounce: 0

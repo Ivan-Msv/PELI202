@@ -20,7 +20,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float ghostMoveSpeed;
     [SerializeField] private float xAxisDrag;
     [Header("Jump")]
-    [SerializeField] private LayerMask ground;
+    [SerializeField] private LayerMask ground, transparentFx;
     [SerializeField] private float minJumpHeight;
     [SerializeField] private float maxJumpHeight;
     [SerializeField] private float maxCoyoteTime;
@@ -112,7 +112,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private void GhostMovement()
     {
         // haamu asetukset
-        rb.excludeLayers = ground;
+        rb.excludeLayers = ground | transparentFx;
         rb.gravityScale = 0;
 
 

@@ -30,6 +30,8 @@ public class BoardUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinCounter;
     [SerializeField] private TextMeshProUGUI crownCounter;
     [SerializeField] private TextMeshProUGUI playerTurn;
+    [SerializeField] private TextMeshProUGUI gameEndHeader;
+    [SerializeField] private TextMeshProUGUI gameEndResults;
     [SerializeField] private string currentTurnPlayerName;
 
 
@@ -105,7 +107,7 @@ public class BoardUIManager : MonoBehaviour
 
     private void CheckForGameEnd()
     {
-        if (localParent.crownAmount.Value >= 0)
+        if (localParent.crownAmount.Value >= 5)
         {
             GameManager.instance.TriggerGameEndServerRpc();
         }
@@ -115,12 +117,35 @@ public class BoardUIManager : MonoBehaviour
     {
         NetworkManager.Singleton.OnClientDisconnectCallback -= localParent.GetComponent<PlayerSetup>().ReturnToLobby;
         gameEndUI.GetComponentInChildren<Button>().onClick.AddListener(() => { DisconnectClient(); });
-        gameEndUI.SetActive(true);
+        SetupGameEndUI();
     }
 
     private void DisconnectClient()
     {
         NetworkManager.Singleton.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+    }
+    private void SetupGameEndUI()
+    {
+        string winnerName = "";
+        // Niin ei tarvi tehä toisen foreach loop missä sä etit voittajan ja sen nimen (toinen tapa ois laittaa se RPCn kautta)
+        int winningNumber = 0;
+        string finalResults = "Final results:";
+
+        foreach (var player in GameManager.instance.availablePlayers)
+        {
+            var playerParent = player.GetComponentInParent<MainPlayerInfo>();
+            finalResults += $"\n{playerParent.playerName.Value} : [ Coins: {playerParent.coinAmount.Value}, Crowns: {playerParent.crownAmount.Value} ]";
+            if (playerParent.crownAmount.Value > winningNumber)
+            {
+                winningNumber = playerParent.crownAmount.Value;
+                winnerName = playerParent.playerName.Value.ToString();
+            }
+        }
+
+        gameEndHeader.text = $"Winner: {winnerName} !";
+        gameEndResults.text = finalResults;
+
+        gameEndUI.SetActive(true);
     }
 }

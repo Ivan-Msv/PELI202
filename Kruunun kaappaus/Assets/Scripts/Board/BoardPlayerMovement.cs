@@ -31,8 +31,11 @@ public class BoardPlayerMovement : MonoBehaviour
             while (player.transform.position != nextTilePosition)
             {
                 player.transform.position = Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime);
+                player.GetComponent<Animator>().SetBool("IsMoving", true);
                 yield return null;
             }
+
+            player.GetComponent<Animator>().SetBool("IsMoving", false);
             yield return new WaitForSeconds(0.1f);
             player.playerInfo.currentBoardPosition.Value = index;
             steps--;

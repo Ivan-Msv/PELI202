@@ -406,6 +406,9 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 1
+  transparentFx:
+    serializedVersion: 2
+    m_Bits: 2
   minJumpHeight: 10
   maxJumpHeight: 2200
   maxCoyoteTime: 0.05
