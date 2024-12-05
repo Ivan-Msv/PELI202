@@ -72,19 +72,12 @@ public class LevelManager : NetworkBehaviour
                 ThreeTwoOneGo();
                 break;
             case LevelState.InProgress:
-                if (currentLevelType == LevelType.Minigame)
-                {
-                    RunTimer();
-                }
+                RunTimer();
                 // Run everything for the game
                 break;
             case LevelState.Ending:
                 // Play animation and switch to idle (BELOW IS TEMPORARY)
-                if (!IsServer)
-                {
-                    return;
-                }
-                NetworkManager.SceneManager.LoadScene("MainBoard", UnityEngine.SceneManagement.LoadSceneMode.Single);
+                StartCoroutine(EndingAnimation());
                 CurrentGameState = LevelState.Idle;
                 break;
         }
@@ -162,6 +155,29 @@ public class LevelManager : NetworkBehaviour
         playerCamera.Priority = 1;
         yield return new WaitForSeconds(cameraAnimationSeconds - 1);
         goTimerUI.gameObject.SetActive(true);
+    }
+    private IEnumerator EndingAnimation()
+    {
+        float timeToWait = 0;
+        switch (currentLevelType)
+        {
+            case LevelType.Challenge:
+                endingCamera.Priority = 1;
+                playerCamera.Priority = 0;
+                timeToWait = cameraAnimationSeconds + 1;
+                break;
+            case LevelType.Minigame:
+                timeToWait = 1;
+                break;
+        }
+        // play animation
+        yield return new WaitForSeconds(timeToWait);
+
+        if (!IsServer)
+        {
+            yield break;
+        }
+        NetworkManager.SceneManager.LoadScene("MainBoard", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
     private void ThreeTwoOneGo()
     {

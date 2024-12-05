@@ -386,10 +386,6 @@ MonoBehaviour:
     m_InternalValue: 0
   playerIsGhost:
     m_InternalValue: 0
-  coinAmount:
-    m_InternalValue: 0
-  crownAmount:
-    m_InternalValue: 0
 --- !u!114 &9174738505860144113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +401,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   isGhost: 0
   moveSpeed: 1
+  ghostMoveSpeed: 6
   xAxisDrag: 0.2
   ground:
     serializedVersion: 2

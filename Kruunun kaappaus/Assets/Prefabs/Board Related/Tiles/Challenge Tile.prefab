@@ -102,12 +102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileSprite: {fileID: 21300000, guid: ccfa01e1a83205e4ca84f9695cf6b326, type: 3}
   tileName: 
-  sceneNames1v1:
-  - 1v1ChallengeLevel1
+  sceneNamesTwoPlayers: []
   sceneNames:
-  - ChallengeLevel1
-  - ChallengeLevel2
-  - ChallengeLevel3
-  - ChallengeLevel4
-  - ChallengeLevel5
-  - ChallengeLevel6
+  - 1v1ChallengeLevel1

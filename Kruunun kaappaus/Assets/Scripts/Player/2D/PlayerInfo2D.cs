@@ -33,6 +33,7 @@ public class PlayerInfo2D : NetworkBehaviour
         {
             LevelManager.instance.SetCamera(transform);
             LevelManager.instance.LoadPlayerServerRpc();
+            playerIsGhost.Value = GetComponentInParent<MainPlayerInfo>().isGhost.Value;
         }
     }
 

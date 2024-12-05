@@ -17,6 +17,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private bool canJump;
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float ghostMoveSpeed;
     [SerializeField] private float xAxisDrag;
     [Header("Jump")]
     [SerializeField] private LayerMask ground;
@@ -58,10 +59,17 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState != LevelState.InProgress)
+        if (!NetworkObject.IsOwner)
         {
             return;
         }
+
+        if (LevelManager.instance.CurrentGameState != LevelState.InProgress)
+        {
+            rb.linearVelocity = new Vector2(0, 0);
+            return;
+        }
+
         PlayerStateManager();
         if (isGhost)
         {
@@ -73,7 +81,6 @@ public class PlayerMovement2D : NetworkBehaviour
             Jump();
             PlayerMovement();
         }
-        PlayerMovement();
     }
 
     private bool IsGrounded()
@@ -111,7 +118,7 @@ public class PlayerMovement2D : NetworkBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        rb.linearVelocity = new Vector2(horizontal * moveSpeed, vertical * moveSpeed);
+        rb.linearVelocity = new Vector2(horizontal * ghostMoveSpeed, vertical * ghostMoveSpeed);
     }
     private void Jump()
     {
@@ -230,10 +237,6 @@ public class PlayerMovement2D : NetworkBehaviour
         if (collision.CompareTag("Death Trigger"))
         {
             transform.position = spawnPoint;
-            if (LevelManager.instance.currentLevelType == LevelType.Challenge)
-            {
-               
-            }
         }
         if (collision.CompareTag("Coin"))
         {
