@@ -17,6 +17,7 @@ public class BoardUIManager : MonoBehaviour
     [Header("UI")]
     public BoardShop shopUI;
     public SpecialDiceUI diceUI;
+    public BoardCamera virtualCamera;
     public Animator diceAnimator;
 
     [Header("Buttons")]

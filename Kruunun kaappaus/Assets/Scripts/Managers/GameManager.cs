@@ -118,6 +118,7 @@ public class GameManager : NetworkBehaviour
         else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
         {
             currentState.Value = BoardState.WaitingForPlayers;
+            BoardUIManager.instance.virtualCamera.SetCameraPosition();
         }
         else
         {
@@ -249,12 +250,12 @@ public class GameManager : NetworkBehaviour
     {
         foreach (var index in ghosts)
         {
-            GameManager.instance.availablePlayers[index].GetComponentInParent<MainPlayerInfo>().isGhost.Value = true;
+            availablePlayers[index].GetComponentInParent<MainPlayerInfo>().isGhost.Value = true;
         }
 
         foreach (var index in players)
         {
-            GameManager.instance.availablePlayers[index].GetComponentInParent<MainPlayerInfo>().isGhost.Value = false;
+            availablePlayers[index].GetComponentInParent<MainPlayerInfo>().isGhost.Value = false;
         }
     }
     [ClientRpc]
