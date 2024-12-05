@@ -25,6 +25,7 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private GameObject timerGrid;
     [SerializeField] private GameObject blackScreenUI;
     [SerializeField] private TextMeshProUGUI goTimerUI;
+    [SerializeField] private TextMeshProUGUI overUI;
     private TextMeshProUGUI timerVisual;
     private float goTimer = 4;
 
@@ -34,6 +35,7 @@ public class LevelManager : NetworkBehaviour
     public Vector2[] playerSpawnPoint = new Vector2[1];
     public Vector2[] ghostSpawnPoints = new Vector2[3];
     public float levelDurationSeconds;
+    public int availableCoins;
     public LevelType currentLevelType;
     public LevelState CurrentGameState { get; private set; }
     public float LevelTimer { get; private set; }
@@ -73,6 +75,10 @@ public class LevelManager : NetworkBehaviour
                 break;
             case LevelState.InProgress:
                 RunTimer();
+                if (currentLevelType == LevelType.Minigame && availableCoins == 0)
+                {
+                    CurrentGameState = LevelState.Ending;
+                }
                 // Run everything for the game
                 break;
             case LevelState.Ending:
@@ -121,6 +127,7 @@ public class LevelManager : NetworkBehaviour
             playerCount++;
         }
 
+        TimerVisual();
         CurrentGameState = LevelState.Starting;
         blackScreenUI.SetActive(false);
 
@@ -139,6 +146,11 @@ public class LevelManager : NetworkBehaviour
         }
 
         LevelTimer -= Time.deltaTime;
+        TimerVisual();
+    }
+
+    private void TimerVisual()
+    {
         var timeInMinutes = Mathf.FloorToInt(LevelTimer / 60);
         var timeInSeconds = Mathf.FloorToInt(LevelTimer - timeInMinutes * 60);
         string timerText = string.Format("Time remaining: {0:00}:{1:00}", timeInMinutes, timeInSeconds);
@@ -164,13 +176,13 @@ public class LevelManager : NetworkBehaviour
             case LevelType.Challenge:
                 endingCamera.Priority = 1;
                 playerCamera.Priority = 0;
-                timeToWait = cameraAnimationSeconds + 1;
+                timeToWait = cameraAnimationSeconds + 0.5f;
                 break;
             case LevelType.Minigame:
-                timeToWait = 1;
+                timeToWait = 1.5f;
                 break;
         }
-        // play animation
+        overUI.gameObject.SetActive(true);
         yield return new WaitForSeconds(timeToWait);
 
         if (!IsServer)
@@ -205,5 +217,10 @@ public class LevelManager : NetworkBehaviour
     {
         var animationObject = NetworkManager.SpawnManager.SpawnedObjects[objectId];
         animationObject.GetComponent<Animator>().Play(animation);
+    }
+    [ClientRpc]
+    public void UpdateLevelStateClientRpc()
+    {
+        CurrentGameState = LevelState.Ending;
     }
 }

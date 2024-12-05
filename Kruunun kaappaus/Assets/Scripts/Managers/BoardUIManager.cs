@@ -16,6 +16,7 @@ public class BoardUIManager : MonoBehaviour
 
     [Header("UI")]
     public BoardShop shopUI;
+    public SpecialDiceUI diceUI;
     public Animator diceAnimator;
 
     [Header("Buttons")]
@@ -40,6 +41,12 @@ public class BoardUIManager : MonoBehaviour
 
         rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); });
         openStoreButton.onClick.AddListener(() => { shopUI.OpenStore(); });
+    }
+
+    private void OnDisable()
+    {
+        GameManager.instance.OnPlayerValueChange -= UpdateLocalPlayers;
+        GameManager.instance.OnCurrentPlayerChange -= UpdateCurrentPlayerName;
     }
 
     private void Update()
@@ -76,6 +83,8 @@ public class BoardUIManager : MonoBehaviour
     {
         localPlayer = GameManager.instance.availablePlayers.Find(player => player.OwnerClientId == NetworkManager.Singleton.LocalClientId);
         localParent = localPlayer.GetComponentInParent<MainPlayerInfo>();
+
+        diceUI.AddEvent();
     }
     private void UpdateCurrentPlayerName(FixedString64Bytes newName)
     {

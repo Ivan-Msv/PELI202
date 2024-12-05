@@ -9,17 +9,17 @@ public class SpecialDiceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI selectedText;
     [SerializeField] private Image diceIcon;
 
-    private void Start()
+    public void AddEvent()
     {
-        StartCoroutine(AddEventDelayed());
-    }
-
-    private IEnumerator AddEventDelayed()
-    {
-        yield return new WaitForSeconds(3);
-        Debug.Log("Added delayed event.");
+        Debug.Log("Added event.");
         BoardUIManager.instance.localParent.specialDiceIndex.OnValueChanged += UpdateIcon;
     }
+
+    private void OnDisable()
+    {
+        BoardUIManager.instance.localParent.specialDiceIndex.OnValueChanged -= UpdateIcon;
+    }
+
     public void OnButtonClick()
     {
         switch (BoardUIManager.instance.localParent.specialDiceIndex.Value)

@@ -17,6 +17,7 @@ public class CoinCounter : MonoBehaviour
         {
             allCoinAmount++;
         }
+        LevelManager.instance.availableCoins = allCoinAmount;
     }
 
     // Update is called once per frame
@@ -36,5 +37,6 @@ public class CoinCounter : MonoBehaviour
     private void AddCollectedCoin(int oldValue, int newValue)
     {
         collectedCoins++;
+        LevelManager.instance.availableCoins--;
     }
 }

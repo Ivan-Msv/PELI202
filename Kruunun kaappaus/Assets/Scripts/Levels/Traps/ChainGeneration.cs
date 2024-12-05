@@ -13,6 +13,7 @@ public class ChainGeneration : MonoBehaviour
 
     private void GenerateChain()
     {
+        GetComponent<SpriteRenderer>().size = new Vector2(0.5f, 0.5f);
         Vector2 newPosition = (startPoint.transform.position + endPoint.transform.position) / 2;
         Vector2 direction = (startPoint.transform.position - endPoint.transform.position).normalized;
         Quaternion newRotation = Quaternion.FromToRotation(Vector3.up, direction);

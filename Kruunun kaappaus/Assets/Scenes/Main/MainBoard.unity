@@ -1857,73 +1857,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1346766163}
   m_CullTransparentMesh: 1
---- !u!1001 &1395696999
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2094167429}
-    m_Modifications:
-    - target: {fileID: 2165456807816290501, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_Name
-      value: Challenge Tile
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
---- !u!4 &1395697000 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2340078841656968169, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-  m_PrefabInstance: {fileID: 1395696999}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1395697001 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2165456807816290501, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
-  m_PrefabInstance: {fileID: 1395696999}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1407944791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2100,7 +2033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23712362, y: 0.469}
   m_AnchorMax: {x: 0.7656703, y: 0.91952044}
-  m_AnchoredPosition: {x: -10.304535, y: -3.8607788}
+  m_AnchoredPosition: {x: -10.304565, y: -3.8607788}
   m_SizeDelta: {x: 5.121, y: -166.86072}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1415753884
@@ -2827,6 +2760,7 @@ MonoBehaviour:
   onShopTile: 0
   localPlayerTurn: 0
   shopUI: {fileID: 1692385401}
+  diceUI: {fileID: 1613468516}
   diceAnimator: {fileID: 1725666589}
   rollButton: {fileID: 2016933220}
   openStoreButton: {fileID: 965509276}
@@ -2898,7 +2832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23712362, y: 0.469}
   m_AnchorMax: {x: 0.7656703, y: 0.91952044}
-  m_AnchoredPosition: {x: -10.304535, y: -3.8607788}
+  m_AnchoredPosition: {x: -10.304565, y: -3.8607788}
   m_SizeDelta: {x: 5.121, y: -166.86072}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1720519069
@@ -4018,11 +3952,11 @@ PrefabInstance:
     - target: {fileID: 3059436255355199960, guid: 10c6e15ec5fd2314a87f98c64ea1c8a5, type: 3}
       propertyPath: 'tiles.Array.data[1]'
       value: 
-      objectReference: {fileID: 1426585485}
+      objectReference: {fileID: 0}
     - target: {fileID: 3059436255355199960, guid: 10c6e15ec5fd2314a87f98c64ea1c8a5, type: 3}
       propertyPath: 'tiles.Array.data[2]'
       value: 
-      objectReference: {fileID: 1395697001}
+      objectReference: {fileID: 1426585485}
     - target: {fileID: 3059436255355199960, guid: 10c6e15ec5fd2314a87f98c64ea1c8a5, type: 3}
       propertyPath: 'tiles.Array.data[3]'
       value: 
@@ -4412,13 +4346,10 @@ PrefabInstance:
       addedObject: {fileID: 1870957099}
     - targetCorrespondingSourceObject: {fileID: 2390891645069398362, guid: 10c6e15ec5fd2314a87f98c64ea1c8a5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1395697000}
+      addedObject: {fileID: 1576167872}
     - targetCorrespondingSourceObject: {fileID: 2390891645069398362, guid: 10c6e15ec5fd2314a87f98c64ea1c8a5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1426585484}
-    - targetCorrespondingSourceObject: {fileID: 2390891645069398362, guid: 10c6e15ec5fd2314a87f98c64ea1c8a5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1576167872}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10c6e15ec5fd2314a87f98c64ea1c8a5, type: 3}
 --- !u!4 &2094167429 stripped
