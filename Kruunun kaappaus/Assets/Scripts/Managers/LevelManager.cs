@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Cinemachine;
-using Unity.Collections;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum LevelType
@@ -111,7 +111,19 @@ public class LevelManager : NetworkBehaviour
         int playerCount = 0;
         int ghostCount = 0;
 
-        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        List<GameObject> shuffledPlayers = new();
+        int n = players.Count;
+
+        while (n > 0)
+        {
+            var randomIndex = UnityEngine.Random.Range(0, n);
+            shuffledPlayers.Add(players[randomIndex]);
+            players.Remove(players[randomIndex]);
+            n--;
+        }
+
+        foreach (var player in shuffledPlayers)
         {
             PlayerMovement2D playerComponent = player.GetComponent<PlayerMovement2D>();
             if (player.GetComponentInParent<MainPlayerInfo>().isGhost.Value)
