@@ -232,7 +232,7 @@ public class PlayerMovement2D : NetworkBehaviour
             transform.position = spawnPoint;
             if (LevelManager.instance.currentLevelType == LevelType.Challenge)
             {
-                LevelManager.instance.LoseHeartServerRpc();
+               
             }
         }
         if (collision.CompareTag("Coin"))
