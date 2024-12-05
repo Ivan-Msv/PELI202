@@ -6,15 +6,20 @@ using UnityEngine;
 
 public class ChallengeTile : BoardTile
 {
-    public string[] sceneNamesTwoPlayers;
-    public string[] sceneNames;
+    [SerializeField] private string[] sceneNames1;
+    [SerializeField] private string[] sceneNames2;
+    [SerializeField] private string[] sceneNames3;
+    [SerializeField] private string[] sceneNames4;
     public override void SetupTile()
     {
         // Tajusin vast nyt kuink huonosti toi on tehty, vihaan sitä 👍 (4/12/2024)
+        // Oisin voinu tehä struct tai jtn mut nyt mun pitää kärsii koska en oo vaihtamas sitä täs vaihees
         tileSprite = GameManager.instance.challengeTile.tileSprite;
         tileName = GameManager.instance.challengeTile.name;
-        sceneNamesTwoPlayers = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNamesTwoPlayers;
-        sceneNames = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames;
+        sceneNames1 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames1;
+        sceneNames2 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames2;
+        sceneNames3 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames3;
+        sceneNames4 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames4;
     }
 
     public override void InvokeTile()
@@ -53,13 +58,23 @@ public class ChallengeTile : BoardTile
 
         GameManager.instance.FromGhostToPlayerServerRpc(ghosts.ToArray(), players.ToArray());
 
-        if (playersOnTile > 1)
+        switch (playersOnTile)
         {
-            newScene = sceneNamesTwoPlayers[Random.Range(0, sceneNamesTwoPlayers.Length)];
-        }
-        else
-        {
-            newScene = sceneNames[Random.Range(0, sceneNames.Length)];
+            case 1:
+                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
+                break;
+            case 2:
+                newScene = sceneNames2[Random.Range(0, sceneNames2.Length)];
+                break;
+            case 3:
+                newScene = sceneNames3[Random.Range(0, sceneNames3.Length)];
+                break;
+            case 4:
+                newScene = sceneNames4[Random.Range(0, sceneNames4.Length)];
+                break;
+            default:
+                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
+                break;
         }
 
         GameManager.instance.LoadSceneServerRpc(newScene);

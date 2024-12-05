@@ -63,7 +63,6 @@ public class BoardShop : MonoBehaviour
         {
             shopPanel.sizeDelta = new Vector2(shopPanel.sizeDelta.x, shopPanel.sizeDelta.y - (shopPanel.sizeDelta.y * itemPools.Length - 1));
         }
-
         UpdateItems();
     }
     public void UpdateItems()
