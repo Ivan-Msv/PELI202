@@ -18,6 +18,7 @@ public class BoardUIManager : MonoBehaviour
     [Header("UI")]
     public BoardShop shopUI;
     public GameObject gameEndUI;
+    public GameObject rollDiceUI;
     public SpecialDiceUI diceUI;
     public BoardCamera virtualCamera;
     public Animator diceAnimator;
@@ -33,6 +34,7 @@ public class BoardUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerTurnTimer;
     [SerializeField] private TextMeshProUGUI gameEndHeader;
     [SerializeField] private TextMeshProUGUI gameEndResults;
+    [SerializeField] private TextMeshProUGUI rollDiceName;
     [SerializeField] private string currentTurnPlayerName;
 
 
@@ -117,6 +119,12 @@ public class BoardUIManager : MonoBehaviour
         {
             GameManager.instance.TriggerGameEndServerRpc();
         }
+    }
+
+    public void UpdateRollDiceUI()
+    {
+        rollDiceUI.SetActive(true);
+        rollDiceName.text = $"{currentTurnPlayerName} rolls...";
     }
 
     public void ShowEndMenu()

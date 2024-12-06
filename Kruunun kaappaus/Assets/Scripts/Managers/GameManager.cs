@@ -230,13 +230,13 @@ public class GameManager : NetworkBehaviour
     public void DiceAnimationClientRpc(int diceIndex, int number)
     {
         string animString = GetDiceFromIndex(diceIndex).DiceAnimationString(number);
-        diceAnimator.gameObject.SetActive(true);
+        BoardUIManager.instance.UpdateRollDiceUI();
         diceAnimator.Play(animString);
     }
     public IEnumerator AnimationEventCoroutine()
     {
         yield return new WaitForSeconds(afterDiceDelaySeconds);
-        diceAnimator.gameObject.SetActive(false);
+        diceAnimator.transform.parent.gameObject.SetActive(false);
 
         if (currentPlayer.OwnerClientId == NetworkManager.LocalClientId)
         {
