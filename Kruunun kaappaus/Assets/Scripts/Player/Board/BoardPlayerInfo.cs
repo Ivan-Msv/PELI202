@@ -47,7 +47,6 @@ public class BoardPlayerInfo : NetworkBehaviour
 
     private void UpdatePlayerSprite(int oldIndex, int newIndex)
     {
-        Debug.Log(MainMenuUI.instance.PlayerIcons[newIndex]);
         spriteComponent.sprite = MainMenuUI.instance.PlayerIcons[newIndex];
         GetComponent<Animator>().runtimeAnimatorController = MainMenuUI.instance.PlayerAnimators[newIndex];
     }

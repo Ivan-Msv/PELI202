@@ -68,6 +68,7 @@ public class LobbyUI : NetworkBehaviour
     {
         HandleLobbyPollForUpdates();
         CheckStartMatch();
+        //CheckLobbyCount(); DEBUG laita takas päälle on release
     }
     public async void SelectSprite(string playerId, int colorIndex, int iconIndex)
     {
@@ -122,6 +123,16 @@ public class LobbyUI : NetworkBehaviour
         playerCount.text = string.Format("Players: {0}/{1}", currentLobby.Players.Count, currentLobby.MaxPlayers);
         RefreshPlayerTab();
     }
+    private void CheckLobbyCount()
+    {
+        if (currentLobby == null || currentLobby.HostId != AuthenticationService.Instance.PlayerId)
+        {
+            return;
+        }
+
+        startGame.interactable = currentLobby.Players.Count > 1;
+        startGame.GetComponentInChildren<TextMeshProUGUI>().text = startGame.interactable ? "Start game" : "Can't start without at least 1 player";
+    }
     private void ActivateLobby()
     {
         playerCount.text = string.Format(playerCount.text, currentLobby.Players.Count, currentLobby.MaxPlayers);
@@ -132,7 +143,6 @@ public class LobbyUI : NetworkBehaviour
 
         if (currentLobby.HostId == AuthenticationService.Instance.PlayerId)
         {
-            // myöhemmin myös tarkistus jos on ainakin 2 pelaajaa
             startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Start Match";
             startGame.interactable = true;
         }
@@ -266,6 +276,7 @@ public class LobbyUI : NetworkBehaviour
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
         if (host.Data["ServerStarted"].Value != "0" && !NetworkManager.IsConnectedClient)
         {
+            leaveLobby.interactable = false;
             LobbyManager.instance.JoinRelay(host.Data["AllocationCode"].Value);
         }
     }

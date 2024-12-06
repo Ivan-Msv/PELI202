@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c6b550fa1358f074596ce0fe72ba6ec1
+guid: e21866f7c2b692f428238a24d90626cb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6358040702757662528
-    second: Yellow_0
+      213: 4499468131736861583
+    second: test for moving background.jpg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,9 +40,9 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 2
-    wrapV: 2
-    wrapW: 2
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Yellow_0
+      name: test for moving background.jpg_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 1786
+        height: 99
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 04f6853355c4c3850800000000000000
-      internalID: 6358040702757662528
+      spriteID: f8bbd563d62517e30800000000000000
+      internalID: 4499468131736861583
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Yellow_0: 6358040702757662528
+      test for moving background.jpg_0: 4499468131736861583
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

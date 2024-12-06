@@ -64,7 +64,7 @@ public class MainMenuUI : MonoBehaviour
 
         // Lobby Selection Menu
         createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; });
-        joinLobby.onClick.AddListener(() => { OpenSubMenu(joinLobby.gameObject, joinMenu); });
+        joinLobby.onClick.AddListener(() => { OpenSubMenu(joinMenu); });
         confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); });
     }
     public void ReturnToPreviousMenu()
@@ -121,10 +121,9 @@ public class MainMenuUI : MonoBehaviour
             child.gameObject.SetActive(false);
         }
     }
-    private void OpenSubMenu(GameObject originalObject, GameObject menu)
+    private void OpenSubMenu(GameObject menu)
     {
-        originalObject.SetActive(false);
-        menu.SetActive(true);
+        menu.SetActive(!menu.activeSelf);
     }
     private void ResetSubMenus()
     {
