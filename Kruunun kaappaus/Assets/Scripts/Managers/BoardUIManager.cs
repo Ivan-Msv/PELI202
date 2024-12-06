@@ -30,6 +30,7 @@ public class BoardUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coinCounter;
     [SerializeField] private TextMeshProUGUI crownCounter;
     [SerializeField] private TextMeshProUGUI playerTurn;
+    [SerializeField] private TextMeshProUGUI playerTurnTimer;
     [SerializeField] private TextMeshProUGUI gameEndHeader;
     [SerializeField] private TextMeshProUGUI gameEndResults;
     [SerializeField] private string currentTurnPlayerName;
@@ -82,7 +83,12 @@ public class BoardUIManager : MonoBehaviour
         coinCounter.text = $"{localParent.coinAmount.Value}";
         crownCounter.text = $"{localParent.crownAmount.Value}";
 
-        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : currentTurnPlayerName) } turn: {(int)GameManager.instance.TurnTimer.Value + 1} sec left";
+        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : currentTurnPlayerName) } turn";
+
+        var timeInMinutes = Mathf.FloorToInt((GameManager.instance.TurnTimer.Value + 1) / 60);
+        var timeInSeconds = Mathf.FloorToInt((GameManager.instance.TurnTimer.Value + 1) - timeInMinutes * 60);
+        string timerText = string.Format("{0:00}:{1:00}", timeInMinutes, timeInSeconds);
+        playerTurnTimer.text = timerText;
     }
     private void UpdateLocalPlayers()
     {
