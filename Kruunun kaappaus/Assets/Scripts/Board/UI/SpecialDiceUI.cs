@@ -12,6 +12,7 @@ public class SpecialDiceUI : MonoBehaviour
     public void AddEvent()
     {
         Debug.Log("Added event.");
+        UpdateIcon(0, BoardUIManager.instance.localParent.specialDiceIndex.Value);
         BoardUIManager.instance.localParent.specialDiceIndex.OnValueChanged += UpdateIcon;
     }
 

@@ -188,7 +188,7 @@ public class LevelManager : NetworkBehaviour
             case LevelType.Challenge:
                 endingCamera.Priority = 1;
                 playerCamera.Priority = 0;
-                timeToWait = cameraAnimationSeconds + 0.5f;
+                timeToWait = cameraAnimationSeconds > 1 ? cameraAnimationSeconds + 0.5f : 1.5f;
                 break;
             case LevelType.Minigame:
                 timeToWait = 1.5f;

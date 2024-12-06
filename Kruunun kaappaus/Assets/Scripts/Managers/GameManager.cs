@@ -305,8 +305,6 @@ public class GameManager : NetworkBehaviour
                 return minusDice;
         }
 
-        // Tää saattaa rollaa 2 kertaa jos olet host, en jaksa tarkistaa nii jätän se tollee.
-        Debug.LogError("Couldn't find from given index, returning default (Ignore this error if host)");
         return defaultDice;
     }
 }

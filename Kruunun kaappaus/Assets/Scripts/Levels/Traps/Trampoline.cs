@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Trampoline : MonoBehaviour
+public class Trampoline : NetworkBehaviour
 {
     [Range(-1, 1)]
     [SerializeField] private int xDirection, yDirection;
@@ -15,7 +16,18 @@ public class Trampoline : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.GetComponent<PlayerMovement2D>().isGhost)
+        {
+            return;
+        }
+
         collision.attachedRigidbody.linearVelocity = new Vector2(xDirection * xBounce, yDirection * yBounce);
+        PlayAnimationServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void PlayAnimationServerRpc()
+    {
         anim.Play("Trampoline_Used");
     }
 

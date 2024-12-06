@@ -21,6 +21,7 @@ public class BoardPlayerMovement : MonoBehaviour
         alreadyMoving = true;
 
         bool forward = steps > 0;
+        bool emptyRoll = steps < 1;
 
         steps = Mathf.Abs(steps);
 
@@ -41,7 +42,10 @@ public class BoardPlayerMovement : MonoBehaviour
             steps--;
         }
 
-        BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
+        if (!emptyRoll)
+        {
+            BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
+        }
         alreadyMoving = false;
     }
 

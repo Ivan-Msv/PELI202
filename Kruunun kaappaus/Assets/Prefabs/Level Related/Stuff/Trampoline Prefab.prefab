@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 198685832661346386}
   - component: {fileID: 7010405592573582284}
   - component: {fileID: -2261702602513459533}
-  - component: {fileID: -2725792418976239320}
+  - component: {fileID: 2018237296950876627}
   - component: {fileID: 7022371540613267000}
   m_Layer: 0
   m_Name: Trampoline Prefab
@@ -232,7 +232,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &-2725792418976239320
+--- !u!114 &2018237296950876627
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9196427204529409395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ecaaafc96ebcc8409adce79bacc41c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1

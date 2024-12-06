@@ -257,7 +257,8 @@ public class LobbyUI : NetworkBehaviour
     private async void HostGame()
     {
         startGame.interactable = false;
-        startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting...";
+        leaveLobby.interactable = false;
+        startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting";
 
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
 

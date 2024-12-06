@@ -104,6 +104,17 @@ MonoBehaviour:
   tileName: 
   sceneNames1:
   - 1PChallengeLevel1
-  sceneNames2: []
-  sceneNames3: []
-  sceneNames4: []
+  - 1PChallengeLevel2
+  sceneNames2:
+  - 2PChallengeLevel1
+  - 3PChallengeLevel1
+  - 4PChallengeLevel1
+  - 4PChallengeLevel2
+  sceneNames3:
+  - 3PChallengeLevel1
+  - 4PChallengeLevel1
+  - 4PChallengeLevel2
+  sceneNames4:
+  - 4PChallengeLevel1
+  - '4PChallengeLevel2 '
+  - 4PChallengeLevel3
