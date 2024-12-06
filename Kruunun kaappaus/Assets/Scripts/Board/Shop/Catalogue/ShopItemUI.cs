@@ -13,8 +13,7 @@ public class ShopItemUI : MonoBehaviour
 
     private void Start()
     {
-        costText.text = $"{cost}$";
-        costText.color = Color.yellow;
+        costText.text = $"{cost} Coins";
     }
 
     private void Update()
