@@ -1,10 +1,11 @@
+using Unity.Multiplayer.Playmode;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Dice/DefaultDice")]
 public class DefaultDice : BoardDice
 {
-    public override void SpecialFunction()
+    public override void SpecialAbility()
     {
-        Debug.Log("No Special Function");
+        GameManager.instance.playerMovement.MovePlayer(GameManager.instance.currentPlayer, GameManager.instance.lastRolledNumber.Value);
     }
 }

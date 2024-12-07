@@ -17,5 +17,5 @@ public abstract class BoardDice : ScriptableObject
     {
         return $"{animationStringPrefix}{Mathf.Abs(rolledNumber)}";
     }
-    public abstract void SpecialFunction();
+    public abstract void SpecialAbility();
 }

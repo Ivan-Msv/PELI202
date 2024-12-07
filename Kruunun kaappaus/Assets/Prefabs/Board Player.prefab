@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7920599123202502415}
   - component: {fileID: 7017745218574142547}
   - component: {fileID: -1028138096747922675}
-  - component: {fileID: -1951428815505227814}
+  - component: {fileID: -7829839320473551096}
   m_Layer: 0
   m_Name: Board Player
   m_TagString: Board Player
@@ -264,7 +264,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-1951428815505227814
+--- !u!114 &-7829839320473551096
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4434875343785939413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ecaaafc96ebcc8409adce79bacc41c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1

@@ -203,23 +203,34 @@ public class GameManager : NetworkBehaviour
     public void RollDiceServerRpc()
     {
         currentState.Value = BoardState.PlayerMoving;
-        int diceIndex = UseDice();
+        int diceIndex = GetActiveDice();
         lastRolledNumber.Value = GetDiceFromIndex(diceIndex).RollDiceNumber();
         DiceAnimationClientRpc(diceIndex, lastRolledNumber.Value);
     }
-    private int UseDice()
+    private int GetActiveDice()
     {
         switch (currentPlayerInfo.specialDiceEnabled.Value)
         {
             case true:
-                var specialDiceValue = currentPlayerInfo.specialDiceIndex.Value;
-                currentPlayerInfo.specialDiceIndex.Value = 0;
-                currentPlayerInfo.specialDiceEnabled.Value = false;
-                return specialDiceValue;
+                return currentPlayerInfo.specialDiceIndex.Value;
             case false:
                 return 0;
         }
     }
+
+    private void UseActiveDice()
+    {
+        GetDiceFromIndex(GetActiveDice()).SpecialAbility();
+
+        if (!currentPlayerInfo.specialDiceEnabled.Value)
+        {
+            return;
+        }
+
+        currentPlayerInfo.specialDiceIndex.Value = 0;
+        currentPlayerInfo.specialDiceEnabled.Value = false;
+    }
+
     [ClientRpc]
     public void DiceAnimationClientRpc(int diceIndex, int number)
     {
@@ -234,13 +245,18 @@ public class GameManager : NetworkBehaviour
 
         if (currentPlayer.OwnerClientId == NetworkManager.LocalClientId)
         {
-            playerMovement.MovePlayer(currentPlayer, lastRolledNumber.Value);
+            UseActiveDice();
         }
     }
     [ServerRpc(RequireOwnership = false)]
     public void LoadPlayerServerRpc()
     {
         playersLoaded.Value++;
+    }
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeGameStateServerRpc(BoardState newState)
+    {
+        currentState.Value = newState;
     }
     [ServerRpc(RequireOwnership = false)]
     public void LoadSceneServerRpc(string sceneName)

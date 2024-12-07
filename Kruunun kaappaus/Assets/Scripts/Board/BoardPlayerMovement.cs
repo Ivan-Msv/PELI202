@@ -47,10 +47,7 @@ public class BoardPlayerMovement : NetworkBehaviour
             BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
         }
         alreadyMoving = false;
-        if (IsServer)
-        {
-            GameManager.instance.currentState.Value = BoardState.SelectingPlayer;
-        }
+        GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
     }
 
     private int GetIndexDirection(int currentPosition, bool forward)

@@ -28,6 +28,11 @@ public class SpecialDiceUI : MonoBehaviour
             return;
         }
 
+        if (GameManager.instance.currentState.Value == BoardState.PlayerMoving)
+        {
+            return;
+        }
+
         // Laittaa boolean vastakohtaan
         BoardUIManager.instance.localParent.specialDiceEnabled.Value = !BoardUIManager.instance.localParent.specialDiceEnabled.Value;
 
