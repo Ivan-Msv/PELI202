@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
-public class BoardPlayerMovement : MonoBehaviour
+public class BoardPlayerMovement : NetworkBehaviour
 {
     [SerializeField] private float moveSpeed;
     private bool alreadyMoving;
@@ -47,6 +47,10 @@ public class BoardPlayerMovement : MonoBehaviour
             BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
         }
         alreadyMoving = false;
+        if (IsServer)
+        {
+            GameManager.instance.currentState.Value = BoardState.SelectingPlayer;
+        }
     }
 
     private int GetIndexDirection(int currentPosition, bool forward)

@@ -14,15 +14,6 @@ public struct ItemPool
     public ShopItem[] poolItems;
 }
 
-public enum ShopItemId
-{
-    None = 1,
-    GambleDice = 2, 
-    MinusDice = 3,
-    TeleportDice = 4,
-    SmallDice = 5
-}
-
 public class BoardShop : MonoBehaviour
 {
     [Header("UI")]

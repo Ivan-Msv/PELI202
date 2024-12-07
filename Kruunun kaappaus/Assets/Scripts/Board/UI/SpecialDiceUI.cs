@@ -23,12 +23,9 @@ public class SpecialDiceUI : MonoBehaviour
 
     public void OnButtonClick()
     {
-        switch (BoardUIManager.instance.localParent.specialDiceIndex.Value)
+        if (BoardUIManager.instance.localParent.specialDiceIndex.Value == 0)
         {
-            case 0:
-                return;
-            case (int)DiceIndex.DefaultDice:
-                return;
+            return;
         }
 
         // Laittaa boolean vastakohtaan
@@ -46,8 +43,8 @@ public class SpecialDiceUI : MonoBehaviour
     }
     private void UpdateIcon(int previousValue, int newValue)
     {
-        var newDiceIcon = GameManager.instance.GetDiceFromIndex(newValue).GetComponent<SpriteRenderer>().sprite;
-        if (newValue == 0 || newValue == 1)
+        var newDiceIcon = GameManager.instance.GetDiceFromIndex(newValue).image;
+        if (newValue == 0)
         {
             diceIcon.color = new Color(0, 0, 0, 0);
             selectedText.gameObject.SetActive(false);

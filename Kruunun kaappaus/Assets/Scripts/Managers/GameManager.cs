@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Netcode;
@@ -11,10 +12,6 @@ using UnityEngine.UI;
 public enum BoardState
 {
     WaitingForPlayers, SelectingPlayer, PlayerTurnCount, PlayerMoving, Idle
-}
-public enum DiceIndex
-{
-    DefaultDice = 1, GambleDice = 2, MinusDice = 3, TeleportDice = 4, SmallDice = 5
 }
 
 public class GameManager : NetworkBehaviour
@@ -39,13 +36,10 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private float afterDiceDelaySeconds;
     public Animator diceAnimator;
     public NetworkVariable<int> lastRolledNumber = new();
-    [Space]
-    public DefaultDice defaultDice;
-    public GambleDice gambleDice;
-    public MinusDice minusDice;
+    public BoardDice[] dice;
     [Space]
 
-    [SerializeField] private NetworkVariable<BoardState> currentState = new();
+    public NetworkVariable<BoardState> currentState = new();
     private NetworkVariable<int> playersLoaded = new();
     public List<BoardPlayerInfo> availablePlayers = new();
     public delegate void OnPlayerValueChangeDelegate();
@@ -208,7 +202,7 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RollDiceServerRpc()
     {
-        currentState.Value = BoardState.Idle;
+        currentState.Value = BoardState.PlayerMoving;
         int diceIndex = UseDice();
         lastRolledNumber.Value = GetDiceFromIndex(diceIndex).RollDiceNumber();
         DiceAnimationClientRpc(diceIndex, lastRolledNumber.Value);
@@ -223,7 +217,7 @@ public class GameManager : NetworkBehaviour
                 currentPlayerInfo.specialDiceEnabled.Value = false;
                 return specialDiceValue;
             case false:
-                return (int)DiceIndex.DefaultDice;
+                return 0;
         }
     }
     [ClientRpc]
@@ -295,16 +289,12 @@ public class GameManager : NetworkBehaviour
     }
     public BoardDice GetDiceFromIndex(int index)
     {
-        switch ((DiceIndex)index)
+        var returnDice = dice.FirstOrDefault(dice => dice.networkIndex == index);
+        if (returnDice == null)
         {
-            case DiceIndex.DefaultDice:
-                return defaultDice;
-            case DiceIndex.GambleDice:
-                return gambleDice;
-            case DiceIndex.MinusDice:
-                return minusDice;
+            return dice[0];
         }
 
-        return defaultDice;
+        return returnDice;
     }
 }

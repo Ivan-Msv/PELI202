@@ -71,7 +71,7 @@ public class BoardUIManager : MonoBehaviour
 
     private void UpdateButtons()
     {
-        if (!LocalPlayerTurn())
+        if (!LocalPlayerTurn() || GameManager.instance.currentState.Value == BoardState.PlayerMoving)
         {
             rollButton.interactable = false;
             return;

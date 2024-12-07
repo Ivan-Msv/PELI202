@@ -1,14 +1,10 @@
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Dice/DefaultDice")]
 public class DefaultDice : BoardDice
 {
-    public override int RollDiceNumber()
+    public override void SpecialFunction()
     {
-        return availableNumbers[Random.Range(0, availableNumbers.Length)];
-    }
-
-    public override string DiceAnimationString(int rolledNumber)
-    {
-        return $"default_dice_{rolledNumber}";
+        Debug.Log("No Special Function");
     }
 }

@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2830c73b20f1fc6448f5cc0d53624819, type: 3}
-  m_Name: SmallDice
+  m_Name: MinusDiceItem
   m_EditorClassIdentifier: 
-  itemName: Small Dice
-  itemDescription: Dice that only rolls first 3 numbers
-  itemCost: 5
-  itemId: 4
-  itemSprite: {fileID: 21300000, guid: b423e43591cbaf94d936514416d47bd8, type: 3}
+  itemName: Minus Dice
+  itemDescription: 'A Dice that only contains negative numbers.
+
+    Rolls [-1] [-2]
+    [-3] [-4] [-5] [-6]'
+  itemCost: 10
+  itemId: 1
+  itemSprite: {fileID: 21300000, guid: ae9400d3ff08f92408e81e375e4e0af8, type: 3}
