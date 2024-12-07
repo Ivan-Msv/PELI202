@@ -1355,7 +1355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: xBounce
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: xDirection
@@ -36215,7 +36215,7 @@ PrefabInstance:
     - target: {fileID: 4034683635968670221, guid: 25c94edee471df740859f503f28bc7a0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 27b4c111a77d78246aa1170ed4719883, type: 3}
+      objectReference: {fileID: 21300000, guid: 4052bac602d84104d85e87276149146f, type: 3}
     - target: {fileID: 4180887698315200047, guid: 25c94edee471df740859f503f28bc7a0, type: 3}
       propertyPath: m_Name
       value: Background Prefab

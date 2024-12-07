@@ -1028,11 +1028,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1285241815613071170, guid: 25c94edee471df740859f503f28bc7a0, type: 3}
       propertyPath: xDirection
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1285241815613071170, guid: 25c94edee471df740859f503f28bc7a0, type: 3}
       propertyPath: yDirection
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4034683635968670221, guid: 25c94edee471df740859f503f28bc7a0, type: 3}
       propertyPath: m_Size.x
@@ -1045,7 +1045,7 @@ PrefabInstance:
     - target: {fileID: 4034683635968670221, guid: 25c94edee471df740859f503f28bc7a0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 27b4c111a77d78246aa1170ed4719883, type: 3}
+      objectReference: {fileID: 21300000, guid: ccfa01e1a83205e4ca84f9695cf6b326, type: 3}
     - target: {fileID: 4180887698315200047, guid: 25c94edee471df740859f503f28bc7a0, type: 3}
       propertyPath: m_Name
       value: Background Prefab

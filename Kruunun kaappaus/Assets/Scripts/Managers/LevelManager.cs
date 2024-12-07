@@ -24,9 +24,11 @@ public class LevelManager : NetworkBehaviour
     [Header("UI")]
     [SerializeField] private GameObject timerGrid;
     [SerializeField] private GameObject blackScreenUI;
-    [SerializeField] private TextMeshProUGUI goTimerUI;
+    [SerializeField] private GameObject coinCounterUI;
+    [SerializeField] private GameObject goTimerUI;
+    [SerializeField] private TextMeshProUGUI goTimerText;
     [SerializeField] private TextMeshProUGUI overUI;
-    private TextMeshProUGUI timerVisual;
+    [SerializeField] private TextMeshProUGUI timerVisual;
     private float goTimer = 4;
 
     [Header("Main")]
@@ -50,7 +52,6 @@ public class LevelManager : NetworkBehaviour
         {
             instance = this;
         }
-        timerVisual = timerGrid.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void Start()
@@ -104,7 +105,8 @@ public class LevelManager : NetworkBehaviour
                 break;
             case LevelType.Minigame:
                 // skippaa kameran animaation sillä ei tarvi nähdä "endgoal"
-                goTimerUI.gameObject.SetActive(true);
+                goTimerUI.SetActive(true);
+                coinCounterUI.SetActive(true);
                 break;
         }
 
@@ -165,7 +167,7 @@ public class LevelManager : NetworkBehaviour
     {
         var timeInMinutes = Mathf.FloorToInt(LevelTimer / 60);
         var timeInSeconds = Mathf.FloorToInt(LevelTimer - timeInMinutes * 60);
-        string timerText = string.Format("Time remaining: {0:00}:{1:00}", timeInMinutes, timeInSeconds);
+        string timerText = string.Format("Time remaining\n{0:00}:{1:00}", timeInMinutes, timeInSeconds);
         timerVisual.text = timerText;
     }
     private IEnumerator CameraAnimation()
@@ -178,7 +180,7 @@ public class LevelManager : NetworkBehaviour
         endingCamera.Priority = 0;
         playerCamera.Priority = 1;
         yield return new WaitForSeconds(cameraAnimationSeconds - 1);
-        goTimerUI.gameObject.SetActive(true);
+        goTimerUI.SetActive(true);
     }
     private IEnumerator EndingAnimation()
     {
@@ -205,18 +207,18 @@ public class LevelManager : NetworkBehaviour
     }
     private void ThreeTwoOneGo()
     {
-        if (!goTimerUI.IsActive())
+        if (!goTimerText.IsActive())
         {
             return;
         }
 
         if (goTimer <= 0)
         {
-            goTimerUI.gameObject.SetActive(false);
+            goTimerUI.SetActive(false);
             CurrentGameState = LevelState.InProgress;
         }
         goTimer -= Time.deltaTime;
-        goTimerUI.text = goTimer <= 1 ? "Go!" : $"{(int)goTimer}";
+        goTimerText.text = goTimer <= 1 ? "Go!" : $"{(int)goTimer}";
     }
     [ServerRpc(RequireOwnership = false)]
     public void LoadPlayerServerRpc()

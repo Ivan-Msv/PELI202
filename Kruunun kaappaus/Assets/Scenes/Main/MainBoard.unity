@@ -723,6 +723,10 @@ PrefabInstance:
       propertyPath: 'tiles.Array.data[1]'
       value: 
       objectReference: {fileID: 343748096}
+    - target: {fileID: 3543412760872549943, guid: 1a006af2f6d31c94dbd688ecc1dd0b71, type: 3}
+      propertyPath: 'sceneNames1.Array.data[0]'
+      value: 3PMinigameLevel1
+      objectReference: {fileID: 0}
     - target: {fileID: 4392819780220186405, guid: 1a006af2f6d31c94dbd688ecc1dd0b71, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2875,7 +2879,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23700002, y: 0.40214816}
   m_AnchorMax: {x: 0.757561, y: 0.81477785}
-  m_AnchoredPosition: {x: -11.2447815, y: -2.5599976}
+  m_AnchoredPosition: {x: -11.244843, y: -2.5599976}
   m_SizeDelta: {x: -12.692001, y: -3.1800003}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1415753884
