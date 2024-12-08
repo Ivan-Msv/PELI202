@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2261702602513459533}
   - component: {fileID: 2018237296950876627}
   - component: {fileID: 7022371540613267000}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Trampoline Prefab
   m_TagString: Trampoline
   m_Icon: {fileID: 0}
@@ -259,6 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fe00ce850ac35469426e428e4178dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   xDirection: 0
   yDirection: 0
   xBounce: 0

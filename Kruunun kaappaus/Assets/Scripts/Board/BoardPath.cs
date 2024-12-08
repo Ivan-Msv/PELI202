@@ -126,7 +126,52 @@ public class BoardPath : NetworkBehaviour
     {
         GameManager.instance.tilesIndex[index] = newNumber;
     }
+    public void SplitPlayersOnTiles()
+    {
+        List<MainPlayerInfo> playerInfos = new();
+        List<int> alreadyMatchingPositions = new();
+        foreach (var player in GameManager.instance.availablePlayers)
+        {
+            playerInfos.Add(player.GetComponentInParent<MainPlayerInfo>());
+        }
 
+        for (int i = 0; i < playerInfos.Count; i++)
+        {
+            if (alreadyMatchingPositions.Contains(playerInfos[i].currentBoardPosition.Value))
+            {
+                Debug.Log("Already matching");
+                continue;
+            }
+
+            var matching = playerInfos.FindAll(player => player.currentBoardPosition.Value == playerInfos[i].currentBoardPosition.Value);
+
+            if (matching.Count > 1)
+            {
+                SplitPlayers(matching);
+                alreadyMatchingPositions.Add(playerInfos[i].currentBoardPosition.Value);
+            }
+        }
+    }
+    private void SplitPlayers(List<MainPlayerInfo> players)
+    {
+        Vector2[] fourSplit = PlayerTilePositions(tiles[players[0].currentBoardPosition.Value].transform);
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].GetComponentInChildren<BoardPlayerInfo>().UpdatePlayerPositionClientRpc(fourSplit[i]);
+        }
+    }
+
+    private Vector2[] PlayerTilePositions(Transform tile)
+    {
+        float playerWidth = 0.385f;
+        float playerHeight = 0.5f;
+        var positions = new Vector2[4];
+        positions[0] = new Vector2(tile.transform.position.x - playerWidth, tile.transform.position.y);
+        positions[1] = new Vector2(tile.transform.position.x + playerWidth, tile.transform.position.y);
+        positions[2] = new Vector2(tile.transform.position.x - playerWidth, tile.transform.position.y - playerHeight);
+        positions[3] = new Vector2(tile.transform.position.x - playerWidth, tile.transform.position.y - playerHeight);
+        return positions;
+    }
     private void OnDrawGizmos()
     {
         tiles.Clear();

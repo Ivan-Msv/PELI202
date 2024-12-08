@@ -45,6 +45,18 @@ public class BoardPlayerInfo : NetworkBehaviour
         playerColor.Value = int.Parse(playerData["PlayerColor"].Value);
     }
 
+    [Rpc(SendTo.Owner)]
+    public void UpdatePlayerPositionClientRpc(Vector2 newPos)
+    {
+        if (!NetworkObject.IsOwner)
+        {
+            return;
+        }
+
+        Debug.Log($"Got rpc to change position with {newPos}");
+        transform.position = newPos;
+    }
+
     private void UpdatePlayerSprite(int oldIndex, int newIndex)
     {
         spriteComponent.sprite = MainMenuUI.instance.PlayerIcons[newIndex];

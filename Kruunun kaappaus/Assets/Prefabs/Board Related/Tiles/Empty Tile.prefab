@@ -76,8 +76,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0a2742734cd977e4f9da73cd7df0e228, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: 93a36c419ef359e4b829a0d5e863801b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,5 +100,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e596b792a02bd43b49b8668310619c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite: {fileID: 21300000, guid: 0a2742734cd977e4f9da73cd7df0e228, type: 3}
+  tileSprite: {fileID: 21300000, guid: 93a36c419ef359e4b829a0d5e863801b, type: 3}
   tileName: 

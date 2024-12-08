@@ -48,6 +48,7 @@ public class BoardPlayerMovement : NetworkBehaviour
         }
         alreadyMoving = false;
         GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
+        BoardPath.instance.SplitPlayersOnTiles();
     }
 
     private int GetIndexDirection(int currentPosition, bool forward)

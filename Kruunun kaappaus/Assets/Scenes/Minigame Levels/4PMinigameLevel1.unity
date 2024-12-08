@@ -161,7 +161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1801563826459194643, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: levelDurationSeconds
-      value: 999
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1801563826459194643, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: ghostSpawnPoints.Array.size

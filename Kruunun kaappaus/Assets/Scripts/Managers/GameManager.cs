@@ -162,6 +162,7 @@ public class GameManager : NetworkBehaviour
 
         Time.timeScale = 1;
         GetAllPlayersClientRpc();
+        BoardPath.instance.SplitPlayersOnTiles();
         currentState.Value = BoardState.SelectingPlayer;
     }
     [ClientRpc]
