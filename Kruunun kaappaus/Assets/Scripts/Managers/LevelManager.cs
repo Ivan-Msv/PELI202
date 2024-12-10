@@ -110,35 +110,38 @@ public class LevelManager : NetworkBehaviour
                 break;
         }
 
-        int playerCount = 0;
-        int ghostCount = 0;
-
-        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
-        List<GameObject> shuffledPlayers = new();
-        int n = players.Count;
-
-        while (n > 0)
+        if (IsServer)
         {
-            var randomIndex = UnityEngine.Random.Range(0, n);
-            shuffledPlayers.Add(players[randomIndex]);
-            players.Remove(players[randomIndex]);
-            n--;
-        }
+            int playerCount = 0;
+            int ghostCount = 0;
 
-        foreach (var player in shuffledPlayers)
-        {
-            PlayerMovement2D playerComponent = player.GetComponent<PlayerMovement2D>();
-            if (player.GetComponentInParent<MainPlayerInfo>().isGhost.Value)
+            List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+            List<GameObject> shuffledPlayers = new();
+            int n = players.Count;
+
+            while (n > 0)
             {
-                playerComponent.spawnPoint = ghostSpawnPoints[ghostCount];
-                player.transform.position = playerComponent.spawnPoint;
-                ghostCount++;
-                continue;
+                var randomIndex = UnityEngine.Random.Range(0, n);
+                shuffledPlayers.Add(players[randomIndex]);
+                players.Remove(players[randomIndex]);
+                n--;
             }
 
-            playerComponent.spawnPoint = playerSpawnPoint[playerCount];
-            player.transform.position = playerComponent.spawnPoint;
-            playerCount++;
+            foreach (var player in shuffledPlayers)
+            {
+                PlayerMovement2D playerComponent = player.GetComponent<PlayerMovement2D>();
+                if (player.GetComponentInParent<MainPlayerInfo>().isGhost.Value)
+                {
+                    playerComponent.spawnPoint = ghostSpawnPoints[ghostCount];
+                    playerComponent.UpdatePlayerPositionClientRpc(playerComponent.spawnPoint);
+                    ghostCount++;
+                    continue;
+                }
+
+                playerComponent.spawnPoint = playerSpawnPoint[playerCount];
+                playerComponent.UpdatePlayerPositionClientRpc(playerComponent.spawnPoint);
+                playerCount++;
+            }
         }
 
         TimerVisual();

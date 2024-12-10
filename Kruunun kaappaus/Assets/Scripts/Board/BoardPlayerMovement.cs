@@ -37,7 +37,7 @@ public class BoardPlayerMovement : NetworkBehaviour
             }
 
             player.GetComponent<Animator>().SetBool("IsMoving", false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.25f);
             player.playerInfo.currentBoardPosition.Value = index;
             steps--;
         }

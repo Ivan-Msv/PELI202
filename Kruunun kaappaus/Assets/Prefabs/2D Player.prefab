@@ -386,6 +386,8 @@ MonoBehaviour:
     m_InternalValue: 0
   playerIsGhost:
     m_InternalValue: 0
+  localCoinAmount:
+    m_InternalValue: 0
 --- !u!114 &9174738505860144113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +417,7 @@ MonoBehaviour:
   maxJumpBufferTime: 0.11
   maxJumpTime: 0.2
   spawnPoint: {x: 0, y: 0}
+  playerInfo: {fileID: 1355854856914575653}
 --- !u!114 &4151534210416331775
 MonoBehaviour:
   m_ObjectHideFlags: 0

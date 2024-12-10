@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class CoinCounter : MonoBehaviour
 {
+    [SerializeField] private PlayerScoreInfo playerScoreInfoPrefab;
+    [SerializeField] private GameObject playerScorePanel;
+    [SerializeField] private Dictionary<PlayerInfo2D, PlayerScoreInfo> playerDictionary = new();
     [SerializeField] private TMP_Text coinText;
     [SerializeField] private int allCoinAmount;
     [SerializeField] private int collectedCoins;
@@ -44,12 +47,31 @@ public class CoinCounter : MonoBehaviour
             var component = player.GetComponentInParent<MainPlayerInfo>();
             component.coinAmount.OnValueChanged += AddCollectedCoin;
             players.Add(component);
+
+            if (component.isGhost.Value)
+            {
+                continue;
+            }
+
+            var newScoreInfo = Instantiate(playerScoreInfoPrefab, playerScorePanel.transform);
+            newScoreInfo.UpdatePlayerImage(player.GetComponent<SpriteRenderer>().sprite);
+            playerDictionary.Add(player.GetComponent<PlayerInfo2D>(), newScoreInfo);
+        }
+
+        UpdatePlayerScore();
+    }
+
+    private void UpdatePlayerScore()
+    {
+        foreach (var player in playerDictionary)
+        {
+            player.Value.UpdatePlayerScore(player.Key.localCoinAmount.Value);
         }
     }
 
     private void AddCollectedCoin(int oldValue, int newValue)
     {
-        Debug.Log("Collected coin.");
+        UpdatePlayerScore();
         collectedCoins++;
         LevelManager.instance.availableCoins--;
     }

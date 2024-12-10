@@ -53,7 +53,6 @@ public class BoardPlayerInfo : NetworkBehaviour
             return;
         }
 
-        Debug.Log($"Got rpc to change position with {newPos}");
         transform.position = newPos;
     }
 

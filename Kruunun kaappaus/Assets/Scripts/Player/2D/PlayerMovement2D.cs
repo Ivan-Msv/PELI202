@@ -27,6 +27,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float maxJumpBufferTime;
     [SerializeField] private float maxJumpTime;
     public Vector2 spawnPoint;
+    [SerializeField] private PlayerInfo2D playerInfo;
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
     private Animator animatorComponent;
@@ -88,10 +89,12 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         return Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.1f, ground);
     }
+
     private bool InsideGround()
     {
         return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, ground);
     }
+
     private void StuckCheck()
     {
         if (InsideGround())
@@ -99,6 +102,7 @@ public class PlayerMovement2D : NetworkBehaviour
             transform.position = spawnPoint;
         }
     }
+
     private void PlayerMovement()
     {
         // pelaajan asetukset
@@ -109,6 +113,7 @@ public class PlayerMovement2D : NetworkBehaviour
         rb.linearVelocityX = rb.linearVelocity.x / (xAxisDrag + 1);
         rb.linearVelocityX += horizontal * moveSpeed;
     }
+
     private void GhostMovement()
     {
         // haamu asetukset
@@ -121,6 +126,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         rb.linearVelocity = new Vector2(horizontal * ghostMoveSpeed, vertical * ghostMoveSpeed);
     }
+
     private void Jump()
     {
         if (jumpBufferTimer > 0 && canJump)
@@ -146,6 +152,7 @@ public class PlayerMovement2D : NetworkBehaviour
             rb.AddRelativeForce(Vector3.up * maxJumpHeight * Time.deltaTime);
         }
     }
+
     private void CoyoteCheck()
     {
         if (!IsGrounded())
@@ -173,6 +180,7 @@ public class PlayerMovement2D : NetworkBehaviour
             coyoteTimer = 0;
         }
     }
+
     private void JumpBuffer()
     {
         jumpBufferTimer -= Time.deltaTime;
@@ -181,6 +189,7 @@ public class PlayerMovement2D : NetworkBehaviour
             jumpBufferTimer = maxJumpBufferTime;
         }
     }
+
     private void PlayerStateManager()
     {
         UpdateAnimation();
@@ -201,15 +210,28 @@ public class PlayerMovement2D : NetworkBehaviour
             currentPlayerState = PlayerMovementState.Idle;
         }
     }
+
     private void UpdateAnimation()
     {
         animatorComponent.SetBool("IsMoving", currentPlayerState == PlayerMovementState.Moving);
         animatorComponent.SetBool("IsJumping", currentPlayerState == PlayerMovementState.Jumping);
         animatorComponent.SetBool("IsFalling", currentPlayerState == PlayerMovementState.Falling);
     }
+
     private PlayerMovementState JumpOrFallCheck()
     {
         return rb.linearVelocity.y > 0 ? PlayerMovementState.Jumping : PlayerMovementState.Falling;
+    }
+
+    [Rpc(SendTo.Owner)]
+    public void UpdatePlayerPositionClientRpc(Vector2 newPos)
+    {
+        if (!NetworkObject.IsOwner)
+        {
+            return;
+        }
+
+        transform.position = newPos;
     }
 
     [ServerRpc]
@@ -228,6 +250,7 @@ public class PlayerMovement2D : NetworkBehaviour
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
         LevelManager.instance.UpdateLevelStateClientRpc();
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Jos on haamu tai ei ole pelaaja objektin omistaja, niin ei mennä eteenpäin.
@@ -242,12 +265,14 @@ public class PlayerMovement2D : NetworkBehaviour
         }
         if (collision.CompareTag("Coin"))
         {
-            spawnParent.GetComponent<MainPlayerInfo>().coinAmount.Value += 1;
+            playerInfo.localCoinAmount.Value++;
+            spawnParent.GetComponent<MainPlayerInfo>().coinAmount.Value++;
+            
             DestroyCoinServerRpc(collisionObjectId);
         }
         if (collision.CompareTag("Crown"))
         {
-            spawnParent.GetComponent<MainPlayerInfo>().crownAmount.Value += 1;
+            spawnParent.GetComponent<MainPlayerInfo>().crownAmount.Value++;
             DestroyCrownServerRpc(collisionObjectId);
         }
         if (collision.CompareTag("Platform"))
@@ -257,6 +282,7 @@ public class PlayerMovement2D : NetworkBehaviour
             collision.GetComponent<Platform>().SwitchStateServerRpc();
         }
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!NetworkObject.IsOwner) { return; }

@@ -4,6 +4,7 @@ using Unity.Collections;
 using Unity.Netcode;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Colors
 {
@@ -19,6 +20,7 @@ public class PlayerInfo2D : NetworkBehaviour
     public NetworkVariable<int> playerSpriteIndex = new(writePerm: NetworkVariableWritePermission.Owner, value: -1);
     public NetworkVariable<int> playerColor = new(writePerm: NetworkVariableWritePermission.Owner, value: -1); 
     public NetworkVariable<bool> playerIsGhost = new(writePerm: NetworkVariableWritePermission.Owner);
+    public NetworkVariable<int> localCoinAmount = new(writePerm: NetworkVariableWritePermission.Owner);
 
     private Animator animatorComponent;
     private SpriteRenderer spriteComponent;
@@ -31,10 +33,25 @@ public class PlayerInfo2D : NetworkBehaviour
     {
         if (NetworkObject.IsOwner)
         {
-            LevelManager.instance.SetCamera(transform);
+            LevelManager.instance.OnPlayerValueChange += OnPlayersUpdated;
             playerIsGhost.Value = GetComponentInParent<MainPlayerInfo>().isGhost.Value;
             LevelManager.instance.LoadPlayerServerRpc();
         }
+    }
+
+    public void OnPlayersUpdated()
+    {
+        if (!NetworkObject.IsOwner)
+        {
+            return;
+        }
+
+        LevelManager.instance.SetCamera(transform);
+    }
+
+    private void OnDisable()
+    {
+        LevelManager.instance.OnPlayerValueChange -= OnPlayersUpdated;
     }
 
     private void Update()
