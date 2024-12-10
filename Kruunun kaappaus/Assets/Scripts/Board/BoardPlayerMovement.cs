@@ -29,6 +29,7 @@ public class BoardPlayerMovement : NetworkBehaviour
         {
             int index = GetIndexDirection(player.playerInfo.currentBoardPosition.Value, forward);
             Vector3 nextTilePosition = BoardPath.instance.tiles[index].transform.position;
+
             while (player.transform.position != nextTilePosition)
             {
                 player.transform.position = Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime);
@@ -40,6 +41,15 @@ public class BoardPlayerMovement : NetworkBehaviour
             yield return new WaitForSeconds(0.25f);
             player.playerInfo.currentBoardPosition.Value = index;
             steps--;
+
+            if (BoardUIManager.instance.LocalPlayerOnShopTile())
+            {
+                BoardUIManager.instance.shopUI.OpenStore();
+                while (BoardUIManager.instance.shopUI.StoreOpen())
+                {
+                    yield return null;
+                }
+            }
         }
 
         if (!emptyRoll)

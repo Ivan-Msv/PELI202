@@ -32,7 +32,6 @@ public class BoardUIManager : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] private Button rollButton;
-    [SerializeField] private Button openStoreButton;
 
     [Header("Text")]
     public TextMeshProUGUI playerLoadText;
@@ -56,7 +55,6 @@ public class BoardUIManager : MonoBehaviour
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
 
         rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); });
-        openStoreButton.onClick.AddListener(() => { shopUI.OpenStore(); });
     }
 
     private void OnDisable()

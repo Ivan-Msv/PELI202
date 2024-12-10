@@ -10,6 +10,11 @@ public class BoardCamera : MonoBehaviour
         virtualCamera.transform.position = GameManager.instance.currentPlayer.transform.position;
     }
 
+    public void SetCustomPosition(Vector2 newPosition)
+    {
+        virtualCamera.transform.position = newPosition;
+    }
+
     private void Update()
     {
         if (GameManager.instance.currentPlayer == null)

@@ -125,6 +125,12 @@ public class BoardShop : MonoBehaviour
         shopPanel.gameObject.SetActive(!shopUI.activeSelf);
         shopUI.SetActive(!shopUI.activeSelf);
     }
+
+    public bool StoreOpen()
+    {
+        return shopUI.activeSelf;
+    }
+
     private void OpenInfoTab(ShopItem itemInfo = null)
     {
         if (itemInfo == null)
