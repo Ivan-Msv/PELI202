@@ -22,6 +22,7 @@ public class BoardUIManager : MonoBehaviour
     public SpecialDiceUI diceUI;
     public BoardCamera virtualCamera;
     public Animator diceAnimator;
+    public TextMeshProUGUI playerLoadText;
 
     [Header("Buttons")]
     [SerializeField] private Button rollButton;
@@ -125,6 +126,12 @@ public class BoardUIManager : MonoBehaviour
     {
         rollDiceUI.SetActive(true);
         rollDiceName.text = $"{currentTurnPlayerName} rolls...";
+    }
+
+    public void UpdateLoadingPlayerUI(bool fadeIn, float speed)
+    {
+        playerLoadText.gameObject.SetActive(false);
+        BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, fadeIn, speed);
     }
 
     public void ShowEndMenu()

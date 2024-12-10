@@ -162,6 +162,7 @@ public class GameManager : NetworkBehaviour
 
         Time.timeScale = 1;
         GetAllPlayersClientRpc();
+        BoardUIManager.instance.UpdateLoadingPlayerUI(false, 1);
         BoardPath.instance.SplitPlayersOnTiles();
         currentState.Value = BoardState.SelectingPlayer;
     }
@@ -297,7 +298,7 @@ public class GameManager : NetworkBehaviour
     }
     private IEnumerator SceneChangeCoroutine(string sceneName)
     {
-        // Play animation for everyone
+        BoardUIManager.instance.UpdateLoadingPlayerUI(true, 1);
         yield return new WaitForSeconds(1);
         if (IsServer)
         {

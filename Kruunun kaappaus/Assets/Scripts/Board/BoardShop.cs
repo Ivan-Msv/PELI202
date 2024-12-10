@@ -98,7 +98,6 @@ public class BoardShop : MonoBehaviour
 
                 if (addedItems.Contains(newItem))
                 {
-                    Debug.Log("Item already exists, skipping");
                     maximumTries--;
                     continue;
                 }

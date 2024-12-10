@@ -21,7 +21,7 @@ public class BoardPlayerMovement : NetworkBehaviour
         alreadyMoving = true;
 
         bool forward = steps > 0;
-        bool emptyRoll = steps < 1;
+        bool emptyRoll = Mathf.Abs(steps) < 1;
 
         steps = Mathf.Abs(steps);
 

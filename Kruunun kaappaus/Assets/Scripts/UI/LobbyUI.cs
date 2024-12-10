@@ -260,6 +260,8 @@ public class LobbyUI : NetworkBehaviour
         leaveLobby.interactable = false;
         startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting";
 
+        BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, true, 1);
+
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
 
         string allocationCode = await LobbyManager.instance.CreateRelay();
@@ -270,13 +272,13 @@ public class LobbyUI : NetworkBehaviour
             { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, allocationCode.ToString()) }
         };
         await LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, currentLobby.HostId, new UpdatePlayerOptions() { Data = newData });
-
     }
     private void CheckIfServerStarted()
     {
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
         if (host.Data["ServerStarted"].Value != "0" && !NetworkManager.IsConnectedClient)
         {
+            BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, true, 1);
             leaveLobby.interactable = false;
             LobbyManager.instance.JoinRelay(host.Data["AllocationCode"].Value);
         }

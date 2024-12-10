@@ -23,11 +23,11 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private CinemachineCamera endingCamera;
     [Header("UI")]
     [SerializeField] private GameObject timerGrid;
-    [SerializeField] private GameObject blackScreenUI;
     [SerializeField] private GameObject coinCounterUI;
     [SerializeField] private GameObject goTimerUI;
+    [SerializeField] private GameObject overUI;
+    [SerializeField] private TextMeshProUGUI loadPlayerText;
     [SerializeField] private TextMeshProUGUI goTimerText;
-    [SerializeField] private TextMeshProUGUI overUI;
     [SerializeField] private TextMeshProUGUI timerVisual;
     private float goTimer = 4;
 
@@ -84,8 +84,8 @@ public class LevelManager : NetworkBehaviour
                 break;
             case LevelState.Ending:
                 // Play animation and switch to idle (BELOW IS TEMPORARY)
-                StartCoroutine(EndingAnimation());
                 CurrentGameState = LevelState.Idle;
+                StartCoroutine(EndingAnimation());
                 break;
         }
     }
@@ -143,7 +143,8 @@ public class LevelManager : NetworkBehaviour
 
         TimerVisual();
         CurrentGameState = LevelState.Starting;
-        blackScreenUI.SetActive(false);
+        loadPlayerText.gameObject.SetActive(false);
+        BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, false);
 
         OnPlayerValueChange?.Invoke();
     }
@@ -190,13 +191,19 @@ public class LevelManager : NetworkBehaviour
             case LevelType.Challenge:
                 endingCamera.Priority = 1;
                 playerCamera.Priority = 0;
-                timeToWait = cameraAnimationSeconds > 1 ? cameraAnimationSeconds + 0.5f : 1.5f;
+                timeToWait = cameraAnimationSeconds > 1 ? cameraAnimationSeconds + 1f : 2f;
                 break;
             case LevelType.Minigame:
-                timeToWait = 1.5f;
+                timeToWait = 2f;
                 break;
         }
-        overUI.gameObject.SetActive(true);
+        overUI.SetActive(true);
+        yield return new WaitForSeconds(timeToWait / 2);
+
+        // (1 / timeToWait) saa nopeuden sekunneista.
+        BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, true, 1 / (timeToWait / 2));
+        BlackScreen.instance.screenFade.StartFade(overUI.transform, false, 1 / (timeToWait / 2));
+        BlackScreen.instance.screenFade.StartFade(overUI.transform.GetChild(0), false, 1 / (timeToWait / 2));
         yield return new WaitForSeconds(timeToWait);
 
         if (!IsServer)
