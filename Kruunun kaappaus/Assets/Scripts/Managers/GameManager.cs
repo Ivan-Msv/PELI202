@@ -169,7 +169,6 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     private void PlayerSelectionClientRpc()
     {
-        Debug.Log(playerTurn % availablePlayers.Count);
         currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
         currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);

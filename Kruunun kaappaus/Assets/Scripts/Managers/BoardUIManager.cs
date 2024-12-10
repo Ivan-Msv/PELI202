@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.Collections;
@@ -15,6 +17,11 @@ public class BoardUIManager : MonoBehaviour
     public bool onShopTile;
     public bool localPlayerTurn;
 
+    [Header("Enemy Info")]
+    [SerializeField] private GameObject enemyInfoPanel;
+    [SerializeField] private EnemyPlayerInfo enemyInfoPrefab;
+    [SerializeField] private Dictionary<MainPlayerInfo, EnemyPlayerInfo> enemyPlayerDictionary = new();
+
     [Header("UI")]
     public BoardShop shopUI;
     public GameObject gameEndUI;
@@ -22,13 +29,13 @@ public class BoardUIManager : MonoBehaviour
     public SpecialDiceUI diceUI;
     public BoardCamera virtualCamera;
     public Animator diceAnimator;
-    public TextMeshProUGUI playerLoadText;
 
     [Header("Buttons")]
     [SerializeField] private Button rollButton;
     [SerializeField] private Button openStoreButton;
 
     [Header("Text")]
+    public TextMeshProUGUI playerLoadText;
     [SerializeField] private TextMeshProUGUI coinCounter;
     [SerializeField] private TextMeshProUGUI crownCounter;
     [SerializeField] private TextMeshProUGUI playerTurn;
@@ -98,17 +105,48 @@ public class BoardUIManager : MonoBehaviour
         localPlayer = GameManager.instance.availablePlayers.Find(player => player.OwnerClientId == NetworkManager.Singleton.LocalClientId);
         localParent = localPlayer.GetComponentInParent<MainPlayerInfo>();
 
+        CreateEnemyPlayerUI();
         diceUI.AddEvent();
         CheckForGameEnd();
     }
     private void UpdateCurrentPlayerName(FixedString64Bytes newName)
     {
         currentTurnPlayerName = newName.ToString();
+        UpdateEnemyPlayerUI();
     }
+
+    private void UpdateEnemyPlayerUI()
+    {
+        foreach (var enemyPlayer in enemyPlayerDictionary)
+        {
+            enemyPlayer.Value.UpdatePlayerInfo(enemyPlayer.Key.playerName.Value.ToString(), enemyPlayer.Key.coinAmount.Value, enemyPlayer.Key.crownAmount.Value);
+        }
+    }
+
+    private void CreateEnemyPlayerUI()
+    {
+        foreach (var playerChild in GameManager.instance.availablePlayers)
+        {
+            if (playerChild == localPlayer)
+            {
+                continue;
+            }
+
+            MainPlayerInfo getInfo = playerChild.GetComponentInParent<MainPlayerInfo>();
+
+            EnemyPlayerInfo newEnemyInfo = Instantiate(enemyInfoPrefab, enemyInfoPanel.transform);
+            newEnemyInfo.UpdatePlayerInfo(getInfo.playerName.Value.ToString(), getInfo.coinAmount.Value, getInfo.crownAmount.Value);
+            enemyPlayerDictionary.Add(getInfo, newEnemyInfo);
+        }
+
+        UpdateEnemyPlayerUI();
+    }
+
     private bool LocalPlayerTurn()
     {
         return localPlayer == GameManager.instance.currentPlayer;
     }
+
     public bool LocalPlayerOnShopTile()
     {
         return BoardPath.instance.GetIndexTile(GameManager.instance.tilesIndex[localParent.currentBoardPosition.Value]) == GameManager.instance.shopTile;
@@ -146,6 +184,7 @@ public class BoardUIManager : MonoBehaviour
         NetworkManager.Singleton.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
+
     private void SetupGameEndUI()
     {
         string winnerName = "";
