@@ -115,11 +115,11 @@ public class BoardUIManager : MonoBehaviour
         UpdateEnemyPlayerUI();
     }
 
-    private void UpdateEnemyPlayerUI()
+    public void UpdateEnemyPlayerUI()
     {
         foreach (var enemyPlayer in enemyPlayerDictionary)
         {
-            enemyPlayer.Value.UpdatePlayerInfo(enemyPlayer.Key.playerName.Value.ToString(), enemyPlayer.Key.coinAmount.Value, enemyPlayer.Key.crownAmount.Value);
+            enemyPlayer.Value.UpdatePlayerInfo(enemyPlayer.Key.playerName.Value.ToString(), enemyPlayer.Key.coinAmount.Value, enemyPlayer.Key.crownAmount.Value, GameManager.instance.GetDiceFromIndex(enemyPlayer.Key.specialDiceIndex.Value).image);
         }
     }
 
@@ -135,7 +135,7 @@ public class BoardUIManager : MonoBehaviour
             MainPlayerInfo getInfo = playerChild.GetComponentInParent<MainPlayerInfo>();
 
             EnemyPlayerInfo newEnemyInfo = Instantiate(enemyInfoPrefab, enemyInfoPanel.transform);
-            newEnemyInfo.UpdatePlayerInfo(getInfo.playerName.Value.ToString(), getInfo.coinAmount.Value, getInfo.crownAmount.Value);
+            newEnemyInfo.UpdatePlayerInfo(getInfo.playerName.Value.ToString(), getInfo.coinAmount.Value, getInfo.crownAmount.Value, GameManager.instance.GetDiceFromIndex(getInfo.specialDiceIndex.Value).image);
             enemyPlayerDictionary.Add(getInfo, newEnemyInfo);
         }
 
