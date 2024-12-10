@@ -23,7 +23,7 @@ public class GameManager : NetworkBehaviour
     public BoardPlayerMovement playerMovement;
     [SerializeField] private float playerTurnTime;
     public NetworkVariable<float> TurnTimer = new();
-    private int playerTurn;
+    [SerializeField] private int playerTurn;
 
     [Header("Tiles")]
     public BoardTile emptyTile;
@@ -93,6 +93,7 @@ public class GameManager : NetworkBehaviour
         }
         else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
         {
+            playerTurn--;
             ComponentInitialization();
         }
     }
@@ -162,13 +163,13 @@ public class GameManager : NetworkBehaviour
 
         Time.timeScale = 1;
         GetAllPlayersClientRpc();
-        BoardUIManager.instance.UpdateLoadingPlayerUI(false, 1);
         BoardPath.instance.SplitPlayersOnTiles();
         currentState.Value = BoardState.SelectingPlayer;
     }
     [ClientRpc]
     private void PlayerSelectionClientRpc()
     {
+        Debug.Log(playerTurn % availablePlayers.Count);
         currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
         currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
@@ -199,6 +200,7 @@ public class GameManager : NetworkBehaviour
             availablePlayers.Add(player);
         }
 
+        BoardUIManager.instance.UpdateLoadingPlayerUI(false, 1);
         OnPlayerValueChange?.Invoke();
     }
     [ServerRpc(RequireOwnership = false)]
