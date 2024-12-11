@@ -85854,11 +85854,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: Damping.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: Lookahead.Time
-      value: 0.209
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: TargetOffset.x
@@ -85874,7 +85874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: Lookahead.Smoothing
-      value: 11.4
+      value: 8.2
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: Composition.DeadZone.Size.x

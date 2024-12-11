@@ -54,8 +54,8 @@ public class CoinCounter : MonoBehaviour
             }
 
             var newScoreInfo = Instantiate(playerScoreInfoPrefab, playerScorePanel.transform);
-            newScoreInfo.UpdatePlayerImage(player.GetComponent<SpriteRenderer>().sprite);
             playerDictionary.Add(player.GetComponent<PlayerInfo2D>(), newScoreInfo);
+            newScoreInfo.UpdatePlayerImage(int.Parse(component.playerSetup.SavedData["PlayerIconIndex"].Value));
         }
 
         UpdatePlayerScore();

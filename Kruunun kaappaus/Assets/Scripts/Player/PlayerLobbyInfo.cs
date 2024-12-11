@@ -32,7 +32,8 @@ public class PlayerLobbyInfo : MonoBehaviour
     {
         selectedColorIndex = int.Parse(playerData["PlayerColor"].Value);
         playerNameText.text = playerData["PlayerName"].Value;
-        iconImage.sprite = MainMenuUI.instance.PlayerIcons[int.Parse(playerData["PlayerIconIndex"].Value)];
+        selectedPlayerIconIndex = int.Parse(playerData["PlayerIconIndex"].Value);
+        iconImage.sprite = MainMenuUI.instance.PlayerIcons[selectedPlayerIconIndex];
         SpawnColorButtons();
         UpdateSelectionMenuColors(selectedColorIndex);
     }

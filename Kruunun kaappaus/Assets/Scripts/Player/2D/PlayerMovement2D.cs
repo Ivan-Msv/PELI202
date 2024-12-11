@@ -82,6 +82,7 @@ public class PlayerMovement2D : NetworkBehaviour
             StuckCheck();
             Jump();
             PlayerMovement();
+            LimitFallSpeed();
         }
     }
 
@@ -102,7 +103,10 @@ public class PlayerMovement2D : NetworkBehaviour
             transform.position = spawnPoint;
         }
     }
-
+    private void LimitFallSpeed()
+    {
+        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
+    }
     private void PlayerMovement()
     {
         // pelaajan asetukset

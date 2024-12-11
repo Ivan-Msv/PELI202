@@ -3245,11 +3245,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: Damping.x
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: Damping.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: Lookahead.Time

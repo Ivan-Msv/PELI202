@@ -89,7 +89,7 @@ public class LobbyManager : NetworkBehaviour
             Data = new Dictionary<string, PlayerDataObject>
                     {
                         { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
-                        { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")},
+                        { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, $"{Random.Range(0, MainMenuUI.instance.PlayerIcons.Length)}")},
                         { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1")},
                         { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "")},
                         { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}

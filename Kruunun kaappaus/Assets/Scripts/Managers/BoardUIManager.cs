@@ -152,7 +152,7 @@ public class BoardUIManager : MonoBehaviour
 
     private void CheckForGameEnd()
     {
-        if (localParent.crownAmount.Value >= 5)
+        if (localParent.crownAmount.Value >= 3)
         {
             GameManager.instance.TriggerGameEndServerRpc();
         }
