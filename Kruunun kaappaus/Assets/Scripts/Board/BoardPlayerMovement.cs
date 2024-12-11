@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class BoardPlayerMovement : NetworkBehaviour
 {
@@ -29,11 +30,12 @@ public class BoardPlayerMovement : NetworkBehaviour
         {
             int index = GetIndexDirection(player.playerInfo.currentBoardPosition.Value, forward);
             Vector3 nextTilePosition = BoardPath.instance.tiles[index].transform.position;
+            bool movingLeft = player.transform.position.x > nextTilePosition.x;
+            player.FlipSpriteRpc(movingLeft);
 
             while (player.transform.position != nextTilePosition)
             {
-                player.transform.position = Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime);
-                player.GetComponent<Animator>().SetBool("IsMoving", true);
+                MovePlayer(player, nextTilePosition);
                 yield return null;
             }
 
@@ -42,13 +44,18 @@ public class BoardPlayerMovement : NetworkBehaviour
             player.playerInfo.currentBoardPosition.Value = index;
             steps--;
 
-            if (BoardUIManager.instance.LocalPlayerOnShopTile())
+
+            // Jos ei ole kauppa kohalla niin jatka
+            if (!BoardUIManager.instance.LocalPlayerOnShopTile())
             {
-                BoardUIManager.instance.shopUI.OpenStore();
-                while (BoardUIManager.instance.shopUI.StoreOpen())
-                {
-                    yield return null;
-                }
+                continue;
+            }
+
+            // Muuten avaa kaupan, ja jatkaa liikkumisen kun kauppa sulkee
+            BoardUIManager.instance.shopUI.OpenStore();
+            while (BoardUIManager.instance.shopUI.StoreOpen())
+            {
+                yield return null;
             }
         }
 
@@ -59,6 +66,15 @@ public class BoardPlayerMovement : NetworkBehaviour
         alreadyMoving = false;
         GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
         BoardPath.instance.SplitPlayersOnTiles();
+    }
+
+    private void MovePlayer(BoardPlayerInfo player, Vector3 nextTilePosition)
+    {
+        Debug.Log(Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime));
+        player.transform.position = Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime);
+
+        // Animaatio
+        player.GetComponent<Animator>().SetBool("IsMoving", true);
     }
 
     private int GetIndexDirection(int currentPosition, bool forward)

@@ -56,6 +56,12 @@ public class BoardPlayerInfo : NetworkBehaviour
         transform.position = newPos;
     }
 
+    [Rpc(SendTo.Everyone)]
+    public void FlipSpriteRpc(bool currentX)
+    {
+        spriteComponent.flipX = currentX;
+    }
+
     private void UpdatePlayerSprite(int oldIndex, int newIndex)
     {
         spriteComponent.sprite = MainMenuUI.instance.PlayerIcons[newIndex];

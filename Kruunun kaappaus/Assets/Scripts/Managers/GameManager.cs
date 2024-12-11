@@ -297,6 +297,12 @@ public class GameManager : NetworkBehaviour
     {
         BoardUIManager.instance.ShowEndMenu();
     }
+
+    [Rpc(SendTo.NotMe)]
+    public void PlayerShopOpenRpc(bool open)
+    {
+        BoardUIManager.instance.shopUI.ShopOpenInfo(open);
+    }
     private IEnumerator SceneChangeCoroutine(string sceneName)
     {
         BoardUIManager.instance.UpdateLoadingPlayerUI(true, 1);

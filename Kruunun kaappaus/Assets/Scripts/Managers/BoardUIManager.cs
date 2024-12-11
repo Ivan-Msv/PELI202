@@ -42,7 +42,7 @@ public class BoardUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameEndHeader;
     [SerializeField] private TextMeshProUGUI gameEndResults;
     [SerializeField] private TextMeshProUGUI rollDiceName;
-    [SerializeField] private string currentTurnPlayerName;
+    public string CurrentTurnPlayerName { get; private set; }
 
 
     private void Awake()
@@ -91,7 +91,7 @@ public class BoardUIManager : MonoBehaviour
         coinCounter.text = $"{localParent.coinAmount.Value}";
         crownCounter.text = $"{localParent.crownAmount.Value}";
 
-        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : currentTurnPlayerName) } turn";
+        playerTurn.text = $"{(LocalPlayerTurn() ? "Your" : CurrentTurnPlayerName) } turn";
 
         var timeInMinutes = Mathf.FloorToInt((GameManager.instance.TurnTimer.Value + 1) / 60);
         var timeInSeconds = Mathf.FloorToInt((GameManager.instance.TurnTimer.Value + 1) - timeInMinutes * 60);
@@ -109,7 +109,7 @@ public class BoardUIManager : MonoBehaviour
     }
     private void UpdateCurrentPlayerName(FixedString64Bytes newName)
     {
-        currentTurnPlayerName = newName.ToString();
+        CurrentTurnPlayerName = newName.ToString();
         UpdateEnemyPlayerUI();
     }
 
@@ -161,7 +161,7 @@ public class BoardUIManager : MonoBehaviour
     public void UpdateRollDiceUI()
     {
         rollDiceUI.SetActive(true);
-        rollDiceName.text = $"{currentTurnPlayerName} rolls...";
+        rollDiceName.text = $"{CurrentTurnPlayerName} rolls...";
     }
 
     public void UpdateLoadingPlayerUI(bool fadeIn, float speed)

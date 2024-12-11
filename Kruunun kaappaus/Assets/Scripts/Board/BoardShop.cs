@@ -21,6 +21,8 @@ public class BoardShop : MonoBehaviour
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private GameObject shopInfoPanel;
     [SerializeField] private GameObject shopCatalogueList;
+    [SerializeField] private GameObject shopCheckingPanel;
+    [SerializeField] private TextMeshProUGUI shopCheckingText;
     [Space]
     [SerializeField] private Image imagePreview;
     [SerializeField] private TextMeshProUGUI itemNamePreview;
@@ -123,7 +125,14 @@ public class BoardShop : MonoBehaviour
     {
         shopInfoPanel.SetActive(false);
         shopPanel.gameObject.SetActive(!shopUI.activeSelf);
+        GameManager.instance.PlayerShopOpenRpc(!shopUI.activeSelf);
         shopUI.SetActive(!shopUI.activeSelf);
+    }
+
+    public void ShopOpenInfo(bool open)
+    {
+        shopCheckingPanel.SetActive(open);
+        shopCheckingText.text = string.Format(shopCheckingText.text, BoardUIManager.instance.CurrentTurnPlayerName);
     }
 
     public bool StoreOpen()
