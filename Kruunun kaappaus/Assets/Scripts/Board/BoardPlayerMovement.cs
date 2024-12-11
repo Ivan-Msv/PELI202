@@ -70,7 +70,6 @@ public class BoardPlayerMovement : NetworkBehaviour
 
     private void MovePlayer(BoardPlayerInfo player, Vector3 nextTilePosition)
     {
-        Debug.Log(Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime));
         player.transform.position = Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime);
 
         // Animaatio

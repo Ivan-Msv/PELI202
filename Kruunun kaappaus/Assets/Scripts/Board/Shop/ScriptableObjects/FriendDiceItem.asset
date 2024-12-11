@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2830c73b20f1fc6448f5cc0d53624819, type: 3}
-  m_Name: MinusDiceItem
+  m_Name: FriendDiceItem
   m_EditorClassIdentifier: 
-  itemName: Negative Dice
-  itemDescription: 'A Dice that lets you move in a negative direction.
+  itemName: Friendship Dice
+  itemDescription: 'A Dice that makes you move toward the closest player in rolled
+    direction.
 
-    Rolls
-    [-1] [-2] [-3] [-4] [-5] [-6]'
-  itemCost: 10
-  itemId: 1
-  itemSprite: {fileID: 21300000, guid: 6f6ddb5c89eb7a04b9107e6c2e537669, type: 3}
+    Rolls [Behind] [In Front]'
+  itemCost: 15
+  itemId: 5
+  itemSprite: {fileID: 21300000, guid: b423e43591cbaf94d936514416d47bd8, type: 3}

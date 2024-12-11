@@ -235,14 +235,6 @@ public class PlayerMovement2D : NetworkBehaviour
     }
 
     [ServerRpc]
-    private void DestroyCoinServerRpc(ulong collisionObjectId)
-    {
-        var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
-        // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
-        collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
-    }
-
-    [ServerRpc]
     private void DestroyCrownServerRpc(ulong collisionObjectId)
     {
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
@@ -267,8 +259,8 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             playerInfo.localCoinAmount.Value++;
             spawnParent.GetComponent<MainPlayerInfo>().coinAmount.Value++;
-            
-            DestroyCoinServerRpc(collisionObjectId);
+
+            collision.gameObject.GetComponent<Coin>().CollectCoinServerRpc();
         }
         if (collision.CompareTag("Crown"))
         {
