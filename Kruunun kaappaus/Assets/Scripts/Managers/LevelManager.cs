@@ -132,14 +132,12 @@ public class LevelManager : NetworkBehaviour
                 PlayerMovement2D playerComponent = player.GetComponent<PlayerMovement2D>();
                 if (player.GetComponentInParent<MainPlayerInfo>().isGhost.Value)
                 {
-                    playerComponent.spawnPoint = ghostSpawnPoints[ghostCount];
-                    playerComponent.UpdatePlayerPositionClientRpc(playerComponent.spawnPoint);
+                    playerComponent.UpdatePlayerSpawnClientRpc(ghostSpawnPoints[ghostCount]);
                     ghostCount++;
                     continue;
                 }
 
-                playerComponent.spawnPoint = playerSpawnPoint[playerCount];
-                playerComponent.UpdatePlayerPositionClientRpc(playerComponent.spawnPoint);
+                playerComponent.UpdatePlayerSpawnClientRpc(playerSpawnPoint[playerCount]);
                 playerCount++;
             }
         }

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2830c73b20f1fc6448f5cc0d53624819, type: 3}
-  m_Name: TeleportDiceItem
+  m_Name: VersusDiceItem
   m_EditorClassIdentifier: 
-  itemName: Type Roller Dice
-  itemDescription: 'A Dice that teleports on the nearest rolled tile type.
+  itemName: Versus Dice
+  itemDescription: 'A Dice that makes you battle against one random player for a
+    crown.
 
-    Rolls
-    [Empty] [Shop] [Minigame] [Challenge]'
-  itemCost: 20
-  itemId: 4
+    Rolls [2 Player Challenge]'
+  itemCost: 25
+  itemId: 7
   itemSprite: {fileID: 21300000, guid: 165d92df475337d408a1577cbafbb076, type: 3}

@@ -784,7 +784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4011280959303947458, guid: 9ff91e594cc74694898f2264f8682301, type: 3}
       propertyPath: pauseTimeSeconds
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5017909260429390906, guid: 9ff91e594cc74694898f2264f8682301, type: 3}
       propertyPath: m_LocalPosition.y

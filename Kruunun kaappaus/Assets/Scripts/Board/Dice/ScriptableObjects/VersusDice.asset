@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9654c2a31039a546b0e0d59d1c146d1, type: 3}
-  m_Name: SmallDice
+  m_Script: {fileID: 11500000, guid: 922c8714f672e7845ba8d99f167e6bc8, type: 3}
+  m_Name: VersusDice
   m_EditorClassIdentifier: 
-  animationStringPrefix: small_dice_
-  networkIndex: 3
-  image: {fileID: 21300000, guid: b423e43591cbaf94d936514416d47bd8, type: 3}
-  availableNumbers: 010000000200000003000000
+  animationStringPrefix: challenge_dice_
+  networkIndex: 7
+  image: {fileID: 0}
+  availableNumbers: 02000000

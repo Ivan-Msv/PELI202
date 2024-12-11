@@ -581,7 +581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: yBounce
-      value: 20
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: jumpHeight
@@ -30669,6 +30669,10 @@ PrefabInstance:
       value: -4.35
       objectReference: {fileID: 0}
     - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
+      propertyPath: Damping.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3566498815621934259, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: TargetOffset.x
       value: 0
       objectReference: {fileID: 0}
@@ -30703,6 +30707,10 @@ PrefabInstance:
     - target: {fileID: 7838924780168179826, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 1216056924
+      objectReference: {fileID: 0}
+    - target: {fileID: 7918622541787475073, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.2050781
       objectReference: {fileID: 0}
     - target: {fileID: 8555879955884414745, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_LocalPosition.x

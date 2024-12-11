@@ -224,14 +224,15 @@ public class PlayerMovement2D : NetworkBehaviour
     }
 
     [Rpc(SendTo.Owner)]
-    public void UpdatePlayerPositionClientRpc(Vector2 newPos)
+    public void UpdatePlayerSpawnClientRpc(Vector2 newSpawnPoint)
     {
         if (!NetworkObject.IsOwner)
         {
             return;
         }
 
-        transform.position = newPos;
+        spawnPoint = newSpawnPoint;
+        transform.position = spawnPoint;
     }
 
     [ServerRpc]

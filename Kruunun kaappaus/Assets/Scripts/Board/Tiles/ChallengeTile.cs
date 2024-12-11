@@ -79,4 +79,60 @@ public class ChallengeTile : BoardTile
 
         GameManager.instance.LoadSceneServerRpc(newScene);
     }
+
+    public void SelectCustomChallenge(int playerAmount)
+    {
+        List<int> ghosts = new();
+        List<int> players = new();
+        List<int> potentialPlayers = new();
+
+        for (int i = 0; i < GameManager.instance.availablePlayers.Count; i++)
+        {
+            if (GameManager.instance.currentPlayer == GameManager.instance.availablePlayers[i])
+            {
+                players.Add(i);
+                continue;
+            }
+
+            potentialPlayers.Add(i);
+        }
+
+        for (int i = 0; i < playerAmount - 1; i++)
+        {
+            var randomIndex = Random.Range(0, potentialPlayers.Count);
+            players.Add(potentialPlayers[randomIndex]);
+            potentialPlayers.Remove(potentialPlayers[randomIndex]);
+        }
+
+        foreach (var leftover in potentialPlayers)
+        {
+            ghosts.Add(leftover);
+        }
+
+        GameManager.instance.FromGhostToPlayerServerRpc(ghosts.ToArray(), players.ToArray());
+
+
+        string newScene;
+        switch (playerAmount)
+        {
+            case 1:
+                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
+                break;
+            case 2:
+                newScene = sceneNames2[Random.Range(0, sceneNames2.Length)];
+                break;
+            case 3:
+                newScene = sceneNames3[Random.Range(0, sceneNames3.Length)];
+                break;
+            case 4:
+                newScene = sceneNames4[Random.Range(0, sceneNames4.Length)];
+                break;
+            default:
+                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
+                break;
+        }
+
+        GameManager.instance.LoadSceneServerRpc(newScene);
+        GameManager.instance.playerMovement.MovePlayer(GameManager.instance.currentPlayer, 0);
+    }
 }

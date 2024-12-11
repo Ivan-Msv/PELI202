@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9654c2a31039a546b0e0d59d1c146d1, type: 3}
-  m_Name: SmallDice
+  m_Script: {fileID: 11500000, guid: 28ec490fb3dbccf41a01dbab924161bd, type: 3}
+  m_Name: 4PlayerMinigameDice
   m_EditorClassIdentifier: 
-  animationStringPrefix: small_dice_
-  networkIndex: 3
-  image: {fileID: 21300000, guid: b423e43591cbaf94d936514416d47bd8, type: 3}
-  availableNumbers: 010000000200000003000000
+  animationStringPrefix: minigame_dice_
+  networkIndex: 6
+  image: {fileID: 0}
+  availableNumbers: 04000000
