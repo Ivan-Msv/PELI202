@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e21866f7c2b692f428238a24d90626cb
+guid: 387ae1b512b0bb948ac8c22a8f304b34
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4499468131736861583
-    second: test for moving background.jpg_0
+      213: 2828268315918739597
+    second: Main_Menu_Tiles 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 16384
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: test for moving background.jpg_0
+      name: Main_Menu_Tiles 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1786
-        height: 99
+        width: 10500
+        height: 472
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f8bbd563d62517e30800000000000000
-      internalID: 4499468131736861583
+      spriteID: d8824db6c07004720800000000000000
+      internalID: 2828268315918739597
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      test for moving background.jpg_0: 4499468131736861583
+      Main_Menu_Tiles 1_0: 2828268315918739597
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
