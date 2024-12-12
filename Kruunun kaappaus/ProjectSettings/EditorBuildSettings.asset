@@ -33,6 +33,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Challenge Levels/1PChallengeLevel2.unity
     guid: 17c80af545c25fa4b8b4ca0d25865ad3
   - enabled: 1
+    path: Assets/Scenes/Challenge Levels/1PChallengeLevel3.unity
+    guid: e5d4fb34df24b7242a28b7db9ef20c77
+  - enabled: 1
     path: Assets/Scenes/Challenge Levels/2PChallengeLevel1.unity
     guid: 941ebeba45243834a9b9d12187320510
   - enabled: 1
@@ -47,7 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Challenge Levels/4PChallengeLevel3.unity
     guid: b1c8901d75e0b2d44a56389be3b89804
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Challenge Levels/4PChallengeLevel4 (In Progress).unity
     guid: 17ded720988ef604e868d0a048552213
   m_configObjects: {}

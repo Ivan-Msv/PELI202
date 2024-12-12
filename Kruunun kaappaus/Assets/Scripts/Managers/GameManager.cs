@@ -49,8 +49,6 @@ public class GameManager : NetworkBehaviour
 
     private void Awake()
     {
-        playerMovement = GetComponent<BoardPlayerMovement>();
-
         if (instance == null)
         {
             instance = this;
@@ -59,6 +57,9 @@ public class GameManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+
+        playerMovement = GetComponent<BoardPlayerMovement>();
+
         if (IsServer)
         {
             NetworkObject.Spawn();
@@ -172,7 +173,7 @@ public class GameManager : NetworkBehaviour
         currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
         currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
-        BoardUIManager.instance.virtualCamera.SetCameraPosition();
+        BoardUIManager.instance.virtualCamera.UpdateCameraFollow();
         BoardUIManager.instance.shopUI.UpdateItems();
         playerTurn++;
 

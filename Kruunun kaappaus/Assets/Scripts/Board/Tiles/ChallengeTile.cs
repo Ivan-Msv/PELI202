@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
@@ -10,16 +11,29 @@ public class ChallengeTile : BoardTile
     [SerializeField] private string[] sceneNames2;
     [SerializeField] private string[] sceneNames3;
     [SerializeField] private string[] sceneNames4;
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        anim.StopPlayback();
+
+        anim.runtimeAnimatorController = GameManager.instance.challengeTile.GetComponent<Animator>().runtimeAnimatorController;
+    }
+
     public override void SetupTile()
     {
         // Tajusin vast nyt kuink huonosti toi on tehty, vihaan sitä 👍 (4/12/2024)
         // Oisin voinu tehä struct tai jtn mut nyt mun pitää kärsii koska en oo vaihtamas sitä täs vaihees
         tileSprite = GameManager.instance.challengeTile.tileSprite;
         tileName = GameManager.instance.challengeTile.name;
-        sceneNames1 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames1;
-        sceneNames2 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames2;
-        sceneNames3 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames3;
-        sceneNames4 = GameManager.instance.challengeTile.GetComponent<ChallengeTile>().sceneNames4;
+        var challengeTileComponent = GameManager.instance.challengeTile.GetComponent<ChallengeTile>();
+        sceneNames1 = challengeTileComponent.sceneNames1;
+        sceneNames2 = challengeTileComponent.sceneNames2;
+        sceneNames3 = challengeTileComponent.sceneNames3;
+        sceneNames4 = challengeTileComponent.sceneNames4;
+
+        anim.Play("CrownTile_Switch");
     }
 
     public override void InvokeTile()
@@ -30,18 +44,19 @@ public class ChallengeTile : BoardTile
         int randomIndex = Random.Range(0, emptyTiles.Count);
         var newIndex = BoardPath.instance.tiles.IndexOf(emptyTiles[randomIndex]);
 
-        BoardPath.instance.ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
-        BoardPath.instance.ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
+        BoardPath.instance.TileAnimation(thisIndex, newIndex);
+        //BoardPath.instance.ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
+        //BoardPath.instance.ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
 
-        SelectRandomChallenge(thisIndex);
+        //SelectRandomChallenge(thisIndex);
     }
 
-    private void SelectRandomChallenge(int currentIndex)
+    public void SelectRandomChallenge(int currentIndex)
     {
         string newScene;
         int playersOnTile = 0;
-        List<int> ghosts = new List<int>();
-        List<int> players = new List<int>();
+        List<int> ghosts = new();
+        List<int> players = new();
 
         for (int i = 0; i < GameManager.instance.availablePlayers.Count; i++)
         {

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Goblin_Jumping
+  m_Name: Robot_Falling
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 508833359948859875, guid: 89ecab8a1f6f76640b33f79ef5b66eff, type: 3}
+      value: {fileID: 473387150350272423, guid: b4b61139faad9ac44bc81252464a4a70, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,7 +44,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 508833359948859875, guid: 89ecab8a1f6f76640b33f79ef5b66eff, type: 3}
+    - {fileID: 473387150350272423, guid: b4b61139faad9ac44bc81252464a4a70, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

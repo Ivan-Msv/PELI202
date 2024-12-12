@@ -11,7 +11,6 @@ public abstract class BoardTile : MonoBehaviour
         SetupTile();
         GetComponent<SpriteRenderer>().sprite = tileSprite;
         name = tileName;
-        // ja pelaa animaatiota tässä ehkä
     }
     public abstract void SetupTile();
     public abstract void InvokeTile();

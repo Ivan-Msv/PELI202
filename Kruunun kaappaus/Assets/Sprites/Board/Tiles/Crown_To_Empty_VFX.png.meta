@@ -1,0 +1,450 @@
+fileFormatVersion: 2
+guid: ce68c58853bd9314d9218679893733ba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3250519195629134084
+    second: Crown_To_Empty_VFX_0
+  - first:
+      213: 3970209668059964802
+    second: Crown_To_Empty_VFX_1
+  - first:
+      213: -5801855807639808029
+    second: Crown_To_Empty_VFX_2
+  - first:
+      213: -2950353773073181361
+    second: Crown_To_Empty_VFX_3
+  - first:
+      213: 2861985475833633418
+    second: Crown_To_Empty_VFX_4
+  - first:
+      213: 2363189236797733444
+    second: Crown_To_Empty_VFX_5
+  - first:
+      213: 6096983421894344821
+    second: Crown_To_Empty_VFX_6
+  - first:
+      213: -3848431000906299186
+    second: Crown_To_Empty_VFX_7
+  - first:
+      213: 4687208087805790620
+    second: Crown_To_Empty_VFX_8
+  - first:
+      213: 2377208764262254436
+    second: Crown_To_Empty_VFX_9
+  - first:
+      213: 6952888202637908124
+    second: Crown_To_Empty_VFX_10
+  - first:
+      213: 3492522389069749367
+    second: Crown_To_Empty_VFX_11
+  - first:
+      213: 3974045768466066093
+    second: Crown_To_Empty_VFX_12
+  - first:
+      213: -2651656876551895629
+    second: Crown_To_Empty_VFX_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_0
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 145
+        width: 37
+        height: 47
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfedfe87306d3e2d0800000000000000
+      internalID: -3250519195629134084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_1
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 145
+        width: 42
+        height: 47
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 285298478a4091730800000000000000
+      internalID: 3970209668059964802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_2
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 143
+        width: 43
+        height: 49
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e7979be1eaab7fa0800000000000000
+      internalID: -5801855807639808029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_4
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 77
+        width: 53
+        height: 51
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8a146770a0d7b720800000000000000
+      internalID: 2861985475833633418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_5
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 76
+        width: 62
+        height: 52
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44afa54171cbbc020800000000000000
+      internalID: 2363189236797733444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_7
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 79
+        width: 43
+        height: 49
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec801600560a79ac0800000000000000
+      internalID: -3848431000906299186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_9
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 79
+        width: 43
+        height: 49
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4670ccea6ca8df020800000000000000
+      internalID: 2377208764262254436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_10
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 13
+        width: 53
+        height: 48
+      alignment: 9
+      pivot: {x: 0.51, y: 0.53}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c989c397bfe9d7060800000000000000
+      internalID: 6952888202637908124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_11
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 13
+        width: 53
+        height: 48
+      alignment: 9
+      pivot: {x: 0.51, y: 0.565}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77cd992db9ee77030800000000000000
+      internalID: 3492522389069749367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_12
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 15
+        width: 48
+        height: 48
+      alignment: 9
+      pivot: {x: 0.48, y: 0.53}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daa609e2295a62730800000000000000
+      internalID: 3974045768466066093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_13
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 15
+        width: 34
+        height: 34
+      alignment: 9
+      pivot: {x: 0.47, y: 0.74}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b507eeae1c633bd0800000000000000
+      internalID: -2651656876551895629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_3
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 145
+        width: 42
+        height: 47
+      alignment: 9
+      pivot: {x: 0.47, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ecd940bf0230184cadf03ea5405252e
+      internalID: -2950353773073181361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1cf521d504cc4a040ba92992c0b51e5b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Crown_To_Empty_VFX_0: -3250519195629134084
+      Crown_To_Empty_VFX_1: 3970209668059964802
+      Crown_To_Empty_VFX_10: 6952888202637908124
+      Crown_To_Empty_VFX_11: 3492522389069749367
+      Crown_To_Empty_VFX_12: 3974045768466066093
+      Crown_To_Empty_VFX_13: -2651656876551895629
+      Crown_To_Empty_VFX_2: -5801855807639808029
+      Crown_To_Empty_VFX_3: -2950353773073181361
+      Crown_To_Empty_VFX_4: 2861985475833633418
+      Crown_To_Empty_VFX_5: 2363189236797733444
+      Crown_To_Empty_VFX_6: 6096983421894344821
+      Crown_To_Empty_VFX_7: -3848431000906299186
+      Crown_To_Empty_VFX_8: 4687208087805790620
+      Crown_To_Empty_VFX_9: 2377208764262254436
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

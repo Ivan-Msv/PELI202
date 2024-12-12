@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 
@@ -126,6 +128,39 @@ public class BoardPath : NetworkBehaviour
     {
         GameManager.instance.tilesIndex[index] = newNumber;
     }
+
+    [Rpc(SendTo.Everyone)]
+    public void SetCameraPositionAndActiveRpc(bool disable, int tileIndex = -5)
+    {
+        Transform cameraFollow = tileIndex == -5 ? null : tiles[tileIndex].transform;
+        BoardUIManager.instance.virtualCamera.ChangeCameraFollow(disable, cameraFollow);
+    }
+
+    public void TileAnimation(int thisIndex, int newIndex)
+    {
+        StartCoroutine(TileAnimationCoroutine(thisIndex, newIndex));
+    }
+
+    private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex)
+    {
+        SetCameraPositionAndActiveRpc(true, newIndex);
+        yield return new WaitForSeconds(0.1f);
+        ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
+        yield return new WaitForSeconds(2.2f);
+        SetCameraPositionAndActiveRpc(false);
+        yield return new WaitForSeconds(0.1f);
+        ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
+        PlayTileAnimationRpc(thisIndex, "EmptyTile_Switch");
+        yield return new WaitForSeconds(tiles[thisIndex].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + 0.5f);
+        GameManager.instance.challengeTile.GetComponent<ChallengeTile>().SelectRandomChallenge(thisIndex);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void PlayTileAnimationRpc(int tileIndex, string animation)
+    {
+        tiles[tileIndex].GetComponent<Animator>().Play(animation);
+    }
+
     public void SplitPlayersOnTiles()
     {
         List<MainPlayerInfo> playerInfos = new();

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5881722664721385194}
   - component: {fileID: 3030998892753430076}
   - component: {fileID: 6369674609150201810}
+  - component: {fileID: 3471826482464308289}
   m_Layer: 0
   m_Name: Empty Tile
   m_TagString: Untagged
@@ -77,12 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 93a36c419ef359e4b829a0d5e863801b, type: 3}
+  m_Sprite: {fileID: -2651656876551895629, guid: ce68c58853bd9314d9218679893733ba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.125, y: 2.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -100,5 +101,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e596b792a02bd43b49b8668310619c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite: {fileID: 21300000, guid: 93a36c419ef359e4b829a0d5e863801b, type: 3}
+  tileSprite: {fileID: -2651656876551895629, guid: ce68c58853bd9314d9218679893733ba, type: 3}
   tileName: 
+  vfxPrefab: {fileID: 2300734494371088752, guid: 4d99204278fba31428a3a12e9c3bf582, type: 3}
+--- !u!95 &3471826482464308289
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2997775448942781035}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4a459537f6b1e7841be5e094b5075268, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

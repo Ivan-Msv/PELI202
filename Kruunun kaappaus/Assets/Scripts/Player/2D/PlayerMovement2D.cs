@@ -103,6 +103,7 @@ public class PlayerMovement2D : NetworkBehaviour
             transform.position = spawnPoint;
         }
     }
+
     private void LimitFallSpeed()
     {
         rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
@@ -209,6 +210,7 @@ public class PlayerMovement2D : NetworkBehaviour
             currentPlayerState = PlayerMovementState.Moving;
             return;
         }
+
         else
         {
             currentPlayerState = PlayerMovementState.Idle;
@@ -224,7 +226,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private PlayerMovementState JumpOrFallCheck()
     {
-        return rb.linearVelocity.y > 0 ? PlayerMovementState.Jumping : PlayerMovementState.Falling;
+        return rb.linearVelocity.y < 0 ? PlayerMovementState.Falling : PlayerMovementState.Jumping;
     }
 
     [Rpc(SendTo.Owner)]
