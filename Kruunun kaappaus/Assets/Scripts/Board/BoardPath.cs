@@ -147,7 +147,7 @@ public class BoardPath : NetworkBehaviour
         yield return new WaitForSeconds(2f);
         ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
         yield return new WaitForSeconds(2.2f);
-        SetCameraPositionAndActiveRpc(false);
+        SetCameraPositionAndActiveRpc(true, thisIndex);
         yield return new WaitForSeconds(0.1f);
         ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
         while (GetTileIndex(tiles[thisIndex].GetComponent<BoardTile>()) != (int)Tiles.EmptyTile)
