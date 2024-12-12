@@ -144,19 +144,23 @@ public class BoardPath : NetworkBehaviour
     private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex)
     {
         SetCameraPositionAndActiveRpc(true, newIndex);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2f);
         ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
         yield return new WaitForSeconds(2.2f);
-        SetCameraPositionAndActiveRpc(false);
+        SetCameraPositionAndActiveRpc(true, thisIndex);
         yield return new WaitForSeconds(0.1f);
         ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
-        PlayTileAnimationRpc(thisIndex, "EmptyTile_Switch");
+        while (GetTileIndex(tiles[thisIndex].GetComponent<BoardTile>()) != (int)Tiles.EmptyTile)
+        {
+            yield return null;
+        }
+        PlayEmptyTileAnimationRpc(thisIndex, "EmptyTile_Switch");
         yield return new WaitForSeconds(tiles[thisIndex].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + 0.5f);
         GameManager.instance.challengeTile.GetComponent<ChallengeTile>().SelectRandomChallenge(thisIndex);
     }
 
     [Rpc(SendTo.Everyone)]
-    public void PlayTileAnimationRpc(int tileIndex, string animation)
+    public void PlayEmptyTileAnimationRpc(int tileIndex, string animation)
     {
         tiles[tileIndex].GetComponent<Animator>().Play(animation);
     }

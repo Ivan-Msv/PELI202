@@ -7,9 +7,9 @@ public class PlayerScoreInfo : MonoBehaviour
     [SerializeField] private Image playerSprite;
     [SerializeField] private TextMeshProUGUI playerCoinText;
 
-    public void UpdatePlayerImage(int imageIndex)
+    public void UpdatePlayerImage(Sprite newSprite)
     {
-        playerSprite.sprite = MainMenuUI.instance.PlayerIcons[imageIndex];
+        playerSprite.sprite = newSprite;
     }
 
     public void UpdatePlayerScore(int newScore)

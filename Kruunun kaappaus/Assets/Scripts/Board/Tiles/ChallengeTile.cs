@@ -45,10 +45,6 @@ public class ChallengeTile : BoardTile
         var newIndex = BoardPath.instance.tiles.IndexOf(emptyTiles[randomIndex]);
 
         BoardPath.instance.TileAnimation(thisIndex, newIndex);
-        //BoardPath.instance.ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
-        //BoardPath.instance.ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
-
-        //SelectRandomChallenge(thisIndex);
     }
 
     public void SelectRandomChallenge(int currentIndex)
