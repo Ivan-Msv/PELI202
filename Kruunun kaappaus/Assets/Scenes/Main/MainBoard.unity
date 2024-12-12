@@ -26958,7 +26958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.37800002, y: 0.33975402}
   m_AnchorMax: {x: 0.794, y: 0.56524605}
-  m_AnchoredPosition: {x: 0, y: 4.088623}
+  m_AnchoredPosition: {x: 0, y: 4.0886536}
   m_SizeDelta: {x: 11.1045, y: -7.8221}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &875496920
@@ -85536,6 +85536,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1284964022}
     m_Modifications:
+    - target: {fileID: 1798204089288071595, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
+      propertyPath: sceneNames1.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2165456807816290501, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
       propertyPath: m_Name
       value: Challenge Tile
