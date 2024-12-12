@@ -144,7 +144,7 @@ public class BoardPath : NetworkBehaviour
     private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex)
     {
         SetCameraPositionAndActiveRpc(true, newIndex);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2f);
         ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
         yield return new WaitForSeconds(2.2f);
         SetCameraPositionAndActiveRpc(false);

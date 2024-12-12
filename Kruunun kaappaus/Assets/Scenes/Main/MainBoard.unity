@@ -19646,7 +19646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '{0} Checking shop contents...'
+  m_text: '{0} checking shop contents...'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fad6668190b766d4f89e30c326bf9540, type: 2}
   m_sharedMaterial: {fileID: -4589694095144660104, guid: fad6668190b766d4f89e30c326bf9540, type: 2}
@@ -80316,7 +80316,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1284964020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140751,7 +140751,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1947310052
 MonoBehaviour:
   m_ObjectHideFlags: 0
