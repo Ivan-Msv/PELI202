@@ -150,10 +150,10 @@ public class GameManager : NetworkBehaviour
                 PlayerLoadState();
                 break;
             case BoardState.SelectingPlayer:
+                PlayerSelectionClientRpc();
                 currentState.Value = BoardState.PlayerTurnCount;
                 TurnTimer.Value = playerTurnTime;
                 playerTurn.Value++;
-                PlayerSelectionClientRpc();
                 break;
             case BoardState.PlayerTurnCount:
                 PlayerTurnState();
