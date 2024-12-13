@@ -68,7 +68,7 @@ public class LobbyUI : NetworkBehaviour
     {
         HandleLobbyPollForUpdates();
         CheckStartMatch();
-        //CheckLobbyCount(); DEBUG laita takas päälle on release
+        //CheckLobbyCount();
     }
     public async void SelectSprite(string playerId, int colorIndex, int iconIndex)
     {
