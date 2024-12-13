@@ -200,7 +200,7 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     private void GetAllPlayersClientRpc()
     {
-        foreach (BoardPlayerInfo player in FindObjectsByType<BoardPlayerInfo>(FindObjectsSortMode.InstanceID))
+        foreach (BoardPlayerInfo player in FindObjectsByType<BoardPlayerInfo>(sortMode: FindObjectsSortMode.None))
         {
             availablePlayers.Add(player);
         }
