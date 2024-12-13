@@ -150,6 +150,9 @@ public class GameManager : NetworkBehaviour
                 PlayerLoadState();
                 break;
             case BoardState.SelectingPlayer:
+                currentState.Value = BoardState.PlayerTurnCount;
+                TurnTimer.Value = playerTurnTime;
+                playerTurn.Value++;
                 PlayerSelectionClientRpc();
                 break;
             case BoardState.PlayerTurnCount:
@@ -172,7 +175,7 @@ public class GameManager : NetworkBehaviour
         BoardPath.instance.SplitPlayersOnTiles();
         currentState.Value = BoardState.SelectingPlayer;
     }
-    [ClientRpc]
+    [Rpc(SendTo.Everyone)]
     private void PlayerSelectionClientRpc()
     {
         currentPlayer = availablePlayers[playerTurn.Value % availablePlayers.Count];
@@ -180,14 +183,6 @@ public class GameManager : NetworkBehaviour
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
         BoardUIManager.instance.boardCamera.UpdateCameraFollow();
         BoardUIManager.instance.shopUI.UpdateItems();
-
-        if (IsServer)
-        {
-            currentState.Value = BoardState.PlayerTurnCount;
-            TurnTimer.Value = playerTurnTime;
-            Debug.Log($"Server updated the playerturn {playerTurn.Value}");
-            playerTurn.Value++;
-        }
     }
     private void PlayerTurnState()
     {
