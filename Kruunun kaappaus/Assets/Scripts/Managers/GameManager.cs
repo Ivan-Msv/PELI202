@@ -121,6 +121,7 @@ public class GameManager : NetworkBehaviour
         }
         else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
         {
+            playerTurn.Value--;
             currentState.Value = BoardState.WaitingForPlayers;
         }
         else
