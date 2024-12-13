@@ -121,6 +121,7 @@ public class PlayerInfo2D : NetworkBehaviour
         var newColor = spriteComponent.color;
         newColor.a = newValue ? 0.4f : 1;
         spriteComponent.color = newColor;
+        animatorComponent.runtimeAnimatorController = MainMenuUI.instance.GhostAnimator;
     }
     private void SwapSpriteAxis()
     {

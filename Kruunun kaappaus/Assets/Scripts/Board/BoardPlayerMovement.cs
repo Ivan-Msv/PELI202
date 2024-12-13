@@ -53,19 +53,29 @@ public class BoardPlayerMovement : NetworkBehaviour
 
             // Muuten avaa kaupan, ja jatkaa liikkumisen kun kauppa sulkee
             BoardUIManager.instance.shopUI.OpenStore();
+            PlayShopAnimationRpc(index, "Shop_Activate");
             while (BoardUIManager.instance.shopUI.StoreOpen())
             {
                 yield return null;
             }
+            PlayShopAnimationRpc(index, "Shop_Deactivate");
         }
+
+        alreadyMoving = false;
+        GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
+        BoardPath.instance.SplitPlayersOnTiles();
 
         if (!emptyRoll)
         {
             BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
         }
-        alreadyMoving = false;
-        GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
-        BoardPath.instance.SplitPlayersOnTiles();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void PlayShopAnimationRpc(int shopTileIndex, string animationName)
+    {
+        var shopAnimator = BoardPath.instance.tiles[shopTileIndex].GetComponent<Animator>();
+        shopAnimator.Play(animationName);
     }
 
     private void MovePlayer(BoardPlayerInfo player, Vector3 nextTilePosition)

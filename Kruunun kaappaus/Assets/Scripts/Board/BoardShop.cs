@@ -131,7 +131,8 @@ public class BoardShop : MonoBehaviour
 
     public void ShopOpenInfo(bool open)
     {
-        shopCheckingPanel.SetActive(open);
+        BlackScreen.instance.screenFade.StartFade(shopCheckingPanel.transform, open);
+        BlackScreen.instance.screenFade.StartFade(shopCheckingText.transform, open);
         shopCheckingText.text = string.Format(shopCheckingText.text, BoardUIManager.instance.CurrentTurnPlayerName);
     }
 

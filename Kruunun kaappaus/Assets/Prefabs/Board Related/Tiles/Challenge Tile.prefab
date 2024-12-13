@@ -78,12 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -5362087098978072423, guid: cff41ca4fcef29149a825f6ab0175207, type: 3}
+  m_Sprite: {fileID: 7820641470027995368, guid: 4d0e4373ba5491340aa8cf0c42ca0a1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.125, y: 2.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -101,11 +101,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad71f793ac0b18c468c90b3d47b908ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite: {fileID: -5362087098978072423, guid: cff41ca4fcef29149a825f6ab0175207, type: 3}
+  tileSprite: {fileID: 7820641470027995368, guid: 4d0e4373ba5491340aa8cf0c42ca0a1d, type: 3}
   tileName: 
   sceneNames1:
   - 1PChallengeLevel1
   - 1PChallengeLevel2
+  - 1PChallengeLevel3
+  - 1PChallengeLevel4
+  - 1PChallengeLevel5
+  - 3PChallengeLevel1
   sceneNames2:
   - 2PChallengeLevel1
   - 3PChallengeLevel1

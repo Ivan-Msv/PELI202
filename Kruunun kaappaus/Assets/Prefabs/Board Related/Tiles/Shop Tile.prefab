@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7391992191227443790}
   - component: {fileID: 7531027804593938247}
   - component: {fileID: 6177457955905682811}
+  - component: {fileID: 6202728671484287829}
   m_Layer: 0
   m_Name: Shop Tile
   m_TagString: Untagged
@@ -77,12 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 3a2afd90672b16b4594438a92d9452f6, type: 3}
+  m_Sprite: {fileID: 6840857970483876212, guid: 3d8e64586c097bd45b4ec4bfb5960163, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.92, y: 0.34}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -100,5 +101,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14579feadcab94b4089637450e05d824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite: {fileID: 21300000, guid: 3a2afd90672b16b4594438a92d9452f6, type: 3}
+  tileSprite: {fileID: 6840857970483876212, guid: 3d8e64586c097bd45b4ec4bfb5960163, type: 3}
   tileName: 
+--- !u!95 &6202728671484287829
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7901603708876825583}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c36559490178944d879325e05c13dad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

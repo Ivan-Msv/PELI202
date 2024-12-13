@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2830c73b20f1fc6448f5cc0d53624819, type: 3}
+  m_Name: VersusDiceItem
+  m_EditorClassIdentifier: 
+  itemName: Versus Ticket
+  itemDescription: An item that forces you to battle against one random player for
+    a crown.
+  itemCost: 25
+  itemId: 7
+  itemSprite: {fileID: 1585943399389613841, guid: fce5be4c209eacf4da8a0252f31cb4fd, type: 3}

@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class BoardCamera : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera virtualCamera;
     public bool isDisabled;
+    [field:SerializeField] public CinemachineCamera VirtualCamera { get; private set; }
 
     public void UpdateCameraFollow()
     {
@@ -13,13 +13,13 @@ public class BoardCamera : MonoBehaviour
             return;
         }
 
-        virtualCamera.Follow = GameManager.instance.currentPlayer.transform;
-        virtualCamera.transform.position = new Vector3(GameManager.instance.currentPlayer.transform.position.x, GameManager.instance.currentPlayer.transform.position.y, virtualCamera.transform.position.z);
+        VirtualCamera.Follow = GameManager.instance.currentPlayer.transform;
+        VirtualCamera.transform.position = new Vector3(GameManager.instance.currentPlayer.transform.position.x, GameManager.instance.currentPlayer.transform.position.y, VirtualCamera.transform.position.z);
     }
 
     public void ChangeCameraFollow(bool disable, Transform newTransform = null)
     {
         isDisabled = disable;
-        virtualCamera.Follow = isDisabled ? newTransform : GameManager.instance.currentPlayer.transform;
+        VirtualCamera.Follow = isDisabled ? newTransform : GameManager.instance.currentPlayer.transform;
     }
 }

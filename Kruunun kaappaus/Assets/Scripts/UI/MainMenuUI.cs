@@ -42,6 +42,7 @@ public class MainMenuUI : MonoBehaviour
 
     [field: SerializeField] public Sprite[] PlayerIcons { get; private set; }
     [field: SerializeField] public RuntimeAnimatorController[] PlayerAnimators { get; private set; }
+    [field: SerializeField] public RuntimeAnimatorController GhostAnimator { get; private set; }
     [Space]
 
     private MenuState currentState;

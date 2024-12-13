@@ -35938,7 +35938,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4011280959303947458, guid: 9ff91e594cc74694898f2264f8682301, type: 3}
       propertyPath: moveSpeed
-      value: 2
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4011280959303947458, guid: 9ff91e594cc74694898f2264f8682301, type: 3}
+      propertyPath: slowDistance
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4011280959303947458, guid: 9ff91e594cc74694898f2264f8682301, type: 3}
+      propertyPath: pauseTimeSeconds
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5017909260429390906, guid: 9ff91e594cc74694898f2264f8682301, type: 3}
       propertyPath: m_LocalPosition.x

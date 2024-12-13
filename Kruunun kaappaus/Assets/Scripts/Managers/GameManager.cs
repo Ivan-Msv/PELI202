@@ -23,7 +23,8 @@ public class GameManager : NetworkBehaviour
     public BoardPlayerMovement playerMovement;
     [SerializeField] private float playerTurnTime;
     public NetworkVariable<float> TurnTimer = new();
-    [SerializeField] private int playerTurn;
+    [SerializeField] private NetworkVariable<int> playerTurn = new();
+    private NetworkVariable<bool> gameEnd = new();
 
     [Header("Tiles")]
     public BoardTile emptyTile;
@@ -94,7 +95,6 @@ public class GameManager : NetworkBehaviour
         }
         else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
         {
-            playerTurn--;
             ComponentInitialization();
         }
     }
@@ -139,6 +139,11 @@ public class GameManager : NetworkBehaviour
 
     private void GameLoop()
     {
+        if (gameEnd.Value)
+        {
+            return;
+        }
+
         switch (currentState.Value)
         {
             case BoardState.WaitingForPlayers:
@@ -170,17 +175,17 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     private void PlayerSelectionClientRpc()
     {
-        currentPlayer = availablePlayers[playerTurn % availablePlayers.Count];
+        currentPlayer = availablePlayers[playerTurn.Value % availablePlayers.Count];
         currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
-        BoardUIManager.instance.virtualCamera.UpdateCameraFollow();
+        BoardUIManager.instance.boardCamera.UpdateCameraFollow();
         BoardUIManager.instance.shopUI.UpdateItems();
-        playerTurn++;
 
         if (IsServer)
         {
-            TurnTimer.Value = playerTurnTime;
             currentState.Value = BoardState.PlayerTurnCount;
+            TurnTimer.Value = playerTurnTime;
+            playerTurn.Value++;
         }
     }
     private void PlayerTurnState()
@@ -222,6 +227,12 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    public void DestroyActiveDice()
+    {
+        currentPlayerInfo.specialDiceIndex.Value = 0;
+        currentPlayerInfo.specialDiceEnabled.Value = false;
+    }
+
     private void UseActiveDice()
     {
         GetDiceFromIndex(GetActiveDice()).SpecialAbility();
@@ -242,6 +253,38 @@ public class GameManager : NetworkBehaviour
         BoardUIManager.instance.UpdateRollDiceUI();
         diceAnimator.Play(animString);
     }
+
+    [Rpc(SendTo.Everyone)]
+    public void RerollButtonEventRpc()
+    {
+        BoardUIManager.instance.rerollButton.gameObject.SetActive(false);
+        BoardUIManager.instance.confirmRollButton.gameObject.SetActive(false);
+
+        if (BoardUIManager.instance.localPlayerTurn)
+        {
+            DestroyActiveDice();
+            RollDiceServerRpc();
+        }
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void ConfirmButtonEventRpc()
+    {
+        BoardUIManager.instance.rerollButton.gameObject.SetActive(false);
+        BoardUIManager.instance.confirmRollButton.gameObject.SetActive(false);
+        ForceEndAnimation();
+    }
+
+    public void ForceEndAnimation()
+    {
+        diceAnimator.transform.parent.gameObject.SetActive(false);
+
+        if (currentPlayer.OwnerClientId == NetworkManager.LocalClientId)
+        {
+            UseActiveDice();
+        }
+    }
+
     public IEnumerator AnimationEventCoroutine()
     {
         yield return new WaitForSeconds(afterDiceDelaySeconds);
@@ -289,9 +332,7 @@ public class GameManager : NetworkBehaviour
     public void TriggerGameEndServerRpc()
     {
         TriggerGameEndClientRpc();
-        Debug.Log("Changed state to idle");
-        Time.timeScale = 0;
-        currentState.Value = BoardState.Idle;
+        gameEnd.Value = true;
     }
     [ClientRpc]
     private void TriggerGameEndClientRpc()

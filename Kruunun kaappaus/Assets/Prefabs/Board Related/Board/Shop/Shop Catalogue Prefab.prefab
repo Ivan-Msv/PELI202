@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 496.4, y: -96.2}
-  m_SizeDelta: {x: 212.3, y: 42.58}
+  m_AnchoredPosition: {x: 227.771, y: -3.8970032}
+  m_SizeDelta: {x: 151.996, y: 62.209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2726388354492898320
 CanvasRenderer:
@@ -66,10 +66,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Catalogue Name
+  m_text: Catalogue  Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 00606f2c83110f545acbc51e99daa7b1, type: 2}
-  m_sharedMaterial: {fileID: 3496431946024261392, guid: 00606f2c83110f545acbc51e99daa7b1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 63cb967cb648a454fbd094832d8e2d68, type: 2}
+  m_sharedMaterial: {fileID: 6112914962907746578, guid: 63cb967cb648a454fbd094832d8e2d68, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,15 +93,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
+  m_fontSize: 29
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 1
-  m_fontSizeMax: 40
+  m_fontSizeMax: 70.2
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dc9f7cbd97ed03347a1a743723b31084, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84f7177cedd874740a90abcabf32c592, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -250,12 +250,12 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 160
+    m_Top: 70
     m_Bottom: 0
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 150, y: 150}
+  m_CellSize: {x: 120, y: 120}
   m_Spacing: {x: 20, y: 30}
   m_Constraint: 0
   m_ConstraintCount: 2

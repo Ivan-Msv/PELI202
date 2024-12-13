@@ -133,27 +133,32 @@ public class BoardPath : NetworkBehaviour
     public void SetCameraPositionAndActiveRpc(bool disable, int tileIndex = -5)
     {
         Transform cameraFollow = tileIndex == -5 ? null : tiles[tileIndex].transform;
-        BoardUIManager.instance.virtualCamera.ChangeCameraFollow(disable, cameraFollow);
+        BoardUIManager.instance.boardCamera.ChangeCameraFollow(disable, cameraFollow);
     }
 
     public void TileAnimation(int thisIndex, int newIndex)
     {
+        GameManager.instance.ChangeGameStateServerRpc(BoardState.PlayerMoving);
         StartCoroutine(TileAnimationCoroutine(thisIndex, newIndex));
     }
 
+
+    // Sekunnit tässä ovat testien perusteella laitettu, jos kamera toimii oudosti animaation aikana, kato tätä
     private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex)
     {
         SetCameraPositionAndActiveRpc(true, newIndex);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
         yield return new WaitForSeconds(2.2f);
         SetCameraPositionAndActiveRpc(true, thisIndex);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
         while (GetTileIndex(tiles[thisIndex].GetComponent<BoardTile>()) != (int)Tiles.EmptyTile)
         {
             yield return null;
         }
+
+
         PlayEmptyTileAnimationRpc(thisIndex, "EmptyTile_Switch");
         yield return new WaitForSeconds(tiles[thisIndex].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + 0.5f);
         GameManager.instance.challengeTile.GetComponent<ChallengeTile>().SelectRandomChallenge(thisIndex);
@@ -208,7 +213,7 @@ public class BoardPath : NetworkBehaviour
         positions[0] = new Vector2(tile.transform.position.x - playerWidth, tile.transform.position.y);
         positions[1] = new Vector2(tile.transform.position.x + playerWidth, tile.transform.position.y);
         positions[2] = new Vector2(tile.transform.position.x - playerWidth, tile.transform.position.y - playerHeight);
-        positions[3] = new Vector2(tile.transform.position.x - playerWidth, tile.transform.position.y - playerHeight);
+        positions[3] = new Vector2(tile.transform.position.x + playerWidth, tile.transform.position.y - playerHeight);
         return positions;
     }
     private void OnDrawGizmos()

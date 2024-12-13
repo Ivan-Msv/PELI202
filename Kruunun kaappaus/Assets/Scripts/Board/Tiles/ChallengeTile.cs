@@ -18,7 +18,10 @@ public class ChallengeTile : BoardTile
         anim = GetComponent<Animator>();
         anim.StopPlayback();
 
-        anim.runtimeAnimatorController = GameManager.instance.challengeTile.GetComponent<Animator>().runtimeAnimatorController;
+        if (GameManager.instance != null)
+        {
+            anim.runtimeAnimatorController = GameManager.instance.challengeTile.GetComponent<Animator>().runtimeAnimatorController;
+        }
     }
 
     public override void SetupTile()
@@ -88,6 +91,7 @@ public class ChallengeTile : BoardTile
                 break;
         }
 
+
         GameManager.instance.LoadSceneServerRpc(newScene);
     }
 
@@ -110,6 +114,12 @@ public class ChallengeTile : BoardTile
 
         for (int i = 0; i < playerAmount - 1; i++)
         {
+            if (potentialPlayers.Count < 1)
+            {
+                Debug.LogError("Did not find any players, are you playing alone...?");
+                break;
+            }
+
             var randomIndex = Random.Range(0, potentialPlayers.Count);
             players.Add(potentialPlayers[randomIndex]);
             potentialPlayers.Remove(potentialPlayers[randomIndex]);

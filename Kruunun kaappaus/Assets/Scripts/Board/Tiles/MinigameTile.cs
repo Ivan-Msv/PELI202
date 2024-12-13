@@ -83,7 +83,7 @@ public class MinigameTile : BoardTile
 
         for (int i = 0; i < playerAmount-1; i++)
         {
-            if (i > potentialPlayers.Count)
+            if (i > potentialPlayers.Count || potentialPlayers.Count < 1)
             {
                 break;
             }

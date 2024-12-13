@@ -11,8 +11,11 @@ public class EmptyTile : BoardTile
         anim = GetComponent<Animator>();
         anim.StopPlayback();
 
-        anim.runtimeAnimatorController = GameManager.instance.emptyTile.GetComponent<Animator>().runtimeAnimatorController;
-        vfxPrefab = GameManager.instance.emptyTile.GetComponent<EmptyTile>().vfxPrefab;
+        if (GameManager.instance != null)
+        {
+            anim.runtimeAnimatorController = GameManager.instance.emptyTile.GetComponent<Animator>().runtimeAnimatorController;
+            vfxPrefab = GameManager.instance.emptyTile.GetComponent<EmptyTile>().vfxPrefab;
+        }
     }
     public override void SetupTile()
     {

@@ -2330,7 +2330,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!224 &772008120
 RectTransform:
@@ -5617,10 +5617,13 @@ MonoBehaviour:
   - {fileID: 9130647759989690307, guid: 9c2978a6b4e08f149a106d86b9c16ea4, type: 3}
   - {fileID: 356012182521869387, guid: 4e1819bd23b7aaf4194c6b3a366ea251, type: 3}
   - {fileID: 21300000, guid: 76c3f02a5ab6a694b8d333eb139185c1, type: 3}
+  - {fileID: -6080960997403495901, guid: b872babaa87124344b44bff17f0ebfd3, type: 3}
   <PlayerAnimators>k__BackingField:
   - {fileID: 9100000, guid: cffceb7c6b9bf8146bd5d619d013dd71, type: 2}
   - {fileID: 9100000, guid: 8275e767a90ca124aa11083b917c3d42, type: 2}
   - {fileID: 9100000, guid: b7a9e075e97321e4ea5f6d413f4b7c46, type: 2}
+  - {fileID: 9100000, guid: 1f74a4af112ba2b4891d4832c7a13bb2, type: 2}
+  <GhostAnimator>k__BackingField: {fileID: 9100000, guid: 769e3fbd4d1676444aa339ef90a0768f, type: 2}
 --- !u!114 &1840512695
 MonoBehaviour:
   m_ObjectHideFlags: 0

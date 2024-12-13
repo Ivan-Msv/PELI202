@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 89ab8893934e2d548b460cdae36ca9fb, type: 3}
+  m_Sprite: {fileID: 4150938492364606288, guid: 948e5c01c134def418ac52e9fdf39c1f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.125, y: 2.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -100,10 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4e2be10cecd2a469854bce2a975357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite: {fileID: 21300000, guid: 89ab8893934e2d548b460cdae36ca9fb, type: 3}
+  tileSprite: {fileID: 4150938492364606288, guid: 948e5c01c134def418ac52e9fdf39c1f, type: 3}
   tileName: 
   sceneNames1:
   - 1PMinigameLevel1
+  - 1PMinigameLevel2
+  - 1PMinigameLevel3
   sceneNames2:
   - 2PMinigameLevel1
   - 2PMinigameLevel2

@@ -27,11 +27,13 @@ public class BoardUIManager : MonoBehaviour
     public GameObject gameEndUI;
     public GameObject rollDiceUI;
     public SpecialDiceUI diceUI;
-    public BoardCamera virtualCamera;
+    public BoardCamera boardCamera;
     public Animator diceAnimator;
 
     [Header("Buttons")]
     [SerializeField] private Button rollButton;
+    public Button rerollButton;
+    public Button confirmRollButton;
 
     [Header("Text")]
     public TextMeshProUGUI playerLoadText;
@@ -55,6 +57,8 @@ public class BoardUIManager : MonoBehaviour
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
 
         rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); });
+        rerollButton.onClick.AddListener(() => { GameManager.instance.RerollButtonEventRpc(); });
+        confirmRollButton.onClick.AddListener(() => { GameManager.instance.ConfirmButtonEventRpc(); });
     }
 
     private void OnDisable()
@@ -161,7 +165,8 @@ public class BoardUIManager : MonoBehaviour
     public void UpdateRollDiceUI()
     {
         rollDiceUI.SetActive(true);
-        rollDiceName.text = $"{CurrentTurnPlayerName} rolls...";
+        string rollText = GameManager.instance.currentPlayerInfo.specialDiceEnabled.Value ? "uses a special item!" : "rolls...";
+        rollDiceName.text = $"{CurrentTurnPlayerName} {rollText}";
     }
 
     public void UpdateLoadingPlayerUI(bool fadeIn, float speed)
