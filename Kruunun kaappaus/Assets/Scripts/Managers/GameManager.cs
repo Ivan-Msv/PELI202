@@ -200,10 +200,12 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     private void GetAllPlayersClientRpc()
     {
-        foreach (BoardPlayerInfo player in FindObjectsByType<BoardPlayerInfo>(sortMode: FindObjectsSortMode.None))
+        foreach (BoardPlayerInfo player in FindObjectsByType<BoardPlayerInfo>(sortMode: FindObjectsSortMode.InstanceID))
         {
             availablePlayers.Add(player);
         }
+
+        availablePlayers.Sort();
 
         BoardUIManager.instance.UpdateLoadingPlayerUI(false, 1);
         OnPlayerValueChange?.Invoke();
