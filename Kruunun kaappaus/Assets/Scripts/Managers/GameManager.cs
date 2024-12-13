@@ -205,7 +205,10 @@ public class GameManager : NetworkBehaviour
             availablePlayers.Add(player);
         }
 
-        availablePlayers.Sort();
+        var sortedList = availablePlayers.OrderBy(x => x.playerName.Value).ToList();
+
+        availablePlayers = sortedList;
+
 
         BoardUIManager.instance.UpdateLoadingPlayerUI(false, 1);
         OnPlayerValueChange?.Invoke();
