@@ -122,6 +122,5 @@ public class MinigameTile : BoardTile
         }
 
         GameManager.instance.LoadSceneServerRpc(newScene);
-        GameManager.instance.playerMovement.MovePlayer(GameManager.instance.currentPlayer, 0);
     }
 }
