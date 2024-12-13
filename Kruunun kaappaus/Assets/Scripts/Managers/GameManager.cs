@@ -121,6 +121,7 @@ public class GameManager : NetworkBehaviour
         }
         else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
         {
+            playerTurn.Value--;
             currentState.Value = BoardState.WaitingForPlayers;
         }
         else
@@ -185,6 +186,7 @@ public class GameManager : NetworkBehaviour
         {
             currentState.Value = BoardState.PlayerTurnCount;
             TurnTimer.Value = playerTurnTime;
+            Debug.Log($"Server updated the playerturn {playerTurn.Value}");
             playerTurn.Value++;
         }
     }
