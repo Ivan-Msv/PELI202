@@ -17,6 +17,8 @@ public class MinigameTile : BoardTile
     }
     public override void InvokeTile()
     {
+        BoardPath.instance.SetCameraPositionAndActiveRpc(true);
+        GameManager.instance.EnableAnimationRpc(true);
         SelectRandomChallenge(transform.GetSiblingIndex());
     }
 
@@ -61,7 +63,7 @@ public class MinigameTile : BoardTile
                 break;
         }
 
-        GameManager.instance.LoadSceneServerRpc(newScene);
+        GameManager.instance.LoadSceneRpc(newScene);
     }
 
     public void SelectCustomMinigame(int playerAmount)
@@ -121,6 +123,6 @@ public class MinigameTile : BoardTile
                 break;
         }
 
-        GameManager.instance.LoadSceneServerRpc(newScene);
+        GameManager.instance.LoadSceneRpc(newScene);
     }
 }

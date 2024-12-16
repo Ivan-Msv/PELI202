@@ -122,7 +122,7 @@ public class BoardPath : NetworkBehaviour
         Debug.LogError("Couldn't find from given index, returning empty");
         return GameManager.instance.emptyTile;
     }
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server)]
     public void ChangeTileIndexServerRpc(int index, int newNumber)
     {
         GameManager.instance.tilesIndex[index] = newNumber;
@@ -137,10 +137,9 @@ public class BoardPath : NetworkBehaviour
 
     public void TileAnimation(int thisIndex, int newIndex)
     {
-        GameManager.instance.ChangeGameStateServerRpc(BoardState.PlayerMoving);
+        GameManager.instance.EnableAnimationRpc(true);
         StartCoroutine(TileAnimationCoroutine(thisIndex, newIndex));
     }
-
 
     // Sekunnit tässä ovat testien perusteella laitettu, jos kamera toimii oudosti animaation aikana, kato tätä
     private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex)
@@ -152,20 +151,23 @@ public class BoardPath : NetworkBehaviour
         SetCameraPositionAndActiveRpc(true, thisIndex);
         yield return new WaitForSeconds(0.5f);
         ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
-        while (GetTileIndex(tiles[thisIndex].GetComponent<BoardTile>()) != (int)Tiles.EmptyTile)
-        {
-            yield return null;
-        }
-
-
         PlayEmptyTileAnimationRpc(thisIndex, "EmptyTile_Switch");
         yield return new WaitForSeconds(tiles[thisIndex].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + 0.5f);
         GameManager.instance.challengeTile.GetComponent<ChallengeTile>().SelectRandomChallenge(thisIndex);
     }
 
     [Rpc(SendTo.Everyone)]
-    public void PlayEmptyTileAnimationRpc(int tileIndex, string animation)
+    public void PlayEmptyTileAnimationRpc(int tileIndex, string anim)
     {
+        StartCoroutine(PlayEmptyTileAnimationCoroutine(tileIndex, anim));
+    }
+
+    public IEnumerator PlayEmptyTileAnimationCoroutine(int tileIndex, string animation)
+    {
+        while (GetTileIndex(tiles[tileIndex].GetComponent<BoardTile>()) != (int)Tiles.EmptyTile)
+        {
+            yield return null;
+        }
         tiles[tileIndex].GetComponent<Animator>().Play(animation);
     }
 

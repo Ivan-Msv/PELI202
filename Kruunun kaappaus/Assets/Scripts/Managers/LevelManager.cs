@@ -228,19 +228,19 @@ public class LevelManager : NetworkBehaviour
         goTimer -= Time.deltaTime;
         goTimerText.text = goTimer <= 1 ? "Go!" : $"{(int)goTimer}";
     }
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server)]
     public void LoadPlayerServerRpc()
     {
         playersLoaded.Value++;
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server)]
     public void PlayAnimationServerRpc(ulong objectId, string animation)
     {
         var animationObject = NetworkManager.SpawnManager.SpawnedObjects[objectId];
         animationObject.GetComponent<Animator>().Play(animation);
     }
-    [ClientRpc]
+    [Rpc(SendTo.Everyone)]
     public void UpdateLevelStateClientRpc()
     {
         CurrentGameState = LevelState.Ending;

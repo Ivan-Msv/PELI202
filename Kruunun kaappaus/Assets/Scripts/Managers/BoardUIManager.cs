@@ -16,6 +16,7 @@ public class BoardUIManager : MonoBehaviour
     public MainPlayerInfo localParent;
     public bool onShopTile;
     public bool localPlayerTurn;
+    public bool animationActive;
 
     [Header("Enemy Info")]
     [SerializeField] private GameObject enemyInfoPanel;
@@ -69,6 +70,11 @@ public class BoardUIManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            localParent.specialDiceIndex.Value = 3;
+        }
+
         if (localParent == null)
         {
             return;
@@ -81,7 +87,7 @@ public class BoardUIManager : MonoBehaviour
 
     private void UpdateButtons()
     {
-        if (!LocalPlayerTurn() || GameManager.instance.currentState.Value == BoardState.PlayerMoving)
+        if (!LocalPlayerTurn() || GameManager.instance.currentState.Value == BoardState.PlayerMoving || animationActive)
         {
             rollButton.interactable = false;
             return;
@@ -158,7 +164,7 @@ public class BoardUIManager : MonoBehaviour
     {
         if (localParent.crownAmount.Value >= 3)
         {
-            GameManager.instance.TriggerGameEndServerRpc();
+            GameManager.instance.TriggerGameEndRpc();
         }
     }
 
@@ -206,7 +212,7 @@ public class BoardUIManager : MonoBehaviour
             }
         }
 
-        gameEndHeader.text = $"Winner: {winnerName} !";
+        gameEndHeader.text = $"Winner: {winnerName}!";
         gameEndResults.text = finalResults;
 
         gameEndUI.SetActive(true);

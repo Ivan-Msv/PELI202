@@ -19,8 +19,6 @@ public class FriendDice : BoardDice
                 break;
         }
 
-        
-
         GameManager.instance.playerMovement.MovePlayer(GameManager.instance.currentPlayer, newPosition);
     }
 
@@ -48,6 +46,6 @@ public class FriendDice : BoardDice
             return 0;
         }
 
-        return positions.Min();
+        return positions.Min() - currentPosition;
     }
 }

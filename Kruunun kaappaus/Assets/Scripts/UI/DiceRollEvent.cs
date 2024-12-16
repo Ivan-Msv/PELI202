@@ -11,6 +11,7 @@ public class DiceRollEvent : MonoBehaviour
     {
         BoardUIManager.instance.rerollButton.gameObject.SetActive(true);
         BoardUIManager.instance.confirmRollButton.gameObject.SetActive(true);
+        GameManager.instance.DestroyActiveDice();
 
         BoardUIManager.instance.rerollButton.interactable = false;
         BoardUIManager.instance.confirmRollButton.interactable = false;

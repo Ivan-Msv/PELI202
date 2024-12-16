@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FriendRadarItem
   m_EditorClassIdentifier: 
   itemName: Friendship Radar
-  itemDescription: "An item that makes you move toward the closest player ahead or
-    behind. \n[ direction chosen randomly ]"
+  itemDescription: "An item that makes you move toward the closest player either\n
+    ahead or behind. \n[ direction chosen randomly ]"
   itemCost: 10
   itemId: 5
   itemSprite: {fileID: -466771735596450672, guid: d0c746b9bd4588b4d8c5c5b222bf8013, type: 3}

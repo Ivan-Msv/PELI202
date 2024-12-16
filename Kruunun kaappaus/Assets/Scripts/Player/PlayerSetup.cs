@@ -46,11 +46,11 @@ public class PlayerSetup : NetworkBehaviour
 
     private void UpdatePlayerState(Scene newScene)
     {
-        if (newScene.name.Contains("level", System.StringComparison.OrdinalIgnoreCase))
+        if (newScene.name.Contains("level", StringComparison.OrdinalIgnoreCase))
         {
             currentState = PlayerState.Side;
         }
-        else if (newScene.name.Contains("board", System.StringComparison.OrdinalIgnoreCase))
+        else if (newScene.name.Contains("board", StringComparison.OrdinalIgnoreCase))
         {
             currentState = PlayerState.Topdown;
         }
@@ -72,7 +72,8 @@ public class PlayerSetup : NetworkBehaviour
 
         SpawnPlayerObjectServerRpc(NetworkObject.OwnerClientId, currentState);
     }
-    [ServerRpc(RequireOwnership = false)]
+
+    [Rpc(SendTo.Server)]
     private void DestroyPreviousChildrenServerRpc(ulong transformId)
     {
         Transform givenTransform = NetworkManager.SpawnManager.SpawnedObjects.FirstOrDefault(transform => transform.Key == transformId).Value.transform;
@@ -81,22 +82,25 @@ public class PlayerSetup : NetworkBehaviour
             Destroy(child.gameObject);
         }
     }
-    [ServerRpc(RequireOwnership = false)]
+
+    [Rpc(SendTo.Server)]
     private void SpawnPlayerObjectServerRpc(ulong clientId, PlayerState state)
     {
+        NetworkObject playerObject;
         switch (state)
         {
             case PlayerState.Topdown:
-                var playerTD = NetworkObject.InstantiateAndSpawn(playerTopDown, NetworkManager, clientId);
+                playerObject = NetworkObject.InstantiateAndSpawn(playerTopDown, NetworkManager, clientId);
                 var clientObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientId);
-                playerTD.TrySetParent(clientObject);
+                playerObject.TrySetParent(clientObject);
                 break;
             case PlayerState.Side:
-                var player2d = NetworkObject.InstantiateAndSpawn(player2D, NetworkManager, clientId);
+                playerObject = NetworkObject.InstantiateAndSpawn(player2D, NetworkManager, clientId);
                 var player2dObject = NetworkManager.SpawnManager.GetPlayerNetworkObject(clientId);
-                player2d.TrySetParent(player2dObject);
+                playerObject.TrySetParent(player2dObject);
                 break;
             default:
+                playerObject = null;
                 break;
         }
     }

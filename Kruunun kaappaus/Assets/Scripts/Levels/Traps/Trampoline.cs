@@ -25,7 +25,7 @@ public class Trampoline : NetworkBehaviour
         PlayAnimationServerRpc();
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server)]
     private void PlayAnimationServerRpc()
     {
         anim.Play("Trampoline_Used");

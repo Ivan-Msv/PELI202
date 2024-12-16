@@ -241,7 +241,7 @@ public class PlayerMovement2D : NetworkBehaviour
         transform.position = spawnPoint;
     }
 
-    [ServerRpc]
+    [Rpc(SendTo.Server)]
     private void DestroyCrownServerRpc(ulong collisionObjectId)
     {
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);

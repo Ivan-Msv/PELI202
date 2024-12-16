@@ -130,22 +130,16 @@ public class PlayerInfo2D : NetworkBehaviour
         switch (lastAxis)
         {
             case 1:
-                FlipServerRpc(false);
+                FlipRpc(false);
                 break;
             case -1:
-                FlipServerRpc(true);
+                FlipRpc(true);
                 break;
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void FlipServerRpc(bool currentX)
-    {
-        FlipClientRpc(currentX);
-    }
-
-    [ClientRpc]
-    private void FlipClientRpc(bool currentX)
+    [Rpc(SendTo.Everyone)]
+    private void FlipRpc(bool currentX)
     {
         spriteComponent.flipX = currentX;
     }

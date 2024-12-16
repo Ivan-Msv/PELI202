@@ -92,7 +92,7 @@ public class ChallengeTile : BoardTile
         }
 
 
-        GameManager.instance.LoadSceneServerRpc(newScene);
+        GameManager.instance.LoadSceneRpc(newScene);
     }
 
     public void SelectCustomChallenge(int playerAmount)
@@ -153,6 +153,6 @@ public class ChallengeTile : BoardTile
                 break;
         }
 
-        GameManager.instance.LoadSceneServerRpc(newScene);
+        GameManager.instance.LoadSceneRpc(newScene);
     }
 }

@@ -98,7 +98,7 @@ public class Platform : NetworkBehaviour
             currentState = autonomousMovement ? PlatformState.Starting : PlatformState.Idle;
         }
     }
-    [ServerRpc(RequireOwnership = false)]
+    [Rpc(SendTo.Server)]
     public void SwitchStateServerRpc()
     {
         if (autonomousMovement)
