@@ -386,6 +386,12 @@ public class GameManager : NetworkBehaviour
     }
 
     [Rpc(SendTo.Everyone)]
+    public void UpdateEnemyPlayerInfoRpc()
+    {
+        BoardUIManager.instance.UpdateEnemyPlayerUI();
+    }
+
+    [Rpc(SendTo.Everyone)]
     public void EnableAnimationRpc(bool enable)
     {
         BoardUIManager.instance.animationActive = enable;

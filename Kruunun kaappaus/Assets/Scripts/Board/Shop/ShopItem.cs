@@ -19,7 +19,7 @@ public abstract class ShopItem : ScriptableObject
 
         player.coinAmount.Value -= itemCost;
         GiveItem(player);
-        BoardUIManager.instance.UpdateEnemyPlayerUI();
+        GameManager.instance.UpdateEnemyPlayerInfoRpc();
     }
 
     public abstract void GiveItem(MainPlayerInfo player);
