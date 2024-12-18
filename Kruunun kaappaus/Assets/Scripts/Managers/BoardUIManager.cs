@@ -70,11 +70,6 @@ public class BoardUIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            localParent.specialDiceIndex.Value = 3;
-        }
-
         if (localParent == null)
         {
             return;

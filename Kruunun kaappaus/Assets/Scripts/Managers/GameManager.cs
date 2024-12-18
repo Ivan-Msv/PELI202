@@ -383,6 +383,7 @@ public class GameManager : NetworkBehaviour
     public void PlayerShopOpenRpc(bool open)
     {
         BoardUIManager.instance.shopUI.ShopOpenInfo(open);
+        UpdateEnemyPlayerInfoRpc();
     }
 
     [Rpc(SendTo.Everyone)]

@@ -6,6 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Dice/FriendDice")]
 public class FriendDice : BoardDice
 {
+    // Rolls numbers 1 and 2,
+    // searching for closest player either in front or behind,
+    // judging by the number rolled
     public override void SpecialAbility()
     {
         int newPosition = 0;
@@ -22,6 +25,7 @@ public class FriendDice : BoardDice
         GameManager.instance.playerMovement.MovePlayer(GameManager.instance.currentPlayer, newPosition);
     }
 
+    // The function that actually does the searching, taking every player position value and searching for the smallest difference in them
     private int GetClosestPlayerTile(bool forward)
     {
         List<int> positions = new();
