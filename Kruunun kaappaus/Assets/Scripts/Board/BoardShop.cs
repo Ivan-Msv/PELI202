@@ -147,12 +147,13 @@ public class BoardShop : MonoBehaviour
         {
             shopPanel.gameObject.SetActive(true);
             shopInfoPanel.SetActive(false);
+            closeButton.gameObject.SetActive(true);
             return;
         }
 
         shopPanel.gameObject.SetActive(false);
         shopInfoPanel.SetActive(true);
-
+        closeButton.gameObject.SetActive(false);
         imagePreview.sprite = itemInfo.itemSprite;
         itemNamePreview.text = itemInfo.itemName;
         itemDescriptionPreview.text = itemInfo.itemDescription;
