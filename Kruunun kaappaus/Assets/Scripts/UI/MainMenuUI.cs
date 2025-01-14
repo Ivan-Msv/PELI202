@@ -24,6 +24,7 @@ public class MainMenuUI : MonoBehaviour
     [Header("Main Menu")]
     [SerializeField] private Button playButton;
     [SerializeField] private Button openSettings;
+    [SerializeField] private Button ExitButton;
     [SerializeField] private TextMeshProUGUI errorMessage;
     [Space]
 
@@ -59,6 +60,7 @@ public class MainMenuUI : MonoBehaviour
         returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); });
         playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); });
         openSettings.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); });
+        ExitButton.onClick.AddListener(() => { Application.Quit(); Debug.Log("Peli suljettiin"); });
 
         // Settings Menu
         changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); });
