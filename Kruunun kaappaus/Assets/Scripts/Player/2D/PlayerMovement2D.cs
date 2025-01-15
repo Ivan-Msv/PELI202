@@ -26,6 +26,11 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
     [SerializeField] private float maxJumpTime;
+    [Header("Shootpoint and projectile settings")]
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private GameObject projectile;
+    [Range(0f, 1f)]
+    [SerializeField] private float pushCooldown = 1f;
     public Vector2 spawnPoint;
     [SerializeField] private PlayerInfo2D playerInfo;
     private Rigidbody2D rb;
@@ -35,6 +40,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private float jumpBufferTimer;
     private float jumpTimer;
     private Transform spawnParent;
+    private float pushTimer;
     public PlayerMovementState currentPlayerState { get; private set; }
     void Start()
     {
@@ -56,6 +62,7 @@ public class PlayerMovement2D : NetworkBehaviour
         }
         CoyoteCheck();
         JumpBuffer();
+        CanPush();
     }
 
     private void FixedUpdate()
@@ -194,7 +201,32 @@ public class PlayerMovement2D : NetworkBehaviour
             jumpBufferTimer = maxJumpBufferTime;
         }
     }
+    private void CanPush()
+    {
+        if (Input.GetKeyDown("a"))
+        {
+            shootPoint.SetLocalPositionAndRotation(new Vector3((float)-0.6,0,0), Quaternion.Euler(0,0,180));
 
+        }
+        if (Input.GetKeyDown("d"))
+        {
+            shootPoint.SetLocalPositionAndRotation(new Vector3((float)0.6, 0,0), Quaternion.Euler(0,0,0));
+
+        }
+        if (Input.GetKeyDown("space") && isGhost == true && pushTimer <= 0)
+        {
+            Push();
+            pushTimer = pushCooldown;
+        }
+        else
+        {
+            pushTimer -= Time.deltaTime;
+        }
+    }
+    private void Push()
+    {
+        Instantiate(projectile, shootPoint.position, shootPoint.rotation);
+    }
     private void PlayerStateManager()
     {
         UpdateAnimation();

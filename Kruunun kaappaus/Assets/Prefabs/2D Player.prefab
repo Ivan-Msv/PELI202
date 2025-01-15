@@ -142,6 +142,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6366758829110339022}
+  - {fileID: 5713807429199112005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1337302398007068744
@@ -416,6 +417,9 @@ MonoBehaviour:
   maxCoyoteTime: 0.05
   maxJumpBufferTime: 0.11
   maxJumpTime: 0.2
+  shootPoint: {fileID: 5713807429199112005}
+  projectile: {fileID: 5409873449286555630, guid: 2472f28971597544fb97358ab65ef183, type: 3}
+  pushCooldown: 1
   spawnPoint: {x: 0, y: 0}
   playerInfo: {fileID: 1355854856914575653}
 --- !u!114 &4151534210416331775
@@ -508,6 +512,37 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 6408978930940377679}
+--- !u!1 &7571851560927952019
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5713807429199112005}
+  m_Layer: 3
+  m_Name: Projectile spawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5713807429199112005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7571851560927952019}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1027503078011283540}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8115857989164965032
 GameObject:
   m_ObjectHideFlags: 0
