@@ -24,8 +24,8 @@ public class Coin : NetworkBehaviour
         Movement();
     }
 
-    [Rpc(SendTo.Server)]
-    public void CollectCoinServerRpc()
+    [Rpc(SendTo.Everyone)]
+    public void CollectCoinRpc()
     {
         StartCoroutine(CoinDestroyCoroutine());
     }
@@ -34,6 +34,12 @@ public class Coin : NetworkBehaviour
     {
         coinCollider.enabled = false;
         anim.Play("Coin_Destroy");
+
+        if (!IsServer)
+        {
+            yield break;
+        }
+
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         GetComponent<NetworkObject>().Despawn(true);
     }

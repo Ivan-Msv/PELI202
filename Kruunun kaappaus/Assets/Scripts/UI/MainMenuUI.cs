@@ -37,10 +37,10 @@ public class MainMenuUI : MonoBehaviour
 
     [Header("Debug Menu")]
     [SerializeField] private Button loadDebugBoard;
-    [SerializeField] private Button loadCustom2DMap;
-    [SerializeField] private GameObject custom2DMapMenu;
-    [SerializeField] private TMP_InputField custom2DMapInput;
-    [SerializeField] private Button custom2DMapConfirm;
+    [SerializeField] private Button loadCustomScene;
+    [SerializeField] private GameObject customSceneMenu;
+    [SerializeField] private TMP_InputField customSceneInput;
+    [SerializeField] private Button customSceneHost, customSceneJoin;
     [Space]
 
     [Header("Lobby Selection Menu")]
@@ -82,9 +82,10 @@ public class MainMenuUI : MonoBehaviour
         confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); });
 
         // Debug Menu
-        loadCustom2DMap.onClick.AddListener(() => { OpenSubMenu(custom2DMapMenu); });
+        loadCustomScene.onClick.AddListener(() => { OpenSubMenu(customSceneMenu); });
         loadDebugBoard.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene("DebugBoard"); });
-        custom2DMapConfirm.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene(custom2DMapInput.text); });
+        customSceneHost.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene(customSceneInput.text); });
+        customSceneJoin.onClick.AddListener(() => { LobbyManager.instance.JoinRelay(customSceneInput.text); });
     }
     public void ReturnToPreviousMenu()
     {

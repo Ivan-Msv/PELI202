@@ -348,6 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  coinCounter: {fileID: 7259457732605570018}
   playerCamera: {fileID: 3160057724283217127}
   endingCamera: {fileID: 4567632447713936289}
   timerGrid: {fileID: 4202299352970997030}
@@ -357,6 +358,14 @@ MonoBehaviour:
   loadPlayerText: {fileID: 894335593525105564}
   goTimerText: {fileID: 2590183071428626044}
   timerVisual: {fileID: 7555777997800806500}
+  CurrentGameState:
+    m_InternalValue: 0
+  availableCoins:
+    m_InternalValue: 0
+  LevelTimer:
+    m_InternalValue: 0
+  currentLevelType: 1
+  levelDurationSeconds: 20
   cameraAnimationSeconds: 0
   playerSpawnPoint:
   - {x: -7, y: -4}
@@ -364,9 +373,6 @@ MonoBehaviour:
   - {x: 7, y: 5}
   - {x: 5, y: 5}
   - {x: 3, y: 5}
-  levelDurationSeconds: 20
-  availableCoins: 0
-  currentLevelType: 1
 --- !u!114 &7456114249622212132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,7 +660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7124819289543986931
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1652,3 +1658,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2052942055123553930, guid: fc51c8e0ec4c1f54fa6546b4b366573b, type: 3}
   m_PrefabInstance: {fileID: 4251209134121530633}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7259457732605570018 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6791870754810978027, guid: fc51c8e0ec4c1f54fa6546b4b366573b, type: 3}
+  m_PrefabInstance: {fileID: 4251209134121530633}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccaf98df63a0d341997a176c87fa97a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

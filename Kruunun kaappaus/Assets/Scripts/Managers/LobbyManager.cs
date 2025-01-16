@@ -152,7 +152,7 @@ public class LobbyManager : NetworkBehaviour
 
     public async void HostCustomScene(string sceneName)
     {
-        await CreateRelay();
+        Debug.Log($"Code: {await CreateRelay()}");
         NetworkManager.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }

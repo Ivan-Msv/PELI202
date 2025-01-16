@@ -1,78 +1,81 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
-public class CoinCounter : MonoBehaviour
+public class CoinCounter : NetworkBehaviour
 {
     [SerializeField] private PlayerScoreInfo playerScoreInfoPrefab;
     [SerializeField] private GameObject playerScorePanel;
-    [SerializeField] private Dictionary<PlayerInfo2D, PlayerScoreInfo> playerDictionary = new();
     [SerializeField] private TMP_Text coinText;
-    [SerializeField] private int allCoinAmount;
-    [SerializeField] private int collectedCoins;
-    private List<MainPlayerInfo> players = new();
-    private void Awake()
-    {
-        LevelManager.instance.OnPlayerValueChange += GetAllPlayerEvents;
-    }
+    [SerializeField] private NetworkVariable<int> allCoinAmount;
+    [SerializeField] private NetworkVariable<int> collectedCoins;
+    [SerializeField] private Dictionary<PlayerInfo2D, PlayerScoreInfo> playerScores = new();
+
     void Start()
     {
-        foreach (var coin in GameObject.FindGameObjectsWithTag("Coin"))
+        if (!IsServer || LevelManager.instance.currentLevelType != LevelType.Minigame)
         {
-            allCoinAmount++;
+            return;
         }
-        LevelManager.instance.availableCoins = allCoinAmount;
+
+        for (int i = 0; i < GameObject.FindGameObjectsWithTag("Coin").Length; i++)
+        {
+            allCoinAmount.Value++;
+        }
+
+        LevelManager.instance.availableCoins.Value = allCoinAmount.Value;
+    }
+
+    void Update()
+    {
+        coinText.text = $"Collected Coins: {collectedCoins.Value}/{allCoinAmount.Value}";
     }
 
     private void OnDisable()
     {
-        foreach (var player in players)
+        foreach (var score in playerScores)
         {
-            player.coinAmount.OnValueChanged -= AddCollectedCoin;
+            score.Key.localCoinAmount.OnValueChanged -= UpdatePlayerData;
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        coinText.text = $"Collected Coins: {collectedCoins}/{allCoinAmount}";
-    }
-
-    private void GetAllPlayerEvents()
+    [Rpc(SendTo.Everyone)]
+    public void GetAllPlayerDataRpc()
     {
         foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
         {
-            var component = player.GetComponentInParent<MainPlayerInfo>();
-            component.coinAmount.OnValueChanged += AddCollectedCoin;
-            players.Add(component);
+            var component = player.GetComponent<PlayerInfo2D>();
 
-            if (component.isGhost.Value)
+            component.localCoinAmount.OnValueChanged += UpdatePlayerData;
+
+            if (component.playerIsGhost.Value)
             {
                 continue;
             }
 
             var newScoreInfo = Instantiate(playerScoreInfoPrefab, playerScorePanel.transform);
-            playerDictionary.Add(player.GetComponent<PlayerInfo2D>(), newScoreInfo);
-            newScoreInfo.UpdatePlayerImage(player.GetComponent<SpriteRenderer>().sprite);
+            playerScores.Add(component, newScoreInfo);
+            newScoreInfo.UpdatePlayerImage(MainMenuUI.instance.PlayerIcons[component.playerSpriteIndex.Value]);
         }
-
-        UpdatePlayerScore();
     }
 
-    private void UpdatePlayerScore()
+    private void UpdatePlayerData(int oldValue, int newValue)
     {
-        foreach (var player in playerDictionary)
+        foreach (var score in playerScores)
         {
-            player.Value.UpdatePlayerScore(player.Key.localCoinAmount.Value);
+            Debug.Log(score.Key.localCoinAmount.Value);
+            score.Value.UpdatePlayerScore(score.Key.localCoinAmount.Value);
         }
     }
 
-    private void AddCollectedCoin(int oldValue, int newValue)
+    [Rpc(SendTo.Server)]
+    public void AddCollectedCoinServerRpc()
     {
-        UpdatePlayerScore();
-        collectedCoins++;
-        LevelManager.instance.availableCoins--;
+        collectedCoins.Value++;
+        LevelManager.instance.availableCoins.Value--;
     }
 }

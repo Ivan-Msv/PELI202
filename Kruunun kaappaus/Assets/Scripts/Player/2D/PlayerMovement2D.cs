@@ -56,10 +56,11 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
-        if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState != LevelState.InProgress)
+        if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState.Value != LevelState.InProgress)
         {
             return;
         }
+
         CoyoteCheck();
         JumpBuffer();
         CanPush();
@@ -72,7 +73,7 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
-        if (LevelManager.instance.CurrentGameState != LevelState.InProgress)
+        if (LevelManager.instance.CurrentGameState.Value != LevelState.InProgress)
         {
             rb.linearVelocity = new Vector2(0, 0);
             rb.gravityScale = 0;
@@ -279,7 +280,7 @@ public class PlayerMovement2D : NetworkBehaviour
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
         // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
-        LevelManager.instance.UpdateLevelStateClientRpc();
+        LevelManager.instance.CurrentGameState.Value = LevelState.Ending;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -298,8 +299,8 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             playerInfo.localCoinAmount.Value++;
             spawnParent.GetComponent<MainPlayerInfo>().coinAmount.Value++;
-
-            collision.gameObject.GetComponent<Coin>().CollectCoinServerRpc();
+            collision.gameObject.GetComponent<Coin>().CollectCoinRpc();
+            LevelManager.instance.coinCounter.AddCollectedCoinServerRpc();
         }
         if (collision.CompareTag("Crown"))
         {

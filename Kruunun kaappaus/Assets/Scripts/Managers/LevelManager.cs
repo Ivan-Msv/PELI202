@@ -19,6 +19,7 @@ public enum LevelState
 public class LevelManager : NetworkBehaviour
 {
     public static LevelManager instance;
+    public CoinCounter coinCounter;
     [SerializeField] private CinemachineCamera playerCamera;
     [SerializeField] private CinemachineCamera endingCamera;
     [Header("UI")]
@@ -29,18 +30,18 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI loadPlayerText;
     [SerializeField] private TextMeshProUGUI goTimerText;
     [SerializeField] private TextMeshProUGUI timerVisual;
-    private float goTimer = 4;
 
     [Header("Main")]
+    public NetworkVariable<LevelState> CurrentGameState = new();
+
+    public NetworkVariable<int> availableCoins = new();
+    public NetworkVariable<float> LevelTimer = new();
     private NetworkVariable<int> playersLoaded = new();
+    public LevelType currentLevelType;
+    public float levelDurationSeconds;
     [SerializeField] private float cameraAnimationSeconds;
     public Vector2[] playerSpawnPoint = new Vector2[1];
     public Vector2[] ghostSpawnPoints = new Vector2[3];
-    public float levelDurationSeconds;
-    public int availableCoins;
-    public LevelType currentLevelType;
-    public LevelState CurrentGameState { get; private set; }
-    public float LevelTimer { get; private set; }
 
     //Events
     public delegate void OnPlayerValueChangeDelegate();
@@ -56,36 +57,45 @@ public class LevelManager : NetworkBehaviour
 
     private void Start()
     {
-        LevelTimer = levelDurationSeconds;
+        if (IsServer)
+        {
+            LevelTimer.Value = levelDurationSeconds;
+        }
+
         timerGrid.SetActive(true);
     }
 
     private void Update()
     {
+        TimerVisual();
+        if (!IsServer)
+        {
+            return;
+        }
+
         GameLoop();
     }
     private void GameLoop()
     {
-        switch (CurrentGameState)
+        switch (CurrentGameState.Value)
         {
             case LevelState.LoadingPlayers:
                 PlayerLoadState();
                 break;
             case LevelState.Starting:
-                ThreeTwoOneGo();
                 break;
             case LevelState.InProgress:
                 RunTimer();
-                if (currentLevelType == LevelType.Minigame && availableCoins == 0)
+
+                if (currentLevelType == LevelType.Minigame && availableCoins.Value == 0)
                 {
-                    CurrentGameState = LevelState.Ending;
+                    CurrentGameState.Value = LevelState.Ending;
                 }
-                // Run everything for the game
+
                 break;
             case LevelState.Ending:
-                // Play animation and switch to idle (BELOW IS TEMPORARY)
-                CurrentGameState = LevelState.Idle;
-                StartCoroutine(EndingAnimation());
+                CurrentGameState.Value = LevelState.Idle;
+                EndingStateRpc();
                 break;
         }
     }
@@ -101,77 +111,97 @@ public class LevelManager : NetworkBehaviour
         switch (currentLevelType)
         {
             case LevelType.Challenge:
-                StartCoroutine(CameraAnimation());
+                ChallengeAnimationRpc();
                 break;
             case LevelType.Minigame:
-                // skippaa kameran animaation sillä ei tarvi nähdä "endgoal"
-                goTimerUI.SetActive(true);
-                coinCounterUI.SetActive(true);
+                MinigameAnimationRpc();
                 break;
         }
 
-        if (IsServer)
+        int playerCount = 0;
+        int ghostCount = 0;
+
+        List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
+        List<GameObject> shuffledPlayers = new();
+        int n = players.Count;
+
+        while (n > 0)
         {
-            int playerCount = 0;
-            int ghostCount = 0;
-
-            List<GameObject> players = GameObject.FindGameObjectsWithTag("Player").ToList();
-            List<GameObject> shuffledPlayers = new();
-            int n = players.Count;
-
-            while (n > 0)
-            {
-                var randomIndex = UnityEngine.Random.Range(0, n);
-                shuffledPlayers.Add(players[randomIndex]);
-                players.Remove(players[randomIndex]);
-                n--;
-            }
-
-            foreach (var player in shuffledPlayers)
-            {
-                PlayerMovement2D playerComponent = player.GetComponent<PlayerMovement2D>();
-                if (player.GetComponentInParent<MainPlayerInfo>().isGhost.Value)
-                {
-                    playerComponent.UpdatePlayerSpawnClientRpc(ghostSpawnPoints[ghostCount]);
-                    ghostCount++;
-                    continue;
-                }
-
-                playerComponent.UpdatePlayerSpawnClientRpc(playerSpawnPoint[playerCount]);
-                playerCount++;
-            }
+            var randomIndex = UnityEngine.Random.Range(0, n);
+            shuffledPlayers.Add(players[randomIndex]);
+            players.Remove(players[randomIndex]);
+            n--;
         }
 
-        TimerVisual();
-        CurrentGameState = LevelState.Starting;
-        loadPlayerText.gameObject.SetActive(false);
-        BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, false);
+        foreach (var player in shuffledPlayers)
+        {
+            PlayerMovement2D playerComponent = player.GetComponent<PlayerMovement2D>();
+            if (player.GetComponentInParent<MainPlayerInfo>().isGhost.Value)
+            {
+                playerComponent.UpdatePlayerSpawnClientRpc(ghostSpawnPoints[ghostCount]);
+                ghostCount++;
+                continue;
+            }
 
-        OnPlayerValueChange?.Invoke();
+            playerComponent.UpdatePlayerSpawnClientRpc(playerSpawnPoint[playerCount]);
+            playerCount++;
+        }
+
+        InvokeRpc();
+        CurrentGameState.Value = LevelState.Starting;
     }
+
     public void SetCamera(Transform player)
     {
         playerCamera.Follow = player;
     }
+
+    [Rpc(SendTo.Everyone)]
+    private void ChallengeAnimationRpc()
+    {
+        coinCounterUI.SetActive(false);
+        StartCoroutine(CameraAnimation());
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void MinigameAnimationRpc()
+    {
+        StartCoroutine(ThreeTwoOneCoroutine());
+    }
+
     private void RunTimer()
     {
-        if (LevelTimer < 1)
+        if (LevelTimer.Value < 1)
         {
-            CurrentGameState = LevelState.Ending;
+            CurrentGameState.Value = LevelState.Ending;
             return;
         }
 
-        LevelTimer -= Time.deltaTime;
-        TimerVisual();
+        LevelTimer.Value -= Time.deltaTime;
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void InvokeRpc()
+    {
+        loadPlayerText.gameObject.SetActive(false);
+        BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, false);
+        OnPlayerValueChange?.Invoke();
     }
 
     private void TimerVisual()
     {
-        var timeInMinutes = Mathf.FloorToInt(LevelTimer / 60);
-        var timeInSeconds = Mathf.FloorToInt(LevelTimer - timeInMinutes * 60);
+        var timeInMinutes = Mathf.FloorToInt(LevelTimer.Value / 60);
+        var timeInSeconds = Mathf.FloorToInt(LevelTimer.Value - timeInMinutes * 60);
         string timerText = string.Format("Time remaining\n{0:00}:{1:00}", timeInMinutes, timeInSeconds);
         timerVisual.text = timerText;
     }
+
+    [Rpc(SendTo.Everyone)]
+    private void EndingStateRpc()
+    {
+        StartCoroutine(EndingAnimation());
+    }
+
     private IEnumerator CameraAnimation()
     {
         // Odottaa että peli päivittää kaiken
@@ -182,8 +212,9 @@ public class LevelManager : NetworkBehaviour
         endingCamera.Priority = 0;
         playerCamera.Priority = 1;
         yield return new WaitForSeconds(cameraAnimationSeconds - 1);
-        goTimerUI.SetActive(true);
+        StartCoroutine(ThreeTwoOneCoroutine());
     }
+
     private IEnumerator EndingAnimation()
     {
         float timeToWait = 0;
@@ -211,23 +242,30 @@ public class LevelManager : NetworkBehaviour
         {
             yield break;
         }
+
         NetworkManager.SceneManager.LoadScene("MainBoard", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
-    private void ThreeTwoOneGo()
-    {
-        if (!goTimerText.IsActive())
-        {
-            return;
-        }
 
-        if (goTimer <= 0)
+    private IEnumerator ThreeTwoOneCoroutine()
+    {
+        goTimerUI.SetActive(true);
+        goTimerText.text = "3";
+        yield return new WaitForSeconds(1);
+        goTimerText.text = "2";
+        yield return new WaitForSeconds(1);
+        goTimerText.text = "1";
+        yield return new WaitForSeconds(1);
+        goTimerText.text = "Go!";
+        yield return new WaitForSeconds(1);
+        goTimerUI.SetActive(false);
+
+        if (IsServer)
         {
-            goTimerUI.SetActive(false);
-            CurrentGameState = LevelState.InProgress;
+            coinCounter.GetAllPlayerDataRpc();
+            CurrentGameState.Value = LevelState.InProgress;
         }
-        goTimer -= Time.deltaTime;
-        goTimerText.text = goTimer <= 1 ? "Go!" : $"{(int)goTimer}";
     }
+
     [Rpc(SendTo.Server)]
     public void LoadPlayerServerRpc()
     {
@@ -239,10 +277,5 @@ public class LevelManager : NetworkBehaviour
     {
         var animationObject = NetworkManager.SpawnManager.SpawnedObjects[objectId];
         animationObject.GetComponent<Animator>().Play(animation);
-    }
-    [Rpc(SendTo.Everyone)]
-    public void UpdateLevelStateClientRpc()
-    {
-        CurrentGameState = LevelState.Ending;
     }
 }
