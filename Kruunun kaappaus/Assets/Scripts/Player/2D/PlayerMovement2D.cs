@@ -312,12 +312,17 @@ public class PlayerMovement2D : NetworkBehaviour
             rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
             collision.GetComponent<Platform>().SwitchStateServerRpc();
         }
+        if (collision.CompareTag("Bullet platform"))
+        {
+            NetworkObject.TrySetParent(collision.transform);
+            rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (!NetworkObject.IsOwner) { return; }
-        if (collision.CompareTag("Platform"))
+        if (collision.CompareTag("Platform") || collision.CompareTag("Bullet platform"))
         {
             rb.interpolation = RigidbodyInterpolation2D.Interpolate;
             NetworkObject.TrySetParent(spawnParent);
