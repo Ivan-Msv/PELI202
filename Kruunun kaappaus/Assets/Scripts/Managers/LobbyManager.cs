@@ -9,6 +9,8 @@ using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay.Models;
 using Unity.Services.Relay;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : NetworkBehaviour
 {
@@ -43,7 +45,7 @@ public class LobbyManager : NetworkBehaviour
 
         if (AuthenticationService.Instance.IsSignedIn)
         {
-            MainMenuUI.instance.OpenNewMenu(MenuState.MainMenu);
+            MainMenuUI.instance.SetNameAndStartMenu(tokenExists);
             return;
         }
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
@@ -83,17 +85,9 @@ public class LobbyManager : NetworkBehaviour
     }
     public Player CreatePlayer()
     {
-        string name = AuthenticationService.Instance.PlayerName.Substring(0, AuthenticationService.Instance.PlayerName.Length - 5);
         return new Player
         {
-            Data = new Dictionary<string, PlayerDataObject>
-                    {
-                        { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
-                        { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, $"{Random.Range(0, MainMenuUI.instance.PlayerIcons.Length)}")},
-                        { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1")},
-                        { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "")},
-                        { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
-                    }
+            Data = CreateData()
         };
     }
     private async void LobbyDecay()
@@ -141,5 +135,24 @@ public class LobbyManager : NetworkBehaviour
 
         NetworkManager.StartClient();
         Debug.Log("Started Client");
+    }
+
+    public Dictionary<string, PlayerDataObject> CreateData()
+    {
+        string name = AuthenticationService.Instance.PlayerName.Substring(0, AuthenticationService.Instance.PlayerName.Length - 5);
+        return new Dictionary<string, PlayerDataObject>
+                    {
+                        { "PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, name) },
+                        { "PlayerIconIndex", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, $"{Random.Range(0, MainMenuUI.instance.PlayerIcons.Length)}")},
+                        { "PlayerColor", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1")},
+                        { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "")},
+                        { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "0")}
+                    };
+    }
+
+    public async void HostCustomScene(string sceneName)
+    {
+        await CreateRelay();
+        NetworkManager.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 }

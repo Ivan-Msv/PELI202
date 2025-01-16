@@ -10,27 +10,37 @@ using Unity.Services.Core;
 
 public enum MenuState
 {
-    MainMenu, SettingsMenu, LobbySelectionMenu, CurrentLobbyMenu
+    MainMenu, SettingsMenu, LobbySelectionMenu, CurrentLobbyMenu, DebugMenu
 }
 
 public class MainMenuUI : MonoBehaviour
 {
     public static MainMenuUI instance;
 
-    [SerializeField] private GameObject mainMenu, settingsMenu, lobbySelectionMenu, currentLobbyMenu;
+    [SerializeField] private GameObject mainMenu, settingsMenu, lobbySelectionMenu, currentLobbyMenu, debugMenu;
     [SerializeField] private Button returnButton;
     [Space]
 
     [Header("Main Menu")]
+    [SerializeField] private bool enableDebug;
     [SerializeField] private Button playButton;
-    [SerializeField] private Button openSettings;
-    [SerializeField] private Button ExitButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button exitButton;
+    [SerializeField] private Button debugButton;
     [SerializeField] private TextMeshProUGUI errorMessage;
     [Space]
 
     [Header("Settings Menu")]
     [SerializeField] private TextMeshProUGUI currentName;
     [SerializeField] private TMP_InputField changeNameInput;
+    [Space]
+
+    [Header("Debug Menu")]
+    [SerializeField] private Button loadDebugBoard;
+    [SerializeField] private Button loadCustom2DMap;
+    [SerializeField] private GameObject custom2DMapMenu;
+    [SerializeField] private TMP_InputField custom2DMapInput;
+    [SerializeField] private Button custom2DMapConfirm;
     [Space]
 
     [Header("Lobby Selection Menu")]
@@ -59,8 +69,9 @@ public class MainMenuUI : MonoBehaviour
         // Main Menu & overall
         returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); });
         playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); });
-        openSettings.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); });
-        ExitButton.onClick.AddListener(() => { Application.Quit(); Debug.Log("Peli suljettiin"); });
+        settingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); });
+        debugButton.onClick.AddListener(() => { OpenNewMenu(MenuState.DebugMenu); });
+        exitButton.onClick.AddListener(() => { Application.Quit(); });
 
         // Settings Menu
         changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); });
@@ -69,6 +80,11 @@ public class MainMenuUI : MonoBehaviour
         createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; });
         joinLobby.onClick.AddListener(() => { OpenSubMenu(joinMenu); });
         confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); });
+
+        // Debug Menu
+        loadCustom2DMap.onClick.AddListener(() => { OpenSubMenu(custom2DMapMenu); });
+        loadDebugBoard.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene("DebugBoard"); });
+        custom2DMapConfirm.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene(custom2DMapInput.text); });
     }
     public void ReturnToPreviousMenu()
     {
@@ -101,6 +117,9 @@ public class MainMenuUI : MonoBehaviour
         {
             returnButton.gameObject.SetActive(true);
         }
+
+        debugButton.gameObject.SetActive(enableDebug);
+
         switch (currentState)
         {
             case MenuState.MainMenu:
@@ -114,6 +133,9 @@ public class MainMenuUI : MonoBehaviour
                 break;
             case MenuState.CurrentLobbyMenu:
                 currentLobbyMenu.SetActive(true);
+                break;
+            case MenuState.DebugMenu:
+                debugMenu.SetActive(true);
                 break;
         }
     }

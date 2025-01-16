@@ -27,10 +27,23 @@ public class PlayerSetup : NetworkBehaviour
             return;
         }
         currentState = PlayerState.Menu;
-        SavedData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId).playerData;
+        SavedData = TryGetSavedData();
         SceneManager.sceneLoaded += ClearSubPlayers;
         NetworkManager.OnClientDisconnectCallback += ReturnToLobby;
     }
+
+    private Dictionary<string, PlayerDataObject> TryGetSavedData()
+    {
+        var getData = FindObjectsByType<PlayerLobbyInfo>(FindObjectsSortMode.None).FirstOrDefault(player => player.name == AuthenticationService.Instance.PlayerId)?.playerData;
+
+        if (getData == null)
+        {
+            getData = LobbyManager.instance.CreateData();
+        }
+
+        return getData;
+    }
+
     public void ReturnToLobby(ulong action)
     {
         NetworkManager.Shutdown();
