@@ -934,7 +934,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19
+  m_fontSize: 38.05
   m_fontSizeBase: 110
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1429,28 +1429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   tiles:
-  - {fileID: 0}
   - {fileID: 1443175020}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &514730125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3126,7 +3105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1029553900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3195,6 +3174,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1947310054}
     m_Modifications:
+    - target: {fileID: 4882977734003989596, guid: f124085a496be6e4e92900bc5adf16af, type: 3}
+      propertyPath: sceneNames1.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882977734003989596, guid: f124085a496be6e4e92900bc5adf16af, type: 3}
+      propertyPath: 'sceneNames1.Array.data[0]'
+      value: DebugLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 5570988830633718960, guid: f124085a496be6e4e92900bc5adf16af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6
@@ -3289,7 +3276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24073666, y: 0.80037475}
   m_AnchorMax: {x: 0.7602749, y: 0.988876}
-  m_AnchoredPosition: {x: -3.500061, y: -4.25}
+  m_AnchoredPosition: {x: -3.5, y: -4.25}
   m_SizeDelta: {x: -11, y: -0.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1151305792
@@ -3863,7 +3850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24073666, y: 0.4}
   m_AnchorMax: {x: 0.7602749, y: 0.818}
-  m_AnchoredPosition: {x: -3.000061, y: -1.5}
+  m_AnchoredPosition: {x: -3, y: -1.5}
   m_SizeDelta: {x: -12, y: -7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1415753884
@@ -5112,7 +5099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.24073666, y: 0.4}
   m_AnchorMax: {x: 0.7602749, y: 0.818}
-  m_AnchoredPosition: {x: -3.000061, y: -1}
+  m_AnchoredPosition: {x: -3, y: -1}
   m_SizeDelta: {x: -12, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1720519069
@@ -5782,7 +5769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1947310052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5797,28 +5784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   tiles:
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 1043535983}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &1947310053
 MonoBehaviour:
   m_ObjectHideFlags: 0

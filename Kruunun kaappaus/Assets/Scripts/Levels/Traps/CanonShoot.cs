@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class CanonShoot : MonoBehaviour
@@ -7,8 +8,8 @@ public class CanonShoot : MonoBehaviour
     [SerializeField] private GameObject projectile;
     [Range(0f, 10f)]
     [SerializeField] private float shootCooldown = 1f;
-    private float shootTimer = 10f;
-
+    private float shootTimer ;
+    [SerializeField] private GameObject parentObject;
     // Update is called once per frame
     void Update()
     {
@@ -24,6 +25,8 @@ public class CanonShoot : MonoBehaviour
     }
     private void Shoot()
     {
-        Instantiate(projectile, shootPoint.position, shootPoint.rotation);
+     var instance = Instantiate(projectile, shootPoint.position, shootPoint.rotation,parentObject.transform);
+        var instanceNetworkObject = instance.GetComponent<NetworkObject>();
+        instanceNetworkObject.Spawn();
     }
 }

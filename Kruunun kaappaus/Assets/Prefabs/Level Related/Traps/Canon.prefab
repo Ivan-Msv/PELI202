@@ -151,7 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPoint: {fileID: 4495881803047217735}
   projectile: {fileID: 3210980027225901294, guid: ba383b69f38c2b84b87f14d763bbdc4f, type: 3}
-  shootCooldown: 10
+  shootCooldown: 5
+  parentObject: {fileID: 2514403128294692770}
 --- !u!114 &9185674996509485182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 832182580
+  GlobalObjectIdHash: 672988409
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1

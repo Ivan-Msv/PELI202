@@ -12,10 +12,10 @@ public class CanonBullet : MonoBehaviour
     [SerializeField] private Transform movePoint;
 
     private Vector2 moveTowards;
-    private Rigidbody2D rb;
+
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        
         Destroy(gameObject, lifetime);
         moveTowards = movePoint.position;
     }
@@ -24,6 +24,6 @@ public class CanonBullet : MonoBehaviour
         moveTowards = movePoint.position;
         transform.position = Vector2.MoveTowards(transform.position, moveTowards, speed * Time.deltaTime);
            
-        //rb.linearVelocity = transform.right * speed;
+        
     }
 }
