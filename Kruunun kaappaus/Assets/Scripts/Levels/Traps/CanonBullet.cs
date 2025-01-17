@@ -13,15 +13,30 @@ public class CanonBullet : NetworkBehaviour
 
     void Start()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         Invoke(nameof(DespawnBullet), lifetime);
     }
     private void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         transform.position = Vector2.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
     }
 
     private void DespawnBullet()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         NetworkObject.Despawn(gameObject);
     }
 }

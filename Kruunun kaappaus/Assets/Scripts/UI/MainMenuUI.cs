@@ -27,7 +27,8 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button debugButton;
-    [SerializeField] private TextMeshProUGUI errorMessage;
+    [SerializeField] private GameObject errorMessageLog;
+    [SerializeField] private GameObject errorMessagePrefab;
     [Space]
 
     [Header("Settings Menu")]
@@ -49,7 +50,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private GameObject joinMenu;
     [SerializeField] private TMP_InputField lobbyCode;
     [SerializeField] private Button confirmJoinLobby;
-    [SerializeField] private TextMeshProUGUI errorText;
 
     [field: SerializeField] public Sprite[] PlayerIcons { get; private set; }
     [field: SerializeField] public RuntimeAnimatorController[] PlayerAnimators { get; private set; }
@@ -101,14 +101,12 @@ public class MainMenuUI : MonoBehaviour
     }
     public void ShowErrorMessage(string message, int timeToExpire = 3)
     {
-        StartCoroutine(ShowErrorMessageCoroutine(message, timeToExpire));
-    }
-    private IEnumerator ShowErrorMessageCoroutine(string message, int timeToExpire)
-    {
-        errorMessage.text = message;
-        errorMessage.gameObject.SetActive(true);
-        yield return new WaitForSeconds(timeToExpire);
-        errorMessage.gameObject.SetActive(false);
+        errorMessageLog.SetActive(true);
+
+        var messageObject = Instantiate(errorMessagePrefab, errorMessageLog.transform);
+        var messageComponent = messageObject.GetComponent<ErrorMessage>();
+        messageComponent.errorMessage = message;
+        messageComponent.lifeTimeSeconds = timeToExpire;
     }
     private void MenuScreen()
     {
@@ -157,7 +155,6 @@ public class MainMenuUI : MonoBehaviour
         joinLobby.gameObject.SetActive(true);
         joinMenu.SetActive(false);
         joinMenu.GetComponentInChildren<TMP_InputField>().text = string.Empty;
-        errorText.gameObject.SetActive(false);
 
         createLobby.interactable = true;
     }
@@ -178,18 +175,15 @@ public class MainMenuUI : MonoBehaviour
             switch (e.Reason)
             {
                 case LobbyExceptionReason.InvalidJoinCode:
-                    errorText.text = $"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})";
-                    errorText.gameObject.SetActive(true);
+                    ShowErrorMessage($"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})", 3);
                     break;
                 case LobbyExceptionReason.LobbyNotFound:
-                    errorText.text = $"Lobby not found (Recently deleted)";
-                    errorText.gameObject.SetActive(true);
+                    ShowErrorMessage($"Lobby not found (Recently deleted)", 3);
                     break;
                 case LobbyExceptionReason.LobbyFull:
-                    errorText.text = $"Lobby is already full";
-                    errorText.gameObject.SetActive(true);
+                    ShowErrorMessage($"Lobby is already full", 3);
                     break;
-                case LobbyExceptionReason.LobbyConflict:
+                default:
                     Debug.LogWarning(e.Reason);
                     break;
             }
@@ -197,8 +191,6 @@ public class MainMenuUI : MonoBehaviour
         catch (ArgumentException ae)
         {
             Debug.LogError(ae);
-            errorText.text = $"Unexpected error, try again";
-            errorText.gameObject.SetActive(true);
         }
     }
     private async void AttemptChangeName(string newName)

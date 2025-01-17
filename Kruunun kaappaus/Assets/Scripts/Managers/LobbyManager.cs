@@ -71,12 +71,17 @@ public class LobbyManager : NetworkBehaviour
             {
                 case LobbyExceptionReason.RequestTimeOut:
                     MainMenuUI.instance.ReturnToPreviousMenu();
-                    string errorMsg = $"Request timeout ({e.ErrorCode})";
-                    MainMenuUI.instance.ShowErrorMessage(errorMsg);
+                    MainMenuUI.instance.ShowErrorMessage($"Request timeout");
+                    break;
+                case LobbyExceptionReason.RateLimited:
+                    MainMenuUI.instance.ReturnToPreviousMenu();
+                    MainMenuUI.instance.ShowErrorMessage($"Creating lobbies too quickly!");
+                    break;
+                default:
+                    MainMenuUI.instance.ReturnToPreviousMenu();
+                    MainMenuUI.instance.ShowErrorMessage($"{e.Reason}");
                     break;
             }
-            string errorMessage = $"Unexpected error, couldn't create lobby ({e.ErrorCode})";
-            MainMenuUI.instance.ShowErrorMessage(errorMessage);
         }
         finally
         {

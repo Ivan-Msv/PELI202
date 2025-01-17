@@ -12,6 +12,11 @@ public class CanonShoot : NetworkBehaviour
 
     void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         if (shootTimer <= 0)
         {
             Shoot();
