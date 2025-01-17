@@ -33,25 +33,10 @@ public class PlayerInfo2D : NetworkBehaviour
     {
         if (NetworkObject.IsOwner)
         {
-            LevelManager.instance.OnPlayerValueChange += OnPlayersUpdated;
+            LevelManager.instance.SetCamera(transform);
             playerIsGhost.Value = GetComponentInParent<MainPlayerInfo>().isGhost.Value;
             LevelManager.instance.LoadPlayerServerRpc();
         }
-    }
-
-    public void OnPlayersUpdated()
-    {
-        if (!NetworkObject.IsOwner)
-        {
-            return;
-        }
-
-        LevelManager.instance.SetCamera(transform);
-    }
-
-    private void OnDisable()
-    {
-        LevelManager.instance.OnPlayerValueChange -= OnPlayersUpdated;
     }
 
     private void Update()

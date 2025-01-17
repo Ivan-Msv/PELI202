@@ -16,6 +16,7 @@ public class LobbyUI : NetworkBehaviour
     private Lobby currentLobby;
     private string currentLobbyId;
     private float pollingTimer;
+    private bool connecting;
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI loadingScreen;
     [SerializeField] private TextMeshProUGUI playerCount;
@@ -275,12 +276,18 @@ public class LobbyUI : NetworkBehaviour
     }
     private void CheckIfServerStarted()
     {
+        if (connecting)
+        {
+            return;
+        }
+
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
         if (host.Data["ServerStarted"].Value != "0" && !NetworkManager.IsConnectedClient)
         {
             BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, true, 1);
             leaveLobby.interactable = false;
             LobbyManager.instance.JoinRelay(host.Data["AllocationCode"].Value);
+            connecting = true;
         }
     }
     private void CheckStartMatch()

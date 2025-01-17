@@ -28,8 +28,20 @@ public class PlayerSetup : NetworkBehaviour
         }
         currentState = PlayerState.Menu;
         SavedData = TryGetSavedData();
+    }
+
+    private void TryGetEarlyPlayer()
+    {
+        ClearSubPlayers(SceneManager.GetActiveScene(), LoadSceneMode.Single);
+    }
+
+
+    public override void OnNetworkSpawn()
+    {
         SceneManager.sceneLoaded += ClearSubPlayers;
         NetworkManager.OnClientDisconnectCallback += ReturnToLobby;
+        base.OnNetworkSpawn();
+        TryGetEarlyPlayer();
     }
 
     private Dictionary<string, PlayerDataObject> TryGetSavedData()
