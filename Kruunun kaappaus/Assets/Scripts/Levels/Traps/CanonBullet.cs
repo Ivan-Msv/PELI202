@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class CanonBullet : MonoBehaviour
+public class CanonBullet : NetworkBehaviour
 {
     [Header("Speed and Lifetime")]
     [Range(0, 100)]
@@ -8,22 +9,19 @@ public class CanonBullet : MonoBehaviour
 
     [Range(0, 100)]
     [SerializeField] private float lifetime = 1.0f;
-
     [SerializeField] private Transform movePoint;
-
-    private Vector2 moveTowards;
 
     void Start()
     {
-        
-        Destroy(gameObject, lifetime);
-        moveTowards = movePoint.position;
+        Invoke(nameof(DespawnBullet), lifetime);
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        moveTowards = movePoint.position;
-        transform.position = Vector2.MoveTowards(transform.position, moveTowards, speed * Time.deltaTime);
-           
-        
+        transform.position = Vector2.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
+    }
+
+    private void DespawnBullet()
+    {
+        NetworkObject.Despawn(gameObject);
     }
 }

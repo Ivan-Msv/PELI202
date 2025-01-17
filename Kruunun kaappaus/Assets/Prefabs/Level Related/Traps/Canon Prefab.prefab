@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 180235727382423665}
   - component: {fileID: 8049488382758797978}
   - component: {fileID: 4459422928995950443}
-  - component: {fileID: 2433986607008754524}
   - component: {fileID: 9185674996509485182}
+  - component: {fileID: 2433986607008754524}
   m_Layer: 0
-  m_Name: Canon
+  m_Name: Canon Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,22 +137,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2433986607008754524
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2514403128294692770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92e3f1ee730a36d4ba0184d19aacdddb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootPoint: {fileID: 4495881803047217735}
-  projectile: {fileID: 3210980027225901294, guid: ba383b69f38c2b84b87f14d763bbdc4f, type: 3}
-  shootCooldown: 5
-  parentObject: {fileID: 2514403128294692770}
 --- !u!114 &9185674996509485182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +162,22 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &2433986607008754524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2514403128294692770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e3f1ee730a36d4ba0184d19aacdddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  shootPoint: {fileID: 4495881803047217735}
+  projectile: {fileID: 3210980027225901294, guid: ba383b69f38c2b84b87f14d763bbdc4f, type: 3}
+  shootCooldown: 5
 --- !u!1 &5652399164104152014
 GameObject:
   m_ObjectHideFlags: 0

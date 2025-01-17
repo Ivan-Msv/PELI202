@@ -1,16 +1,15 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class CanonShoot : MonoBehaviour
+public class CanonShoot : NetworkBehaviour
 {
     [Header("Shootpoint and projectile settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
     [Range(0f, 10f)]
     [SerializeField] private float shootCooldown = 1f;
-    private float shootTimer ;
-    [SerializeField] private GameObject parentObject;
-    // Update is called once per frame
+    private float shootTimer;
+
     void Update()
     {
         if (shootTimer <= 0)
@@ -25,8 +24,6 @@ public class CanonShoot : MonoBehaviour
     }
     private void Shoot()
     {
-     var instance = Instantiate(projectile, shootPoint.position, shootPoint.rotation,parentObject.transform);
-        var instanceNetworkObject = instance.GetComponent<NetworkObject>();
-        instanceNetworkObject.Spawn();
+        NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
     }
 }

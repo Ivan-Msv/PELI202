@@ -67,7 +67,6 @@ public class CoinCounter : NetworkBehaviour
     {
         foreach (var score in playerScores)
         {
-            Debug.Log(score.Key.localCoinAmount.Value);
             score.Value.UpdatePlayerScore(score.Key.localCoinAmount.Value);
         }
     }
