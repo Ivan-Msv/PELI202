@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7129205327354041499}
   - component: {fileID: 6282395821698618284}
   - component: {fileID: 4395127528501997266}
-  - component: {fileID: 5238428612908180238}
   - component: {fileID: -7501791766508236437}
+  - component: {fileID: 5238428612908180238}
   - component: {fileID: -2991297153855223638}
   - component: {fileID: -6598523966893692982}
   m_Layer: 0
@@ -116,7 +116,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -156,21 +156,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.045
---- !u!114 &5238428612908180238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5409873449286555630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c31586c7f80cc34469ac9e46a6ec108c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  lifetime: 2.37
-  pushDistance: 500
 --- !u!114 &-7501791766508236437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +181,22 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &5238428612908180238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5409873449286555630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31586c7f80cc34469ac9e46a6ec108c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  speed: 10
+  lifetime: 2.37
+  pushDistance: 3
 --- !u!114 &-2991297153855223638
 MonoBehaviour:
   m_ObjectHideFlags: 0

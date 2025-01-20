@@ -8,11 +8,16 @@ public class CanonShoot : NetworkBehaviour
     [SerializeField] private GameObject projectile;
     [Range(0f, 10f)]
     [SerializeField] private float shootCooldown = 1f;
-    private float shootTimer ;
+    private float shootTimer;
     [SerializeField] private GameObject parentObject;
     // Update is called once per frame
     void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         if (shootTimer <= 0)
         {
             Shoot();
@@ -25,7 +30,6 @@ public class CanonShoot : NetworkBehaviour
     }
     private void Shoot()
     {
-        
         NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
     }
 }

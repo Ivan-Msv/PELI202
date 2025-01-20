@@ -41,9 +41,14 @@ public class CanonBullet : NetworkBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
         if(!collision.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            DespawnBullet();
         }
     }
 }

@@ -59,9 +59,15 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
-        CoyoteCheck();
-        JumpBuffer();
-        CanPush();
+        if (isGhost)
+        {
+            CanPush();
+        }
+        else
+        {
+            CoyoteCheck();
+            JumpBuffer();
+        }
     }
 
     private void FixedUpdate()
@@ -202,19 +208,16 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void CanPush()
     {
-        if (Input.GetKeyDown("a"))
-        {
-            shootPoint.SetLocalPositionAndRotation(new Vector3((float)-0.6, 0, 0), Quaternion.Euler(0, 0, 180));
+        var userInput = Input.GetAxisRaw("Horizontal");
 
-        }
-        if (Input.GetKeyDown("d"))
+        if (userInput != 0)
         {
-            shootPoint.SetLocalPositionAndRotation(new Vector3((float)0.6, 0, 0), Quaternion.Euler(0, 0, 0));
+            shootPoint.SetLocalPositionAndRotation(new(userInput, 0, 0), new(0, 0, userInput * 180, shootPoint.rotation.w));
+        }
 
-        }
-        if (Input.GetKeyDown("space") && isGhost == true && pushTimer <= 0)
+        if (Input.GetKeyDown(KeyCode.Space) && pushTimer <= 0)
         {
-            Push();
+            PushServerRpc();
             pushTimer = pushCooldown;
         }
         else
@@ -222,9 +225,10 @@ public class PlayerMovement2D : NetworkBehaviour
             pushTimer -= Time.deltaTime;
         }
     }
-    private void Push()
+
+    [Rpc(SendTo.Server)]
+    private void PushServerRpc()
     {
-       
         NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
     }
     private void PlayerStateManager()
