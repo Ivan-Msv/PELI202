@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 311b62d1a04512f4f9bfaaf526f24b04
+guid: 223f52d45a602424295519b03421fb67
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4862894511612231376
-    second: Shop_UI 1_0
+      213: 5316388266166215087
+    second: Return_Button_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shop_UI 1_0
+      name: Return_Button_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 194
-        height: 87
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0310827d437838cb0800000000000000
-      internalID: -4862894511612231376
+      spriteID: fa164ece5fa97c940800000000000000
+      internalID: 5316388266166215087
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Shop_UI 1_0: -4862894511612231376
+      Return_Button_0: 5316388266166215087
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
