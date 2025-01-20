@@ -224,9 +224,8 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void Push()
     {
-        var instance = Instantiate(projectile, shootPoint.position, shootPoint.rotation);
-        var instanceNetworkObject = instance.GetComponent<NetworkObject>();
-        instanceNetworkObject.Spawn();
+       
+        NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
     }
     private void PlayerStateManager()
     {
