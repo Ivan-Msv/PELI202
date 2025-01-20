@@ -261,7 +261,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 5
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 135388348
+  GlobalObjectIdHash: 3396764271
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -403,26 +403,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   isGhost: 0
-  moveSpeed: 1
-  ghostMoveSpeed: 6
-  xAxisDrag: 0.2
+  externalForce: {x: 0, y: 0}
+  forceDampSpeed: 8
+  moveSpeed: 230
+  ghostMoveSpeed: 230
   ground:
     serializedVersion: 2
     m_Bits: 1
   transparentFx:
     serializedVersion: 2
     m_Bits: 2
-  minJumpHeight: 10
-  maxJumpHeight: 2200
+  defaultGravity: 3
+  maxFloatRadius: 0.5
+  jumpHeight: 360
+  maxTimeInAir: 0.2
   maxCoyoteTime: 0.05
   maxJumpBufferTime: 0.11
-  maxJumpTime: 0.2
   shootPoint: {fileID: 5713807429199112005}
   projectile: {fileID: 5409873449286555630, guid: 2472f28971597544fb97358ab65ef183, type: 3}
   pushCooldown: 1
   spawnPoint: {x: 0, y: 0}
   playerInfo: {fileID: 1355854856914575653}
-  ParentObj: {fileID: 7571851560927952019}
 --- !u!114 &4151534210416331775
 MonoBehaviour:
   m_ObjectHideFlags: 0

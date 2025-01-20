@@ -12,33 +12,42 @@ public class PlayerMovement2D : NetworkBehaviour
 {
     public bool isGhost;
     private bool canJump;
+
+    [Header("External Forces")]
+    [SerializeField] private Vector2 externalForce;
+    [SerializeField] private float forceDampSpeed;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float ghostMoveSpeed;
-    [SerializeField] private float xAxisDrag;
+
     [Header("Jump")]
     [SerializeField] private LayerMask ground, transparentFx;
-    [SerializeField] private float minJumpHeight;
-    [SerializeField] private float maxJumpHeight;
+    [SerializeField] private float defaultGravity;
+    [SerializeField] private float maxFloatRadius;
+    [SerializeField] private float jumpHeight;
+    [SerializeField] private float maxTimeInAir;
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
-    [SerializeField] private float maxJumpTime;
-    [Header("Shootpoint and projectile settings")]
+    private float timeInAir;
+
+    [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
     [Range(0f, 1f)]
     [SerializeField] private float pushCooldown = 1f;
     public Vector2 spawnPoint;
     [SerializeField] private PlayerInfo2D playerInfo;
+
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
     private Animator animatorComponent;
     private float coyoteTimer;
     private float jumpBufferTimer;
-    private float jumpTimer;
-    private Transform spawnParent;
     private float pushTimer;
+    private Transform spawnParent;
     public PlayerMovementState currentPlayerState { get; private set; }
+
     void Start()
     {
         if (!NetworkObject.IsOwner)
@@ -59,14 +68,31 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            Application.targetFrameRate = 15;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            Application.targetFrameRate = 30;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            Application.targetFrameRate = 0;
+        }
+
         if (isGhost)
         {
+            GhostMovement();
             CanPush();
         }
         else
         {
             CoyoteCheck();
             JumpBuffer();
+            DampExternalForce();
         }
     }
 
@@ -85,17 +111,18 @@ public class PlayerMovement2D : NetworkBehaviour
         }
 
         PlayerStateManager();
+
         if (isGhost)
         {
-            GhostMovement();
+            return;
         }
-        else
-        {
-            StuckCheck();
-            Jump();
-            PlayerMovement();
-            LimitFallSpeed();
-        }
+
+        GravityScales();
+        StuckCheck();
+        LimitFallSpeed();
+
+        HorizontalMovement();
+        Jump();
     }
 
     private bool IsGrounded()
@@ -120,15 +147,18 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
     }
-    private void PlayerMovement()
+
+    private void HorizontalMovement()
     {
         // pelaajan asetukset
-        rb.gravityScale = 5;
         rb.excludeLayers = default;
 
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        rb.linearVelocityX = rb.linearVelocity.x / (xAxisDrag + 1);
-        rb.linearVelocityX += horizontal * moveSpeed;
+        var playerVelocity = GetPlayerHorizontalVelocity();
+
+        var totalVelocity = playerVelocity + externalForce.x;
+
+        // set velocity
+        rb.linearVelocityX = totalVelocity;
     }
 
     private void GhostMovement()
@@ -137,37 +167,36 @@ public class PlayerMovement2D : NetworkBehaviour
         rb.excludeLayers = ground | transparentFx;
         rb.gravityScale = 0;
 
-
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        rb.linearVelocity = new Vector2(horizontal * ghostMoveSpeed, vertical * ghostMoveSpeed);
+        rb.linearVelocity = GetGhostVelocity();
     }
 
     private void Jump()
     {
+        var totalVelocity = jumpHeight * Time.fixedDeltaTime + externalForce.y;
+
         if (jumpBufferTimer > 0 && canJump)
         {
-            // min jump
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, minJumpHeight);
+            rb.linearVelocityY = totalVelocity;
+            jumpBufferTimer = -1;
+            timeInAir = 0;
         }
-        MaxJumpTimer();
-    }
 
-    private void MaxJumpTimer()
-    {
-        jumpTimer -= Time.deltaTime;
-        bool falling = rb.linearVelocity.y <= 0;
+        if (Input.GetKey(KeyCode.Space) && timeInAir < maxTimeInAir)
+        {
+            rb.linearVelocityY = totalVelocity;
+        }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            jumpTimer = -1;
+            timeInAir = maxTimeInAir;
         }
 
-        if (jumpTimer >= 0 && !falling && Input.GetKey(KeyCode.Space))
+        if (externalForce.y != 0 && timeInAir >= maxTimeInAir)
         {
-            rb.AddRelativeForce(Vector3.up * maxJumpHeight * Time.deltaTime);
+            rb.linearVelocityY = externalForce.y;
         }
+
+        timeInAir += Time.deltaTime;
     }
 
     private void CoyoteCheck()
@@ -193,7 +222,6 @@ public class PlayerMovement2D : NetworkBehaviour
         else
         {
             canJump = true;
-            jumpTimer = maxJumpTime;
             coyoteTimer = 0;
         }
     }
@@ -231,6 +259,7 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
     }
+
     private void PlayerStateManager()
     {
         UpdateAnimation();
@@ -263,6 +292,64 @@ public class PlayerMovement2D : NetworkBehaviour
     private PlayerMovementState JumpOrFallCheck()
     {
         return rb.linearVelocity.y < 0 ? PlayerMovementState.Falling : PlayerMovementState.Jumping;
+    }
+
+    private void GravityScales()
+    {
+        // Faster falling
+        if (currentPlayerState == PlayerMovementState.Falling)
+        {
+            rb.gravityScale = defaultGravity * 2;
+        }
+
+        // Giving some floating time when near end of the jump
+        else if (Mathf.Abs(rb.linearVelocityY) < maxFloatRadius && !IsGrounded())
+        {
+            rb.gravityScale = defaultGravity / 2;
+        }
+
+        // Resets back to normal gravity scale
+        else
+        {
+            rb.gravityScale = defaultGravity;
+        }
+    }
+
+    private float GetPlayerHorizontalVelocity()
+    {
+        var horizontal = Input.GetAxisRaw("Horizontal");
+
+        return horizontal * moveSpeed * Time.fixedDeltaTime;
+    }
+
+    private Vector2 GetGhostVelocity()
+    {
+        // Not using raw to get that floaty "ghosty" movement
+        var horizontal = Input.GetAxis("Horizontal");
+        var vertical = Input.GetAxis("Vertical");
+
+        return new(horizontal * ghostMoveSpeed * Time.fixedDeltaTime, vertical * ghostMoveSpeed * Time.fixedDeltaTime);
+    }
+
+    public void AddExternalForce(Vector2 force)
+    {
+        externalForce += force;
+    }
+
+    private void DampExternalForce()
+    {
+        // this gradually removes the external force, so it doesn't stay forever
+        if (Mathf.Abs(externalForce.x) < 0.5f)
+        {
+            externalForce.x = 0;
+        }
+
+        if (Mathf.Abs(externalForce.y) < 3)
+        {
+            externalForce.y = 0;
+        }
+
+        externalForce = Vector2.Lerp(externalForce, Vector2.zero, Time.deltaTime * forceDampSpeed);
     }
 
     [Rpc(SendTo.Owner)]
