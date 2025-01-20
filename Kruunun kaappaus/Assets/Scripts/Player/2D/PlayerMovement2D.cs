@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -52,6 +49,7 @@ public class PlayerMovement2D : NetworkBehaviour
         spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
+
     }
 
     void Update()
@@ -206,12 +204,12 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         if (Input.GetKeyDown("a"))
         {
-            shootPoint.SetLocalPositionAndRotation(new Vector3((float)-0.6,0,0), Quaternion.Euler(0,0,180));
+            shootPoint.SetLocalPositionAndRotation(new Vector3((float)-0.6, 0, 0), Quaternion.Euler(0, 0, 180));
 
         }
         if (Input.GetKeyDown("d"))
         {
-            shootPoint.SetLocalPositionAndRotation(new Vector3((float)0.6, 0,0), Quaternion.Euler(0,0,0));
+            shootPoint.SetLocalPositionAndRotation(new Vector3((float)0.6, 0, 0), Quaternion.Euler(0, 0, 0));
 
         }
         if (Input.GetKeyDown("space") && isGhost == true && pushTimer <= 0)
@@ -226,7 +224,9 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void Push()
     {
-        Instantiate(projectile, shootPoint.position, shootPoint.rotation);
+        var instance = Instantiate(projectile, shootPoint.position, shootPoint.rotation);
+        var instanceNetworkObject = instance.GetComponent<NetworkObject>();
+        instanceNetworkObject.Spawn();
     }
     private void PlayerStateManager()
     {
