@@ -1,10 +1,15 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Fade : MonoBehaviour
 {
     private float fadeSpeed;
+    private List<GameObject> currentlyFading = new();
+
     public void StartFade(Transform fadeObject, bool fadeIn, float speed = 1)
     {
         fadeSpeed = speed;
@@ -19,6 +24,14 @@ public class Fade : MonoBehaviour
             yield break;
         }
 
+        var componentObject = givenComponent.gameObject;
+
+        while (currentlyFading.Contains(componentObject))
+        {
+            yield return null;
+        }
+
+        currentlyFading.Add(componentObject);
         Color newColor;
 
         if (givenComponent is SpriteRenderer sprite)
@@ -27,7 +40,7 @@ public class Fade : MonoBehaviour
             switch (fadeIn)
             {
                 case true:
-                    while (sprite.color.a < 1)
+                    while (sprite.color.a < 1 && currentlyFading.Contains(componentObject))
                     {
                         newColor.a += fadeSpeed * Time.deltaTime;
                         sprite.color = newColor;
@@ -35,7 +48,7 @@ public class Fade : MonoBehaviour
                     }
                     break;
                 case false:
-                    while (sprite.color.a > 0)
+                    while (sprite.color.a > 0 && currentlyFading.Contains(componentObject))
                     {
                         newColor.a -= fadeSpeed * Time.deltaTime;
                         sprite.color = newColor;
@@ -51,7 +64,7 @@ public class Fade : MonoBehaviour
             switch (fadeIn)
             {
                 case true:
-                    while (image.color.a < 1)
+                    while (image.color.a < 1 && currentlyFading.Contains(componentObject))
                     {
                         newColor.a += fadeSpeed * Time.deltaTime;
                         image.color = newColor;
@@ -59,7 +72,7 @@ public class Fade : MonoBehaviour
                     }
                     break;
                 case false:
-                    while (image.color.a > 0)
+                    while (image.color.a > 0 && currentlyFading.Contains(componentObject))
                     {
                         newColor.a -= fadeSpeed * Time.deltaTime;
                         image.color = newColor;
@@ -74,14 +87,14 @@ public class Fade : MonoBehaviour
             switch (fadeIn)
             {
                 case true:
-                    while (canvas.alpha < 1)
+                    while (canvas.alpha < 1 && currentlyFading.Contains(componentObject))
                     {
                         canvas.alpha += fadeSpeed * Time.deltaTime;
                         yield return null;
                     }
                     break;
                 case false:
-                    while (canvas.alpha > 0)
+                    while (canvas.alpha > 0 && currentlyFading.Contains(componentObject))
                     {
                         canvas.alpha -= fadeSpeed * Time.deltaTime;
                         yield return null;
@@ -89,6 +102,8 @@ public class Fade : MonoBehaviour
                     break;
             }
         }
+
+        currentlyFading.Remove(componentObject);
     }
     private Component GetProperComponent(Transform fadeObject)
     {
