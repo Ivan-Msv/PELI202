@@ -19,7 +19,6 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private Vector2 externalForce;
     [SerializeField] private float forceDampSpeed;
     public bool CanUsePortal { get; private set; } = true;
-    public Vector2 LastVelocity { get; private set; }
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -120,11 +119,6 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
-        if (rb.linearVelocity != Vector2.zero)
-        {
-            LastVelocity = rb.linearVelocity;
-        }
-
         GravityScales();
         StuckCheck();
         LimitFallSpeed();
@@ -133,6 +127,7 @@ public class PlayerMovement2D : NetworkBehaviour
         HorizontalMovement();
         Jump();
     }
+
 
     private bool IsGrounded()
     {
