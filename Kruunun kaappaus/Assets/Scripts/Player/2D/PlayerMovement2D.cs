@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,8 +15,11 @@ public class PlayerMovement2D : NetworkBehaviour
     private bool canJump;
 
     [Header("External Forces")]
+    [SerializeField] private float portalCooldown;
     [SerializeField] private Vector2 externalForce;
     [SerializeField] private float forceDampSpeed;
+    public bool CanUsePortal { get; private set; } = true;
+    public Vector2 LastVelocity { get; private set; }
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -116,6 +120,11 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
+        if (rb.linearVelocity != Vector2.zero)
+        {
+            LastVelocity = rb.linearVelocity;
+        }
+
         GravityScales();
         StuckCheck();
         LimitFallSpeed();
@@ -145,7 +154,19 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void LimitFallSpeed()
     {
-        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
+        //rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
+    }
+
+    public void SetPortalCooldown()
+    {
+        StartCoroutine(PortalCoroutine());
+    }
+
+    private IEnumerator PortalCoroutine()
+    {
+        CanUsePortal = false;
+        yield return new WaitForSeconds(portalCooldown);
+        CanUsePortal = true;
     }
 
     private void HorizontalMovement()
@@ -181,14 +202,14 @@ public class PlayerMovement2D : NetworkBehaviour
             timeInAir = 0;
         }
 
+        if (Input.GetAxisRaw("Vertical") <= 0 && timeInAir < maxTimeInAir)
+        {
+            timeInAir = maxTimeInAir;
+        }
+
         if (Input.GetKey(KeyCode.Space) && timeInAir < maxTimeInAir)
         {
             rb.linearVelocityY = totalVelocity;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            timeInAir = maxTimeInAir;
         }
 
         if (externalForce.y != 0 && timeInAir >= maxTimeInAir)
@@ -229,6 +250,12 @@ public class PlayerMovement2D : NetworkBehaviour
     private void JumpBuffer()
     {
         jumpBufferTimer -= Time.deltaTime;
+
+        if (!CanUsePortal)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && currentPlayerState != PlayerMovementState.Jumping)
         {
             jumpBufferTimer = maxJumpBufferTime;

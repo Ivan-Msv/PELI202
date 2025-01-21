@@ -16,12 +16,13 @@ public class Trampoline : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlayerMovement2D>().isGhost)
+        var playerMovement = collision.GetComponent<PlayerMovement2D>();
+        if (playerMovement.isGhost)
         {
             return;
         }
 
-        collision.GetComponent<PlayerMovement2D>().AddExternalForce(new(xDirection * xBounce, yDirection * yBounce));
+        playerMovement.AddExternalForce(new(xDirection * xBounce, yDirection * yBounce));
         PlayAnimationServerRpc();
     }
 
