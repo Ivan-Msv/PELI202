@@ -92,7 +92,6 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             CoyoteCheck();
             JumpBuffer();
-            DampExternalForce();
         }
     }
 
@@ -120,6 +119,7 @@ public class PlayerMovement2D : NetworkBehaviour
         GravityScales();
         StuckCheck();
         LimitFallSpeed();
+        DampExternalForce();
 
         HorizontalMovement();
         Jump();
@@ -349,7 +349,7 @@ public class PlayerMovement2D : NetworkBehaviour
             externalForce.y = 0;
         }
 
-        externalForce = Vector2.Lerp(externalForce, Vector2.zero, Time.deltaTime * forceDampSpeed);
+        externalForce = Vector2.Lerp(externalForce, Vector2.zero, Time.fixedDeltaTime * forceDampSpeed);
     }
 
     [Rpc(SendTo.Owner)]

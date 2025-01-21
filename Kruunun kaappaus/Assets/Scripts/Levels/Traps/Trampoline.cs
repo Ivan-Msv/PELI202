@@ -21,7 +21,7 @@ public class Trampoline : NetworkBehaviour
             return;
         }
 
-        collision.attachedRigidbody.linearVelocity = new Vector2(xDirection * xBounce, yDirection * yBounce);
+        collision.GetComponent<PlayerMovement2D>().AddExternalForce(new(xDirection * xBounce, yDirection * yBounce));
         PlayAnimationServerRpc();
     }
 
