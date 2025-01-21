@@ -33,9 +33,12 @@ public class Trampoline : NetworkBehaviour
 
     private void OnDrawGizmos()
     {
+        // I dont know why 10 works, but this is the closest I got to visualizing
+        // the peak of the height
         Gizmos.color = Color.green;
-        float xHeightPosition = xDirection * xBounce / 5 * 0.2f * 2; // 5 on gravity scale, 0.2f on mun xDrag pelaajan skriptissä.
-        float yHeightPosition = yDirection * (0.5f * yBounce - 6); // Voi olla täysin väärä, sillä testasin sitä pelissä ja yritin verrata siihen.
+        float xHeightPosition = xDirection * xBounce / 10;
+        float yHeightPosition = (yDirection * yBounce) / 10;
+
         Vector3 jumpHeightPosition = transform.position + new Vector3(xHeightPosition, yHeightPosition, 0);
         Gizmos.DrawLine(transform.position, jumpHeightPosition);
         Gizmos.DrawSphere(jumpHeightPosition, 0.1f);
