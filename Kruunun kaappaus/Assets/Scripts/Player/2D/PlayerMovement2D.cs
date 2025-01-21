@@ -12,6 +12,7 @@ public class PlayerMovement2D : NetworkBehaviour
 {
     public bool isGhost;
     private bool canJump;
+    private bool isShooting;
 
     [Header("External Forces")]
     [SerializeField] private Vector2 externalForce;
@@ -34,10 +35,11 @@ public class PlayerMovement2D : NetworkBehaviour
     [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
-    [Range(0f, 1f)]
-    [SerializeField] private float pushCooldown = 1f;
+    
     public Vector2 spawnPoint;
     [SerializeField] private PlayerInfo2D playerInfo;
+    [Range (0f, 5f)]
+    public float maxChargeTime;
 
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
@@ -46,6 +48,8 @@ public class PlayerMovement2D : NetworkBehaviour
     private float jumpBufferTimer;
     private float pushTimer;
     private Transform spawnParent;
+    private float chargeTimer;
+    private SpriteRenderer spritComp;
     public PlayerMovementState currentPlayerState { get; private set; }
 
     void Start()
@@ -58,7 +62,7 @@ public class PlayerMovement2D : NetworkBehaviour
         spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
-
+        spritComp = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -167,6 +171,11 @@ public class PlayerMovement2D : NetworkBehaviour
         rb.excludeLayers = ground | transparentFx;
         rb.gravityScale = 0;
 
+        if (isShooting)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
         rb.linearVelocity = GetGhostVelocity();
     }
 
@@ -236,22 +245,39 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     private void CanPush()
     {
+        //Color col = spritComp.color;
+        //col.a = 0.5f;
         var userInput = Input.GetAxisRaw("Horizontal");
-
+        
         if (userInput != 0)
         {
             shootPoint.SetLocalPositionAndRotation(new(userInput, 0, 0), new(0, 0, userInput * 180, shootPoint.rotation.w));
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isShooting = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isShooting = false;
+            chargeTimer = 0;
+            spritComp.color = Color.white;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            spritComp.color = Color.red;
+            
+            //spritComp.color = col;
+            if (chargeTimer >= maxChargeTime)
+            {
+                chargeTimer = 0;
+                PushServerRpc();
+            }
+            chargeTimer += Time.deltaTime;
+            Debug.Log(chargeTimer);
 
-        if (Input.GetKeyDown(KeyCode.Space) && pushTimer <= 0)
-        {
-            PushServerRpc();
-            pushTimer = pushCooldown;
         }
-        else
-        {
-            pushTimer -= Time.deltaTime;
-        }
+        
     }
 
     [Rpc(SendTo.Server)]
