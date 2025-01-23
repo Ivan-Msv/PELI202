@@ -4,7 +4,8 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     [SerializeField] private Transform nextPortal;
-    private List<Collider2D> playerObjects = new();
+
+    private float lastGravity;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -19,35 +20,36 @@ public class Portal : MonoBehaviour
             return;
         }
 
-        playerObjects.Add(collision);
+        lastGravity = collision.attachedRigidbody.gravityScale;
+        collision.attachedRigidbody.gravityScale = 0;
+
+        var lastVelocity = collision.attachedRigidbody.linearVelocity;
+
+        var localPosition = transform.InverseTransformPoint(collision.transform.position);
+
+        collision.transform.position = nextPortal.transform.TransformPoint(localPosition);
+
+        float angleDiff = Vector2.SignedAngle(transform.up, nextPortal.transform.up);
+        var newVelocity = Quaternion.Euler(0, 0, angleDiff) * -lastVelocity;
+
+        collision.attachedRigidbody.linearVelocity = newVelocity;
+        Debug.Log(collision.attachedRigidbody.linearVelocity);
     }
 
-
-    private void FixedUpdate()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (playerObjects.Count > 0)
+        var playerMovement = collision.GetComponent<PlayerMovement2D>();
+        if (playerMovement.isGhost)
         {
-            for (int i = 0; i < playerObjects.Count; i++)
-            {
-                var collision = playerObjects[i];
-                var playerMovement = collision.GetComponent<PlayerMovement2D>();
-
-                var lastVelocity = collision.attachedRigidbody.linearVelocity;
-
-                Vector2 offset = collision.transform.position - transform.position;
-
-                collision.attachedRigidbody.MovePosition((Vector2)nextPortal.transform.position + offset);
-
-                float angleDiff = Vector2.SignedAngle(transform.up, nextPortal.transform.up);
-                var newVelocity = Quaternion.Euler(0, 0, angleDiff) * -lastVelocity;
-
-                Debug.Log(newVelocity);
-
-                collision.attachedRigidbody.linearVelocity = newVelocity;
-                playerMovement.SetPortalCooldown();
-
-                playerObjects.Remove(playerObjects[i]);
-            }
+            return;
         }
+
+        if (!playerMovement.CanUsePortal)
+        {
+            return;
+        }
+
+        collision.attachedRigidbody.gravityScale = lastGravity;
+        playerMovement.SetPortalCooldown();
     }
 }

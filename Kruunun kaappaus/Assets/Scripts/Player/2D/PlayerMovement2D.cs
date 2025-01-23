@@ -16,9 +16,11 @@ public class PlayerMovement2D : NetworkBehaviour
     private bool isShooting;
 
     [Header("External Forces")]
+    public bool isUsingPortal;
     [SerializeField] private float portalCooldown;
     [SerializeField] private Vector2 externalForce;
     [SerializeField] private float forceDampSpeed;
+    [field: SerializeField] public float DefaultGravity { get; private set; }
     public bool CanUsePortal { get; private set; } = true;
 
     [Header("Movement")]
@@ -27,7 +29,6 @@ public class PlayerMovement2D : NetworkBehaviour
 
     [Header("Jump")]
     [SerializeField] private LayerMask ground, transparentFx;
-    [SerializeField] private float defaultGravity;
     [SerializeField] private float maxFloatRadius;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float maxTimeInAir;
@@ -255,11 +256,6 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         jumpBufferTimer -= Time.deltaTime;
 
-        if (!CanUsePortal)
-        {
-            return;
-        }
-
         if (Input.GetKeyDown(KeyCode.Space) && currentPlayerState != PlayerMovementState.Jumping)
         {
             jumpBufferTimer = maxJumpBufferTime;
@@ -344,22 +340,29 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void GravityScales()
     {
+        if (!CanUsePortal)
+        {
+            Debug.Log($"1 {rb.gravityScale}");
+            return;
+        }
+            Debug.Log($"2 {rb.gravityScale}");
+
         // Faster falling
         if (currentPlayerState == PlayerMovementState.Falling)
         {
-            rb.gravityScale = defaultGravity * 2;
+            rb.gravityScale = DefaultGravity * 2;
         }
 
         // Giving some floating time when near end of the jump
         else if (Mathf.Abs(rb.linearVelocityY) < maxFloatRadius && !IsGrounded())
         {
-            rb.gravityScale = defaultGravity / 2;
+            rb.gravityScale = DefaultGravity / 2;
         }
 
         // Resets back to normal gravity scale
         else
         {
-            rb.gravityScale = defaultGravity;
+            rb.gravityScale = DefaultGravity;
         }
     }
 
