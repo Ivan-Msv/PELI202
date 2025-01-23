@@ -35,8 +35,8 @@ public class LobbyUI : NetworkBehaviour
         {
             instance = this;
         }
-        startGame.onClick.AddListener(() => { HostGame(); });
-        copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); });
+        startGame.onClick.AddListener(() => { HostGame(); AudioManager.PlaySound(SoundType.Open); });
+        copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); AudioManager.PlaySound(SoundType.Click); });
     }
     async void OnEnable()
     {
@@ -304,7 +304,6 @@ public class LobbyUI : NetworkBehaviour
 
         if (NetworkManager.ConnectedClients.Count == currentLobby.Players.Count)
         {
-            NetworkManager.SceneManager.LoadScene("MainBoard", LoadSceneMode.Single);
         }
     }
     private void DisableListeners()
