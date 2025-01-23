@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2416979852829b4da18babb3ec0bd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextPortal: {fileID: 2074552559}
+  targetPortal: {fileID: 2074552559}
 --- !u!61 &402807987
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6431,7 +6431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2416979852829b4da18babb3ec0bd6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextPortal: {fileID: 402807985}
+  targetPortal: {fileID: 402807985}
 --- !u!212 &2074552558
 SpriteRenderer:
   m_ObjectHideFlags: 0

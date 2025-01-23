@@ -3,10 +3,7 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    [SerializeField] private Transform nextPortal;
-
-    private float lastGravity;
-
+    [SerializeField] private Transform targetPortal;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var playerMovement = collision.GetComponent<PlayerMovement2D>();
@@ -20,18 +17,31 @@ public class Portal : MonoBehaviour
             return;
         }
 
-        lastGravity = collision.attachedRigidbody.gravityScale;
+        // So that the gravity doesn't change during this
+        playerMovement.IsUsingPortal = true;
+
+        // Reset gravity so it doesn't affect the new velocity too early
         collision.attachedRigidbody.gravityScale = 0;
 
+        // Get current velocity
         var lastVelocity = collision.attachedRigidbody.linearVelocity;
 
+        // Calculate the rotation difference between this portal and the next one
+        var angleDiff = Vector2.SignedAngle(transform.up, targetPortal.transform.up);
+
+        // This was the hardest part to find info on, since the player gravity changes based on the velocity
+        var newSpeed = lastVelocity.magnitude / Mathf.Sqrt(2);
+        // Get new direction using the angle difference between two portals
+        var newDirection = Quaternion.Euler(0, 0, angleDiff) * -lastVelocity.normalized;
+
+        // Round the speed magnitude so it doesn't sway around too much and decrease/increase velocity
+        var newVelocity = newDirection * Mathf.Round(newSpeed);
+
+        // Teleport the player
         var localPosition = transform.InverseTransformPoint(collision.transform.position);
+        collision.transform.position = targetPortal.transform.TransformPoint(localPosition);
 
-        collision.transform.position = nextPortal.transform.TransformPoint(localPosition);
-
-        float angleDiff = Vector2.SignedAngle(transform.up, nextPortal.transform.up);
-        var newVelocity = Quaternion.Euler(0, 0, angleDiff) * -lastVelocity;
-
+        // Finally set new velocity
         collision.attachedRigidbody.linearVelocity = newVelocity;
         Debug.Log(collision.attachedRigidbody.linearVelocity);
     }
@@ -49,7 +59,10 @@ public class Portal : MonoBehaviour
             return;
         }
 
-        collision.attachedRigidbody.gravityScale = lastGravity;
+        // Reset everything, and put the portal on cooldown (otherwise it would spam teleport)
+
+        playerMovement.IsUsingPortal = false;
+        collision.attachedRigidbody.gravityScale = playerMovement.DefaultGravity;
         playerMovement.SetPortalCooldown();
     }
 }
