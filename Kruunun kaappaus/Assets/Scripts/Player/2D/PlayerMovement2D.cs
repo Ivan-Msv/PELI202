@@ -29,6 +29,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
     [Header("Jump")]
     [SerializeField] private LayerMask ground, transparentFx;
+    [SerializeField] private ContactFilter2D groundFilter;
     [SerializeField] private float maxFloatRadius;
     [SerializeField] private float jumpHeight;
     [SerializeField] private float maxTimeInAir;
@@ -62,6 +63,7 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             return;
         }
+
         animatorComponent = GetComponent<Animator>();
         spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
@@ -149,12 +151,14 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private bool IsGrounded()
     {
-        return Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.1f, ground);
+        //return Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.1f, ground);
+        return rb.IsTouching(groundFilter);
     }
 
     private bool InsideGround()
     {
-        return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, ground);
+        // Using default and not "ground" because platforms are assigned as ground and you can jump through them
+        return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, LayerMask.NameToLayer("Default"));
     }
 
     private void StuckCheck()
