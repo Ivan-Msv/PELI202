@@ -171,7 +171,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void LimitFallSpeed()
     {
-        //rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
+        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
     }
 
     public void SetPortalCooldown()
