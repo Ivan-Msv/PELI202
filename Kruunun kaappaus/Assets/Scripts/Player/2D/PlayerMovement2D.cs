@@ -194,7 +194,7 @@ public class PlayerMovement2D : NetworkBehaviour
         var playerVelocity = GetPlayerHorizontalVelocity();
 
         var totalVelocity = playerVelocity + externalForce.x;
-
+        
         // set velocity
         rb.linearVelocityX = totalVelocity;
     }
@@ -220,6 +220,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (jumpBufferTimer > 0 && canJump)
         {
+            AudioManager.PlaySound(SoundType.Jump);
             rb.linearVelocityY = totalVelocity;
             jumpBufferTimer = -1;
             timeInAir = 0;
@@ -227,11 +228,13 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (Input.GetAxisRaw("Vertical") <= 0 && timeInAir < maxTimeInAir)
         {
+            
             timeInAir = maxTimeInAir;
         }
 
         if (Input.GetKey(KeyCode.Space) && timeInAir < maxTimeInAir)
         {
+            
             rb.linearVelocityY = totalVelocity;
         }
 
@@ -339,6 +342,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
+            //AudioManager.PlaySound(SoundType.FootSteps);
             currentPlayerState = PlayerMovementState.Moving;
             return;
         }
@@ -439,6 +443,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void DestroyCrownServerRpc(ulong collisionObjectId)
     {
+        AudioManager.PlaySound(SoundType.CrownPickUp);
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
         // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);

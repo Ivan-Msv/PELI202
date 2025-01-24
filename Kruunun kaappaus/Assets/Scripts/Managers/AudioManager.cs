@@ -7,7 +7,11 @@ public enum SoundType
     Click,
     Close,
     Error,
-    Rolldice
+    Rolldice,
+    Jump,
+    CoinPickUp,
+    CrownPickUp,
+    FootSteps
 }
 public class AudioManager : NetworkBehaviour
 {
@@ -17,7 +21,15 @@ public class AudioManager : NetworkBehaviour
     private AudioSource audioSource;
     private void Awake()
     {
-        if (instance == null) { instance = this; }
+        
+        if (instance == null) { 
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     private void Start()
     {
