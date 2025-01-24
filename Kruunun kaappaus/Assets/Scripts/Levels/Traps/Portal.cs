@@ -37,13 +37,15 @@ public class Portal : MonoBehaviour
         // Round the speed magnitude so it doesn't sway around too much and decrease/increase velocity
         var newVelocity = newDirection * Mathf.Round(newSpeed);
 
-        // Teleport the player
-        var localPosition = transform.InverseTransformPoint(collision.transform.position);
-        collision.transform.position = targetPortal.transform.TransformPoint(localPosition);
+        Vector2 offset = new(0, Mathf.Abs(collision.transform.position.y - transform.position.y));
+        var targetPosition = (Vector2)targetPortal.transform.position + offset;
 
-        // Finally set new velocity
-        collision.attachedRigidbody.linearVelocity = newVelocity;
-        Debug.Log(collision.attachedRigidbody.linearVelocity);
+        // Teleport the player
+        collision.transform.position = targetPosition;
+
+        // Setting horizontal as external force due to playermovement script resetting it otherwise
+        collision.attachedRigidbody.linearVelocityY = newVelocity.y;
+        playerMovement.AddExternalForce(new(newVelocity.x, 0));
     }
 
     private void OnTriggerExit2D(Collider2D collision)

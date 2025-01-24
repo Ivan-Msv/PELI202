@@ -78,15 +78,25 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            Application.targetFrameRate = 15;
+            Time.timeScale = 0.1f;
         }
 
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            Application.targetFrameRate = 30;
+            Time.timeScale = 10f;
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
+        {
+            Time.timeScale = 1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            Application.targetFrameRate = 15;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
         {
             Application.targetFrameRate = 0;
         }
@@ -95,12 +105,16 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             GhostMovement();
             CanPush();
+            return;
         }
-        else
+
+        if (IsUsingPortal)
         {
-            CoyoteCheck();
-            JumpBuffer();
+            return;
         }
+
+        CoyoteCheck();
+        JumpBuffer();
     }
 
     private void FixedUpdate()
