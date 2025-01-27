@@ -110,11 +110,6 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
-        if (IsUsingPortal)
-        {
-            return;
-        }
-
         CoyoteCheck();
         JumpBuffer();
     }
@@ -248,6 +243,11 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void CoyoteCheck()
     {
+        if (IsUsingPortal)
+        {
+            return;
+        }
+
         if (!IsGrounded())
         {
             //tarkistaa että coyotetime toimii vaan jos yrität hyppää tippumisen jälkeen (ton koko pointti)
@@ -277,7 +277,7 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         jumpBufferTimer -= Time.deltaTime;
 
-        if (!CanUsePortal)
+        if (IsUsingPortal)
         {
             return;
         }

@@ -156,6 +156,11 @@ public class LevelManager : NetworkBehaviour
         playerCamera.Follow = player;
     }
 
+    public void TeleportCamera()
+    {
+        playerCamera.CancelDamping();
+    }
+
     [Rpc(SendTo.Everyone)]
     private void ChallengeAnimationRpc()
     {

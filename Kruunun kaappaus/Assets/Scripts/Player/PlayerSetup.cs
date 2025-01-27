@@ -39,7 +39,7 @@ public class PlayerSetup : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         SceneManager.sceneLoaded += ClearSubPlayers;
-        NetworkManager.OnClientDisconnectCallback += ReturnToLobby;
+        NetworkManager.OnClientDisconnectCallback += ReturnToMenu;
         base.OnNetworkSpawn();
         TryGetEarlyPlayer();
     }
@@ -56,7 +56,7 @@ public class PlayerSetup : NetworkBehaviour
         return getData;
     }
 
-    public void ReturnToLobby(ulong action)
+    public void ReturnToMenu(ulong action)
     {
         NetworkManager.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
@@ -65,7 +65,7 @@ public class PlayerSetup : NetworkBehaviour
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
-        NetworkManager.OnClientDisconnectCallback -= ReturnToLobby;
+        NetworkManager.OnClientDisconnectCallback -= ReturnToMenu;
         SceneManager.sceneLoaded -= ClearSubPlayers;
     }
 

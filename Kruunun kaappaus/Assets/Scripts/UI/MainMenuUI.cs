@@ -38,6 +38,7 @@ public class MainMenuUI : MonoBehaviour
 
     [Header("Debug Menu")]
     [SerializeField] private Button loadDebugBoard;
+    [SerializeField] private Button loadDebugLevel;
     [SerializeField] private Button loadCustomScene;
     [SerializeField] private GameObject customSceneMenu;
     [SerializeField] private TMP_InputField customSceneInput;
@@ -84,6 +85,7 @@ public class MainMenuUI : MonoBehaviour
         // Debug Menu
         loadCustomScene.onClick.AddListener(() => { OpenSubMenu(customSceneMenu); });
         loadDebugBoard.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene("DebugBoard"); });
+        loadDebugLevel.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene("DebugLevel"); });
         customSceneHost.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene(customSceneInput.text); });
         customSceneJoin.onClick.AddListener(() => { LobbyManager.instance.JoinRelay(customSceneInput.text); });
     }

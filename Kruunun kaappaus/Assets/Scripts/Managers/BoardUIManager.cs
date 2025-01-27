@@ -178,7 +178,7 @@ public class BoardUIManager : MonoBehaviour
 
     public void ShowEndMenu()
     {
-        NetworkManager.Singleton.OnClientDisconnectCallback -= localParent.GetComponent<PlayerSetup>().ReturnToLobby;
+        NetworkManager.Singleton.OnClientDisconnectCallback -= localParent.GetComponent<PlayerSetup>().ReturnToMenu;
         gameEndUI.GetComponentInChildren<Button>().onClick.AddListener(() => { DisconnectClient(); });
         SetupGameEndUI();
     }
