@@ -40,10 +40,10 @@ public class PlayerMovement2D : NetworkBehaviour
     [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
-    
+
     public Vector2 spawnPoint;
     [SerializeField] private PlayerInfo2D playerInfo;
-    [Range (0f, 5f)]
+    [Range(0f, 5f)]
     public float maxChargeTime;
 
     private Rigidbody2D rb;
@@ -75,7 +75,7 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         // DEBUG
 
-        
+
         if (Input.GetKeyDown(KeyCode.F1))
         {
             Time.timeScale = 0.1f;
@@ -192,7 +192,7 @@ public class PlayerMovement2D : NetworkBehaviour
         var playerVelocity = GetPlayerHorizontalVelocity();
 
         var totalVelocity = playerVelocity + externalForce.x;
-        
+
         // set velocity
         rb.linearVelocityX = totalVelocity;
     }
@@ -226,13 +226,13 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (Input.GetAxisRaw("Vertical") <= 0 && timeInAir < maxTimeInAir)
         {
-            
+
             timeInAir = maxTimeInAir;
         }
 
         if (Input.GetKey(KeyCode.Space) && timeInAir < maxTimeInAir)
         {
-            
+
             rb.linearVelocityY = totalVelocity;
         }
 
@@ -295,11 +295,20 @@ public class PlayerMovement2D : NetworkBehaviour
         //Color col = spritComp.color;
         //col.a = 0.5f;
         var userInput = Input.GetAxisRaw("Horizontal");
-        
+        Debug.Log(userInput);
         if (userInput != 0)
         {
             shootPoint.SetLocalPositionAndRotation(new(userInput, 0, 0), new(0, 0, userInput * 180, shootPoint.rotation.w));
+            if (userInput == 1)
+            {
+                shootPoint.SetLocalPositionAndRotation(new(userInput, 0, 0), new(0, 0, userInput * 0, shootPoint.rotation.w));
+            }
         }
+        
+
+
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isShooting = true;
@@ -313,7 +322,7 @@ public class PlayerMovement2D : NetworkBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             spritComp.color = Color.red;
-            
+
             //spritComp.color = col;
             if (chargeTimer >= maxChargeTime)
             {
@@ -324,7 +333,7 @@ public class PlayerMovement2D : NetworkBehaviour
             Debug.Log(chargeTimer);
 
         }
-        
+
     }
 
     [Rpc(SendTo.Server)]

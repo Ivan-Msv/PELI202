@@ -13,10 +13,11 @@ public abstract class ShopItem : ScriptableObject
     {
         if (!IsEnoughCoins(player))
         {
+            
             Debug.LogError("Not enough coins.");
             return;
         }
-
+        AudioManager.PlaySound(SoundType.BoardSelect);
         player.coinAmount.Value -= itemCost;
         GiveItem(player);
     }

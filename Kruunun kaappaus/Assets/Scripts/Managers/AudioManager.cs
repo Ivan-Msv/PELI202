@@ -11,7 +11,9 @@ public enum SoundType
     Jump,
     CoinPickUp,
     CrownPickUp,
-    FootSteps
+    FootSteps,
+    BoardSelect,
+    Boarderror
 }
 public class AudioManager : NetworkBehaviour
 {
