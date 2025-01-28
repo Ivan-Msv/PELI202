@@ -3,10 +3,12 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    [SerializeField] private Transform targetPortal;
-    private void OnTriggerStay2D(Collider2D collision)
+    [SerializeField] private Collider2D currentPortal;
+    [SerializeField] private Collider2D targetPortal;
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        var playerMovement = collision.GetComponent<PlayerMovement2D>();
+        var playerMovement = collision.collider.GetComponent<PlayerMovement2D>();
         if (playerMovement.isGhost)
         {
             return;
@@ -21,40 +23,35 @@ public class Portal : MonoBehaviour
         playerMovement.IsUsingPortal = true;
 
         // Reset gravity so it doesn't affect the new velocity too early
-        collision.attachedRigidbody.gravityScale = 0;
+        collision.rigidbody.gravityScale = 0;
 
-        // Get current velocity
-        var lastVelocity = collision.attachedRigidbody.linearVelocity;
-
-        // Calculate the rotation difference between this portal and the next one
-        var angleDiff = Vector2.SignedAngle(transform.up, targetPortal.transform.up);
+        var lastVelocity = collision.relativeVelocity;
 
         // This was the hardest part to find info on, since the player gravity changes based on the velocity
         var newSpeed = lastVelocity.magnitude / Mathf.Sqrt(2);
-        // Get new direction using the angle difference between two portals
-        var newDirection = Quaternion.Euler(0, 0, angleDiff) * -lastVelocity.normalized;
 
         // Round the speed magnitude so it doesn't sway around too much and decrease/increase velocity
-        var newVelocity = newDirection * Mathf.Round(newSpeed);
+        var newVelocity = targetPortal.transform.up * Mathf.Round(newSpeed);
 
-        //Vector2 offset = new(0, Mathf.Abs(collision.transform.position.y - transform.position.y));
-        //var targetPosition = (Vector2)targetPortal.transform.position + offset;
+        Vector3 relativePos = transform.InverseTransformPoint(new(transform.position.x, collision.transform.position.y));
 
-        Debug.Log(playerMovement.currentPlayerState);
+        // Rotate the relative position to align with the target portal's rotation
 
-        // Teleport the player
-        collision.transform.position = targetPortal.transform.position;
+
+        // Transform the rotated relative position into the target portal's world space
+        collision.transform.position = targetPortal.transform.TransformPoint(relativePos);
+
         LevelManager.instance.TeleportCamera();
 
         // Setting horizontal as external force due to playermovement script resetting it otherwise
-        collision.attachedRigidbody.linearVelocityY = newVelocity.y;
+        collision.rigidbody.linearVelocityY = newVelocity.y;
         playerMovement.AddExternalForce(new(newVelocity.x, 0));
         playerMovement.SetPortalCooldown();
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        var playerMovement = collision.GetComponent<PlayerMovement2D>();
+        var playerMovement = collision.collider.GetComponent<PlayerMovement2D>();
         if (playerMovement.isGhost)
         {
             return;
@@ -68,6 +65,6 @@ public class Portal : MonoBehaviour
         // Reset everything, and put the portal on cooldown (otherwise it would spam teleport)
 
         playerMovement.IsUsingPortal = false;
-        collision.attachedRigidbody.gravityScale = playerMovement.DefaultGravity;
+        collision.rigidbody.gravityScale = playerMovement.DefaultGravity;
     }
 }

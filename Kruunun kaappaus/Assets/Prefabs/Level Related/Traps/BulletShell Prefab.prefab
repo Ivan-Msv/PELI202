@@ -212,9 +212,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  speed: 2
+  speed: 4
   lifetime: 100
   movePoint: {fileID: 1623810192483350809}
+  parent: {fileID: 0}
 --- !u!114 &6544614492026742809
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class CanonBullet : NetworkBehaviour
+public class CannonBullet : NetworkBehaviour
 {
     [Header("Speed and Lifetime")]
     [Range(0, 100)]
@@ -10,6 +10,7 @@ public class CanonBullet : NetworkBehaviour
     [Range(0, 100)]
     [SerializeField] private float lifetime = 1.0f;
     [SerializeField] private Transform movePoint;
+    public Transform parent;
 
     void Start()
     {
@@ -46,9 +47,11 @@ public class CanonBullet : NetworkBehaviour
             return;
         }
 
-        if(!collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") || collision.transform == parent)
         {
-            DespawnBullet();
+            return;
         }
+
+        DespawnBullet();
     }
 }

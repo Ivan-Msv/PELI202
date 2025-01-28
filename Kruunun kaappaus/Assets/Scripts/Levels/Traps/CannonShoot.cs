@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-public class CanonShoot : NetworkBehaviour
+public class CannonShoot : NetworkBehaviour
 {
     [Header("Shootpoint and projectile settings")]
     [SerializeField] private Transform shootPoint;
@@ -30,6 +30,7 @@ public class CanonShoot : NetworkBehaviour
     }
     private void Shoot()
     {
-        NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
+        var spawnObject = NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
+        spawnObject.GetComponent<CannonBullet>().parent = transform;
     }
 }

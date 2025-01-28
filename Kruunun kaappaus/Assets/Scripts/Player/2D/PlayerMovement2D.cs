@@ -73,11 +73,9 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
-        if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState.Value != LevelState.InProgress)
-        {
-            return;
-        }
+        // DEBUG
 
+        
         if (Input.GetKeyDown(KeyCode.F1))
         {
             Time.timeScale = 0.1f;
@@ -101,6 +99,11 @@ public class PlayerMovement2D : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.F5))
         {
             Application.targetFrameRate = 0;
+        }
+
+        if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState.Value != LevelState.InProgress)
+        {
+            return;
         }
 
         if (isGhost)
@@ -429,7 +432,7 @@ public class PlayerMovement2D : NetworkBehaviour
     }
 
     [Rpc(SendTo.Owner)]
-    public void UpdatePlayerSpawnClientRpc(Vector2 newSpawnPoint)
+    public void UpdatePlayerSpawnClientRpc(Vector2 newSpawnPoint, bool updatePosition = true)
     {
         if (!NetworkObject.IsOwner)
         {
@@ -437,6 +440,12 @@ public class PlayerMovement2D : NetworkBehaviour
         }
 
         spawnPoint = newSpawnPoint;
+
+        if (!updatePosition)
+        {
+            return;
+        }
+
         transform.position = spawnPoint;
     }
 
