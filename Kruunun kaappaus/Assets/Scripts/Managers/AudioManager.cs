@@ -38,6 +38,7 @@ public class AudioManager : NetworkBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
+    [Rpc(SendTo.Everyone)]
     public static void PlaySound(SoundType sound, float volume = 1)
     {
         instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
