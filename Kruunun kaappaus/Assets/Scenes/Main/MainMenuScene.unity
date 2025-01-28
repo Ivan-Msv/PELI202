@@ -6434,7 +6434,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.716, y: 0}
   m_AnchorMax: {x: 1, y: 0.12122058}
-  m_AnchoredPosition: {x: 3.5076904, y: -2.3197021}
+  m_AnchoredPosition: {x: 3.5078125, y: -2.3197021}
   m_SizeDelta: {x: -6.0300293, y: -5.279999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1243456381
@@ -11544,7 +11544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: soundList.Array.size
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: 'soundList.Array.data[5]'
@@ -11562,6 +11562,18 @@ PrefabInstance:
       propertyPath: 'soundList.Array.data[8]'
       value: 
       objectReference: {fileID: 8300000, guid: b702172cdb295524e953985b825df38e, type: 3}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: 'soundList.Array.data[9]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 04a01aea6c61b4f4192b523b2740c94f, type: 3}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: 'soundList.Array.data[10]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 68192681d0a53974e8864c10a9341146, type: 3}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: 'soundList.Array.data[11]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 57cbe1ead9f5bff45936415f2aba11b7, type: 3}
     - target: {fileID: 7516492012736235621, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

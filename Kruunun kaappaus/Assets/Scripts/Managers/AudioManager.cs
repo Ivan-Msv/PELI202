@@ -13,7 +13,8 @@ public enum SoundType
     CrownPickUp,
     FootSteps,
     BoardSelect,
-    Boarderror
+    Explosion,
+    Cannon
 }
 public class AudioManager : NetworkBehaviour
 {
