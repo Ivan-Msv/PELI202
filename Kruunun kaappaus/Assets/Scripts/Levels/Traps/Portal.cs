@@ -5,6 +5,7 @@ public class Portal : MonoBehaviour
 {
     [SerializeField] private Collider2D currentPortal;
     [SerializeField] private Collider2D targetPortal;
+    [SerializeField] private float exitOffset;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -30,24 +31,30 @@ public class Portal : MonoBehaviour
         // This was the hardest part to find info on, since the player gravity changes based on the velocity
         var newSpeed = lastVelocity.magnitude / Mathf.Sqrt(2);
 
+        // Give minimum speed so you don't get "stuck" in portal
+        if (newSpeed < 3)
+        {
+            newSpeed = 3;
+        }
+
         // Round the speed magnitude so it doesn't sway around too much and decrease/increase velocity
         var newVelocity = targetPortal.transform.up * Mathf.Round(newSpeed);
 
-        Vector3 relativePos = transform.InverseTransformPoint(new(transform.position.x, collision.transform.position.y));
 
-        // Rotate the relative position to align with the target portal's rotation
+        // Teleport the player and the camera
+        var newPosition = targetPortal.transform.up * exitOffset + targetPortal.transform.position;
+        var colliderCenter = collision.transform.position - collision.collider.bounds.center;
 
-
-        // Transform the rotated relative position into the target portal's world space
-        collision.transform.position = targetPortal.transform.TransformPoint(relativePos);
-
+        collision.transform.position = newPosition + colliderCenter;
         LevelManager.instance.TeleportCamera();
 
+        Debug.Log(newVelocity);
         // Setting horizontal as external force due to playermovement script resetting it otherwise
         collision.rigidbody.linearVelocityY = newVelocity.y;
         playerMovement.AddExternalForce(new(newVelocity.x, 0));
         playerMovement.SetPortalCooldown();
     }
+
 
     private void OnCollisionExit2D(Collision2D collision)
     {

@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPortal: {fileID: 752917268796361031}
   targetPortal: {fileID: 1232638172048219855}
+  exitOffset: 0.1
 --- !u!61 &752917268796361031
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -180,7 +181,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.126}
+  m_Size: {x: 0.9764796, y: 0.11417794}
   m_EdgeRadius: 0
 --- !u!1 &8764157511579346513
 GameObject:
@@ -285,6 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPortal: {fileID: 1232638172048219855}
   targetPortal: {fileID: 752917268796361031}
+  exitOffset: 0.1
 --- !u!61 &1232638172048219855
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -329,5 +331,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.126}
+  m_Size: {x: 0.917, y: 0.11417794}
   m_EdgeRadius: 0
