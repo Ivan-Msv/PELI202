@@ -17,7 +17,7 @@ public abstract class ShopItem : ScriptableObject
             Debug.LogError("Not enough coins.");
             return;
         }
-        AudioManager.PlaySound(SoundType.BoardSelect);
+        AudioManager.instance.PlaySoundRpc(SoundType.BoardSelect);
         player.coinAmount.Value -= itemCost;
         GiveItem(player);
     }

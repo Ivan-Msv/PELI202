@@ -32,7 +32,7 @@ public class Coin : NetworkBehaviour
 
     private IEnumerator CoinDestroyCoroutine()
     {
-        AudioManager.PlaySound(SoundType.CoinPickUp);
+        AudioManager.instance.PlaySoundRpc(SoundType.CoinPickUp);
         coinCollider.enabled = false;
         anim.Play("Coin_Destroy");
 

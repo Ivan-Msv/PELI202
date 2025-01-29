@@ -20,7 +20,7 @@ public class AudioManager : NetworkBehaviour
 {
     [SerializeField] private AudioClip[] soundList;
 
-    private static AudioManager instance;
+    public static AudioManager instance;
     private AudioSource audioSource;
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class AudioManager : NetworkBehaviour
         audioSource = GetComponent<AudioSource>();
     }
     [Rpc(SendTo.Everyone)]
-    public static void PlaySound(SoundType sound, float volume = 1)
+    public void PlaySoundRpc(SoundType sound, float volume = 1)
     {
         instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
     }

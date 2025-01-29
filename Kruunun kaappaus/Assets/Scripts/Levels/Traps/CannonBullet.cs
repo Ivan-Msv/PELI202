@@ -37,7 +37,7 @@ public class CannonBullet : NetworkBehaviour
         {
             return;
         }
-        AudioManager.PlaySound(SoundType.Explosion);
+        AudioManager.instance.PlaySoundRpc(SoundType.Explosion);
         NetworkObject.Despawn(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D collision)

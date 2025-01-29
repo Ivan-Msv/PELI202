@@ -57,7 +57,7 @@ public class BoardUIManager : MonoBehaviour
         GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
 
-        rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); AudioManager.PlaySound(SoundType.BoardSelect); });
+        rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); AudioManager.instance.PlaySoundRpc(SoundType.BoardSelect); });
         rerollButton.onClick.AddListener(() => { GameManager.instance.RerollButtonEventRpc(); });
         confirmRollButton.onClick.AddListener(() => { GameManager.instance.ConfirmButtonEventRpc(); });
     }

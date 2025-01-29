@@ -218,7 +218,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (jumpBufferTimer > 0 && canJump)
         {
-            AudioManager.PlaySound(SoundType.Jump);
+            AudioManager.instance.PlaySoundRpc(SoundType.Jump);
             rb.linearVelocityY = totalVelocity;
             jumpBufferTimer = -1;
             timeInAir = 0;
@@ -461,7 +461,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void DestroyCrownServerRpc(ulong collisionObjectId)
     {
-        AudioManager.PlaySound(SoundType.CrownPickUp);
+        AudioManager.instance.PlaySoundRpc(SoundType.CrownPickUp);
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
         // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);

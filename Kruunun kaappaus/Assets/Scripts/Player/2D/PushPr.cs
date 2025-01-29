@@ -31,6 +31,7 @@ public class PushPr : NetworkBehaviour
     {
         if (collision.CompareTag("Player")) 
         {
+            
             /*targetrb = collision.GetComponent<Rigidbody2D>();
             targetrb.AddForce(transform.right * pushDistance);*/
             collision.attachedRigidbody.linearVelocity = new Vector2(pushDistance, 0) ;
