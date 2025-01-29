@@ -28,7 +28,8 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float ghostMoveSpeed;
 
     [Header("Jump")]
-    [SerializeField] private LayerMask ground, transparentFx;
+    [SerializeField] private LayerMask ground;
+    [SerializeField] private LayerMask transparentFx;
     [SerializeField] private ContactFilter2D groundFilter;
     [SerializeField] private float maxFloatRadius;
     [SerializeField] private float jumpHeight;
