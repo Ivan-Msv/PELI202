@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -14,7 +12,7 @@ enum PauseScenes
 
 enum PauseStates
 {
-    Disabled, Pause, Settings, MainMenuConfirm
+    Disabled, Pause, Settings, MainMenuConfirm, Audio
 }
 
 public class PauseMenu : MonoBehaviour
@@ -32,6 +30,11 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Settings Menu")]
     [SerializeField] private GameObject settingsMenu;
+
+    [Header("Audio settings")]
+    [SerializeField] private GameObject audioMenu;
+    [SerializeField] private Button audioMenuButton;
+    [SerializeField] public Slider audioSlider;
 
     [Header("Main Menu Confirmation")]
     [SerializeField] private GameObject confirmMainMenu;
@@ -65,7 +68,7 @@ public class PauseMenu : MonoBehaviour
         returnButton.onClick.AddListener(() => { PreviousMenu(); });
 
         // Settings Buttons
-
+        audioMenuButton.onClick.AddListener(() => { OpenMenu(PauseStates.Audio); });
         // Main Menu Confirm Buttons
         confirmButton.onClick.AddListener(() => { ReturnToMainMenuScene(); });
         cancelButton.onClick.AddListener(() => { PreviousMenu(); });
@@ -110,6 +113,9 @@ public class PauseMenu : MonoBehaviour
             case PauseStates.MainMenuConfirm:
                 confirmMainMenu.SetActive(true);
                 break;
+            case PauseStates.Audio:
+                audioMenu.SetActive(true);
+                break;
         }
     }
 
@@ -128,6 +134,9 @@ public class PauseMenu : MonoBehaviour
                 break;
             case PauseStates.MainMenuConfirm:
                 confirmMainMenu.SetActive(false);
+                break;
+            case PauseStates.Audio:
+                audioMenu.SetActive(false);
                 break;
         }
     }
@@ -185,6 +194,11 @@ public class PauseMenu : MonoBehaviour
 
         NetworkManager.Singleton.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+    }
+
+    public void SoundVolume()
+    {
+        AudioManager.instance.SoundVolume(audioSlider.value);
     }
 
     private void PauseGame()

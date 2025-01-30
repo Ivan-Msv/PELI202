@@ -21,7 +21,7 @@ public class AudioManager : NetworkBehaviour
     [SerializeField] private AudioClip[] soundList;
 
     public static AudioManager instance;
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private void Awake()
     {
         
@@ -39,8 +39,14 @@ public class AudioManager : NetworkBehaviour
         audioSource = GetComponent<AudioSource>();
     }
     [Rpc(SendTo.Everyone)]
-    public void PlaySoundRpc(SoundType sound, float volume = 1)
+    public void PlaySoundRpc(SoundType sound/*, float volume = 1*/)
     {
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], volume);
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound]/*, volume*/);
+        
+    }
+    
+    public void SoundVolume(float volume)
+    {
+        audioSource.volume = volume;
     }
 }
