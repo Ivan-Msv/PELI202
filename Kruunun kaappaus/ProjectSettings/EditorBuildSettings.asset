@@ -68,5 +68,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Challenge Levels/4PChallengeLevel3.unity
     guid: b1c8901d75e0b2d44a56389be3b89804
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 882a6c2d6b9e65d43925f2a00387fd8e, type: 2}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: fecdc2ec3b8b0144b88294ef1e89ee82, type: 3}
   m_UseUCBPForAssetBundles: 0

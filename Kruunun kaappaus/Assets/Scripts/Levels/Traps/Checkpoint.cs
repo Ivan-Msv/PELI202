@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    [SerializeField] private Animator anim;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +23,7 @@ public class Checkpoint : MonoBehaviour
             return;
         }
 
+        anim.Play("Checkpoint_Activate");
         playerMovement.UpdatePlayerSpawnClientRpc(transform.position, false);
     }
 }
