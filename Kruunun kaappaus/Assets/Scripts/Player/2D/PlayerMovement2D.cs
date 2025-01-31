@@ -477,7 +477,7 @@ public class PlayerMovement2D : NetworkBehaviour
         collision.TryGetComponent(out NetworkObject containsNetworkObject);
         var collisionObjectId = containsNetworkObject.IsUnityNull() ? 0 : containsNetworkObject.NetworkObjectId;
 
-        if (collision.CompareTag("Death Trigger"))
+        if (collision.CompareTag("Death Trigger") || collision.CompareTag("Bullet Platform"))
         {
             transform.position = spawnPoint;
         }
@@ -493,23 +493,30 @@ public class PlayerMovement2D : NetworkBehaviour
             spawnParent.GetComponent<MainPlayerInfo>().crownAmount.Value++;
             DestroyCrownServerRpc(collisionObjectId);
         }
-        if (collision.CompareTag("Platform"))
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isGhost || !NetworkObject.IsOwner) { return; }
+
+        if (collision.collider.CompareTag("Platform"))
         {
             NetworkObject.TrySetParent(collision.transform);
             rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
-            collision.GetComponent<Platform>().SwitchStateServerRpc();
+            collision.collider.GetComponent<Platform>().SwitchStateServerRpc();
         }
-        if (collision.CompareTag("Bullet platform"))
+        if (collision.collider.CompareTag("Bullet Platform"))
         {
             NetworkObject.TrySetParent(collision.transform);
             rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (!NetworkObject.IsOwner) { return; }
-        if (collision.CompareTag("Platform") || collision.CompareTag("Bullet platform"))
+        if (isGhost || !NetworkObject.IsOwner) { return; }
+
+        if (collision.collider.CompareTag("Platform") || collision.collider.CompareTag("Bullet Platform"))
         {
             rb.interpolation = RigidbodyInterpolation2D.Interpolate;
             NetworkObject.TrySetParent(spawnParent);

@@ -37,6 +37,7 @@ public class CannonBullet : NetworkBehaviour
         {
             return;
         }
+
         AudioManager.instance.PlaySoundRpc(SoundType.Explosion);
         NetworkObject.Despawn(gameObject);
     }

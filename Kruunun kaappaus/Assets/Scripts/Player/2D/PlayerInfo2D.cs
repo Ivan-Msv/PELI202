@@ -60,7 +60,7 @@ public class PlayerInfo2D : NetworkBehaviour
 
     private void OnTransformParentChanged()
     {
-        if (!NetworkObject.IsOwner)
+        if (!NetworkObject.IsOwner || transform.parent == null)
         {
             return;
         }
