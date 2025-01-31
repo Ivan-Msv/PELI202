@@ -24,8 +24,9 @@ public class AudioManager : NetworkBehaviour
     public AudioSource audioSource;
     private void Awake()
     {
-        
-        if (instance == null) { 
+
+        if (instance == null)
+        {
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -39,12 +40,17 @@ public class AudioManager : NetworkBehaviour
         audioSource = GetComponent<AudioSource>();
     }
     [Rpc(SendTo.Everyone)]
-    public void PlaySoundRpc(SoundType sound/*, float volume = 1*/)
+    public void PlaySoundRpc(SoundType sound)
     {
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound]/*, volume*/);
-        
+        //instance.audioSource.PlayOneShot(instance.soundList[(int)sound]/*, volume*/);
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound]);
     }
-    
+    [Rpc(SendTo.Everyone)]
+    public void PlaySoundAtPosRpc(SoundType sound, Vector3 pos)
+    {
+        AudioSource.PlayClipAtPoint(instance.soundList[(int)sound], pos );
+    }
+
     public void SoundVolume(float volume)
     {
         audioSource.volume = volume;

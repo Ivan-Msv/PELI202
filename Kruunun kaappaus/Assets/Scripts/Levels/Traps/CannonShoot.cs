@@ -36,7 +36,7 @@ public class CannonShoot : NetworkBehaviour
 
     public void ShootEvent()
     {
-        AudioManager.instance.PlaySoundRpc(SoundType.Cannon);
+        AudioManager.instance.PlaySoundAtPosRpc(SoundType.Cannon,transform.position);
         var spawnObject = NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
         spawnObject.GetComponent<CannonBullet>().parent = transform;
     }
