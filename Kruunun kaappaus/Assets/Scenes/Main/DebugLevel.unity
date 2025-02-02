@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 230253974110965302, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4.401428
+      value: 4.401367
       objectReference: {fileID: 0}
     - target: {fileID: 847472897268513635, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_LocalPosition.x
@@ -281,7 +281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7918622541787475073, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -3.2322388
+      value: -3.2322998
       objectReference: {fileID: 0}
     - target: {fileID: 8555879955884414745, guid: 9f333c8e7aced134abb3c3702c062086, type: 3}
       propertyPath: m_LocalPosition.x
@@ -908,27 +908,27 @@ Tilemap:
       e33: 7.92e-43
   - m_RefCount: 0
     m_Data:
-      e00: 8.751776e+9
+      e00: 1.5949152e-23
       e01: 0
       e02: 1e-45
-      e03: -2.971712e+29
-      e10: 8.2e-43
+      e03: 2.0328811e-19
+      e10: 4.5916e-41
       e11: 0
       e12: 0
-      e13: 8.16e-43
-      e20: 8.699436e-22
-      e21: -2.971712e+29
-      e22: 8.751776e+9
-      e23: 0.000000008444523
+      e13: 8.02e-43
+      e20: 1.5350627e-23
+      e21: 2.0328811e-19
+      e22: -1.1070944e-19
+      e23: -3.067866e-19
       e30: 4.5916e-41
-      e31: 8.16e-43
-      e32: 8.2e-43
-      e33: 8.17e-43
+      e31: 8.02e-43
+      e32: 8.04e-43
+      e33: 8.02e-43
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: -1.9506242e-18, g: -1.9506242e-18, b: -1.9506242e-18, a: -1.9506242e-18}
   - m_RefCount: 0
-    m_Data: {r: 0.000000008444488, g: 0.000000008444488, b: 0.000000008444488, a: 0.000000008444488}
+    m_Data: {r: -3.0678557e-19, g: -3.0678557e-19, b: -3.0678557e-19, a: -3.0678557e-19}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
