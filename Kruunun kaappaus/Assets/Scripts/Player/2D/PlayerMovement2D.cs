@@ -296,7 +296,7 @@ public class PlayerMovement2D : NetworkBehaviour
         //Color col = spritComp.color;
         //col.a = 0.5f;
         var userInput = Input.GetAxisRaw("Horizontal");
-        Debug.Log(userInput);
+        
         if (userInput != 0)
         {
             shootPoint.SetLocalPositionAndRotation(new(userInput, 0, 0), new(0, 0, userInput * 180, shootPoint.rotation.w));
