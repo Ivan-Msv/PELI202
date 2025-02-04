@@ -68,19 +68,19 @@ public class MainMenuUI : MonoBehaviour
         }
 
         // Main Menu & overall
-        returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); AudioManager.instance.PlaySoundRpc(SoundType.Close); });
-        playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); AudioManager.instance.PlaySoundRpc(SoundType.Open); });
-        settingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); AudioManager.instance.PlaySoundRpc(SoundType.Open); });
-        debugButton.onClick.AddListener(() => { OpenNewMenu(MenuState.DebugMenu); AudioManager.instance.PlaySoundRpc(SoundType.Open); });
-        exitButton.onClick.AddListener(() => { Application.Quit(); AudioManager.instance.PlaySoundRpc(SoundType.Close); });
+        returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); AudioManager.instance.PlaySound(SoundType.Close); });
+        playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); AudioManager.instance.PlaySound(SoundType.Open); });
+        settingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); AudioManager.instance.PlaySound(SoundType.Open); });
+        debugButton.onClick.AddListener(() => { OpenNewMenu(MenuState.DebugMenu); AudioManager.instance.PlaySound(SoundType.Open); });
+        exitButton.onClick.AddListener(() => { Application.Quit(); AudioManager.instance.PlaySound(SoundType.Close); });
         
         // Settings Menu
-        changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); AudioManager.instance.PlaySoundRpc(SoundType.Click); });
+        changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); AudioManager.instance.PlaySound(SoundType.Click); });
 
         // Lobby Selection Menu
-        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; AudioManager.instance.PlaySoundRpc(SoundType.Open); });
+        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; AudioManager.instance.PlaySound(SoundType.Open); });
         joinLobby.onClick.AddListener(() => { OpenSubMenu(joinMenu);  });
-        confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); AudioManager.instance.PlaySoundRpc(SoundType.Open); });
+        confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); AudioManager.instance.PlaySound(SoundType.Open); });
 
         // Debug Menu
         loadCustomScene.onClick.AddListener(() => { OpenSubMenu(customSceneMenu); });
@@ -149,7 +149,7 @@ public class MainMenuUI : MonoBehaviour
     }
     private void OpenSubMenu(GameObject menu)
     {
-        AudioManager.instance.PlaySoundRpc(SoundType.Click);
+        AudioManager.instance.PlaySound(SoundType.Click);
         menu.SetActive(!menu.activeSelf);
     }
     private void ResetSubMenus()
@@ -179,19 +179,19 @@ public class MainMenuUI : MonoBehaviour
             {
                 case LobbyExceptionReason.InvalidJoinCode:
                     ShowErrorMessage($"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})", 3);
-                    AudioManager.instance.PlaySoundRpc(SoundType.Error);
+                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
                 case LobbyExceptionReason.LobbyNotFound:
                     ShowErrorMessage($"Lobby not found (Recently deleted)", 3);
-                    AudioManager.instance.PlaySoundRpc(SoundType.Error);
+                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
                 case LobbyExceptionReason.LobbyFull:
                     ShowErrorMessage($"Lobby is already full", 3);
-                    AudioManager.instance.PlaySoundRpc(SoundType.Error);
+                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
                 default:
                     Debug.LogWarning(e.Reason);
-                    AudioManager.instance.PlaySoundRpc(SoundType.Error);
+                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
             }
         }
@@ -213,7 +213,7 @@ public class MainMenuUI : MonoBehaviour
             // switch ei toimi error koodeissa jostain syystä (ei oo constant int)
             if (e.ErrorCode == AuthenticationErrorCodes.InvalidParameters)
             {
-                AudioManager.instance.PlaySoundRpc(SoundType.Error);
+                AudioManager.instance.PlaySound(SoundType.Error);
                 ShowErrorMessage(e.Message, 5);
             }
         }

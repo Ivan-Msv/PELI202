@@ -1,7 +1,5 @@
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 
 public enum SoundType
 {
@@ -44,12 +42,27 @@ public class AudioManager : NetworkBehaviour
             Destroy(gameObject);
         }
     }
-
+    public void PlaySound(SoundType sound)
+    {
+        if (NetworkManager.Singleton.IsConnectedClient || NetworkManager.Singleton.IsServer)
+        {
+            PlaySoundRpc(sound);
+        }
+        else
+        {
+            PlaySoundLocal(sound);
+        }
+    }
     [Rpc(SendTo.Everyone)]
     public void PlaySoundRpc(SoundType sound)
     {
-        //instance.audioSource.PlayOneShot(instance.soundList[(int)sound]/*, volume*/);
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound]);
+        //Debug.Log("play sound rpc");
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundVolume);
+    }
+    public void PlaySoundLocal(SoundType sound)
+    {
+        //Debug.Log("play sound local");
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundVolume);
     }
 
     /// <param name="parent">Whether to parent the sound to a gameobject or not</param>
