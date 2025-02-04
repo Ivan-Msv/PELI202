@@ -34,7 +34,8 @@ public class PauseMenu : MonoBehaviour
     [Header("Audio settings")]
     [SerializeField] private GameObject audioMenu;
     [SerializeField] private Button audioMenuButton;
-    [SerializeField] public Slider audioSlider;
+    [SerializeField] public Slider soundVolumeSlider;
+    [SerializeField] public Slider musicVolumeSlider;
 
     [Header("Main Menu Confirmation")]
     [SerializeField] private GameObject confirmMainMenu;
@@ -195,7 +196,10 @@ public class PauseMenu : MonoBehaviour
         NetworkManager.Singleton.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
-
+    public void SoundVolume()
+    {
+        AudioManager.instance.VolumeSliders(soundVolumeSlider.value, musicVolumeSlider.value);
+    }
     private void PauseGame()
     {
 
