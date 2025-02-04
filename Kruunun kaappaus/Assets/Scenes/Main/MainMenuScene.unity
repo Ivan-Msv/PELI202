@@ -6071,6 +6071,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034253794}
   m_CullTransparentMesh: 1
+--- !u!82 &1072569355 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8734194588421392889, guid: f872053d27f930c459ab1541a20453af, type: 3}
+  m_PrefabInstance: {fileID: 6044360797700112298}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1087833666
 GameObject:
   m_ObjectHideFlags: 0
@@ -6300,7 +6305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.43058062, y: 0.032333333}
   m_AnchorMax: {x: 0.5684793, y: 0.14755557}
-  m_AnchoredPosition: {x: 1.0390625, y: -1.5742188}
+  m_AnchoredPosition: {x: 1.0390625, y: -1.5741577}
   m_SizeDelta: {x: -0.14099884, y: -3.145}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1162685802
@@ -12627,6 +12632,22 @@ PrefabInstance:
       value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1072569355}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: spatialBlend
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: soundMaxDistance
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: soundMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: soundList.Array.size
       value: 12
       objectReference: {fileID: 0}
@@ -12658,6 +12679,62 @@ PrefabInstance:
       propertyPath: 'soundList.Array.data[11]'
       value: 
       objectReference: {fileID: 8300000, guid: 57cbe1ead9f5bff45936415f2aba11b7, type: 3}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[0].time
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[1].time
+      value: 0.2435727
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[1].value
+      value: 0.30318663
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[1].inSlope
+      value: -2.8608024
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[1].outSlope
+      value: -1.2431934
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
+      propertyPath: distanceCurve.m_Curve.Array.data[1].tangentMode
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7516492012736235621, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12712,7 +12789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8734194588421392889, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8734194588421392889, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value

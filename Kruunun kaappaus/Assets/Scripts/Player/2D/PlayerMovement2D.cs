@@ -219,7 +219,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (jumpBufferTimer > 0 && canJump)
         {
-            AudioManager.instance.PlaySoundAtPosRpc(SoundType.Jump, transform.position);
+            AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Jump, NetworkObjectId, true);
             rb.linearVelocityY = totalVelocity;
             jumpBufferTimer = -1;
             timeInAir = 0;
