@@ -196,11 +196,6 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
 
-    public void SoundVolume()
-    {
-        AudioManager.instance.SoundVolume(audioSlider.value);
-    }
-
     private void PauseGame()
     {
 

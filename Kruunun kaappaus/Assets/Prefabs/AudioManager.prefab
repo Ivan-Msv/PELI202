@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3365955138
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 1312756296
+  InScenePlacedSourceGlobalObjectIdHash: 3365955138
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
@@ -80,6 +80,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d37bd9c8a8c39864691c44c6a6df6d95, type: 3}
   - {fileID: 8300000, guid: 04a01aea6c61b4f4192b523b2740c94f, type: 3}
   - {fileID: 8300000, guid: 881eefa05894d014987b3af1aa82462e, type: 3}
+  - {fileID: 8300000, guid: 60095c4b68b13d44a9b23e623bc000e2, type: 3}
+  - {fileID: 8300000, guid: b05c4e0d341aead49b603e020ce8c815, type: 3}
+  - {fileID: 8300000, guid: 8080ebfd537a07a42971df29249644a3, type: 3}
+  - {fileID: 8300000, guid: b702172cdb295524e953985b825df38e, type: 3}
+  - {fileID: 8300000, guid: 04a01aea6c61b4f4192b523b2740c94f, type: 3}
+  - {fileID: 8300000, guid: 68192681d0a53974e8864c10a9341146, type: 3}
+  - {fileID: 8300000, guid: 57cbe1ead9f5bff45936415f2aba11b7, type: 3}
+  soundVolume: 0.5
+  musicVolume: 0.5
 --- !u!82 &8734194588421392889
 AudioSource:
   m_ObjectHideFlags: 0
@@ -93,7 +102,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.418
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -102,9 +111,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -137,7 +146,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -167,7 +176,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0

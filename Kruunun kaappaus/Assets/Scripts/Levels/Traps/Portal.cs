@@ -48,7 +48,6 @@ public class Portal : MonoBehaviour
         collision.transform.position = newPosition + colliderCenter;
         LevelManager.instance.TeleportCamera();
 
-        Debug.Log(newVelocity);
         // Setting horizontal as external force due to playermovement script resetting it otherwise
         collision.rigidbody.linearVelocityY = newVelocity.y;
         playerMovement.AddExternalForce(new(newVelocity.x, 0));

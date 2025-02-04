@@ -25,6 +25,12 @@ public class AudioManager : NetworkBehaviour
     [SerializeField] private AudioSource soundAtPositionPrefab;
     [SerializeField] private AudioClip[] soundList;
 
+    [Header("Audio Volume")]
+    [Range(0f, 1f)]
+    [SerializeField] private float soundVolume = 0.5f;
+    [Range(0f, 1f)]
+    [SerializeField] private float musicVolume = 0.5f;
+
     private void Awake()
     {
 
@@ -68,13 +74,15 @@ public class AudioManager : NetworkBehaviour
         var objectAudio = soundObject.GetComponent<AudioSource>();
 
         objectAudio.clip = soundList[(int)sound];
+        objectAudio.volume = soundVolume;
 
         objectAudio.Play();
-        Destroy(soundObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+        Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
 
-    public void SoundVolume(float volume)
+    public void VolumeSliders(float soundVolume, float musicVolume)
     {
-        audioSource.volume = volume;
+        this.soundVolume = soundVolume;
+        this.musicVolume = musicVolume;
     }
 }
