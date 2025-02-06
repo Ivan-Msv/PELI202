@@ -56,6 +56,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private Transform spawnParent;
     private float chargeTimer;
     private SpriteRenderer spritComp;
+    
     public PlayerMovementState currentPlayerState { get; private set; }
 
     void Start()
@@ -306,10 +307,6 @@ public class PlayerMovement2D : NetworkBehaviour
             }
         }
         
-
-
-
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isShooting = true;
@@ -318,12 +315,12 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             isShooting = false;
             chargeTimer = 0;
-            spritComp.color = Color.white;
+            spritComp.color = new Color(1,1,1,0.5f);
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            spritComp.color = Color.red;
-
+            spritComp.color = new Color(1, 0, 0, 0.5f);  
+            
             //spritComp.color = col;
             if (chargeTimer >= maxChargeTime)
             {
@@ -336,7 +333,7 @@ public class PlayerMovement2D : NetworkBehaviour
         }
 
     }
-
+   
     [Rpc(SendTo.Server)]
     private void PushServerRpc()
     {

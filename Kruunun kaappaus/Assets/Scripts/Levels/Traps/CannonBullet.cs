@@ -48,7 +48,7 @@ public class CannonBullet : NetworkBehaviour
             return;
         }
 
-        if (collision.CompareTag("Player") || collision.transform == parent)
+        if (collision.CompareTag("Player") || collision.transform == parent || collision.CompareTag("Ghost projectile"))
         {
             return;
         }
