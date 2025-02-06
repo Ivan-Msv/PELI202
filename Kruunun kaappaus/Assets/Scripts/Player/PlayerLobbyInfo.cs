@@ -13,6 +13,7 @@ public class PlayerLobbyInfo : MonoBehaviour
     public Dictionary<string, PlayerDataObject> playerData;
     public bool IsHost { get; private set; }
     [SerializeField] private GameObject spriteSelectionMenu;
+    [SerializeField] private GameObject colorSelectionMenu;
     [SerializeField] private GameObject spriteShowcase;
     [SerializeField] private GameObject noColorButtonPrefab;
     [SerializeField] private GameObject colorButtonPrefab;
@@ -118,13 +119,13 @@ public class PlayerLobbyInfo : MonoBehaviour
             Color currentColor = MainMenuUI.GetColor((int)colors);
             if ((int)colors == (int)Colors.None)
             {
-                var noColorButton = Instantiate(noColorButtonPrefab, spriteSelectionMenu.transform.GetChild(0));
+                var noColorButton = Instantiate(noColorButtonPrefab, colorSelectionMenu.transform);
                 noColorButton.name = $"{(int)colors}";
                 noColorButton.GetComponent<Button>().onClick.AddListener(() => { UpdateSelectionMenuColors((int)colors); });
             }
             else
             {
-                var colorButton = Instantiate(colorButtonPrefab, spriteSelectionMenu.transform.GetChild(0));
+                var colorButton = Instantiate(colorButtonPrefab, colorSelectionMenu.transform);
                 colorButton.GetComponent<Image>().color = currentColor;
                 colorButton.name = $"{(int)colors}";
 
@@ -136,7 +137,7 @@ public class PlayerLobbyInfo : MonoBehaviour
     {
         selectedColorIndex = colorIndex;
 
-        foreach (Transform child in spriteSelectionMenu.transform.GetChild(0).transform)
+        foreach (Transform child in colorSelectionMenu.transform)
         {
             bool isSelected = child.name == colorIndex.ToString();
             child.GetComponent<Outline>().enabled = isSelected;
