@@ -459,7 +459,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void DestroyCrownServerRpc(ulong collisionObjectId)
     {
-        AudioManager.instance.PlaySound(SoundType.CrownPickUp);
+        AudioManager.instance.PlaySoundAtPositionRpc(SoundType.CrownPickUp, NetworkObjectId, false);
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
         // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);

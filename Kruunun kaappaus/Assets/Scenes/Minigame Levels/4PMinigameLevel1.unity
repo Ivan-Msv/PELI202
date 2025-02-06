@@ -705,7 +705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: yBounce
-      value: 45
+      value: 170
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: xDirection
@@ -43124,7 +43124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: yBounce
-      value: 31
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7022371540613267000, guid: 59d2b9ce884d01d448e4cd51059eecec, type: 3}
       propertyPath: xDirection
@@ -45145,7 +45145,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1568688060}
   - component: {fileID: 1568688059}
-  - component: {fileID: 1568688058}
   - component: {fileID: 1568688057}
   - component: {fileID: 1568688056}
   m_Layer: 0
@@ -45231,14 +45230,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &1568688058
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568688055}
-  m_Enabled: 1
 --- !u!20 &1568688059
 Camera:
   m_ObjectHideFlags: 0
