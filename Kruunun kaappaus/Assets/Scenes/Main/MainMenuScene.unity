@@ -1158,7 +1158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.7636719, y: 0}
+  m_AnchoredPosition: {x: -1.7636414, y: 0}
   m_SizeDelta: {x: -36.139, y: -5.585002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &203480088
@@ -8214,6 +8214,7 @@ MonoBehaviour:
   loadingScreen: {fileID: 2014653923}
   playerCount: {fileID: 552855453}
   lobbyCodeVisual: {fileID: 775931959}
+  copyCodeVisual: {fileID: 721854964}
   leaveLobby: {fileID: 697385851}
   startGame: {fileID: 1824781788}
   copyCode: {fileID: 785994581}
@@ -9968,7 +9969,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.7636719, y: 0}
+  m_AnchoredPosition: {x: -1.7636414, y: 0}
   m_SizeDelta: {x: -36.139, y: -5.585}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1735929928

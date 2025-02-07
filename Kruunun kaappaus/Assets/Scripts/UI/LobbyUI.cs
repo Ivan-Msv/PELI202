@@ -16,11 +16,13 @@ public class LobbyUI : NetworkBehaviour
     private Lobby currentLobby;
     private string currentLobbyId;
     private float pollingTimer;
+    private float codeTimer;
     private bool connecting;
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI loadingScreen;
     [SerializeField] private TextMeshProUGUI playerCount;
     [SerializeField] private TextMeshProUGUI lobbyCodeVisual;
+    [SerializeField] private TextMeshProUGUI copyCodeVisual;
     [Header("Buttons")]
     [SerializeField] private Button leaveLobby;
     [SerializeField] private Button startGame;
@@ -69,6 +71,7 @@ public class LobbyUI : NetworkBehaviour
     {
         HandleLobbyPollForUpdates();
         CheckStartMatch();
+        CopiedCodeTimer();
         //CheckLobbyCount();
     }
     public async void SelectSprite(string playerId, int colorIndex, int iconIndex)
@@ -124,6 +127,7 @@ public class LobbyUI : NetworkBehaviour
         playerCount.text = string.Format("Players: {0}/{1}", currentLobby.Players.Count, currentLobby.MaxPlayers);
         RefreshPlayerTab();
     }
+
     private void CheckLobbyCount()
     {
         if (currentLobby == null || currentLobby.HostId != AuthenticationService.Instance.PlayerId)
@@ -319,9 +323,22 @@ public class LobbyUI : NetworkBehaviour
         textEditor.SelectAll();
         textEditor.Copy();
 
-        // Pitää vaihtaa myöhemmin kunnoliseen viestiin eikä error viestii
-        MainMenuUI.instance.ShowErrorMessage("Copied code to clipboard!");
+        // Laittaa timer päälle, joka näyttää et koodi on kopioitu
+        codeTimer = 1;
     }
+
+    private void CopiedCodeTimer()
+    {
+        if (codeTimer <= 0)
+        {
+            copyCodeVisual.text = "Click to copy";
+            return;
+        }
+
+        codeTimer -= Time.deltaTime;
+        copyCodeVisual.text = "Copied!";
+    }
+
     private void OnApplicationQuit()
     {
         ClearPlayerList();
