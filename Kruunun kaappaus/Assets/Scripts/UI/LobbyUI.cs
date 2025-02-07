@@ -37,6 +37,7 @@ public class LobbyUI : NetworkBehaviour
         {
             instance = this;
         }
+        leaveLobby.onClick.AddListener(() => { MainMenuUI.instance.ReturnToPreviousMenu(); });
         startGame.onClick.AddListener(() => { HostGame(); AudioManager.instance.PlaySound(SoundType.Open); });
         copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); AudioManager.instance.PlaySound(SoundType.Click); });
     }
