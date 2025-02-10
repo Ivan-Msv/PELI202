@@ -10,14 +10,21 @@ using Unity.Services.Core;
 
 public enum MenuState
 {
-    MainMenu, SettingsMenu, LobbySelectionMenu, CurrentLobbyMenu, DebugMenu
+    MainMenu, 
+    SettingsMenu, 
+    GeneralSettingsMenu, 
+    VideoSettingsMenu, 
+    AudioSettingsMenu, 
+    LobbySelectionMenu, 
+    CurrentLobbyMenu, 
+    DebugMenu
 }
 
 public class MainMenuUI : MonoBehaviour
 {
     public static MainMenuUI instance;
 
-    [SerializeField] private GameObject mainMenu, settingsMenu, lobbySelectionMenu, currentLobbyMenu, debugMenu;
+    [SerializeField] private GameObject mainMenu, settingsMenu, generalSettingsMenu, videoSettingsMenu, audioSettingsMenu, lobbySelectionMenu, currentLobbyMenu, debugMenu;
     [SerializeField] private Button returnButton;
     [Space]
 
@@ -29,11 +36,14 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button debugButton;
     [SerializeField] private GameObject errorMessageLog;
     [SerializeField] private GameObject errorMessagePrefab;
+    [SerializeField] private TextMeshProUGUI currentName;
+    [SerializeField] private TMP_InputField changeNameInput;
     [Space]
 
     [Header("Settings Menu")]
-    [SerializeField] private TextMeshProUGUI currentName;
-    [SerializeField] private TMP_InputField changeNameInput;
+    [SerializeField] private Button generalSettingsButton;
+    [SerializeField] private Button videoSettingsButton;
+    [SerializeField] private Button audioSettingsButton;
     [Space]
 
     [Header("Debug Menu")]
@@ -73,9 +83,12 @@ public class MainMenuUI : MonoBehaviour
         settingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); AudioManager.instance.PlaySound(SoundType.Open); });
         debugButton.onClick.AddListener(() => { OpenNewMenu(MenuState.DebugMenu); AudioManager.instance.PlaySound(SoundType.Open); });
         exitButton.onClick.AddListener(() => { Application.Quit(); AudioManager.instance.PlaySound(SoundType.Close); });
-        
-        // Settings Menu
         changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); AudioManager.instance.PlaySound(SoundType.Click); });
+
+        // Settings Menu
+        generalSettingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.GeneralSettingsMenu); });
+        videoSettingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.VideoSettingsMenu); });
+        audioSettingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.AudioSettingsMenu); });
 
         // Lobby Selection Menu
         createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; AudioManager.instance.PlaySound(SoundType.Open); });
@@ -128,6 +141,15 @@ public class MainMenuUI : MonoBehaviour
                 break;
             case MenuState.SettingsMenu:
                 settingsMenu.SetActive(true);
+                break;
+            case MenuState.GeneralSettingsMenu:
+                generalSettingsMenu.SetActive(true);
+                break;
+            case MenuState.VideoSettingsMenu:
+                videoSettingsMenu.SetActive(true);
+                break;
+            case MenuState.AudioSettingsMenu:
+                audioSettingsMenu.SetActive(true);
                 break;
             case MenuState.LobbySelectionMenu:
                 lobbySelectionMenu.SetActive(true);
