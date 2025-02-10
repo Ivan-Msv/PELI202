@@ -3,13 +3,18 @@ using UnityEngine;
 
 public class CannonShoot : NetworkBehaviour
 {
+    
     [SerializeField] private Animator anim;
 
     [Header("Shootpoint and projectile settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
     [SerializeField] private float shootCooldownSeconds = 1f;
+    [SerializeField] public float bulletSpeed;
     private float shootTimer;
+
+
+    
     // Update is called once per frame
     void Update()
     {
@@ -33,11 +38,12 @@ public class CannonShoot : NetworkBehaviour
     {
         anim.Play("Cannon_Shoot");
     }
-
+   
     public void ShootEvent()
     {
         AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Cannon, NetworkObjectId, true);
         var spawnObject = NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
         spawnObject.GetComponent<CannonBullet>().parent = transform;
+        spawnObject.GetComponent<CannonBullet>().speed = bulletSpeed;
     }
 }

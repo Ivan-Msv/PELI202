@@ -5,7 +5,7 @@ public class CannonBullet : NetworkBehaviour
 {
     [Header("Speed and Lifetime")]
     [Range(0, 100)]
-    [SerializeField] private float speed = 1.0f;
+    [SerializeField] public float speed = 1.0f;
 
     [Range(0, 100)]
     [SerializeField] private float lifetime = 1.0f;
@@ -18,7 +18,7 @@ public class CannonBullet : NetworkBehaviour
         {
             return;
         }
-
+        
         Invoke(nameof(DespawnBullet), lifetime);
     }
     private void Update()
@@ -27,7 +27,7 @@ public class CannonBullet : NetworkBehaviour
         {
             return;
         }
-
+        
         transform.position = Vector2.MoveTowards(transform.position, movePoint.position, speed * Time.deltaTime);
     }
 

@@ -2705,6 +2705,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2433986607008754524, guid: 7263202a81d3ea245ab80f6116491fe6, type: 3}
+      propertyPath: bulletSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2514403128294692770, guid: 7263202a81d3ea245ab80f6116491fe6, type: 3}
       propertyPath: m_Name
       value: Cannon Prefab
