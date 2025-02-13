@@ -198,7 +198,11 @@ public class PauseMenu : MonoBehaviour
     }
     public void SoundVolume()
     {
-        AudioManager.instance.VolumeSliders(soundVolumeSlider.value, musicVolumeSlider.value);
+        AudioManager.instance.SoundVolumeSliders(soundVolumeSlider.value);
+    }
+    public void MusicVolume()
+    {
+        AudioManager.instance.MusicVolumeSliders(musicVolumeSlider.value);
     }
     private void PauseGame()
     {
