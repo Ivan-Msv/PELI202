@@ -138,11 +138,9 @@ public class MainMenuUI : MonoBehaviour
         {
             case MenuState.MainMenu:
                 mainMenu.SetActive(true);
-                AudioManager.instance.PlayMusic(MusicType.LobbyMusic);
                 break;
             case MenuState.SettingsMenu:
                 settingsMenu.SetActive(true);
-                AudioManager.instance.PlayMusic(MusicType.LobbyMusic2);
                 break;
             case MenuState.GeneralSettingsMenu:
                 generalSettingsMenu.SetActive(true);

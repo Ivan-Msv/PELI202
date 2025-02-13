@@ -69,8 +69,6 @@ public class VideoSettingsUI : MonoBehaviour
     private void UpdateFramerateVisual()
     {
         var index = framerateLimit.options.FindIndex(option => option.text.Contains(Application.targetFrameRate.ToString()));
-        Debug.Log(Application.targetFrameRate);
-        Debug.Log(index);
         framerateLimit.value = index;
     }
 

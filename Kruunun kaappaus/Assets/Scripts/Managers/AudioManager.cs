@@ -33,9 +33,12 @@ public class AudioManager : NetworkBehaviour
 
     [Header("Audio Volume")]
     [Range(0f, 1f)]
-    [SerializeField] private float soundVolume = 0.5f;
+    [field: SerializeField] public float MusicVolume { get; private set; } = 0.5f;
     [Range(0f, 1f)]
-    [SerializeField] private float musicVolume = 0.5f;
+    [field: SerializeField] public float SoundVolume { get; private set; } = 0.5f;
+
+    [SerializeField] private bool musicMute;
+    [SerializeField] private bool soundMute;
 
     private void Awake()
     {
@@ -50,21 +53,9 @@ public class AudioManager : NetworkBehaviour
             Destroy(gameObject);
         }
     }
-    private void Update()
-    {
-        instance.musicSource.volume = musicVolume;
-    }
-    public void PlayMusic(MusicType music)
-    {
-        if (NetworkManager.Singleton.IsConnectedClient || NetworkManager.Singleton.IsServer)
-        {
-            PlayMusicRpc(music);
-        }
-        else
-        {
-            PlayMusicLocal(music);
-        }
-    }
+
+
+
     public void PlaySound(SoundType sound)
     {
         if (NetworkManager.Singleton.IsConnectedClient || NetworkManager.Singleton.IsServer)
@@ -80,12 +71,12 @@ public class AudioManager : NetworkBehaviour
     public void PlaySoundRpc(SoundType sound)
     {
         //Debug.Log("play sound rpc");
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundVolume);
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundMute == enabled ? 0 : SoundVolume);
     }
     public void PlaySoundLocal(SoundType sound)
     {
         //Debug.Log("play sound local");
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundVolume);
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundMute == enabled ? 0 : SoundVolume);
     }
 
     /// <param name="parent">Whether to parent the sound to a gameobject or not</param>
@@ -110,20 +101,12 @@ public class AudioManager : NetworkBehaviour
         var objectAudio = soundObject.GetComponent<AudioSource>();
 
         objectAudio.clip = soundList[(int)sound];
-        objectAudio.volume = soundVolume;
+        objectAudio.volume = soundMute == enabled ? 0 : SoundVolume;
 
         objectAudio.Play();
         Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
-    
-    [Rpc(SendTo.Everyone)]
-    public void PlayMusicRpc(MusicType music)
-    {
-        instance.musicSource.loop = true;
-        instance.musicSource.clip = musicList[(int)music];
 
-        instance.musicSource.Play();
-    }
     public void PlayMusicLocal(MusicType music)
     {
         instance.musicSource.loop = true;
@@ -131,13 +114,24 @@ public class AudioManager : NetworkBehaviour
         
         instance.musicSource.Play();
     }
-    public void SoundVolumeSliders(float soundVolume )
+
+    public void SetSoundVolume(float volume)
     {
-        this.soundVolume = soundVolume;
-        
+        SoundVolume = volume;
     }
-    public void MusicVolumeSliders(float musicVolume)
+
+    public void SetMusicVolume(float volume)
     {
-        this.musicVolume = musicVolume;
+        MusicVolume = volume;
+    }
+
+    public void MuteSound(bool enable)
+    {
+        soundMute = enable;
+    }
+
+    public void MuteMusic(bool enable)
+    {
+        musicMute = enable;
     }
 }

@@ -12,7 +12,7 @@ enum PauseScenes
 
 enum PauseStates
 {
-    Disabled, Pause, Settings, MainMenuConfirm, Audio
+    Disabled, Pause, Settings, GeneralSettings, AudioSettings, VideoSettings, MainMenuConfirm
 }
 
 public class PauseMenu : MonoBehaviour
@@ -30,12 +30,12 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Settings Menu")]
     [SerializeField] private GameObject settingsMenu;
-
-    [Header("Audio settings")]
+    [SerializeField] private GameObject generalMenu;
+    [SerializeField] private GameObject videoMenu;
     [SerializeField] private GameObject audioMenu;
+    [SerializeField] private Button generalMenuButton;
+    [SerializeField] private Button videoMenuButton;
     [SerializeField] private Button audioMenuButton;
-    [SerializeField] public Slider soundVolumeSlider;
-    [SerializeField] public Slider musicVolumeSlider;
 
     [Header("Main Menu Confirmation")]
     [SerializeField] private GameObject confirmMainMenu;
@@ -69,7 +69,11 @@ public class PauseMenu : MonoBehaviour
         returnButton.onClick.AddListener(() => { PreviousMenu(); });
 
         // Settings Buttons
-        audioMenuButton.onClick.AddListener(() => { OpenMenu(PauseStates.Audio); });
+        generalMenuButton.onClick.AddListener(() => { OpenMenu(PauseStates.GeneralSettings, true); });
+        videoMenuButton.onClick.AddListener(() => { OpenMenu(PauseStates.VideoSettings, true); });
+        audioMenuButton.onClick.AddListener(() => { OpenMenu(PauseStates.AudioSettings, true); });
+
+
         // Main Menu Confirm Buttons
         confirmButton.onClick.AddListener(() => { ReturnToMainMenuScene(); });
         cancelButton.onClick.AddListener(() => { PreviousMenu(); });
@@ -93,6 +97,8 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+
+    // consider changing the switch into dictionary
     private void UpdateMenu()
     {
         var mainPause = currentMenuState == PauseStates.Pause;
@@ -111,11 +117,17 @@ public class PauseMenu : MonoBehaviour
             case PauseStates.Settings:
                 settingsMenu.SetActive(true);
                 break;
+            case PauseStates.GeneralSettings:
+                generalMenu.SetActive(true);
+                break;
+            case PauseStates.VideoSettings:
+                videoMenu.SetActive(true);
+                break;
+            case PauseStates.AudioSettings:
+                audioMenu.SetActive(true);
+                break;
             case PauseStates.MainMenuConfirm:
                 confirmMainMenu.SetActive(true);
-                break;
-            case PauseStates.Audio:
-                audioMenu.SetActive(true);
                 break;
         }
     }
@@ -130,14 +142,11 @@ public class PauseMenu : MonoBehaviour
             case PauseStates.Pause:
                 pauseMenu.SetActive(false);
                 break;
-            case PauseStates.Settings:
-                settingsMenu.SetActive(false);
-                break;
-            case PauseStates.MainMenuConfirm:
-                confirmMainMenu.SetActive(false);
-                break;
-            case PauseStates.Audio:
-                audioMenu.SetActive(false);
+            default:
+                foreach (Transform child in pauseMenu.transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
                 break;
         }
     }
@@ -158,8 +167,9 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    private void OpenMenu(PauseStates menuState)
+    private void OpenMenu(PauseStates menuState, bool disablePrevious = false)
     {
+        if (disablePrevious) { DisableCurrentMenu(); }
         currentMenuState = menuState;
         pauseStateStack.Push(currentMenuState);
 
@@ -196,14 +206,7 @@ public class PauseMenu : MonoBehaviour
         NetworkManager.Singleton.Shutdown();
         SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
     }
-    public void SoundVolume()
-    {
-        AudioManager.instance.SoundVolumeSliders(soundVolumeSlider.value);
-    }
-    public void MusicVolume()
-    {
-        AudioManager.instance.MusicVolumeSliders(musicVolumeSlider.value);
-    }
+
     private void PauseGame()
     {
 
