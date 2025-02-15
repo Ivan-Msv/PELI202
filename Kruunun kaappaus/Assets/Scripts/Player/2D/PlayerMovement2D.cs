@@ -492,6 +492,11 @@ public class PlayerMovement2D : NetworkBehaviour
         }
     }
 
+    private void OnParticleTrigger()
+    {
+        Debug.Log("Test");
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isGhost || !NetworkObject.IsOwner) { return; }

@@ -6,11 +6,12 @@ public class CannonBullet : NetworkBehaviour
     [Header("Speed and Lifetime")]
     [Range(0, 100)]
     [SerializeField] public float speed = 1.0f;
+    public Transform parent;
 
     [Range(0, 100)]
     [SerializeField] private float lifetime = 1.0f;
     [SerializeField] private Transform movePoint;
-    public Transform parent;
+    [SerializeField] private GameObject explosionObject;
 
     void Start()
     {
@@ -37,8 +38,8 @@ public class CannonBullet : NetworkBehaviour
         {
             return;
         }
-
         AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Explosion, NetworkObjectId, false);
+        InstantiateExplosionRpc();
         NetworkObject.Despawn(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,5 +55,12 @@ public class CannonBullet : NetworkBehaviour
         }
 
         DespawnBullet();
+    }
+
+
+    [Rpc(SendTo.Everyone)]
+    private void InstantiateExplosionRpc()
+    {
+        Instantiate(explosionObject, transform.position, explosionObject.transform.rotation);
     }
 }
