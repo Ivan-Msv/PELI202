@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 public class Portal : NetworkBehaviour
@@ -81,7 +82,7 @@ public class Portal : NetworkBehaviour
         var newPosition = targetPortal.transform.up * exitOffset + targetPortal.transform.position;
         var colliderCenter = collision.transform.position - collision.collider.bounds.center;
 
-        collision.transform.position = newPosition + colliderCenter;
+        collision.transform.GetComponent<NetworkTransform>().Teleport(newPosition + colliderCenter, collision.transform.rotation, collision.transform.localScale);
         LevelManager.instance.TeleportCamera();
 
         // Setting horizontal as external force due to playermovement script resetting it otherwise

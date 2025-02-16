@@ -6,13 +6,16 @@ public class CannonShoot : NetworkBehaviour
     
     [SerializeField] private Animator anim;
 
-    [Header("Shootpoint and projectile settings")]
+    [Header("Cannon Settings")]
     [SerializeField] private Transform shootPoint;
-    [SerializeField] private GameObject projectile;
     [SerializeField] private float shootCooldownSeconds = 1f;
-    [SerializeField] private ParticleSystem cloudParticle;
-    [SerializeField] public float bulletSpeed;
     private float shootTimer;
+
+    [Header("Projectile Settings")]
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private ParticleSystem cloudParticle;
+    [SerializeField] private float bulletSpeed;
+    [SerializeField] private float bulletLifeTime;
 
 
     
@@ -49,7 +52,6 @@ public class CannonShoot : NetworkBehaviour
 
         AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Cannon, NetworkObjectId, true);
         var spawnObject = NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
-        spawnObject.GetComponent<CannonBullet>().parent = transform;
-        spawnObject.GetComponent<CannonBullet>().speed = bulletSpeed;
+        spawnObject.GetComponent<CannonBullet>().SetupProjectile(bulletSpeed, bulletLifeTime, transform);
     }
 }
