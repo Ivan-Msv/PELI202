@@ -27,7 +27,6 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private GameObject coinCounterUI;
     [SerializeField] private GameObject goTimerUI;
     [SerializeField] private GameObject overUI;
-    [SerializeField] private TextMeshProUGUI loadPlayerText;
     [SerializeField] private TextMeshProUGUI goTimerText;
     [SerializeField] private TextMeshProUGUI timerVisual;
 
@@ -188,7 +187,6 @@ public class LevelManager : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void InvokeRpc()
     {
-        loadPlayerText.gameObject.SetActive(false);
         BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, false);
         OnPlayerValueChange?.Invoke();
     }

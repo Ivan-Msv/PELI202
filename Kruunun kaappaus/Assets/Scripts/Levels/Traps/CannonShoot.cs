@@ -10,6 +10,7 @@ public class CannonShoot : NetworkBehaviour
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
     [SerializeField] private float shootCooldownSeconds = 1f;
+    [SerializeField] private ParticleSystem cloudParticle;
     [SerializeField] public float bulletSpeed;
     private float shootTimer;
 
@@ -41,6 +42,11 @@ public class CannonShoot : NetworkBehaviour
    
     public void ShootEvent()
     {
+        // This spawns local projectile, otherwise clients might have bullets despawning too early
+        cloudParticle.Play();
+
+        if (!IsServer) { return; }
+
         AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Cannon, NetworkObjectId, true);
         var spawnObject = NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
         spawnObject.GetComponent<CannonBullet>().parent = transform;

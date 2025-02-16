@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class Portal : NetworkBehaviour
 {
     [SerializeField] private Collider2D currentPortal;
     [SerializeField] private Collider2D targetPortal;
@@ -28,6 +29,17 @@ public class Portal : MonoBehaviour
         idleMain.startColor = currentColor;
     }
 
+    [Rpc(SendTo.Everyone)]
+    private void PlayInwardParticleRpc()
+    {
+        portalInwardTrigger.Play();
+    }
+    [Rpc(SendTo.Everyone)]
+    private void PlayOutwardParticleRpc()
+    {
+        targetPortalOutwardTrigger.Play();
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         var playerMovement = collision.collider.GetComponent<PlayerMovement2D>();
@@ -42,7 +54,7 @@ public class Portal : MonoBehaviour
         }
 
         // Play particle | sound here
-        portalInwardTrigger.Play();
+        PlayInwardParticleRpc();
 
         // So that the gravity doesn't change during this
         playerMovement.IsUsingPortal = true;
@@ -78,7 +90,6 @@ public class Portal : MonoBehaviour
         playerMovement.SetPortalCooldown();
     }
 
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         var playerMovement = collision.collider.GetComponent<PlayerMovement2D>();
@@ -93,7 +104,7 @@ public class Portal : MonoBehaviour
         }
 
         // Play particle | sound here
-        targetPortalOutwardTrigger.Play();
+        PlayOutwardParticleRpc();
 
         // Reset everything, and put the portal on cooldown (otherwise it would spam teleport)
 

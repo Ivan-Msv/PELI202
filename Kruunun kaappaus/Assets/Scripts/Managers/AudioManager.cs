@@ -172,6 +172,30 @@ public class AudioManager : NetworkBehaviour
         Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
 
+    public void PlayLocalSoundAtPosition(SoundType sound, Transform originObject, bool parent)
+    {
+        AudioSource soundObject;
+        switch (parent)
+        {
+            case true:
+                soundObject = Instantiate(soundAtPositionPrefab, originObject.transform);
+                break;
+            case false:
+                soundObject = Instantiate(soundAtPositionPrefab);
+                soundObject.transform.position = originObject.transform.position;
+                break;
+        }
+
+        soundObject.name = $"{originObject.transform.name}'s {sound} local sound";
+        var objectAudio = soundObject.GetComponent<AudioSource>();
+
+        objectAudio.clip = soundList[(int)sound];
+        objectAudio.volume = soundMute == enabled ? 0 : SoundVolume;
+
+        objectAudio.Play();
+        Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+    }
+
     public void SetSoundVolume(float volume)
     {
         SoundVolume = volume;
