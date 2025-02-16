@@ -3,6 +3,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using Unity.Services.Lobbies.Models;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,12 +32,17 @@ public class PlayerInfo2D : NetworkBehaviour
     }
     private void Start()
     {
-        if (NetworkObject.IsOwner)
+        if (!NetworkObject.IsOwner)
         {
-            LevelManager.instance.SetCamera(transform);
-            playerIsGhost.Value = GetComponentInParent<MainPlayerInfo>().isGhost.Value;
-            LevelManager.instance.LoadPlayerServerRpc();
+            return;
         }
+
+        // Adding here to prevent multiple audiolisteners across 1 scene
+        transform.AddComponent<AudioListener>();
+
+        playerIsGhost.Value = GetComponentInParent<MainPlayerInfo>().isGhost.Value;
+        LevelManager.instance.SetCamera(transform);
+        LevelManager.instance.LoadPlayerServerRpc();
     }
 
     private void Update()

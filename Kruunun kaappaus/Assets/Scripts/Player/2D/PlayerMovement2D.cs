@@ -63,7 +63,6 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         if (!NetworkObject.IsOwner)
         {
-            Destroy(GetComponent<AudioListener>());
             return;
         }
 

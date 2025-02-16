@@ -121,7 +121,6 @@ GameObject:
   - component: {fileID: 7942911339286493421}
   - component: {fileID: 6408978930940377679}
   - component: {fileID: 2048038193042265351}
-  - component: {fileID: 4446825844052673004}
   m_Layer: 3
   m_Name: 2D Player
   m_TagString: Player
@@ -530,14 +529,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 6408978930940377679}
---- !u!81 &4446825844052673004
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6658996084343075146}
-  m_Enabled: 1
 --- !u!1 &7571851560927952019
 GameObject:
   m_ObjectHideFlags: 0
