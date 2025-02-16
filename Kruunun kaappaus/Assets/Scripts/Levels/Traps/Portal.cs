@@ -6,6 +6,27 @@ public class Portal : MonoBehaviour
     [SerializeField] private Collider2D currentPortal;
     [SerializeField] private Collider2D targetPortal;
     [SerializeField] private float exitOffset;
+    [SerializeField] private ParticleSystem portalIdleParticle;
+    public ParticleSystem portalInwardTrigger, portalOutwardTrigger;
+
+    private ParticleSystem targetPortalOutwardTrigger;
+
+    private void Awake()
+    {
+        targetPortalOutwardTrigger = targetPortal.GetComponent<Portal>().portalOutwardTrigger;
+        SetParticleColors();
+    }
+
+    private void SetParticleColors()
+    {
+        var currentColor = GetComponent<SpriteRenderer>().color;
+        var idleMain = portalIdleParticle.main;
+        var inwardMain = portalInwardTrigger.main;
+        var outwardMain = portalOutwardTrigger.main;
+        inwardMain.startColor = currentColor;
+        outwardMain.startColor = currentColor;
+        idleMain.startColor = currentColor;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -19,6 +40,9 @@ public class Portal : MonoBehaviour
         {
             return;
         }
+
+        // Play particle | sound here
+        portalInwardTrigger.Play();
 
         // So that the gravity doesn't change during this
         playerMovement.IsUsingPortal = true;
@@ -67,6 +91,9 @@ public class Portal : MonoBehaviour
         {
             return;
         }
+
+        // Play particle | sound here
+        targetPortalOutwardTrigger.Play();
 
         // Reset everything, and put the portal on cooldown (otherwise it would spam teleport)
 
