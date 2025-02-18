@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
 using System.ComponentModel;
+using Unity.Netcode.Components;
 
 public enum PlayerMovementState
 {
@@ -13,7 +14,10 @@ public enum PlayerMovementState
 
 public class PlayerMovement2D : NetworkBehaviour
 {
+    [SerializeField] private PlayerInfo2D playerInfo;
+    [SerializeField] private NetworkTransform netTransform;
     public bool isGhost;
+    public Vector2 spawnPoint;
     private bool canJump;
     private bool isShooting;
     public bool CanUsePortal { get; private set; } = true;
@@ -49,21 +53,18 @@ public class PlayerMovement2D : NetworkBehaviour
     [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
-
-    public Vector2 spawnPoint;
-    [SerializeField] private PlayerInfo2D playerInfo;
-    [Range(0f, 5f)]
     public float maxChargeTime;
 
+
+    private Animator animatorComponent;
+    private Transform spawnParent;
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
-    private Animator animatorComponent;
+    private SpriteRenderer spritComp;
     private float coyoteTimer;
     private float jumpBufferTimer;
     private float pushTimer;
-    private Transform spawnParent;
     private float chargeTimer;
-    private SpriteRenderer spritComp;
     
     public PlayerMovementState currentPlayerState { get; private set; }
 
@@ -485,7 +486,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (collision.CompareTag("Death Trigger") || collision.CompareTag("Bullet Platform"))
         {
-            transform.position = spawnPoint;
+            netTransform.Teleport(spawnPoint, transform.rotation, transform.localScale);
         }
         if (collision.CompareTag("Coin"))
         {
