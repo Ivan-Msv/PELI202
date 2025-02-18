@@ -8,6 +8,7 @@ public class Trampoline : NetworkBehaviour
     [SerializeField] private int xDirection, yDirection;
     [SerializeField] private float xBounce;
     [SerializeField] private float yBounce;
+    [SerializeField] private ParticleSystem bounceParticle;
     private Animator anim;
     void Start()
     {
@@ -30,6 +31,12 @@ public class Trampoline : NetworkBehaviour
     private void PlayAnimationServerRpc()
     {
         anim.Play("Trampoline_Used");
+    }
+
+    // Used in animation "Trampoline_Used"
+    private void PlayParticle()
+    {
+        bounceParticle.Play();
     }
 
     private void OnDrawGizmos()
