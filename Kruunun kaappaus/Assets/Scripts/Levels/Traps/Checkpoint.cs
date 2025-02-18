@@ -3,6 +3,7 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] private Animator anim;
+    [SerializeField] private ParticleSystem bannerParticle;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -24,6 +25,7 @@ public class Checkpoint : MonoBehaviour
         }
 
         anim.Play("Checkpoint_Activate");
+        bannerParticle.Play();
         playerMovement.UpdatePlayerSpawnClientRpc(transform.position, false);
     }
 }

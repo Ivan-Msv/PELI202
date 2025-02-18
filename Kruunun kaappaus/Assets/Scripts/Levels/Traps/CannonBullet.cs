@@ -19,6 +19,8 @@ public class CannonBullet : NetworkBehaviour
         {
             return;
         }
+
+        //netTransform.SetMaxInterpolationBound
         
         Invoke(nameof(DespawnBullet), lifeTime);
     }
