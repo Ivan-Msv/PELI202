@@ -3,6 +3,8 @@ using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEditor;
+using System.ComponentModel;
 
 public enum PlayerMovementState
 {
@@ -14,14 +16,19 @@ public class PlayerMovement2D : NetworkBehaviour
     public bool isGhost;
     private bool canJump;
     private bool isShooting;
-
-    [Header("External Forces")]
-    [SerializeField] private float portalCooldown;
-    [SerializeField] private Vector2 externalForce;
-    [SerializeField] private float forceDampSpeed;
-    [field: SerializeField] public float DefaultGravity { get; private set; }
     public bool CanUsePortal { get; private set; } = true;
     public bool IsUsingPortal { get; set; }
+
+    [Header("External Force Settings")]
+    [SerializeField] private float portalCooldown;
+    [SerializeField] private Vector2 forceDampSpeed;
+    [SerializeField] private Vector2 forceDampCap;
+
+    [ReadOnlyInspector]
+    [SerializeField] private Vector2 externalForce;
+    [ReadOnlyInspector]
+    [SerializeField] private Vector2 platformForces;
+    [SerializeField] private bool onPlatform;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -37,6 +44,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
     private float timeInAir;
+    [field: SerializeField] public float DefaultGravity { get; private set; }
 
     [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
@@ -193,7 +201,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         var playerVelocity = GetPlayerHorizontalVelocity();
 
-        var totalVelocity = playerVelocity + externalForce.x;
+        var totalVelocity = playerVelocity + externalForce.x + platformForces.x;
 
         // set velocity
         rb.linearVelocityX = totalVelocity;
@@ -216,7 +224,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void Jump()
     {
-        var totalVelocity = jumpHeight * Time.fixedDeltaTime + externalForce.y;
+        var totalVelocity = jumpHeight * Time.fixedDeltaTime + externalForce.y + platformForces.y;
 
         if (jumpBufferTimer > 0 && canJump)
         {
@@ -425,17 +433,18 @@ public class PlayerMovement2D : NetworkBehaviour
     private void DampExternalForce()
     {
         // this gradually removes the external force, so it doesn't stay forever
-        if (Mathf.Abs(externalForce.x) < 0.5f)
+        if (Mathf.Abs(externalForce.x) < forceDampCap.x)
         {
             externalForce.x = 0;
         }
 
-        if (Mathf.Abs(externalForce.y) < 3)
+        if (Mathf.Abs(externalForce.y) < forceDampCap.y)
         {
             externalForce.y = 0;
         }
 
-        externalForce = Vector2.Lerp(externalForce, Vector2.zero, Time.fixedDeltaTime * forceDampSpeed);
+        externalForce.x = Mathf.Lerp(externalForce.x, 0, Time.fixedDeltaTime * forceDampSpeed.x);
+        externalForce.y = Mathf.Lerp(externalForce.y, 0, Time.fixedDeltaTime * forceDampSpeed.y);
     }
 
     [Rpc(SendTo.Owner)]
@@ -492,25 +501,23 @@ public class PlayerMovement2D : NetworkBehaviour
         }
     }
 
-    private void OnParticleTrigger()
-    {
-        Debug.Log("Test");
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (isGhost || !NetworkObject.IsOwner) { return; }
 
-        if (collision.collider.CompareTag("Platform"))
+        if (collision.collider.CompareTag("Bullet Platform") || collision.collider.CompareTag("Platform"))
         {
-            NetworkObject.TrySetParent(collision.transform);
-            rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
-            collision.collider.GetComponent<Platform>().SwitchStateServerRpc();
-        }
-        if (collision.collider.CompareTag("Bullet Platform"))
-        {
-            NetworkObject.TrySetParent(collision.transform);
-            rb.interpolation = RigidbodyInterpolation2D.Extrapolate;
+            if (!IsGrounded()) { return; }
+
+            if (!onPlatform)
+            {
+                // Set parent because network tick sync is only applied to children for some reason...
+                NetworkObject.TrySetParent(collision.transform);
+                rb.interpolation = RigidbodyInterpolation2D.None;
+                onPlatform = true;
+            }
+
+            platformForces = collision.rigidbody.linearVelocity;
         }
     }
 
@@ -520,8 +527,14 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (collision.collider.CompareTag("Platform") || collision.collider.CompareTag("Bullet Platform"))
         {
-            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+            if (!onPlatform) { return; }
+
             NetworkObject.TrySetParent(spawnParent);
+            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+            onPlatform = false;
+            AddExternalForce(platformForces);
+            platformForces = Vector2.zero;
         }
     }
 }

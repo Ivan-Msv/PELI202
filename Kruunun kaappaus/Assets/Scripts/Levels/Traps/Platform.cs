@@ -12,28 +12,43 @@ enum PlatformState
 
 public class Platform : NetworkBehaviour
 {
+    [SerializeField] private Rigidbody2D rb;
     [Header("Movement")]
     [SerializeField] private bool autonomousMovement;
     [SerializeField] private Vector2 endPosition;
     [SerializeField] private float timeTillMoveSeconds;
     [SerializeField] private float cooldownSeconds;
     [SerializeField] private float moveSpeed;
-    private Animator animatorComponent;
-    private Vector2 startPosition;
     [SerializeField] private float startingTimer;
     [SerializeField] private float cooldownTimer;
+    private Vector2 startPosition;
+    private Animator animatorComponent;
     private PlatformState currentState;
     private void Start()
     {
         animatorComponent = GetComponent<Animator>();
+
+        if (!IsServer)
+        {
+            return;
+        }
+
         startPosition = transform.position;
         currentState = autonomousMovement ? PlatformState.Starting : PlatformState.Idle;
     }
 
+
     private void Update()
     {
+        if (!IsServer)
+        {
+            return;
+        }
+
+        SendLinearVelocityRpc(rb.linearVelocity);
         StateMovement();
     }
+
     private void StateMovement()
     {
         switch (currentState)
@@ -65,6 +80,7 @@ public class Platform : NetworkBehaviour
     }
     private void StartingState()
     {
+        rb.linearVelocity = Vector2.zero;
         startingTimer += Time.deltaTime;
 
         if (startingTimer > timeTillMoveSeconds)
@@ -75,14 +91,17 @@ public class Platform : NetworkBehaviour
     }
     private void FallingState()
     {
-        transform.position = Vector2.MoveTowards(transform.position, endPosition, moveSpeed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, endPosition) <= 0)
+        var moveDirection = (endPosition - (Vector2)transform.position).normalized;
+        rb.linearVelocity = moveDirection * moveSpeed;
+
+        if (Vector2.Distance(transform.position, endPosition) <= 0.1f)
         {
             currentState = PlatformState.Cooldown;
         }
     }
     private void CooldownState()
     {
+        rb.linearVelocity = Vector2.zero;
         cooldownTimer += Time.deltaTime;
         if (cooldownTimer > cooldownSeconds)
         {
@@ -92,8 +111,10 @@ public class Platform : NetworkBehaviour
     }
     private void ReturningState()
     {
-        transform.position = Vector2.MoveTowards(transform.position, startPosition, moveSpeed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, startPosition) <= 0)
+        var moveDirection = (startPosition - (Vector2)transform.position).normalized;
+        rb.linearVelocity = moveDirection * moveSpeed;
+
+        if (Vector2.Distance(transform.position, startPosition) <= 0.1f)
         {
             currentState = autonomousMovement ? PlatformState.Starting : PlatformState.Idle;
         }
@@ -115,5 +136,11 @@ public class Platform : NetworkBehaviour
                 currentState = PlatformState.Starting;
                 break;
         }
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void SendLinearVelocityRpc(Vector2 newVelocity)
+    {
+        rb.linearVelocity = newVelocity;
     }
 }

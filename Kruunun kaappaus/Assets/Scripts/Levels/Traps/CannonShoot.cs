@@ -45,7 +45,6 @@ public class CannonShoot : NetworkBehaviour
    
     public void ShootEvent()
     {
-        // This spawns local projectile, otherwise clients might have bullets despawning too early
         cloudParticle.Play();
 
         if (!IsServer) { return; }

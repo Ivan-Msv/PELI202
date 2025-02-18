@@ -404,9 +404,10 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   isGhost: 0
   portalCooldown: 0.15
+  forceDampSpeed: {x: 3, y: 2}
+  forceDampCap: {x: 1, y: 7}
   externalForce: {x: 0, y: 0}
-  forceDampSpeed: 8
-  <DefaultGravity>k__BackingField: 3
+  platformForces: {x: 0, y: 0}
   moveSpeed: 230
   ghostMoveSpeed: 230
   ground:
@@ -434,6 +435,7 @@ MonoBehaviour:
   maxTimeInAir: 0.2
   maxCoyoteTime: 0.05
   maxJumpBufferTime: 0.2
+  <DefaultGravity>k__BackingField: 3
   shootPoint: {fileID: 5713807429199112005}
   projectile: {fileID: 5409873449286555630, guid: 2472f28971597544fb97358ab65ef183, type: 3}
   spawnPoint: {x: 0, y: 0}

@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 public class CannonBullet : NetworkBehaviour
@@ -6,6 +7,8 @@ public class CannonBullet : NetworkBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float moveDirectionX, moveDirectionY;
     [SerializeField] private GameObject explosionObject;
+    [SerializeField] private NetworkTransform netTransform;
+    [SerializeField] private Rigidbody2D rb;
     private Transform parent;
     private float speed;
     private float lifeTime;
@@ -27,14 +30,14 @@ public class CannonBullet : NetworkBehaviour
         parent = givenParent;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (!IsServer)
-        {
-            return;
-        }
 
-        transform.position = Vector2.MoveTowards(transform.position, transform.position + new Vector3(moveDirectionX, moveDirectionY), speed * Time.fixedDeltaTime);
+        if (IsServer)
+        {
+            rb.linearVelocity = new Vector2(moveDirectionX, moveDirectionY) * speed;
+            SendLinearVelocityRpc(rb.linearVelocity);
+        }
     }
 
     [Rpc(SendTo.Everyone)]
@@ -67,5 +70,11 @@ public class CannonBullet : NetworkBehaviour
         }
 
         DespawnBullet();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void SendLinearVelocityRpc(Vector2 newVelocity)
+    {
+        rb.linearVelocity = newVelocity;
     }
 }
