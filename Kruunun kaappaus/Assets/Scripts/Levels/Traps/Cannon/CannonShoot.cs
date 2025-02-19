@@ -12,13 +12,18 @@ public class CannonShoot : NetworkBehaviour
     private float shootTimer;
 
     [Header("Projectile Settings")]
-    [SerializeField] private GameObject projectile;
+    [SerializeField] private GameObject[] projectile;
+    [Tooltip("Projectile list index")]
+    [SerializeField] private int projectileIndex;
     [SerializeField] private ParticleSystem cloudParticle;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float bulletLifeTime;
 
+    private void OnValidate()
+    {
+        projectileIndex = Mathf.Clamp(projectileIndex, 0, projectile.Length - 1);
+    }
 
-    
     // Update is called once per frame
     void Update()
     {
@@ -50,7 +55,7 @@ public class CannonShoot : NetworkBehaviour
         if (!IsServer) { return; }
 
         AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Cannon, NetworkObjectId, true);
-        var spawnObject = NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
+        var spawnObject = NetworkObject.InstantiateAndSpawn(projectile[projectileIndex], NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
         spawnObject.GetComponent<CannonBullet>().SetupProjectile(bulletSpeed, bulletLifeTime, transform);
     }
 }

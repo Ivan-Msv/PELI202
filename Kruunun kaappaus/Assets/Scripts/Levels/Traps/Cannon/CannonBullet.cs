@@ -6,8 +6,6 @@ public class CannonBullet : NetworkBehaviour
 {
     [Range(0f, 1f)]
     [SerializeField] private float moveDirectionX, moveDirectionY;
-    [SerializeField] private GameObject explosionObject;
-    [SerializeField] private NetworkTransform netTransform;
     [SerializeField] private Rigidbody2D rb;
     private Transform parent;
     private float speed;
@@ -34,7 +32,6 @@ public class CannonBullet : NetworkBehaviour
 
     private void Update()
     {
-
         if (IsServer)
         {
             rb.linearVelocity = new Vector2(moveDirectionX, moveDirectionY) * speed;
@@ -42,20 +39,15 @@ public class CannonBullet : NetworkBehaviour
         }
     }
 
-    [Rpc(SendTo.Everyone)]
-    private void InstantiateExplosionRpc()
+    public virtual void DespawnBullet()
     {
-        Instantiate(explosionObject, transform.position, explosionObject.transform.rotation);
-    }
-
-    private void DespawnBullet()
-    {
+        // I don't think this matters since it only gets invoked
+        // from start which already has it but whatever
         if (!IsServer)
         {
             return;
         }
-        AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Explosion, NetworkObjectId, false);
-        InstantiateExplosionRpc();
+
         NetworkObject.Despawn(gameObject);
     }
 

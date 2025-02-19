@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 672988409
+  GlobalObjectIdHash: 738012209
   InScenePlacedSourceGlobalObjectIdHash: 672988409
   DeferredDespawnTick: 0
   Ownership: 1
@@ -191,7 +191,10 @@ MonoBehaviour:
   anim: {fileID: 3285444338292878415}
   shootPoint: {fileID: 4495881803047217735}
   shootCooldownSeconds: 1
-  projectile: {fileID: 3210980027225901294, guid: ba383b69f38c2b84b87f14d763bbdc4f, type: 3}
+  projectile:
+  - {fileID: 3210980027225901294, guid: ba383b69f38c2b84b87f14d763bbdc4f, type: 3}
+  - {fileID: 3176935864060832881, guid: 8a34d6d1e980a1c44917315131bc9603, type: 3}
+  projectileIndex: 0
   cloudParticle: {fileID: 444469876996068489}
   bulletSpeed: 5
   bulletLifeTime: 60
