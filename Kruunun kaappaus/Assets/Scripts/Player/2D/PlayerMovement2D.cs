@@ -486,7 +486,6 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (collision.CompareTag("Death Trigger") || collision.CompareTag("Bullet Platform"))
         {
-            CameraEffects.instance.ShakeCamera();
             netTransform.Teleport(spawnPoint, transform.rotation, transform.localScale);
         }
         if (collision.CompareTag("Coin"))
