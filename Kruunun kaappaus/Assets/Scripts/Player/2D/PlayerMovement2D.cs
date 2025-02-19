@@ -50,6 +50,9 @@ public class PlayerMovement2D : NetworkBehaviour
     private float timeInAir;
     [field: SerializeField] public float DefaultGravity { get; private set; }
 
+    [Header("Animation stuff")]
+    [SerializeField] private GameObject deathSprite;
+
     [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
@@ -60,7 +63,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private Transform spawnParent;
     private Rigidbody2D rb;
     private BoxCollider2D playerCollider;
-    private SpriteRenderer spritComp;
+    private SpriteRenderer spriteComponent;
     private float coyoteTimer;
     private float jumpBufferTimer;
     private float pushTimer;
@@ -79,7 +82,7 @@ public class PlayerMovement2D : NetworkBehaviour
         spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<BoxCollider2D>();
-        spritComp = GetComponent<SpriteRenderer>();
+        spriteComponent = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -123,6 +126,8 @@ public class PlayerMovement2D : NetworkBehaviour
             CanPush();
             return;
         }
+
+        RestartHotkey();
 
         CoyoteCheck();
         JumpBuffer();
@@ -181,6 +186,35 @@ public class PlayerMovement2D : NetworkBehaviour
     private void LimitFallSpeed()
     {
         rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
+    }
+
+    private void RestartHotkey()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RespawnPlayer();
+        }
+    }
+
+    private void RespawnPlayer()
+    {
+        // This prevents an issue, where you might get teleported while still parented
+        // which would teleport you from local position of a parent to a wrong position
+        NetworkObject.TrySetParent(spawnParent);
+
+        // To prevent spamming particles
+        if (Vector2.Distance(spawnPoint, transform.position) > 1f)
+        {
+            PlayDeathAnimationRpc();
+        }
+
+        netTransform.Teleport(spawnPoint, transform.rotation, transform.localScale);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void PlayDeathAnimationRpc()
+    {
+        Instantiate(deathSprite, transform.position, deathSprite.transform.rotation);
     }
 
     public void SetPortalCooldown()
@@ -324,11 +358,11 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             isShooting = false;
             chargeTimer = 0;
-            spritComp.color = new Color(1,1,1,0.5f);
+            spriteComponent.color = new Color(1,1,1,0.5f);
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            spritComp.color = new Color(1, 0, 0, 0.5f);  
+            spriteComponent.color = new Color(1, 0, 0, 0.5f);  
             
             //spritComp.color = col;
             if (chargeTimer >= maxChargeTime)
@@ -486,7 +520,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (collision.CompareTag("Death Trigger") || collision.CompareTag("Bullet Platform"))
         {
-            netTransform.Teleport(spawnPoint, transform.rotation, transform.localScale);
+            RespawnPlayer();
         }
         if (collision.CompareTag("Coin"))
         {

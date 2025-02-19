@@ -402,7 +402,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  playerInfo: {fileID: 1355854856914575653}
+  netTransform: {fileID: 4151534210416331775}
   isGhost: 0
+  spawnPoint: {x: 0, y: 0}
   portalCooldown: 0.15
   forceDampSpeed: {x: 3, y: 2}
   forceDampCap: {x: 1, y: 7}
@@ -437,11 +440,9 @@ MonoBehaviour:
   maxCoyoteTime: 0.05
   maxJumpBufferTime: 0.2
   <DefaultGravity>k__BackingField: 3
+  deathSprite: {fileID: 4454233243839674799, guid: 2bc00bc70d27bdc4a882b2c104e025a9, type: 3}
   shootPoint: {fileID: 5713807429199112005}
   projectile: {fileID: 5409873449286555630, guid: 2472f28971597544fb97358ab65ef183, type: 3}
-  spawnPoint: {x: 0, y: 0}
-  playerInfo: {fileID: 1355854856914575653}
-  netTransform: {fileID: 4151534210416331775}
   maxChargeTime: 1
 --- !u!114 &4151534210416331775
 MonoBehaviour:
