@@ -2429,7 +2429,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.41055098, y: 0.026594233}
   m_AnchorMax: {x: 0.590521, y: 0.16744569}
-  m_AnchoredPosition: {x: -0.8883362, y: -1.0003357}
+  m_AnchoredPosition: {x: -0.8883362, y: -1.0003662}
   m_SizeDelta: {x: 3, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &246790849
@@ -15169,7 +15169,7 @@ GameObject:
   - component: {fileID: 1347125204}
   - component: {fileID: 1347125203}
   m_Layer: 5
-  m_Name: Black Screen
+  m_Name: Player Related Stuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

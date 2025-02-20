@@ -80,6 +80,7 @@ public class VideoSettingsUI : MonoBehaviour
             return;
         }
 
+        DataSaving.instance.dataSettings.fpsValue = result;
         Application.targetFrameRate = result;
     }
 }

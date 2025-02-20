@@ -15,6 +15,9 @@ public class AudioSettingsUI : MonoBehaviour
 
     private void OnEnable()
     {
+        musicMuteToggle.enabled = AudioManager.instance.MusicMute;
+        soundMuteToggle.enabled = AudioManager.instance.SoundMute;
+
         musicSlider.value = AudioManager.instance.MusicVolume;
         UpdateText();
 

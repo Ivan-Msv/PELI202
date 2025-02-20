@@ -244,6 +244,8 @@ public class LevelManager : NetworkBehaviour
         BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, true, 1 / (timeToWait / 2));
         BlackScreen.instance.screenFade.StartFade(overUI.transform, false, 1 / (timeToWait / 2));
         BlackScreen.instance.screenFade.StartFade(overUI.transform.GetChild(0), false, 1 / (timeToWait / 2));
+        AudioManager.instance.EnableLoading(true);
+
         yield return new WaitForSeconds(timeToWait);
 
         if (!IsServer)

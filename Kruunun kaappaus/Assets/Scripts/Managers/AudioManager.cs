@@ -61,8 +61,9 @@ public class AudioManager : NetworkBehaviour
     private AudioSource[] musicSources;
 
     [Header("Audio Volume")]
-    [SerializeField] private bool musicMute;
-    [SerializeField] private bool soundMute;
+    [field: SerializeField] public bool MusicMute { get; private set; }
+    [field: SerializeField] public bool SoundMute { get; private set; }
+
     [Range(0f, 1f)]
     [field: SerializeField] public float MusicVolume { get; private set; } = 0.5f;
     [Range(0f, 1f)]
@@ -162,7 +163,7 @@ public class AudioManager : NetworkBehaviour
     {
         for (int i = 0; i < musicSources.Length; i++)
         {
-            musicSources[i].mute = musicMute;
+            musicSources[i].mute = MusicMute;
 
             // Blend the volume based on current music type
             if ((MusicLayer)i == currentMusicLayer && !loadingScreen)
@@ -200,12 +201,12 @@ public class AudioManager : NetworkBehaviour
     public void PlaySoundRpc(SoundType sound)
     {
         //Debug.Log("play sound rpc");
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundMute == enabled ? 0 : SoundVolume);
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], SoundMute == enabled ? 0 : SoundVolume);
     }
     public void PlaySoundLocal(SoundType sound)
     {
         //Debug.Log("play sound local");
-        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], soundMute == enabled ? 0 : SoundVolume);
+        instance.audioSource.PlayOneShot(instance.soundList[(int)sound], SoundMute == enabled ? 0 : SoundVolume);
     }
 
     /// <param name="parent">Whether to parent the sound to a gameobject or not</param>
@@ -230,7 +231,7 @@ public class AudioManager : NetworkBehaviour
         var objectAudio = soundObject.GetComponent<AudioSource>();
 
         objectAudio.clip = soundList[(int)sound];
-        objectAudio.volume = soundMute == enabled ? 0 : SoundVolume;
+        objectAudio.volume = SoundMute == enabled ? 0 : SoundVolume;
 
         objectAudio.Play();
         Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
@@ -254,7 +255,7 @@ public class AudioManager : NetworkBehaviour
         var objectAudio = soundObject.GetComponent<AudioSource>();
 
         objectAudio.clip = soundList[(int)sound];
-        objectAudio.volume = soundMute == enabled ? 0 : SoundVolume;
+        objectAudio.volume = SoundMute == enabled ? 0 : SoundVolume;
 
         objectAudio.Play();
         Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
@@ -272,11 +273,11 @@ public class AudioManager : NetworkBehaviour
 
     public void MuteSound(bool enable)
     {
-        soundMute = enable;
+        SoundMute = enable;
     }
 
     public void MuteMusic(bool enable)
     {
-        musicMute = enable;
+        MusicMute = enable;
     }
 }
