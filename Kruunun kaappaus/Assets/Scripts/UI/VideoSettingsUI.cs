@@ -77,6 +77,7 @@ public class VideoSettingsUI : MonoBehaviour
         if (!int.TryParse(framerateLimit.options[index].text, out int result))
         {
             Application.targetFrameRate = -1;
+            DataSaving.instance.dataSettings.fpsValue = -1;
             return;
         }
 

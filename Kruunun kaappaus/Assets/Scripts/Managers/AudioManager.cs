@@ -231,7 +231,8 @@ public class AudioManager : NetworkBehaviour
         var objectAudio = soundObject.GetComponent<AudioSource>();
 
         objectAudio.clip = soundList[(int)sound];
-        objectAudio.volume = SoundMute == enabled ? 0 : SoundVolume;
+        objectAudio.volume = SoundVolume;
+        objectAudio.mute = SoundMute;
 
         objectAudio.Play();
         Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
@@ -255,7 +256,8 @@ public class AudioManager : NetworkBehaviour
         var objectAudio = soundObject.GetComponent<AudioSource>();
 
         objectAudio.clip = soundList[(int)sound];
-        objectAudio.volume = SoundMute == enabled ? 0 : SoundVolume;
+        objectAudio.volume = SoundVolume;
+        objectAudio.mute = SoundMute;
 
         objectAudio.Play();
         Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
