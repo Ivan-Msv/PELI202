@@ -266,6 +266,7 @@ public class LobbyUI : NetworkBehaviour
         leaveLobby.interactable = false;
         startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Starting";
 
+        AudioManager.instance.EnableLoading(true);
         BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, true, 1);
 
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
@@ -289,6 +290,7 @@ public class LobbyUI : NetworkBehaviour
         var host = currentLobby.Players.Find(player => player.Id == currentLobby.HostId);
         if (host.Data["ServerStarted"].Value != "0" && !NetworkManager.IsConnectedClient)
         {
+            AudioManager.instance.EnableLoading(true);
             BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, true, 1);
             leaveLobby.interactable = false;
             LobbyManager.instance.JoinRelay(host.Data["AllocationCode"].Value);

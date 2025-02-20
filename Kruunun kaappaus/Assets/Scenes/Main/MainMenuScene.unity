@@ -2429,7 +2429,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.41055098, y: 0.026594233}
   m_AnchorMax: {x: 0.590521, y: 0.16744569}
-  m_AnchoredPosition: {x: -0.8883362, y: -1.0003052}
+  m_AnchoredPosition: {x: -0.8883362, y: -1.0003357}
   m_SizeDelta: {x: 3, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &246790849
@@ -7903,7 +7903,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 697385852}
   m_OnClick:
     m_PersistentCalls:
@@ -10396,7 +10396,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45.55
+  m_fontSize: 45.6
   m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13233,7 +13233,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.42947948, y: 0.031000001}
   m_AnchorMax: {x: 0.56739736, y: 0.1468148}
-  m_AnchoredPosition: {x: 0, y: -0.5741577}
+  m_AnchoredPosition: {x: 0, y: -0.5740967}
   m_SizeDelta: {x: -3.1409912, y: -5.1450195}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1162685802
@@ -17057,7 +17057,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10969182, y: 0.906}
   m_AnchorMax: {x: 0.901, y: 1}
-  m_AnchoredPosition: {x: 0, y: 8.963867}
+  m_AnchoredPosition: {x: 0, y: 8.963852}
   m_SizeDelta: {x: -7.139, y: 17.928}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1485516813
@@ -20778,7 +20778,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1824781789}
   m_OnClick:
     m_PersistentCalls:
@@ -24008,12 +24008,12 @@ PrefabInstance:
       value: AudioManager
       objectReference: {fileID: 0}
     - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
-      propertyPath: musicSource
-      value: 
+      propertyPath: musicBlendSpeed
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 3725883789058633443, guid: f872053d27f930c459ab1541a20453af, type: 3}
-      propertyPath: musicBlendSpeed
-      value: 1
+      propertyPath: currentMusicType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7516492012736235621, guid: f872053d27f930c459ab1541a20453af, type: 3}
       propertyPath: m_LocalPosition.x

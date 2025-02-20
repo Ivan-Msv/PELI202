@@ -138,9 +138,11 @@ public class MainMenuUI : MonoBehaviour
         {
             case MenuState.MainMenu:
                 mainMenu.SetActive(true);
+                AudioManager.instance.ChangeMusicLayer(MusicLayer.MediumLayer);
                 break;
             case MenuState.SettingsMenu:
                 settingsMenu.SetActive(true);
+                AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
                 break;
             case MenuState.GeneralSettingsMenu:
                 generalSettingsMenu.SetActive(true);
@@ -153,9 +155,11 @@ public class MainMenuUI : MonoBehaviour
                 break;
             case MenuState.LobbySelectionMenu:
                 lobbySelectionMenu.SetActive(true);
+                AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
                 break;
             case MenuState.CurrentLobbyMenu:
                 currentLobbyMenu.SetActive(true);
+                AudioManager.instance.ChangeMusicLayer(MusicLayer.MediumLayer);
                 break;
             case MenuState.DebugMenu:
                 debugMenu.SetActive(true);

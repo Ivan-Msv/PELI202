@@ -164,12 +164,16 @@ public class LevelManager : NetworkBehaviour
     private void ChallengeAnimationRpc()
     {
         coinCounterUI.SetActive(false);
+        AudioManager.instance.ChangeMusic(MusicType.ChallengeMusic);
+        AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
         StartCoroutine(CameraAnimation());
     }
 
     [Rpc(SendTo.Everyone)]
     private void MinigameAnimationRpc()
     {
+        AudioManager.instance.ChangeMusic(MusicType.MinigameMusic);
+        AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
         StartCoroutine(ThreeTwoOneCoroutine());
     }
 
@@ -220,6 +224,7 @@ public class LevelManager : NetworkBehaviour
 
     private IEnumerator EndingAnimation()
     {
+        AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
         float timeToWait = 0;
         switch (currentLevelType)
         {
@@ -261,6 +266,8 @@ public class LevelManager : NetworkBehaviour
         goTimerText.text = "Go!";
         yield return new WaitForSeconds(1);
         goTimerUI.SetActive(false);
+
+        AudioManager.instance.ChangeMusicLayer(MusicLayer.MediumLayer);
 
         if (IsServer)
         {

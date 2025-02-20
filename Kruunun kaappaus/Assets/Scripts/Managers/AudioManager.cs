@@ -1,6 +1,11 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public enum SoundType
 {
@@ -24,17 +29,35 @@ public enum MusicType
     MinigameMusic,
     ChallengeMusic
 }
+public enum MusicLayer
+{
+    LightLayer,
+    MediumLayer,
+    HeavyLayer
+}
+
+[Serializable]
+public struct MusicStruct
+{
+    public MusicType Type;
+    public AudioClip[] musicList;
+}
+
 public class AudioManager : NetworkBehaviour
 {
     public static AudioManager instance;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioSource soundAtPositionPrefab;
     [SerializeField] private AudioClip[] soundList;
-    [SerializeField] private AudioClip[] musicList;
+    [SerializeField] private MusicStruct[] musicTypeList;
 
     [Header("Music Settings")]
     [SerializeField] private MusicType currentMusicType;
+    [SerializeField] private MusicLayer currentMusicLayer;
     [SerializeField] private float musicBlendSpeed;
+    [SerializeField] private bool loadingScreen;
+    [ReadOnlyInspector]
+    [SerializeField] private AudioClip[] selectedMusicList;
     private AudioSource[] musicSources;
 
     [Header("Audio Volume")]
@@ -69,14 +92,55 @@ public class AudioManager : NetworkBehaviour
         BlendMusic();
     }
 
-    public void ChangeMusic(MusicType type)
+    public void ChangeMusic(MusicType type, bool preserveTiming = false)
     {
+        // To prevent song restarts
+        if (currentMusicType == type)
+        {
+            return;
+        }
+
+        // Sets the current music type
         currentMusicType = type;
+
+        // Gets the playback time so it doesn't reset on change
+        var songTiming = musicSources[(int)currentMusicLayer].time;
+
+        // Finds the corresponding musiclist for the type
+        selectedMusicList = musicTypeList.FirstOrDefault(musicStruct => musicStruct.Type == currentMusicType).musicList;
+
+        for (int i = 0; i < musicSources.Length; i++)
+        {
+            musicSources[i].clip = selectedMusicList[i];
+
+            if (preserveTiming)
+            {
+                musicSources[i].time = songTiming;
+            }
+
+            musicSources[i].Play();
+        }
+    }
+
+    public void EnableLoading(bool enable)
+    {
+        loadingScreen = enable;
+    }
+
+    public void ChangeMusicLayer(MusicLayer layer)
+    {
+        currentMusicLayer = layer;
+    }
+
+    public MusicLayer GetCurrentLayer()
+    {
+        return currentMusicLayer;
     }
 
     private void CreateAndStartMusic()
     {
-        musicSources = new AudioSource[musicList.Length];
+        selectedMusicList = musicTypeList.FirstOrDefault(musicStruct => musicStruct.Type == currentMusicType).musicList;
+        musicSources = new AudioSource[selectedMusicList.Length];
         var musicContainer = new GameObject("Music Container");
         musicContainer.transform.parent = transform;
 
@@ -86,7 +150,7 @@ public class AudioManager : NetworkBehaviour
             musicObject.transform.parent = musicContainer.transform;
             musicSources[i] = musicObject.AddComponent<AudioSource>();
 
-            musicSources[i].clip = musicList[i];
+            musicSources[i].clip = selectedMusicList[i];
             musicSources[i].loop = true;
 
             musicSources[i].volume = 0;
@@ -101,7 +165,7 @@ public class AudioManager : NetworkBehaviour
             musicSources[i].mute = musicMute;
 
             // Blend the volume based on current music type
-            if ((MusicType)i == currentMusicType)
+            if ((MusicLayer)i == currentMusicLayer && !loadingScreen)
             {
                 musicSources[i].volume = Mathf.Lerp(musicSources[i].volume, MusicVolume, musicBlendSpeed * Time.deltaTime);
             }
@@ -110,7 +174,7 @@ public class AudioManager : NetworkBehaviour
                 musicSources[i].volume = Mathf.Lerp(musicSources[i].volume, 0, musicBlendSpeed * Time.deltaTime);
 
                 // Fixes weird lerping at the end
-                if (musicSources[i].volume < 0.1f)
+                if (musicSources[i].volume < 0.01f)
                 {
                     musicSources[i].volume = 0;
                 }

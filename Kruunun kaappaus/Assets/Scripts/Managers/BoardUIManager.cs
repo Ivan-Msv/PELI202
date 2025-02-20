@@ -37,7 +37,6 @@ public class BoardUIManager : MonoBehaviour
     public Button confirmRollButton;
 
     [Header("Text")]
-    public TextMeshProUGUI playerLoadText;
     [SerializeField] private TextMeshProUGUI coinCounter;
     [SerializeField] private TextMeshProUGUI crownCounter;
     [SerializeField] private TextMeshProUGUI playerTurn;
@@ -172,7 +171,8 @@ public class BoardUIManager : MonoBehaviour
 
     public void UpdateLoadingPlayerUI(bool fadeIn, float speed)
     {
-        playerLoadText.gameObject.SetActive(false);
+        AudioManager.instance.EnableLoading(fadeIn);
+        AudioManager.instance.ChangeMusic(MusicType.BoardMusic);
         BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, fadeIn, speed);
     }
 

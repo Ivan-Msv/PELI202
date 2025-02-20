@@ -74,7 +74,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   audioSource: {fileID: 8734194588421392889}
   soundAtPositionPrefab: {fileID: 8734194588421392889, guid: 93787c8f282f3d84c809c3d7466f6659, type: 3}
-  musicSource: {fileID: 0}
   soundList:
   - {fileID: 8300000, guid: d61ab74051cd57a47bdb27ba5dc1e148, type: 3}
   - {fileID: 8300000, guid: bd79648fa9d6db343a6703ed0ac6c9c3, type: 3}
@@ -88,13 +87,36 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 04a01aea6c61b4f4192b523b2740c94f, type: 3}
   - {fileID: 8300000, guid: 68192681d0a53974e8864c10a9341146, type: 3}
   - {fileID: 8300000, guid: 57cbe1ead9f5bff45936415f2aba11b7, type: 3}
-  musicList:
-  - {fileID: 8300000, guid: 11bebeca9010c2d40945334c6a3d61e6, type: 3}
-  - {fileID: 8300000, guid: b0d2fa50f6f71c34cbcda0ddea14c195, type: 3}
-  <MusicVolume>k__BackingField: 0.5
-  <SoundVolume>k__BackingField: 0.5
+  musicTypeList:
+  - Type: 0
+    musicList:
+    - {fileID: 8300000, guid: 24532ebbef86e6f45a6b196a8cba98ac, type: 3}
+    - {fileID: 8300000, guid: e36bd8f8d645e0545b3dca92cffe35a3, type: 3}
+    - {fileID: 8300000, guid: 4f7e2c77a7986e644b4d3bc2582445ad, type: 3}
+  - Type: 1
+    musicList:
+    - {fileID: 8300000, guid: c79b1ff8d613b73419924ca9e1eed252, type: 3}
+    - {fileID: 8300000, guid: fd7a5b98af7fa85419763182219dfc96, type: 3}
+    - {fileID: 8300000, guid: 19d3e2ccc84689245b6016ee4558ed93, type: 3}
+  - Type: 2
+    musicList:
+    - {fileID: 8300000, guid: 05311caea2b9b6540b16319a2a5d1c84, type: 3}
+    - {fileID: 8300000, guid: 6d7f02a5fecb55b46a62afba23a27314, type: 3}
+    - {fileID: 8300000, guid: 9f6fdeaf30f3e3149b6ef855079cc598, type: 3}
+  - Type: 3
+    musicList:
+    - {fileID: 8300000, guid: f4a599e0a7eabbe4f843b46c771a8d5c, type: 3}
+    - {fileID: 8300000, guid: 8bb1573a5014201409d7e443ef68080c, type: 3}
+    - {fileID: 8300000, guid: f046d88a25e12024cac66e7fd452a54e, type: 3}
+  currentMusicType: 0
+  currentMusicLayer: 1
+  musicBlendSpeed: 1
+  loadingScreen: 0
+  selectedMusicList: []
   musicMute: 0
   soundMute: 0
+  <MusicVolume>k__BackingField: 0.5
+  <SoundVolume>k__BackingField: 0.5
 --- !u!82 &8734194588421392889
 AudioSource:
   m_ObjectHideFlags: 0

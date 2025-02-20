@@ -42,6 +42,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button confirmButton;
     [SerializeField] private Button cancelButton;
 
+    private MusicLayer previousLayer;
+
     private PauseStates currentMenuState;
     private Stack<PauseStates> pauseStateStack = new();
     public bool isMainMenuScene;
@@ -110,9 +112,12 @@ public class PauseMenu : MonoBehaviour
         {
             case PauseStates.Disabled:
                 pauseMenu.SetActive(false);
+                AudioManager.instance.ChangeMusicLayer(previousLayer);
                 break;
             case PauseStates.Pause:
                 pauseMenu.SetActive(true);
+                previousLayer = AudioManager.instance.GetCurrentLayer();
+                AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
                 break;
             case PauseStates.Settings:
                 settingsMenu.SetActive(true);
