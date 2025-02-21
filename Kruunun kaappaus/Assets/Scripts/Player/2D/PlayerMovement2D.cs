@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEditor;
 using System.ComponentModel;
 using Unity.Netcode.Components;
+using System.Runtime.CompilerServices;
 
 public enum PlayerMovementState
 {
@@ -28,7 +29,6 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private Vector2 forceDampSpeed;
     [SerializeField] private Vector2 forceDampCap;
 
-    [ReadOnlyInspector]
     [SerializeField] private Vector2 externalForce;
     [ReadOnlyInspector]
     [SerializeField] private Vector2 platformForces;
@@ -87,9 +87,6 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
-        // DEBUG
-        Debug.Log(InsideGround());
-
         if (Input.GetKeyDown(KeyCode.F1))
         {
             Time.timeScale = 0.1f;
@@ -172,7 +169,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private bool InsideGround()
     {
         // Using default and not "ground" because platforms are assigned as ground and you can jump through them
-        return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, LayerMask.NameToLayer("Default"));
+        return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, LayerMask.GetMask("Default"));
     }
 
     private void StuckCheck()
