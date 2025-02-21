@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3396764271
+  GlobalObjectIdHash: 135388348
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -406,6 +406,10 @@ MonoBehaviour:
   netTransform: {fileID: 4151534210416331775}
   isGhost: 0
   spawnPoint: {x: 0, y: 0}
+  isWallSticking: 0
+  wallNormal: {x: 0, y: 0}
+  gravityNullified: 0
+  slowMultiplier: 0
   portalCooldown: 0.15
   forceDampSpeed: {x: 3, y: 2}
   forceDampCap: {x: 1, y: 7}
@@ -414,6 +418,7 @@ MonoBehaviour:
   onPlatform: 0
   moveSpeed: 230
   ghostMoveSpeed: 230
+  wallJumpForce: 5
   ground:
     serializedVersion: 2
     m_Bits: 129

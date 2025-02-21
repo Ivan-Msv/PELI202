@@ -24,6 +24,12 @@ public class PlayerMovement2D : NetworkBehaviour
     public bool CanUsePortal { get; private set; } = true;
     public bool IsUsingPortal { get; set; }
 
+    [Header("External Multipliers")]
+    public bool isWallSticking;
+    public Vector2 wallNormal;
+    public bool gravityNullified;
+    public float slowMultiplier;
+
     [Header("External Force Settings")]
     [SerializeField] private float portalCooldown;
     [SerializeField] private Vector2 forceDampSpeed;
@@ -37,6 +43,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float ghostMoveSpeed;
+    [SerializeField] private float wallJumpForce;
 
     [Header("Jump")]
     [SerializeField] private LayerMask ground;
@@ -153,20 +160,20 @@ public class PlayerMovement2D : NetworkBehaviour
 
         GravityScales();
         StuckCheck();
-        LimitFallSpeed();
+        //LimitFallSpeed();
         DampExternalForce();
 
         HorizontalMovement();
         Jump();
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         //return Physics2D.BoxCast(playerCollider.bounds.center, playerCollider.bounds.size, 0, Vector2.down, 0.1f, ground);
         return rb.IsTouching(groundFilter);
     }
 
-    private bool InsideGround()
+    public bool InsideGround()
     {
         // Using default and not "ground" because platforms are assigned as ground and you can jump through them
         return Physics2D.BoxCast(playerCollider.bounds.center, new Vector2(0.2f, 0.2f), 0, Vector2.zero, 0, LayerMask.GetMask("Default"));
@@ -256,7 +263,8 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void Jump()
     {
-        var totalVelocity = jumpHeight * Time.fixedDeltaTime + externalForce.y + platformForces.y;
+        var externalForces = externalForce.y + platformForces.y;
+        var totalVelocity = jumpHeight * (1f - slowMultiplier) * Time.fixedDeltaTime + externalForces;
 
         if (jumpBufferTimer > 0 && canJump)
         {
@@ -264,17 +272,20 @@ public class PlayerMovement2D : NetworkBehaviour
             rb.linearVelocityY = totalVelocity;
             jumpBufferTimer = -1;
             timeInAir = 0;
+
+            if (isWallSticking)
+            {
+                AddExternalForce(new(-wallNormal.x * wallJumpForce, 0));
+            }
         }
 
         if (Input.GetAxisRaw("Vertical") <= 0 && timeInAir < maxTimeInAir)
         {
-
             timeInAir = maxTimeInAir;
         }
 
-        if (Input.GetKey(KeyCode.Space) && timeInAir < maxTimeInAir)
+        if (Input.GetKey(KeyCode.Space) && timeInAir < maxTimeInAir && !isWallSticking)
         {
-
             rb.linearVelocityY = totalVelocity;
         }
 
@@ -293,7 +304,7 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
-        if (!IsGrounded())
+        if (!IsGrounded() && !isWallSticking)
         {
             //tarkistaa että coyotetime toimii vaan jos yrität hyppää tippumisen jälkeen (ton koko pointti)
             bool falling = rb.linearVelocity.y <= 0;
@@ -327,7 +338,7 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && currentPlayerState != PlayerMovementState.Jumping)
+        if (Input.GetKeyDown(KeyCode.Space) && currentPlayerState != PlayerMovementState.Jumping || Input.GetKeyDown(KeyCode.Space) && isWallSticking)
         {
             jumpBufferTimer = maxJumpBufferTime;
         }
@@ -422,6 +433,13 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
+        // In case you want to nullify the gravity
+        if (gravityNullified)
+        {
+            rb.gravityScale = 0;
+            return;
+        }
+
         // Faster falling
         if (currentPlayerState == PlayerMovementState.Falling)
         {
@@ -444,8 +462,9 @@ public class PlayerMovement2D : NetworkBehaviour
     private float GetPlayerHorizontalVelocity()
     {
         var horizontal = Input.GetAxisRaw("Horizontal");
+        var remainingSpeed = 1f - slowMultiplier;
 
-        return horizontal * moveSpeed * Time.fixedDeltaTime;
+        return horizontal * moveSpeed * remainingSpeed * Time.fixedDeltaTime;
     }
 
     private Vector2 GetGhostVelocity()
