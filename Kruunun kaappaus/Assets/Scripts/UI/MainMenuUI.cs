@@ -77,6 +77,10 @@ public class MainMenuUI : MonoBehaviour
             instance = this;
         }
 
+        // Audio
+        AudioManager.instance.ChangeMusic(MusicType.LobbyMusic);
+        AudioManager.instance.ChangeMusicLayer(MusicLayer.MediumLayer);
+
         // Main Menu & overall
         returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); AudioManager.instance.PlaySound(SoundType.Close); });
         playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); AudioManager.instance.PlaySound(SoundType.Open); });

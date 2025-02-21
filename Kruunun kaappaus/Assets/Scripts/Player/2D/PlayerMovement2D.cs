@@ -88,7 +88,7 @@ public class PlayerMovement2D : NetworkBehaviour
     void Update()
     {
         // DEBUG
-
+        Debug.Log(InsideGround());
 
         if (Input.GetKeyDown(KeyCode.F1))
         {

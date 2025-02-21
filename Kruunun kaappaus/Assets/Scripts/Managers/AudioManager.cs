@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -59,6 +60,8 @@ public class AudioManager : NetworkBehaviour
     [ReadOnlyInspector]
     [SerializeField] private AudioClip[] selectedMusicList;
     private AudioSource[] musicSources;
+    public delegate void OnAudioLayerChangeDelegate(MusicLayer newLayer);
+    public event OnAudioLayerChangeDelegate OnAudioLayerChanged;
 
     [Header("Audio Volume")]
     [field: SerializeField] public bool MusicMute { get; private set; }
@@ -128,9 +131,13 @@ public class AudioManager : NetworkBehaviour
         loadingScreen = enable;
     }
 
-    public void ChangeMusicLayer(MusicLayer layer)
+    public void ChangeMusicLayer(MusicLayer layer, bool invokeTrigger = true)
     {
         currentMusicLayer = layer;
+        if (invokeTrigger)
+        {
+            OnAudioLayerChanged.Invoke(layer);
+        }
     }
 
     public MusicLayer GetCurrentLayer()

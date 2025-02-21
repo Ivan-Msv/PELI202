@@ -53,6 +53,7 @@ public class PauseMenu : MonoBehaviour
         SetButtons();
 
         SceneManager.sceneLoaded += UpdateCurrentScene;
+        AudioManager.instance.OnAudioLayerChanged += OnMusicLayerChanged;
     }
 
     private void UpdateCurrentScene(Scene currentScene, LoadSceneMode loadMode)
@@ -112,12 +113,9 @@ public class PauseMenu : MonoBehaviour
         {
             case PauseStates.Disabled:
                 pauseMenu.SetActive(false);
-                AudioManager.instance.ChangeMusicLayer(previousLayer);
                 break;
             case PauseStates.Pause:
                 pauseMenu.SetActive(true);
-                previousLayer = AudioManager.instance.GetCurrentLayer();
-                AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
                 break;
             case PauseStates.Settings:
                 settingsMenu.SetActive(true);
@@ -162,13 +160,25 @@ public class PauseMenu : MonoBehaviour
         {
             case PauseStates.Pause:
                 CloseMenu();
+                AudioManager.instance.ChangeMusicLayer(previousLayer, false);
                 break;
             case PauseStates.Disabled:
                 OpenMenu(PauseStates.Pause);
+                AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer, false);
                 break;
             default:
                 PreviousMenu();
+                AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer, false);
                 break;
+        }
+    }
+
+    private void OnMusicLayerChanged(MusicLayer newLayer)
+    {
+        if (currentMenuState != PauseStates.Disabled)
+        {
+            previousLayer = newLayer;
+            AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer, false);
         }
     }
 

@@ -164,6 +164,7 @@ public class LevelManager : NetworkBehaviour
     private void ChallengeAnimationRpc()
     {
         coinCounterUI.SetActive(false);
+        AudioManager.instance.EnableLoading(false);
         AudioManager.instance.ChangeMusic(MusicType.ChallengeMusic);
         AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
         StartCoroutine(CameraAnimation());
@@ -172,6 +173,7 @@ public class LevelManager : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void MinigameAnimationRpc()
     {
+        AudioManager.instance.EnableLoading(false);
         AudioManager.instance.ChangeMusic(MusicType.MinigameMusic);
         AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer);
         StartCoroutine(ThreeTwoOneCoroutine());

@@ -173,6 +173,7 @@ public class BoardUIManager : MonoBehaviour
     {
         AudioManager.instance.EnableLoading(fadeIn);
         AudioManager.instance.ChangeMusic(MusicType.BoardMusic);
+        AudioManager.instance.ChangeMusicLayer(fadeIn ? MusicLayer.LightLayer : MusicLayer.MediumLayer);
         BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, fadeIn, speed);
     }
 
