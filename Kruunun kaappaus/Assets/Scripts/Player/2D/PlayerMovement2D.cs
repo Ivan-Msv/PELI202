@@ -112,16 +112,6 @@ public class PlayerMovement2D : NetworkBehaviour
             Time.timeScale = 1f;
         }
 
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            Application.targetFrameRate = 15;
-        }
-
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            Application.targetFrameRate = 0;
-        }
-
         if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState.Value != LevelState.InProgress)
         {
             return;
