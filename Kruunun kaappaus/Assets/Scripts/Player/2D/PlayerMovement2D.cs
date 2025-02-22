@@ -35,9 +35,11 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private Vector2 forceDampSpeed;
     [SerializeField] private Vector2 forceDampCap;
 
+    [ReadOnlyInspector]
     [SerializeField] private Vector2 externalForce;
     [ReadOnlyInspector]
     [SerializeField] private Vector2 platformForces;
+    [ReadOnlyInspector]
     [SerializeField] private bool onPlatform;
 
     [Header("Movement")]
@@ -54,17 +56,18 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float maxTimeInAir;
     [SerializeField] private float maxCoyoteTime;
     [SerializeField] private float maxJumpBufferTime;
-    private float timeInAir;
+    private float airTime;
+    private float jumpAirTime;
     [field: SerializeField] public float DefaultGravity { get; private set; }
 
     [Header("Animation stuff")]
+    [SerializeField] private float jumpAnimationThreshold;
     [SerializeField] private GameObject deathSprite;
 
     [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
     public float maxChargeTime;
-
 
     private Animator animatorComponent;
     private Transform spawnParent;
@@ -160,7 +163,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         GravityScales();
         StuckCheck();
-        //LimitFallSpeed();
+        UpdateAirTimer();
         DampExternalForce();
 
         HorizontalMovement();
@@ -187,9 +190,15 @@ public class PlayerMovement2D : NetworkBehaviour
         }
     }
 
-    private void LimitFallSpeed()
+    private void UpdateAirTimer()
     {
-        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -20, Mathf.Infinity);
+        if (IsGrounded())
+        {
+            airTime = 0;
+            return;
+        }
+
+        airTime += Time.deltaTime;
     }
 
     private void RestartHotkey()
@@ -271,7 +280,7 @@ public class PlayerMovement2D : NetworkBehaviour
             AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Jump, NetworkObjectId, true);
             rb.linearVelocityY = totalVelocity;
             jumpBufferTimer = -1;
-            timeInAir = 0;
+            jumpAirTime = 0;
 
             if (isWallSticking)
             {
@@ -279,22 +288,22 @@ public class PlayerMovement2D : NetworkBehaviour
             }
         }
 
-        if (Input.GetAxisRaw("Vertical") <= 0 && timeInAir < maxTimeInAir)
+        if (Input.GetAxisRaw("Vertical") <= 0 && jumpAirTime < maxTimeInAir)
         {
-            timeInAir = maxTimeInAir;
+            jumpAirTime = maxTimeInAir;
         }
 
-        if (Input.GetKey(KeyCode.Space) && timeInAir < maxTimeInAir && !isWallSticking)
+        if (Input.GetKey(KeyCode.Space) && jumpAirTime < maxTimeInAir && !isWallSticking)
         {
             rb.linearVelocityY = totalVelocity;
         }
 
-        if (externalForce.y != 0 && timeInAir >= maxTimeInAir)
+        if (externalForce.y != 0 && jumpAirTime >= maxTimeInAir)
         {
             rb.linearVelocityY = externalForce.y;
         }
 
-        timeInAir += Time.deltaTime;
+        jumpAirTime += Time.deltaTime;
     }
 
     private void CoyoteCheck()
@@ -395,7 +404,7 @@ public class PlayerMovement2D : NetworkBehaviour
     {
         UpdateAnimation();
 
-        if (!IsGrounded())
+        if (!IsGrounded() && airTime > jumpAnimationThreshold)
         {
             currentPlayerState = JumpOrFallCheck();
             return;

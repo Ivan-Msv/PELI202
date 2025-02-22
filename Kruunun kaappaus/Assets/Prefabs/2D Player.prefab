@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 135388348
+  GlobalObjectIdHash: 3396764271
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -411,14 +411,14 @@ MonoBehaviour:
   gravityNullified: 0
   slowMultiplier: 0
   portalCooldown: 0.15
-  forceDampSpeed: {x: 3, y: 2}
+  forceDampSpeed: {x: 5, y: 2}
   forceDampCap: {x: 1, y: 7}
   externalForce: {x: 0, y: 0}
   platformForces: {x: 0, y: 0}
   onPlatform: 0
   moveSpeed: 230
   ghostMoveSpeed: 230
-  wallJumpForce: 5
+  wallJumpForce: 3
   ground:
     serializedVersion: 2
     m_Bits: 129
@@ -445,6 +445,7 @@ MonoBehaviour:
   maxCoyoteTime: 0.05
   maxJumpBufferTime: 0.2
   <DefaultGravity>k__BackingField: 3
+  jumpAnimationThreshold: 0.08
   deathSprite: {fileID: 4454233243839674799, guid: 2bc00bc70d27bdc4a882b2c104e025a9, type: 3}
   shootPoint: {fileID: 5713807429199112005}
   projectile: {fileID: 5409873449286555630, guid: 2472f28971597544fb97358ab65ef183, type: 3}
