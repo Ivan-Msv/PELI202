@@ -215,6 +215,11 @@ public class PlayerMovement2D : NetworkBehaviour
         // which would teleport you from local position of a parent to a wrong position
         NetworkObject.TrySetParent(spawnParent);
 
+        // Also reset velocity
+        rb.linearVelocity = Vector2.zero;
+        externalForce = Vector2.zero;
+        platformForces = Vector2.zero;
+
         // To prevent spamming particles
         if (Vector2.Distance(spawnPoint, transform.position) > 1f)
         {

@@ -24,7 +24,9 @@ public class Trampoline : NetworkBehaviour
         var newSpeed = collision.relativeVelocity.magnitude / Mathf.Sqrt(2);
         var newVelocity = transform.up * Mathf.Clamp(Mathf.Round(newSpeed + bounceAmount), -velocityCap, velocityCap);
 
-        collision.rigidbody.linearVelocity = newVelocity;
+        collision.rigidbody.linearVelocityY = newVelocity.y;
+        // No reason to multiply by two but it feels way better that way...
+        playerMovement.AddExternalForce(new(newVelocity.x * 2, 0));
         PlayAnimationServerRpc();
     }
 
