@@ -47,7 +47,18 @@ public class TimerStartBlock : NetworkBehaviour
             block.Play("Timer_Block_Running");
         }
 
-        yield return new WaitForSeconds(givenTimeSeconds);
+
+        // Does the same thing as above because for some reason
+        // Just waiting for giventimeSeconds resulted in the animation sometimes being either too fast or too slow
+        while (!timerBlocks[0].GetCurrentAnimatorStateInfo(0).IsName("Timer_Block_Running"))
+        {
+            yield return null;
+        }
+
+        while (timerBlocks[0].GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+        {
+            yield return null;
+        }
 
         timerActive = false;
 
