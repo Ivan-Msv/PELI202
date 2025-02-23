@@ -160,15 +160,14 @@ public class PauseMenu : MonoBehaviour
         {
             case PauseStates.Pause:
                 CloseMenu();
-                AudioManager.instance.ChangeMusicLayer(previousLayer, false);
                 break;
             case PauseStates.Disabled:
                 OpenMenu(PauseStates.Pause);
+                previousLayer = AudioManager.instance.GetCurrentLayer();
                 AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer, false);
                 break;
             default:
                 PreviousMenu();
-                AudioManager.instance.ChangeMusicLayer(MusicLayer.LightLayer, false);
                 break;
         }
     }
@@ -210,6 +209,7 @@ public class PauseMenu : MonoBehaviour
 
     private void CloseMenu()
     {
+        AudioManager.instance.ChangeMusicLayer(previousLayer, false);
         pauseStateStack.Clear();
         PreviousMenu();
     }

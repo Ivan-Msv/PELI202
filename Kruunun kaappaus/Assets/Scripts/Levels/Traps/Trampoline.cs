@@ -1,36 +1,37 @@
 ﻿using Unity.Netcode;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Trampoline : NetworkBehaviour
 {
-    [Range(-1, 1)]
-    [SerializeField] private int xDirection, yDirection;
-    [SerializeField] private float xBounce;
-    [SerializeField] private float yBounce;
+    [SerializeField] private Animator anim;
     [SerializeField] private ParticleSystem bounceParticle;
-    private Animator anim;
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-    }
+    [Header("Editor")]
+    [SerializeField] private bool EnableGizmoText;
+    [Header("Settings")]
+    [SerializeField] private float bounceAmount;
+    [SerializeField] private float velocityCap;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        var playerMovement = collision.GetComponent<PlayerMovement2D>();
+        var playerMovement = collision.collider.GetComponent<PlayerMovement2D>();
         if (playerMovement.isGhost)
         {
             return;
         }
 
-        playerMovement.AddExternalForce(new(xDirection * xBounce, yDirection * yBounce));
+        var newSpeed = collision.relativeVelocity.magnitude / Mathf.Sqrt(2);
+        var newVelocity = transform.up * Mathf.Clamp(Mathf.Round(newSpeed + bounceAmount), -velocityCap, velocityCap);
+
+        collision.rigidbody.linearVelocity = newVelocity;
         PlayAnimationServerRpc();
     }
 
     [Rpc(SendTo.Server)]
     private void PlayAnimationServerRpc()
     {
-        anim.Play("Trampoline_Used");
+        anim.Play("Trampoline_Used", 0, 0);
     }
 
     // Used in animation "Trampoline_Used"
@@ -41,14 +42,19 @@ public class Trampoline : NetworkBehaviour
 
     private void OnDrawGizmos()
     {
-        // I dont know why 10 works, but this is the closest I got to visualizing
-        // the peak of the height
         Gizmos.color = Color.green;
-        float xHeightPosition = xDirection * xBounce / 10;
-        float yHeightPosition = (yDirection * yBounce) / 10;
+        // Both divided by 3 because of the player gravity
+        Vector2 capPosition = transform.position + transform.up * (velocityCap / 3);
+        Vector2 startingVelocityPosition = transform.position + transform.up * (bounceAmount / 3);
 
-        Vector3 jumpHeightPosition = transform.position + new Vector3(xHeightPosition, yHeightPosition, 0);
-        Gizmos.DrawLine(transform.position, jumpHeightPosition);
-        Gizmos.DrawSphere(jumpHeightPosition, 0.1f);
+        Gizmos.DrawLine(transform.position, capPosition);
+        Gizmos.DrawSphere(capPosition, 0.05f);
+        Gizmos.DrawSphere(startingVelocityPosition, 0.05f);
+
+        if (EnableGizmoText)
+        {
+            Handles.Label(capPosition, "Velocity Cap");
+            Handles.Label(startingVelocityPosition, "Minimum Bounce");
+        }
     }
 }

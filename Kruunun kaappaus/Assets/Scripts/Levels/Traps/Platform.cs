@@ -16,7 +16,7 @@ public class Platform : NetworkBehaviour
     [SerializeField] private Rigidbody2D rb;
     [Header("Movement")]
     [SerializeField] private bool autonomousMovement;
-    [SerializeField] private Vector2 endPosition;
+    [SerializeField] private GameObject endPosition;
     [SerializeField] private float timeTillMoveSeconds;
     [SerializeField] private float cooldownSeconds;
     [SerializeField] private float moveSpeed;
@@ -92,10 +92,10 @@ public class Platform : NetworkBehaviour
     }
     private void FallingState()
     {
-        var moveDirection = (endPosition - (Vector2)transform.position).normalized;
+        var moveDirection = (endPosition.transform.position - transform.position).normalized;
         rb.linearVelocity = moveDirection * moveSpeed;
 
-        if (Vector2.Distance(transform.position, endPosition) <= 0.1f)
+        if (Vector2.Distance(transform.position, endPosition.transform.position) <= 0.1f)
         {
             currentState = PlatformState.Cooldown;
         }
