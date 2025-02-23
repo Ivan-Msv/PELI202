@@ -112,6 +112,16 @@ public class PlayerMovement2D : NetworkBehaviour
             Time.timeScale = 1f;
         }
 
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            LevelManager.instance.LevelTimer.Value = Mathf.Infinity;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            playerInfo.playerIsGhost.Value = !playerInfo.playerIsGhost.Value;
+        }
+
         if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState.Value != LevelState.InProgress)
         {
             return;
@@ -537,6 +547,7 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             RespawnPlayer();
         }
+
         if (collision.CompareTag("Coin"))
         {
             playerInfo.localCoinAmount.Value++;
@@ -548,6 +559,14 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             spawnParent.GetComponent<MainPlayerInfo>().crownAmount.Value++;
             DestroyCrownServerRpc(collisionObjectId);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Platform") && IsGrounded())
+        {
+            collision.GetComponent<Platform>().SwitchStateServerRpc();
         }
     }
 
@@ -563,7 +582,7 @@ public class PlayerMovement2D : NetworkBehaviour
             {
                 // Set parent because network tick sync is only applied to children for some reason...
                 NetworkObject.TrySetParent(collision.transform);
-                rb.interpolation = RigidbodyInterpolation2D.None;
+                //rb.interpolation = RigidbodyInterpolation2D.None;
                 onPlatform = true;
             }
 
@@ -580,7 +599,7 @@ public class PlayerMovement2D : NetworkBehaviour
             if (!onPlatform) { return; }
 
             NetworkObject.TrySetParent(spawnParent);
-            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+            //rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
             onPlatform = false;
             AddExternalForce(platformForces);

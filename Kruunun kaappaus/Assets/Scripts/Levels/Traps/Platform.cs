@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 enum PlatformState
@@ -38,7 +39,7 @@ public class Platform : NetworkBehaviour
     }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!IsServer)
         {
@@ -76,7 +77,7 @@ public class Platform : NetworkBehaviour
     }
     private void IdleState()
     {
-        // Tyhjä koska en keksinyt tänne mitään, eikä rehellisesti tarvi
+        rb.linearVelocity = Vector2.zero;
     }
     private void StartingState()
     {
