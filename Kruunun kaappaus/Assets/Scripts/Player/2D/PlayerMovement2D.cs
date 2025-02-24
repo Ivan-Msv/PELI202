@@ -46,6 +46,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float ghostMoveSpeed;
     [SerializeField] private float wallJumpForce;
+    [SerializeField] private float fallSpeedCap;
 
     [Header("Jump")]
     [SerializeField] private LayerMask ground;
@@ -168,6 +169,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         HorizontalMovement();
         Jump();
+        LimitFallSpeed();
     }
 
     public bool IsGrounded()
@@ -188,6 +190,11 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             transform.position = spawnPoint;
         }
+    }
+
+    private void LimitFallSpeed()
+    {
+        rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -fallSpeedCap, Mathf.Infinity);
     }
 
     private void UpdateAirTimer()

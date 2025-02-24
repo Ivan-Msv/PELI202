@@ -24,7 +24,7 @@ public class Trampoline : NetworkBehaviour
         var newSpeed = collision.relativeVelocity.magnitude / Mathf.Sqrt(2);
         var newVelocity = transform.up * Mathf.Clamp(Mathf.Round(newSpeed + bounceAmount), -velocityCap, velocityCap);
 
-        collision.rigidbody.linearVelocityY = newVelocity.y;
+        collision.rigidbody.linearVelocityY += newVelocity.y;
         // No reason to multiply by two but it feels way better that way...
         playerMovement.AddExternalForce(new(newVelocity.x * 2, 0));
         PlayAnimationServerRpc();
@@ -45,7 +45,8 @@ public class Trampoline : NetworkBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        // Both divided by 3 because of the player gravity
+        // Both divided by 3 because of the player default gravity
+        // But for some reason it's way shorter than it should be
         Vector2 capPosition = transform.position + transform.up * (velocityCap / 3);
         Vector2 startingVelocityPosition = transform.position + transform.up * (bounceAmount / 3);
 
@@ -55,7 +56,7 @@ public class Trampoline : NetworkBehaviour
 
         if (EnableGizmoText)
         {
-            Handles.Label(capPosition, "Velocity Cap");
+            Handles.Label(capPosition, "Velocity Cap \n{INACCURATE}");
             Handles.Label(startingVelocityPosition, "Minimum Bounce");
         }
     }

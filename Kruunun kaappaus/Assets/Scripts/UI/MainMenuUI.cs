@@ -77,6 +77,8 @@ public class MainMenuUI : MonoBehaviour
             instance = this;
         }
 
+        BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, false, 1);
+
         // Audio
         AudioManager.instance.ChangeMusic(MusicType.LobbyMusic);
         AudioManager.instance.ChangeMusicLayer(MusicLayer.MediumLayer);

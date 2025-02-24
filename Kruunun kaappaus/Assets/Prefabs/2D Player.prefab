@@ -419,6 +419,7 @@ MonoBehaviour:
   moveSpeed: 260
   ghostMoveSpeed: 260
   wallJumpForce: 3
+  fallSpeedCap: 50
   ground:
     serializedVersion: 2
     m_Bits: 129
