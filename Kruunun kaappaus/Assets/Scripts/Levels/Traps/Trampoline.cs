@@ -42,6 +42,7 @@ public class Trampoline : NetworkBehaviour
         bounceParticle.Play();
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -60,4 +61,5 @@ public class Trampoline : NetworkBehaviour
             Handles.Label(startingVelocityPosition, "Minimum Bounce");
         }
     }
+#endif
 }
