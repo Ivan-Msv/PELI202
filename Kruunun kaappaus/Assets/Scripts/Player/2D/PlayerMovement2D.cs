@@ -73,7 +73,7 @@ public class PlayerMovement2D : NetworkBehaviour
     private Animator animatorComponent;
     private Transform spawnParent;
     private Rigidbody2D rb;
-    private BoxCollider2D playerCollider;
+    private PolygonCollider2D playerCollider;
     private SpriteRenderer spriteComponent;
     private float coyoteTimer;
     private float jumpBufferTimer;
@@ -92,7 +92,7 @@ public class PlayerMovement2D : NetworkBehaviour
         animatorComponent = GetComponent<Animator>();
         spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<BoxCollider2D>();
+        playerCollider = GetComponent<PolygonCollider2D>();
         spriteComponent = GetComponent<SpriteRenderer>();
     }
 
