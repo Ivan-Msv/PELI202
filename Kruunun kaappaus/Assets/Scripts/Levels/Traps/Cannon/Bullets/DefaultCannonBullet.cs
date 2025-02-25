@@ -15,6 +15,6 @@ public class DefaultCannonBullet : CannonBullet
     [Rpc(SendTo.Everyone)]
     private void InstantiateExplosionRpc()
     {
-        Instantiate(explosionObject, transform.position, explosionObject.transform.rotation);
+        Instantiate(explosionObject, transform.position, transform.rotation);
     }
 }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CannonBullet : NetworkBehaviour
 {
-    [Range(0f, 1f)]
-    [SerializeField] private float moveDirectionX, moveDirectionY;
+    [SerializeField] private Vector2 moveDirection;
     [SerializeField] private Rigidbody2D rb;
     private Transform parent;
     private float speed;
@@ -28,13 +27,14 @@ public class CannonBullet : NetworkBehaviour
         speed = givenSpeed;
         lifeTime = givenLifetime;
         parent = givenParent;
+        moveDirection = givenParent.transform.right;
     }
 
     private void Update()
     {
         if (IsServer)
         {
-            rb.linearVelocity = new Vector2(moveDirectionX, moveDirectionY) * speed;
+            rb.linearVelocity = moveDirection * speed;
             SendLinearVelocityRpc(rb.linearVelocity);
         }
     }
