@@ -84,10 +84,7 @@ public class AudioManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-    private void Start()
-    {
         CreateAndStartMusic();
     }
 

@@ -53,6 +53,10 @@ public class PauseMenu : MonoBehaviour
         SetButtons();
 
         SceneManager.sceneLoaded += UpdateCurrentScene;
+    }
+
+    private void Start()
+    {
         AudioManager.instance.OnAudioLayerChanged += OnMusicLayerChanged;
     }
 

@@ -79,10 +79,6 @@ public class MainMenuUI : MonoBehaviour
 
         BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, false, 1);
 
-        // Audio
-        AudioManager.instance.ChangeMusic(MusicType.LobbyMusic);
-        AudioManager.instance.ChangeMusicLayer(MusicLayer.MediumLayer);
-
         // Main Menu & overall
         returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); AudioManager.instance.PlaySound(SoundType.Close); });
         playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); AudioManager.instance.PlaySound(SoundType.Open); });
@@ -108,6 +104,15 @@ public class MainMenuUI : MonoBehaviour
         customSceneHost.onClick.AddListener(() => { LobbyManager.instance.HostCustomScene(customSceneInput.text); });
         customSceneJoin.onClick.AddListener(() => { LobbyManager.instance.JoinRelay(customSceneInput.text); });
     }
+
+    private void Start()
+    {
+        // Audio
+        AudioManager.instance.ChangeMusic(MusicType.LobbyMusic);
+        AudioManager.instance.ChangeMusicLayer(MusicLayer.MediumLayer);
+    }
+
+
     public void ReturnToPreviousMenu()
     {
         stateStack.Pop();
