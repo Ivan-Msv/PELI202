@@ -11,7 +11,7 @@ public class PushProjectile : NetworkBehaviour
     [SerializeField] private float lifetime = 1.0f;
     [SerializeField] private float pushDistance;
     private Rigidbody2D rb;
-    
+    public Animator animator;
     void Start()
     {
         if (!IsServer)
@@ -25,6 +25,7 @@ public class PushProjectile : NetworkBehaviour
 
     private void DespawnProjectile()
     {
+        animator.Play("Fire_End");
         NetworkObject.Despawn(gameObject);
     }
 
