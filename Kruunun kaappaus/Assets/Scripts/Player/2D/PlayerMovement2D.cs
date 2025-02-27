@@ -7,6 +7,7 @@ using UnityEditor;
 using System.ComponentModel;
 using Unity.Netcode.Components;
 using System.Runtime.CompilerServices;
+using System;
 
 public enum PlayerMovementState
 {
@@ -79,7 +80,8 @@ public class PlayerMovement2D : NetworkBehaviour
     private float jumpBufferTimer;
     private float pushTimer;
     private float chargeTimer;
-    
+    private Camera cam;
+
     public PlayerMovementState currentPlayerState { get; private set; }
 
     void Start()
@@ -94,6 +96,7 @@ public class PlayerMovement2D : NetworkBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<PolygonCollider2D>();
         spriteComponent = GetComponent<SpriteRenderer>();
+        cam = Camera.main;
     }
 
     void Update()
@@ -372,10 +375,10 @@ public class PlayerMovement2D : NetworkBehaviour
         
         if (userInput != 0)
         {
-            shootPoint.SetLocalPositionAndRotation(new(userInput, 0, 0), new(0, 0, userInput * 180, shootPoint.rotation.w));
+            shootPoint.SetLocalPositionAndRotation(new(userInput *0 -0.1f, 0, 0), new(0, 0, userInput * 180, shootPoint.rotation.w));
             if (userInput == 1)
             {
-                shootPoint.SetLocalPositionAndRotation(new(userInput, 0, 0), new(0, 0, userInput * 0, shootPoint.rotation.w));
+                shootPoint.SetLocalPositionAndRotation(new(userInput * 0+0.1f,  0, 0), new(0, 0, userInput * 0, shootPoint.rotation.w));
             }
         }
         
@@ -391,8 +394,8 @@ public class PlayerMovement2D : NetworkBehaviour
         }
         if (Input.GetKey(KeyCode.Space))
         {
-            spriteComponent.color = new Color(1, 0, 0, 0.5f);  
-            
+            spriteComponent.color = new Color(1, 0, 0, 0.5f);
+            LookAtMouse();
             //spritComp.color = col;
             if (chargeTimer >= maxChargeTime)
             {
@@ -405,7 +408,14 @@ public class PlayerMovement2D : NetworkBehaviour
         }
 
     }
-   
+    public void LookAtMouse()
+    {
+        Vector3 mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
+        float angleRad = MathF.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x);
+        float angleDeg = (180 / Mathf.PI) * angleRad;
+        shootPoint.transform.rotation = Quaternion.Euler(0, 0, angleDeg);
+    }
+    
     [Rpc(SendTo.Server)]
     private void PushServerRpc()
     {
