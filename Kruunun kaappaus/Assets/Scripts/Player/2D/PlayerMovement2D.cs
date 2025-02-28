@@ -86,22 +86,23 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private Color defaultGhostColor = new(1, 1, 1, 0.5f);
     private Color shootingGhostColor = new(1, 0, 0, 0.5f);
-    private Color blendColor;
+    private NetworkVariable<Color> blendColor = new(writePerm:NetworkVariableWritePermission.Owner);
 
     public PlayerMovementState currentPlayerState { get; private set; }
 
     void Start()
     {
+        spriteComponent = GetComponent<SpriteRenderer>();
+        animatorComponent = GetComponent<Animator>();
+
         if (!NetworkObject.IsOwner)
         {
             return;
         }
 
-        animatorComponent = GetComponent<Animator>();
         spawnParent = transform.parent;
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<PolygonCollider2D>();
-        spriteComponent = GetComponent<SpriteRenderer>();
         cam = Camera.main;
     }
 
@@ -127,14 +128,14 @@ public class PlayerMovement2D : NetworkBehaviour
             LevelManager.instance.LevelTimer.Value = Mathf.Infinity;
         }
 
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            playerInfo.playerIsGhost.Value = !playerInfo.playerIsGhost.Value;
-        }
-
         if (!NetworkObject.IsOwner || LevelManager.instance.CurrentGameState.Value != LevelState.InProgress)
         {
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            playerInfo.playerIsGhost.Value = !playerInfo.playerIsGhost.Value;
         }
 
         if (isGhost)
@@ -152,6 +153,12 @@ public class PlayerMovement2D : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if (isGhost)
+        {
+            // Blends the color for everyone
+            spriteComponent.color = blendColor.Value;
+        }
+
         if (!NetworkObject.IsOwner)
         {
             return;
@@ -300,7 +307,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
             if (isWallSticking)
             {
-                AddExternalForce(new(-wallNormal.x * wallJumpForce, 0));
+                AddExternalForceRpc(new(-wallNormal.x * wallJumpForce, 0));
             }
         }
 
@@ -374,18 +381,20 @@ public class PlayerMovement2D : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isShooting = true;
+            ShootingRpc(isShooting);
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isShooting = false;
+            ShootingRpc(isShooting);
         }
 
         if (chargeTimer >= chargeThreshold)
         {
             chargeTimer = 0.1f; // Makes the charge faster when holding
             slowMultiplier = 0.5f; // Reduces slow instantly when finished charging
-            PushServerRpc();
+            PushProjectileRpc(shootPoint.transform.position, shootPoint.transform.rotation);
         }
 
         if (isShooting)
@@ -400,8 +409,14 @@ public class PlayerMovement2D : NetworkBehaviour
             slowMultiplier = Mathf.Lerp(slowMultiplier, 0, Time.deltaTime * 2);
         }
 
-        blendColor = Color.Lerp(defaultGhostColor, shootingGhostColor, chargeTimer);
-        spriteComponent.color = blendColor;
+        blendColor.Value = Color.Lerp(defaultGhostColor, shootingGhostColor, chargeTimer);
+    }
+
+
+    [Rpc(SendTo.Everyone)]
+    private void ShootingRpc(bool isShooting)
+    {
+        animatorComponent.SetBool("IsAttacking", isShooting);
     }
 
     private void LookAtMouse()
@@ -413,9 +428,10 @@ public class PlayerMovement2D : NetworkBehaviour
     }
     
     [Rpc(SendTo.Server)]
-    private void PushServerRpc()
+    private void PushProjectileRpc(Vector2 givenPosition, Quaternion givenRotation)
     {
-        NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
+        // Spawn it locally so the actual players dodging won't have it despawn too early / jitter
+        NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: givenPosition, rotation: givenRotation);
     }
 
     private void PlayerStateManager()
@@ -510,7 +526,8 @@ public class PlayerMovement2D : NetworkBehaviour
         return new(horizontal * ghostMoveSpeed * remainingSpeed * Time.fixedDeltaTime, vertical * ghostMoveSpeed * remainingSpeed * Time.fixedDeltaTime);
     }
 
-    public void AddExternalForce(Vector2 force)
+    [Rpc(SendTo.Owner)]
+    public void AddExternalForceRpc(Vector2 force)
     {
         externalForce += force;
     }
@@ -627,7 +644,7 @@ public class PlayerMovement2D : NetworkBehaviour
             //rb.interpolation = RigidbodyInterpolation2D.Interpolate;
 
             onPlatform = false;
-            AddExternalForce(platformForces);
+            AddExternalForceRpc(platformForces);
             platformForces = Vector2.zero;
         }
     }

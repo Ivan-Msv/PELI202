@@ -24,10 +24,12 @@ public class PlayerInfo2D : NetworkBehaviour
     public NetworkVariable<int> localCoinAmount = new(writePerm: NetworkVariableWritePermission.Owner);
 
     private Animator animatorComponent;
+    private ClientNetworkAnimator netAnimator;
     private SpriteRenderer spriteComponent;
     void Awake()
     {
         animatorComponent = GetComponent<Animator>();
+        netAnimator = GetComponent<ClientNetworkAnimator>();
         spriteComponent = GetComponent<SpriteRenderer>();
     }
     private void Start()
@@ -113,6 +115,8 @@ public class PlayerInfo2D : NetworkBehaviour
         newColor.a = newValue ? 0.4f : 1;
         spriteComponent.color = newColor;
         animatorComponent.runtimeAnimatorController = newValue ? MainMenuUI.instance.GhostAnimator : MainMenuUI.instance.PlayerAnimators[playerSpriteIndex.Value];
+        gameObject.layer = newValue ? LayerMask.NameToLayer("Ghost Player") : LayerMask.NameToLayer("Player");
+        netAnimator.Animator = animatorComponent;
     }
     private void SwapSpriteAxis()
     {

@@ -90,7 +90,7 @@ public class Portal : NetworkBehaviour
 
         // Setting horizontal as external force due to playermovement script resetting it otherwise
         collision.rigidbody.linearVelocityY = newVelocity.y;
-        playerMovement.AddExternalForce(new(newVelocity.x, 0));
+        playerMovement.AddExternalForceRpc(new(newVelocity.x, 0));
         playerMovement.SetPortalCooldown();
     }
 

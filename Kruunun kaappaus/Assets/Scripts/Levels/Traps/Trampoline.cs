@@ -26,7 +26,7 @@ public class Trampoline : NetworkBehaviour
 
         collision.rigidbody.linearVelocityY += newVelocity.y;
         // No reason to multiply by two but it feels way better that way...
-        playerMovement.AddExternalForce(new(newVelocity.x * 2, 0));
+        playerMovement.AddExternalForceRpc(new(newVelocity.x * 2, 0));
         PlayAnimationServerRpc();
     }
 

@@ -48,9 +48,11 @@ public class PushProjectile : NetworkBehaviour
     {
         if (!IsServer) { return; }
 
-        if (collision.collider.CompareTag("Player"))
+        collision.collider.TryGetComponent(out PlayerMovement2D playerMovement);
+
+        if (playerMovement != null)
         {
-            collision.rigidbody.linearVelocity = transform.right * pushDistance;
+            playerMovement.AddExternalForceRpc(transform.right * pushDistance);
         }
 
         DespawnProjectile();
