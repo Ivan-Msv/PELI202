@@ -430,7 +430,6 @@ public class PlayerMovement2D : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void PushProjectileRpc(Vector2 givenPosition, Quaternion givenRotation)
     {
-        // Spawn it locally so the actual players dodging won't have it despawn too early / jitter
         NetworkObject.InstantiateAndSpawn(projectile, NetworkManager, position: givenPosition, rotation: givenRotation);
     }
 

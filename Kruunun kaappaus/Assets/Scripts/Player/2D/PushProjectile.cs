@@ -23,6 +23,13 @@ public class PushProjectile : NetworkBehaviour
         Invoke(nameof(DespawnProjectile), lifetime);
     }
 
+
+    // This plays in Ghost_Projectile_End
+    private void AnimationEvent()
+    {
+        DespawnProjectile();
+    }
+
     private void DespawnProjectile()
     {
         if (!IsSpawned)
@@ -55,7 +62,9 @@ public class PushProjectile : NetworkBehaviour
             playerMovement.AddExternalForceRpc(transform.right * pushDistance);
         }
 
-        DespawnProjectile();
+        rb.linearVelocity = Vector2.zero;
+        speed = 0;
+        animator.Play("Ghost_Projectile_End");
     }
 
 }

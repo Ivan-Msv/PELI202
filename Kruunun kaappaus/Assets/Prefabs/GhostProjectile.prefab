@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4395127528501997266}
   - component: {fileID: -7501791766508236437}
   - component: {fileID: 5238428612908180238}
+  - component: {fileID: 6545417539301822470}
   - component: {fileID: -2991297153855223638}
   - component: {fileID: -6598523966893692982}
   m_Layer: 0
@@ -82,12 +83,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: 21300000, guid: 19603b6b0bfa16841ae0e0a302017a93, type: 3}
-  m_Color: {r: 0.6320754, g: 0, b: 0, a: 0.8627451}
+  m_Sprite: {fileID: 114894839241892060, guid: 19603b6b0bfa16841ae0e0a302017a93, type: 3}
+  m_Color: {r: 0.7075472, g: 0, b: 0, a: 0.9411765}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -119,7 +120,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &4395127528501997266
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -155,7 +156,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.125
+  m_Radius: 0.33324283
 --- !u!114 &-7501791766508236437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,9 +196,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   speed: 10
-  lifetime: 2.37
+  lifetime: 2
   pushDistance: 10
-  animator: {fileID: 0}
+  animator: {fileID: 6545417539301822470}
+--- !u!95 &6545417539301822470
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5409873449286555630}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cd4d3f66b0cdae24c8f25fa69ecf2c46, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-2991297153855223638
 MonoBehaviour:
   m_ObjectHideFlags: 0
