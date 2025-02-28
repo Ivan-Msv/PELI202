@@ -168,6 +168,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (isGhost)
         {
+            UpdateGhostAnimation();
             return;
         }
 
@@ -367,6 +368,7 @@ public class PlayerMovement2D : NetworkBehaviour
             jumpBufferTimer = maxJumpBufferTime;
         }
     }
+
     private void CanPush()
     {        
         if (Input.GetKeyDown(KeyCode.Space))
@@ -437,6 +439,11 @@ public class PlayerMovement2D : NetworkBehaviour
         {
             currentPlayerState = PlayerMovementState.Idle;
         }
+    }
+
+    private void UpdateGhostAnimation()
+    {
+        animatorComponent.SetBool("IsAttacking", isShooting);
     }
 
     private void UpdateAnimation()
