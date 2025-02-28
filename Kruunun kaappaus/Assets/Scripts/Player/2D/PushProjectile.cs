@@ -52,6 +52,5 @@ public class PushProjectile : NetworkBehaviour
 
         DespawnProjectile();
     }
- 
 
 }

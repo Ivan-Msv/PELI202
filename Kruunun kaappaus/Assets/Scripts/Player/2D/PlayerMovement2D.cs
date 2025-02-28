@@ -69,7 +69,11 @@ public class PlayerMovement2D : NetworkBehaviour
     [Header("Shootpoint And Projectile Settings")]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject projectile;
-    public float maxChargeTime;
+    [Range(0f, 1f)]
+    [SerializeField] private float chargeThreshold;
+    [SerializeField] private float chargeSpeed;
+    [SerializeField] private float decaySpeed;
+    private float chargeTimer;
 
     private Animator animatorComponent;
     private Transform spawnParent;
@@ -78,9 +82,11 @@ public class PlayerMovement2D : NetworkBehaviour
     private SpriteRenderer spriteComponent;
     private float coyoteTimer;
     private float jumpBufferTimer;
-    private float pushTimer;
-    private float chargeTimer;
     private Camera cam;
+
+    private Color defaultGhostColor = new(1, 1, 1, 0.5f);
+    private Color shootingGhostColor = new(1, 0, 0, 0.5f);
+    private Color blendColor;
 
     public PlayerMovementState currentPlayerState { get; private set; }
 
@@ -276,12 +282,6 @@ public class PlayerMovement2D : NetworkBehaviour
         rb.excludeLayers = ground | transparentFx;
         rb.gravityScale = 0;
 
-        if (isShooting)
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
-
         rb.linearVelocity = GetGhostVelocity();
     }
 
@@ -368,47 +368,60 @@ public class PlayerMovement2D : NetworkBehaviour
         }
     }
     private void CanPush()
-    {
-        //Color col = spritComp.color;
-        //col.a = 0.5f;
-        var userInput = Input.GetAxisRaw("Horizontal");
-        
-        if (userInput != 0)
-        {
-            shootPoint.SetLocalPositionAndRotation(new(userInput *0 -0.1f, 0, 0), new(0, 0, userInput * 180, shootPoint.rotation.w));
-            if (userInput == 1)
-            {
-                shootPoint.SetLocalPositionAndRotation(new(userInput * 0+0.1f,  0, 0), new(0, 0, userInput * 0, shootPoint.rotation.w));
-            }
-        }
-        
+    {        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isShooting = true;
         }
+
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isShooting = false;
-            chargeTimer = 0;
-            spriteComponent.color = new Color(1,1,1,0.5f);
         }
-        if (Input.GetKey(KeyCode.Space))
+
+        if (chargeTimer >= chargeThreshold)
         {
-            spriteComponent.color = new Color(1, 0, 0, 0.5f);
-            LookAtMouse();
-            //spritComp.color = col;
-            if (chargeTimer >= maxChargeTime)
-            {
-                chargeTimer = 0;
-                PushServerRpc();
-            }
-            chargeTimer += Time.deltaTime;
-            Debug.Log(chargeTimer);
-
+            chargeTimer = 0.1f; // Makes the charge faster when holding
+            slowMultiplier = 0.5f; // Reduces slow instantly when finished charging
+            PushServerRpc();
         }
 
+        if (isShooting)
+        {
+            LookAtMouse();
+            chargeTimer = Mathf.Lerp(chargeTimer, 1, Time.deltaTime * chargeSpeed);
+            slowMultiplier = Mathf.Lerp(slowMultiplier, 1, Time.deltaTime * 2);
+        }
+        else
+        {
+            chargeTimer = Mathf.Lerp(chargeTimer, 0, Time.deltaTime * decaySpeed);
+            slowMultiplier = Mathf.Lerp(slowMultiplier, 0, Time.deltaTime * 2);
+        }
+
+        // Clamp very small values
+        chargeTimer = ClampFloat(chargeTimer, 0.01f, 1);
+        slowMultiplier = ClampFloat(slowMultiplier, 0.01f, 1);
+
+        blendColor = Color.Lerp(defaultGhostColor, shootingGhostColor, chargeTimer);
+        spriteComponent.color = blendColor;
     }
-    public void LookAtMouse()
+
+    private float ClampFloat(float givenFloat, float min, float max)
+    {
+        if (givenFloat < min)
+        {
+            return 0;
+        }
+
+        if (givenFloat > max)
+        {
+            return max;
+        }
+
+        return givenFloat;
+    }
+
+    private void LookAtMouse()
     {
         Vector3 mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
         float angleRad = MathF.Atan2(mousePos.y - transform.position.y, mousePos.x - transform.position.x);
@@ -501,10 +514,12 @@ public class PlayerMovement2D : NetworkBehaviour
     private Vector2 GetGhostVelocity()
     {
         // Not using raw to get that floaty "ghosty" movement
-        var horizontal = Input.GetAxis("Horizontal");
-        var vertical = Input.GetAxis("Vertical");
+        // Also using a different input board which doesn't contain space as "up"
+        var horizontal = Input.GetAxis("Ghost Horizontal");
+        var vertical = Input.GetAxis("Ghost Vertical");
+        var remainingSpeed = 1f - slowMultiplier;
 
-        return new(horizontal * ghostMoveSpeed * Time.fixedDeltaTime, vertical * ghostMoveSpeed * Time.fixedDeltaTime);
+        return new(horizontal * ghostMoveSpeed * remainingSpeed * Time.fixedDeltaTime, vertical * ghostMoveSpeed * remainingSpeed * Time.fixedDeltaTime);
     }
 
     public void AddExternalForce(Vector2 force)

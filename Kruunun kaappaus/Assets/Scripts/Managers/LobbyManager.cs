@@ -25,10 +25,12 @@ public class LobbyManager : NetworkBehaviour
         {
             Instantiate(networkManagerPrefab);
         }
+
         if (instance == null)
         {
             instance = this;
         }
+
         if (UnityServices.State == ServicesInitializationState.Uninitialized)
         {
             await UnityServices.InitializeAsync();
@@ -48,12 +50,39 @@ public class LobbyManager : NetworkBehaviour
             MainMenuUI.instance.SetNameAndStartMenu(tokenExists);
             return;
         }
-        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        AttemptSignIn(3);
     }
     void Update()
     {
         LobbyDecay();
     }
+
+    private async void AttemptSignIn(int amountOfTries)
+    {
+        int retryCount = 0;
+        while (retryCount < amountOfTries)
+        {
+            try
+            {
+                await AuthenticationService.Instance.SignInAnonymouslyAsync();
+                return;
+            }
+            catch (AuthenticationException ex)
+            {
+
+                Debug.Log(ex.ErrorCode);
+                MainMenuUI.instance.ShowErrorMessage($"Failed to sign in. retrying... ({ex.ErrorCode})");
+
+                await Task.Delay(1000);
+            }
+
+            retryCount++;
+        }
+
+        MainMenuUI.instance.ShowErrorMessage("Failed to sign in. Please check your internet connection.", 30);
+    }
+
     public async void CreateLobby(string lobbyName, int maxPlayers = 4)
     {
         CreateLobbyOptions lobbyOptions = new CreateLobbyOptions()
