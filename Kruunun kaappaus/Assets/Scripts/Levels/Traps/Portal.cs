@@ -43,7 +43,10 @@ public class Portal : NetworkBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var playerMovement = collision.collider.GetComponent<PlayerMovement2D>();
+        collision.collider.TryGetComponent(out PlayerMovement2D playerMovement);
+
+        if (playerMovement == null) { return; }
+
         if (playerMovement.isGhost)
         {
             return;
@@ -93,7 +96,10 @@ public class Portal : NetworkBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        var playerMovement = collision.collider.GetComponent<PlayerMovement2D>();
+        collision.collider.TryGetComponent(out PlayerMovement2D playerMovement);
+
+        if (playerMovement == null) { return; }
+
         if (playerMovement.isGhost)
         {
             return;

@@ -54,7 +54,7 @@ public class CannonShoot : NetworkBehaviour
 
         if (!IsServer) { return; }
 
-        AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Cannon, NetworkObjectId, true);
+        AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.Cannon, NetworkObjectId, true);
         var spawnObject = NetworkObject.InstantiateAndSpawn(projectile[projectileIndex], NetworkManager, position: shootPoint.position, rotation: shootPoint.rotation);
         spawnObject.GetComponent<CannonBullet>().SetupProjectile(bulletSpeed, bulletLifeTime, transform);
     }

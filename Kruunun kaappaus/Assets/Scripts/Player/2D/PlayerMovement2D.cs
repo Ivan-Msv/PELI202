@@ -292,7 +292,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (jumpBufferTimer > 0 && canJump)
         {
-            AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Jump, NetworkObjectId, true);
+            AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.Jump, NetworkObjectId, true);
             rb.linearVelocityY = totalVelocity;
             jumpBufferTimer = -1;
             jumpAirTime = 0;
@@ -398,27 +398,8 @@ public class PlayerMovement2D : NetworkBehaviour
             slowMultiplier = Mathf.Lerp(slowMultiplier, 0, Time.deltaTime * 2);
         }
 
-        // Clamp very small values
-        chargeTimer = ClampFloat(chargeTimer, 0.01f, 1);
-        slowMultiplier = ClampFloat(slowMultiplier, 0.01f, 1);
-
         blendColor = Color.Lerp(defaultGhostColor, shootingGhostColor, chargeTimer);
         spriteComponent.color = blendColor;
-    }
-
-    private float ClampFloat(float givenFloat, float min, float max)
-    {
-        if (givenFloat < min)
-        {
-            return 0;
-        }
-
-        if (givenFloat > max)
-        {
-            return max;
-        }
-
-        return givenFloat;
     }
 
     private void LookAtMouse()
@@ -565,7 +546,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void DestroyCrownServerRpc(ulong collisionObjectId)
     {
-        AudioManager.instance.PlaySoundAtPositionRpc(SoundType.CrownPickUp, NetworkObjectId, false);
+        AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.CrownPickUp, NetworkObjectId, false);
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
         // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);

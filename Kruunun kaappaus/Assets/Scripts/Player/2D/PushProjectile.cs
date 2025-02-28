@@ -25,7 +25,12 @@ public class PushProjectile : NetworkBehaviour
 
     private void DespawnProjectile()
     {
-        animator.Play("Fire_End");
+        if (!IsSpawned)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         NetworkObject.Despawn(gameObject);
     }
 
@@ -38,16 +43,14 @@ public class PushProjectile : NetworkBehaviour
 
         rb.linearVelocity = transform.right * speed;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!IsServer)
-        {
-            return;
-        }
 
-        if (collision.CompareTag("Player")) 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!IsServer) { return; }
+
+        if (collision.collider.CompareTag("Player"))
         {
-            collision.attachedRigidbody.linearVelocity = transform.right * pushDistance;
+            collision.rigidbody.linearVelocity = transform.right * pushDistance;
         }
 
         DespawnProjectile();

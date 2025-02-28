@@ -215,7 +215,7 @@ public class AudioManager : NetworkBehaviour
 
     /// <param name="parent">Whether to parent the sound to a gameobject or not</param>
     [Rpc(SendTo.Everyone)]
-    public void PlaySoundAtPositionRpc(SoundType sound, ulong soundOriginId, bool parent)
+    public void PlaySoundAtObjectPositionRpc(SoundType sound, ulong soundOriginId, bool parent)
     {
         var originObject = NetworkManager.SpawnManager.SpawnedObjects[soundOriginId];
 
@@ -241,6 +241,24 @@ public class AudioManager : NetworkBehaviour
         objectAudio.Play();
         Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
     }
+
+    public void PlaySoundAtPositionRpc(SoundType sound, Vector2 position)
+    {
+        AudioSource soundObject;
+        soundObject = Instantiate(soundAtPositionPrefab);
+        soundObject.transform.position = position;
+
+        soundObject.name = $"{sound} at {position}";
+        var objectAudio = soundObject.GetComponent<AudioSource>();
+
+        objectAudio.clip = soundList[(int)sound];
+        objectAudio.volume = SoundVolume;
+        objectAudio.mute = SoundMute;
+
+        objectAudio.Play();
+        Destroy(soundObject.gameObject, objectAudio.clip.length * ((Time.timeScale < 0.01f) ? 0.01f : Time.timeScale));
+    }
+
 
     public void PlayLocalSoundAtPosition(SoundType sound, Transform originObject, bool parent)
     {

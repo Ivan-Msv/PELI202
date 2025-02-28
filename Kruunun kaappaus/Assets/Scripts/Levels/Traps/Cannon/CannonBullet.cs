@@ -48,6 +48,12 @@ public class CannonBullet : NetworkBehaviour
             return;
         }
 
+        if (!IsSpawned)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         NetworkObject.Despawn(gameObject);
     }
 

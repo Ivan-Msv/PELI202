@@ -8,7 +8,18 @@ public class DefaultCannonBullet : CannonBullet
     public override void DespawnBullet()
     {
         InstantiateExplosionRpc();
-        AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Explosion, NetworkObjectId, false);
+
+        // If the object gets destroyed before properly spawning, play local rpc
+        switch (IsSpawned)
+        {
+            case true:
+                AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.Explosion, NetworkObjectId, false);
+                break;
+            case false:
+                AudioManager.instance.PlaySoundAtPositionRpc(SoundType.Explosion, transform.position);
+                break;
+        }
+
         base.DespawnBullet();
     }
 
