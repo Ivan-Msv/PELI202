@@ -353,10 +353,10 @@ public class GameManager : NetworkBehaviour
         currentPlayerInfo = currentPlayer.GetComponentInParent<MainPlayerInfo>();
         OnCurrentPlayerChange?.Invoke(currentPlayerInfo.playerName.Value);
         BoardUIManager.instance.boardCamera.UpdateCameraFollow();
-        BoardUIManager.instance.shopUI.UpdateItems();
 
         if (IsServer)
         {
+            BoardUIManager.instance.shopUI.UpdateItems();
             TurnTimer.Value = playerTurnTime;
             playerTurn.Value++;
         }

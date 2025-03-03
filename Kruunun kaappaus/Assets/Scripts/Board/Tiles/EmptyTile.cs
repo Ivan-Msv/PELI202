@@ -13,7 +13,6 @@ public class EmptyTile : BoardTile
 
         if (GameManager.instance != null)
         {
-            anim.runtimeAnimatorController = GameManager.instance.emptyTile.GetComponent<Animator>().runtimeAnimatorController;
             vfxPrefab = GameManager.instance.emptyTile.GetComponent<EmptyTile>().vfxPrefab;
         }
     }
@@ -21,7 +20,14 @@ public class EmptyTile : BoardTile
     {
         tileSprite = GameManager.instance.emptyTile.tileSprite;
         tileName = GameManager.instance.emptyTile.name;
+
+        // On scene switch it might have crowntile from the start even though it should be empty
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("EmptyTile_Switch"))
+        {
+            anim.Play("EmptyTile_Idle");
+        }
     }
+
     public override void InvokeTile()
     {
         Debug.Log("Empty Tile Invoked");

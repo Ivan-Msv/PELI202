@@ -17,11 +17,6 @@ public class ChallengeTile : BoardTile
     {
         anim = GetComponent<Animator>();
         anim.StopPlayback();
-
-        if (GameManager.instance != null)
-        {
-            anim.runtimeAnimatorController = GameManager.instance.challengeTile.GetComponent<Animator>().runtimeAnimatorController;
-        }
     }
 
     public override void SetupTile()

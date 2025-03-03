@@ -151,7 +151,9 @@ public class BoardUIManager : MonoBehaviour
 
     public bool LocalPlayerOnShopTile()
     {
-        return BoardPath.instance.GetIndexTile(GameManager.instance.tilesIndex[localParent.currentBoardPosition.Value]) == GameManager.instance.shopTile;
+        var hisTurn = LocalPlayerTurn();
+        var onTile = BoardPath.instance.GetIndexTile(GameManager.instance.tilesIndex[localParent.currentBoardPosition.Value]) == GameManager.instance.shopTile;
+        return hisTurn && onTile;
     }
 
     private void CheckForGameEnd()

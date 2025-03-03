@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5570988830633718960}
   - component: {fileID: 8593352458520575472}
   - component: {fileID: 4882977734003989596}
+  - component: {fileID: -7198988929175995483}
   m_Layer: 0
   m_Name: Minigame Tile
   m_TagString: Untagged
@@ -113,3 +114,25 @@ MonoBehaviour:
   - 3PMinigameLevel1
   sceneNames4:
   - 4PMinigameLevel1
+--- !u!95 &-7198988929175995483
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9135019513618342763}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f5661a69062b3b049a65f9fac50d0b01, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

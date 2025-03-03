@@ -14,7 +14,7 @@ public struct ItemPool
     public ShopItem[] poolItems;
 }
 
-public class BoardShop : MonoBehaviour
+public class BoardShop : NetworkBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject shopUI;
@@ -23,6 +23,7 @@ public class BoardShop : MonoBehaviour
     [SerializeField] private GameObject shopCatalogueList;
     [SerializeField] private GameObject shopCheckingPanel;
     [SerializeField] private TextMeshProUGUI shopCheckingText;
+    [SerializeField] private Toggle shopViewToggle;
     [Space]
     [SerializeField] private Image imagePreview;
     [SerializeField] private TextMeshProUGUI itemNamePreview;
@@ -42,6 +43,7 @@ public class BoardShop : MonoBehaviour
         InitShop();
         closeButton.onClick.AddListener(() => { OpenStore(); });
         returnButton.onClick.AddListener(() => { OpenInfoTab(); });
+        shopViewToggle.onValueChanged.AddListener((enabled) => { OpenStore(); });
     }
 
     private void InitShop()
@@ -52,6 +54,8 @@ public class BoardShop : MonoBehaviour
             catalogue.name = pool.poolName;
         }
 
+        if (!IsServer) { return; }
+
         UpdateItems();
     }
     public void UpdateItems()
@@ -59,20 +63,26 @@ public class BoardShop : MonoBehaviour
         for (int i = 0; i < shopCatalogueList.transform.childCount; i++)
         {
             // Poistetaan vanhat itemit
-            foreach (Transform child in shopCatalogueList.transform.GetChild(i))
-            {
-                // Listan ensimmäinen objekti on teksti, ei poisteta sitä seuraavalla tavalla.
-                if (child.transform.GetSiblingIndex() == 0)
-                {
-                    continue;
-                }
-
-                Destroy(child.gameObject);
-            }
+            ClearItemsRpc(i);
 
             List<ShopItem> addedItems = new();
             // Lisätään uudet itemit
             ItemRoll(i, addedItems);
+        }
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void ClearItemsRpc(int i)
+    {
+        foreach (Transform child in shopCatalogueList.transform.GetChild(i))
+        {
+            // Listan ensimmäinen objekti on teksti, ei poisteta sitä seuraavalla tavalla.
+            if (child.transform.GetSiblingIndex() == 0)
+            {
+                continue;
+            }
+
+            Destroy(child.gameObject);
         }
     }
 
@@ -90,7 +100,7 @@ public class BoardShop : MonoBehaviour
                 if (maximumTries < 1)
                 {
                     Debug.LogError("Reached maximum tries and no substitute found, adding anyway.");
-                    ItemInstantiation(i, newItem);
+                    ItemInstantiationRpc(i, randomIndex);
                     break;
                 }
 
@@ -101,14 +111,17 @@ public class BoardShop : MonoBehaviour
                 }
 
                 addedItems.Add(newItem);
-                ItemInstantiation(i, newItem);
+                ItemInstantiationRpc(i, randomIndex);
                 validItem = true;
             }
         }
     }
 
-    private void ItemInstantiation(int i, ShopItem newItem)
+    [Rpc(SendTo.Everyone)]
+    private void ItemInstantiationRpc(int i, int randomIndex)
     {
+        var newItem = itemPools[i].poolItems[randomIndex];
+
         ShopItemUI newItemPrefab = Instantiate(shopItemPrefab, shopCatalogueList.transform.GetChild(i));
         newItemPrefab.itemImage.sprite = newItem.itemSprite;
         newItemPrefab.cost = newItem.itemCost;
@@ -121,13 +134,23 @@ public class BoardShop : MonoBehaviour
     {
         shopInfoPanel.SetActive(false);
         shopPanel.gameObject.SetActive(!shopUI.activeSelf);
-        GameManager.instance.PlayerShopOpenRpc(!shopUI.activeSelf);
         shopUI.SetActive(!shopUI.activeSelf);
+
+        shopViewToggle.isOn = shopUI.activeSelf;
+
+        if (BoardUIManager.instance.LocalPlayerOnShopTile())
+        {
+            GameManager.instance.PlayerShopOpenRpc(shopUI.activeSelf);
+        }
     }
 
     public void ShopOpenInfo(bool open)
     {
+        if (!open && shopUI.activeSelf) { shopUI.SetActive(false); }
+
+        shopViewToggle.interactable = open;
         BlackScreen.instance.screenFade.StartFade(shopCheckingPanel.transform, open);
+        BlackScreen.instance.screenFade.StartFade(shopViewToggle.transform, open);
         BlackScreen.instance.screenFade.StartFade(shopCheckingText.transform, open);
         shopCheckingText.text = string.Format(shopCheckingText.text, BoardUIManager.instance.CurrentTurnPlayerName);
     }

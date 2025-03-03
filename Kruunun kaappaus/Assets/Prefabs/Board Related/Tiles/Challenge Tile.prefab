@@ -107,8 +107,6 @@ MonoBehaviour:
   - 1PChallengeLevel1
   - 1PChallengeLevel2
   - 1PChallengeLevel3
-  - 1PChallengeLevel4
-  - 1PChallengeLevel5
   - 3PChallengeLevel1
   sceneNames2:
   - 2PChallengeLevel1
@@ -133,7 +131,7 @@ Animator:
   m_GameObject: {fileID: 2165456807816290501}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c6e9f4d92bc92f54c935c6e6feabe8ac, type: 2}
+  m_Controller: {fileID: 9100000, guid: f5661a69062b3b049a65f9fac50d0b01, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
