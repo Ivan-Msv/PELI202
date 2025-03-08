@@ -8,6 +8,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public enum BoardState
 {
@@ -23,6 +24,14 @@ public class GameManager : NetworkBehaviour
     public NetworkVariable<BoardState> currentState = new();
     private NetworkVariable<int> playersLoaded = new();
 
+    [Header("Tile randomization")]
+    public bool randomizeTiles;
+    [SerializeField] private bool experimentalShopRandomization;
+    [SerializeField] private int teleportTileDistance;
+    [SerializeField] private int minigameTileLimit;
+    [SerializeField] private int challengeTileLimit;
+    [SerializeField] private int shopTileLimit;
+    [SerializeField] private int teleportTileLimit;
 
     [Header("Player Related")]
     public BoardPlayerInfo currentPlayer;
@@ -41,6 +50,7 @@ public class GameManager : NetworkBehaviour
     public BoardTile minigameTile;
     public BoardTile challengeTile;
     public BoardTile shopTile;
+    public BoardTile teleportTile;
     // Index list which BoardPath script uses to refresh tiles in case they have changed.
     public NetworkList<int> tilesIndex = new();
 
@@ -82,6 +92,7 @@ public class GameManager : NetworkBehaviour
         {
             SceneManager.activeSceneChanged += OnSceneChangedServer;
         }
+
         ComponentInitialization();
         SceneManager.sceneLoaded += OnSceneChanged;
         BoardPath.instance.InitTiles();
@@ -91,6 +102,68 @@ public class GameManager : NetworkBehaviour
         BoardPath.instance = GameObject.FindGameObjectWithTag("Board Path").GetComponent<BoardPath>();
         diceAnimator = BoardUIManager.instance.diceAnimator;
     }
+
+
+    #region Randomness
+
+    public void TileRandomization()
+    {
+        // Rules: 
+        // Only empty tiles can be stacked (e.g. 3 empties in a row)
+        // Although empties should never stack more than 3 in a row
+        // Teleport tiles should have at least distance of [teleportTileDistance] tiles from each other
+        // Shop tiles should be static (so already placed in scene), or experimentally enabled via [experimentalShopRandomization] boolean
+        // The problem is that shop tiles look ugly if misplaced and not rotated accordingly
+
+        // This was weird, just getting values will return array
+        // And for this I needed to turn them into IEnumerable first, and then to dictionary
+        var availableTiles = Enum.GetValues(typeof(Tiles)).Cast<Tiles>().ToDictionary(tile => tile, tile => 0);
+
+        var tileLimits = new Dictionary<Tiles, int>()
+        {
+            { Tiles.MinigameTile, minigameTileLimit },
+            { Tiles.ChallengeTile, challengeTileLimit },
+            { Tiles.TeleportTile, teleportTileLimit },
+            { Tiles.ShopTile, shopTileLimit }
+        };
+
+        if (!experimentalShopRandomization) { availableTiles.Remove(Tiles.ShopTile); };
+
+        // This takes the tile count itself, so if you want to make a new board
+        // All you have to do is place empty tiles however you like
+        // This only randomizes tiles itself, not the "placement"
+        for (int i = 0; i < tilesIndex.Count; i++)
+        {
+            // Roll a random number between currently available tiles
+            Tiles randomTile = (Tiles)Random.Range(0, availableTiles.Count);
+            availableTiles[randomTile]++;
+
+            tilesIndex[i] = (int)randomTile;
+
+            if (randomTile == Tiles.EmptyTile) { continue; }
+
+            if (availableTiles[randomTile] >= tileLimits[randomTile])
+            {
+                availableTiles.Remove(randomTile);
+            }
+        }
+        
+
+        foreach  (var num in tilesIndex)
+        {
+            Debug.Log(num);
+        }
+    }
+
+
+    private bool RollWithChance(int chancePercent)
+    {
+        var randomPercent = Random.Range(0, 100);
+
+        return randomPercent < chancePercent;
+    }
+
+    #endregion
 
     #region OnEvents
 

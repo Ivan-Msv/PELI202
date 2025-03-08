@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerDeathAnimation : MonoBehaviour
+public class TimedAnimation : MonoBehaviour
 {
     [SerializeField] private Animator anim;
     private void Start()

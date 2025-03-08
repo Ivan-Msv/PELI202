@@ -14,6 +14,15 @@ public class MinigameTile : BoardTile
     {
         tileSprite = GameManager.instance.minigameTile.tileSprite;
         tileName = GameManager.instance.minigameTile.name;
+
+        var minigameTileComponent = GameManager.instance.minigameTile.GetComponent<MinigameTile>();
+
+        sceneNames1 = minigameTileComponent.sceneNames1;
+        sceneNames2 = minigameTileComponent.sceneNames2;
+        sceneNames3 = minigameTileComponent.sceneNames3;
+        sceneNames4 = minigameTileComponent.sceneNames4;
+
+        anim.Play("MinigameTile_Idle");
     }
     public override void InvokeTile()
     {

@@ -24339,6 +24339,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   currentState:
     m_InternalValue: 0
+  randomizeTiles: 1
+  experimentalShopRandomization: 0
+  teleportTileDistance: 0
+  minigameTileLimit: 20
+  challengeTileLimit: 3
+  shopTileLimit: 0
+  teleportTileLimit: 0
   currentPlayer: {fileID: 0}
   currentPlayerInfo: {fileID: 0}
   playerMovement: {fileID: 0}
@@ -24352,6 +24359,7 @@ MonoBehaviour:
   minigameTile: {fileID: 4882977734003989596, guid: f124085a496be6e4e92900bc5adf16af, type: 3}
   challengeTile: {fileID: 1798204089288071595, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
   shopTile: {fileID: 6177457955905682811, guid: 5f7e0225f85c1c447aba92d57252aafe, type: 3}
+  teleportTile: {fileID: 0}
   dice:
   - {fileID: 11400000, guid: a3920218b8857924ebae020604b9f5c0, type: 2}
   - {fileID: 11400000, guid: 2f3840f9d5389e848885b14a4f384923, type: 2}
@@ -87422,10 +87430,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 22292820}
   - {fileID: 1346766164}
   - {fileID: 772623501}
   - {fileID: 566759000}
-  - {fileID: 22292820}
   - {fileID: 851655765}
   - {fileID: 2080140701}
   m_Father: {fileID: 1692385399}

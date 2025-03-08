@@ -1,0 +1,733 @@
+fileFormatVersion: 2
+guid: 57d75da5c32ff5949819cc9bbf9b01c3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 852751209635881545
+    second: Teleport_Tile_SFX_0
+  - first:
+      213: 2920482752259885041
+    second: Teleport_Tile_SFX_1
+  - first:
+      213: -4852297661501112541
+    second: Teleport_Tile_SFX_2
+  - first:
+      213: 9163929340841368581
+    second: Teleport_Tile_SFX_3
+  - first:
+      213: -4620859073875938094
+    second: Teleport_Tile_SFX_4
+  - first:
+      213: 5944775775633375769
+    second: Teleport_Tile_SFX_5
+  - first:
+      213: 1649768573309918074
+    second: Teleport_Tile_SFX_6
+  - first:
+      213: 6283296932312876496
+    second: Teleport_Tile_SFX_7
+  - first:
+      213: -7604380134111686965
+    second: Teleport_Tile_SFX_8
+  - first:
+      213: 7106114533998277168
+    second: Teleport_Tile_SFX_9
+  - first:
+      213: 6059972658957013720
+    second: Teleport_Tile_SFX_10
+  - first:
+      213: -8628731104867171310
+    second: Teleport_Tile_SFX_11
+  - first:
+      213: 775522883982909600
+    second: Teleport_Tile_SFX_12
+  - first:
+      213: -713372544628884197
+    second: Teleport_Tile_SFX_13
+  - first:
+      213: 2951785401775842798
+    second: Teleport_Tile_SFX_14
+  - first:
+      213: 3721290233810330273
+    second: Teleport_Tile_SFX_15
+  - first:
+      213: -2219900412881561294
+    second: Teleport_Tile_SFX_16
+  - first:
+      213: -5159672683193639415
+    second: Teleport_Tile_SFX_17
+  - first:
+      213: -6744838569021075401
+    second: Teleport_Tile_SFX_18
+  - first:
+      213: 5226598258343960298
+    second: Teleport_Tile_SFX_19
+  - first:
+      213: -4978524025793098633
+    second: Teleport_Tile_SFX_20
+  - first:
+      213: -1346347632954243120
+    second: Teleport_Tile_SFX_21
+  - first:
+      213: 3343726854857485625
+    second: Teleport_Tile_SFX_22
+  - first:
+      213: 207047376555650011
+    second: Teleport_Tile_SFX_23
+  - first:
+      213: -6645900740036388261
+    second: Teleport_Tile_SFX_24
+  - first:
+      213: -593908904817698445
+    second: Teleport_Tile_SFX_25
+  - first:
+      213: -4137003379774015354
+    second: Teleport_Tile_SFX_26
+  - first:
+      213: 8672427872783037499
+    second: Teleport_Tile_SFX_27
+  - first:
+      213: -2975798534565665548
+    second: Teleport_Tile_SFX_28
+  - first:
+      213: 2804344334049655081
+    second: Teleport_Tile_SFX_29
+  - first:
+      213: 2823754317994442605
+    second: Teleport_Tile_SFX_30
+  - first:
+      213: -5375812748287274788
+    second: Teleport_Tile_SFX_31
+  - first:
+      213: 2655353317267904173
+    second: Teleport_Tile_SFX_32
+  - first:
+      213: -7294027083322031922
+    second: Teleport_Tile_SFX_33
+  - first:
+      213: -2522127838932055461
+    second: Teleport_Tile_SFX_34
+  - first:
+      213: -7214239115275327726
+    second: Teleport_Tile_SFX_35
+  - first:
+      213: -290996266542124899
+    second: Teleport_Tile_SFX_36
+  - first:
+      213: 959050367011685232
+    second: Teleport_Tile_SFX_37
+  - first:
+      213: -2914542175373721007
+    second: Teleport_Tile_SFX_38
+  - first:
+      213: 764180564126250969
+    second: Teleport_Tile_SFX_39
+  - first:
+      213: -2358144372866277832
+    second: Teleport_Tile_SFX_40
+  - first:
+      213: 3394218714019530551
+    second: Teleport_Tile_SFX_41
+  - first:
+      213: 8658593378282675436
+    second: Teleport_Tile_SFX_42
+  - first:
+      213: -7951844676354758347
+    second: Teleport_Tile_SFX_43
+  - first:
+      213: -616309984679813430
+    second: Teleport_Tile_SFX_44
+  - first:
+      213: 8831919973927573641
+    second: Teleport_Tile_SFX_45
+  - first:
+      213: 8904651879761342157
+    second: Teleport_Tile_SFX_46
+  - first:
+      213: -8627869276494691355
+    second: Teleport_Tile_SFX_47
+  - first:
+      213: -1806642419377158128
+    second: Teleport_Tile_SFX_48
+  - first:
+      213: -7699009170290536552
+    second: Teleport_Tile_SFX_49
+  - first:
+      213: -3478426898506090789
+    second: Teleport_Tile_SFX_50
+  - first:
+      213: -4694849313917552803
+    second: Teleport_Tile_SFX_51
+  - first:
+      213: 2336778440107094166
+    second: Teleport_Tile_SFX_52
+  - first:
+      213: 6753855220083785467
+    second: Teleport_Tile_SFX_53
+  - first:
+      213: -6526431514821961906
+    second: Teleport_Tile_SFX_54
+  - first:
+      213: -8679061514215311823
+    second: Teleport_Tile_SFX_55
+  - first:
+      213: -3555636979168375196
+    second: Teleport_Tile_SFX_56
+  - first:
+      213: 215980610237397673
+    second: Teleport_Tile_SFX_57
+  - first:
+      213: 9148157642648600357
+    second: Teleport_Tile_SFX_58
+  - first:
+      213: -7800093669930237226
+    second: Teleport_Tile_SFX_59
+  - first:
+      213: -3757124882745621937
+    second: Teleport_Tile_SFX_60
+  - first:
+      213: 6104855318467775592
+    second: Teleport_Tile_SFX_61
+  - first:
+      213: -1431590746173138152
+    second: Teleport_Tile_SFX_62
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 942a12405b495db00800000000000000
+      internalID: 852751209635881545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f70b1df693a78820800000000000000
+      internalID: 2920482752259885041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32f74c54cfc29acb0800000000000000
+      internalID: -4852297661501112541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50c11a3de21dc2f70800000000000000
+      internalID: 9163929340841368581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d4fb7897296fdfb0800000000000000
+      internalID: -4620859073875938094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91289f73216108250800000000000000
+      internalID: 5944775775633375769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7b9dbdc6c725e610800000000000000
+      internalID: 1649768573309918074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d58fc40541c23750800000000000000
+      internalID: 6283296932312876496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bce4c39ce80d77690800000000000000
+      internalID: -7604380134111686965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0323534d48dfd9260800000000000000
+      internalID: 7106114533998277168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_10
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d256b5b609591450800000000000000
+      internalID: 6059972658957013720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_11
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2144700f6c6904880800000000000000
+      internalID: -8628731104867171310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_12
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a0ecfe34f533ca00800000000000000
+      internalID: 775522883982909600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_13
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1df0e443779916f0800000000000000
+      internalID: -713372544628884197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_14
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee568060f29d6f820800000000000000
+      internalID: 2951785401775842798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_15
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a2256c50cda4a330800000000000000
+      internalID: 3721290233810330273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 239937506545131e0800000000000000
+      internalID: -2219900412881561294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Teleport_Tile_SFX_17
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90ed4f028092568b0800000000000000
+      internalID: -5159672683193639415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 83f37bdfd708caf4fb9112545f82ef28
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Teleport_Tile_SFX_0: 852751209635881545
+      Teleport_Tile_SFX_1: 2920482752259885041
+      Teleport_Tile_SFX_10: 6059972658957013720
+      Teleport_Tile_SFX_11: -8628731104867171310
+      Teleport_Tile_SFX_12: 775522883982909600
+      Teleport_Tile_SFX_13: -713372544628884197
+      Teleport_Tile_SFX_14: 2951785401775842798
+      Teleport_Tile_SFX_15: 3721290233810330273
+      Teleport_Tile_SFX_16: -2219900412881561294
+      Teleport_Tile_SFX_17: -5159672683193639415
+      Teleport_Tile_SFX_2: -4852297661501112541
+      Teleport_Tile_SFX_3: 9163929340841368581
+      Teleport_Tile_SFX_4: -4620859073875938094
+      Teleport_Tile_SFX_5: 5944775775633375769
+      Teleport_Tile_SFX_6: 1649768573309918074
+      Teleport_Tile_SFX_7: 6283296932312876496
+      Teleport_Tile_SFX_8: -7604380134111686965
+      Teleport_Tile_SFX_9: 7106114533998277168
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

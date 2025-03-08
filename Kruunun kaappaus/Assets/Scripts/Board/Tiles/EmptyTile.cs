@@ -5,12 +5,8 @@ using UnityEngine;
 public class EmptyTile : BoardTile
 {
     [SerializeField] private GameObject vfxPrefab;
-    private Animator anim;
     private void Awake()
     {
-        anim = GetComponent<Animator>();
-        anim.StopPlayback();
-
         if (GameManager.instance != null)
         {
             vfxPrefab = GameManager.instance.emptyTile.GetComponent<EmptyTile>().vfxPrefab;

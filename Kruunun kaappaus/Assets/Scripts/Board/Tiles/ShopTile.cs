@@ -7,6 +7,8 @@ public class ShopTile : BoardTile
     {
         tileSprite = GameManager.instance.shopTile.tileSprite;
         tileName = GameManager.instance.shopTile.name;
+
+        anim.Play("Shop_Idle");
     }
     public override void InvokeTile()
     {

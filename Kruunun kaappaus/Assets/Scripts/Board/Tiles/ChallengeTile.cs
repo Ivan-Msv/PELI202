@@ -11,13 +11,6 @@ public class ChallengeTile : BoardTile
     [SerializeField] private string[] sceneNames2;
     [SerializeField] private string[] sceneNames3;
     [SerializeField] private string[] sceneNames4;
-    private Animator anim;
-
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-        anim.StopPlayback();
-    }
 
     public override void SetupTile()
     {

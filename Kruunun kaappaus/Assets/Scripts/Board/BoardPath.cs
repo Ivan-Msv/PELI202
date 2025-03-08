@@ -8,7 +8,7 @@ using UnityEngine;
 
 public enum Tiles
 {
-    EmptyTile, MinigameTile, ChallengeTile, ShopTile
+    EmptyTile, MinigameTile, ChallengeTile, ShopTile, TeleportTile
 }
 public class BoardPath : NetworkBehaviour
 {
@@ -35,7 +35,13 @@ public class BoardPath : NetworkBehaviour
         {
             ResetTiles();
         }
+
         GameManager.instance.tilesIndex.OnListChanged += UpdateTiles;
+
+        if (IsServer && GameManager.instance.randomizeTiles)
+        {
+            GameManager.instance.TileRandomization();
+        }
     }
 
 
@@ -49,8 +55,11 @@ public class BoardPath : NetworkBehaviour
         }
     }
 
+
     private void AddNetworkTiles()
     {
+        if (!IsServer) { return; }
+
         foreach (var tile in tiles)
         {
             GameManager.instance.tilesIndex.Add(GetTileIndex(tile.GetComponent<BoardTile>()));
@@ -117,6 +126,8 @@ public class BoardPath : NetworkBehaviour
                 return GameManager.instance.challengeTile;
             case Tiles.ShopTile:
                 return GameManager.instance.shopTile;
+            case Tiles.TeleportTile:
+                return GameManager.instance.teleportTile;
         }
 
         Debug.LogError("Couldn't find from given index, returning empty");
