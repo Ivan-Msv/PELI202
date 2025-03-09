@@ -255,7 +255,7 @@ public class LevelManager : NetworkBehaviour
             yield break;
         }
 
-        NetworkManager.SceneManager.LoadScene("MainBoard", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        NetworkManager.SceneManager.LoadScene(GameManager.instance.MainBoardScene, UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private IEnumerator ThreeTwoOneCoroutine()

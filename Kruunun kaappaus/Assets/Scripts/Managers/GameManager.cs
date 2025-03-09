@@ -15,10 +15,28 @@ public enum BoardState
     WaitingForPlayers, SelectingPlayer, PlayerTurnCount, PlayerMoving, Idle
 }
 
+[Serializable]
+public struct TileRandom
+{
+    [Space]
+    public bool randomize;
+    public Tiles tileType;
+    public int tileWeight;
+    [Space]
+    public bool distanceTiles;
+    public int tileDistance;
+    public int distanceRerollStartChance;
+    public int distanceRerollChanceIncrease;
+    [Space]
+    public bool limitTiles;
+    public int tileLimit;
+}
+
 public class GameManager : NetworkBehaviour
 {
     // Singleton
     public static GameManager instance;
+    public string MainBoardScene { get; private set; }
 
     // Game Manager Related
     public NetworkVariable<BoardState> currentState = new();
@@ -26,12 +44,7 @@ public class GameManager : NetworkBehaviour
 
     [Header("Tile randomization")]
     public bool randomizeTiles;
-    [SerializeField] private bool experimentalShopRandomization;
-    [SerializeField] private int teleportTileDistance;
-    [SerializeField] private int minigameTileLimit;
-    [SerializeField] private int challengeTileLimit;
-    [SerializeField] private int shopTileLimit;
-    [SerializeField] private int teleportTileLimit;
+    [SerializeField] private TileRandom[] randomTiles;
 
     [Header("Player Related")]
     public BoardPlayerInfo currentPlayer;
@@ -90,6 +103,7 @@ public class GameManager : NetworkBehaviour
     {
         if (IsServer)
         {
+            MainBoardScene = SceneManager.GetActiveScene().name;
             SceneManager.activeSceneChanged += OnSceneChangedServer;
         }
 
@@ -119,42 +133,99 @@ public class GameManager : NetworkBehaviour
         // And for this I needed to turn them into IEnumerable first, and then to dictionary
         var availableTiles = Enum.GetValues(typeof(Tiles)).Cast<Tiles>().ToDictionary(tile => tile, tile => 0);
 
-        var tileLimits = new Dictionary<Tiles, int>()
-        {
-            { Tiles.MinigameTile, minigameTileLimit },
-            { Tiles.ChallengeTile, challengeTileLimit },
-            { Tiles.TeleportTile, teleportTileLimit },
-            { Tiles.ShopTile, shopTileLimit }
-        };
-
-        if (!experimentalShopRandomization) { availableTiles.Remove(Tiles.ShopTile); };
-
         // This takes the tile count itself, so if you want to make a new board
         // All you have to do is place empty tiles however you like
         // This only randomizes tiles itself, not the "placement"
         for (int i = 0; i < tilesIndex.Count; i++)
         {
-            // Roll a random number between currently available tiles
-            Tiles randomTile = (Tiles)Random.Range(0, availableTiles.Count);
-            availableTiles[randomTile]++;
-
-            tilesIndex[i] = (int)randomTile;
-
-            if (randomTile == Tiles.EmptyTile) { continue; }
-
-            if (availableTiles[randomTile] >= tileLimits[randomTile])
+            while (true)
             {
-                availableTiles.Remove(randomTile);
-            }
-        }
-        
+                // Roll between currently available tiles
+                Tiles randomTile = GetRandomTile(availableTiles);
+                TileRandom tileData = FindRandomTile(randomTile);
 
-        foreach  (var num in tilesIndex)
-        {
-            Debug.Log(num);
+                // if randomization disabled break early, to prevent it being changed
+                if (!tileData.randomize || !FindRandomTile((Tiles)tilesIndex[i]).randomize)
+                {
+                    Debug.Log($"Can't randomize {tileData.tileType}");
+                    break;
+                }
+
+                // Replace with empty ? 
+                tilesIndex[i] = (int)Tiles.EmptyTile;
+
+                if (tileData.limitTiles && availableTiles[randomTile] >= tileData.tileLimit)
+                {
+                    availableTiles.Remove(randomTile);
+                    Debug.Log($"Does this ever work bruh {randomTile}");
+                    continue;
+                }
+
+                var tileDistance = tileData.tileDistance;
+                var rerollStartChance = tileData.distanceRerollStartChance;
+                var rerollChanceIncrease = tileData.distanceRerollChanceIncrease;
+
+                var tileBehindIncreasedChance = 0;
+                bool rerollTile = false;
+                for (int j = 1; j < tileDistance + 1; j++)
+                {
+                    // If disabled, just break
+                    if (!tileData.distanceTiles) { break; }
+
+                    // i is the current tile index
+                    // j here is the amount of tiles behind
+                    var previousIndex = (i - j + BoardPath.instance.tiles.Count) % BoardPath.instance.tiles.Count;
+                    var previousTile = BoardPath.instance.tiles[previousIndex].GetComponent<BoardTile>();
+
+                    if ((Tiles)BoardPath.instance.GetTileIndex(previousTile) == randomTile)
+                    {
+                        // Rolls with start + increasing chance
+                        // On success it continues, otherwise it rerolls a tile
+                        if (!RollWithChance(rerollStartChance + tileBehindIncreasedChance))
+                        {
+                            rerollTile = true;
+                            break;
+                        }
+                    }
+
+                    tileBehindIncreasedChance += rerollChanceIncrease;
+                }
+
+                if (rerollTile) { continue; }
+
+                availableTiles[randomTile]++;
+                tilesIndex[i] = (int)randomTile;
+
+                // Breaks the while true if everything went right, continues the loop
+                break;
+            }
         }
     }
 
+    private TileRandom FindRandomTile(Tiles givenTile)
+    {
+        TileRandom returnTile = randomTiles.FirstOrDefault(rngTile => rngTile.tileType == givenTile);
+
+        return returnTile;
+    }
+
+    private Tiles GetRandomTile(Dictionary<Tiles, int> givenTiles)
+    {
+        var randomIndex = Random.Range(0, givenTiles.Count);
+
+        // Replace placed amount into weight instead, since it's useless here
+        //foreach (var tile in givenTiles)
+        //{
+        //    givenTiles[tile.Key] = FindRandomTile(tile.Key).tileWeight;
+        //}
+
+
+
+
+        Tiles randomTile = givenTiles.Keys.ElementAt(randomIndex);
+
+        return randomTile;
+    }
 
     private bool RollWithChance(int chancePercent)
     {
@@ -220,6 +291,12 @@ public class GameManager : NetworkBehaviour
         if (IsServer)
         {
             GameLoop();
+
+            // DEBUG
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                TileRandomization();
+            }
         }
     }
 

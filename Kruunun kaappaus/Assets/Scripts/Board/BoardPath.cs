@@ -109,6 +109,8 @@ public class BoardPath : NetworkBehaviour
                 return 2;
             case ShopTile:
                 return 3;
+            case TeleportTile:
+                return 4;
         }
 
         Debug.LogError("Couldn't find tile, returning empty");
