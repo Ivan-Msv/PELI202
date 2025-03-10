@@ -111,6 +111,11 @@ public class GameManager : NetworkBehaviour
         {
             MainBoardScene = SceneManager.GetActiveScene().name;
             SceneManager.activeSceneChanged += OnSceneChangedServer;
+
+            var playerObject = NetworkManager.SpawnManager.GetLocalPlayerObject();
+            Debug.Log(playerObject.name);
+            bool.TryParse(playerObject.GetComponent<PlayerSetup>().SavedData["RandomizeTiles"].Value, out bool randomize);
+            randomizeTiles = randomize;
         }
 
         ComponentInitialization();

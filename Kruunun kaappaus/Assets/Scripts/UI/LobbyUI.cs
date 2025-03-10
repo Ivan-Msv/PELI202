@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public class LobbyUI : NetworkBehaviour
 {
     public static LobbyUI instance;
+    [SerializeField] private BoardMaps boardMap;
     private Lobby currentLobby;
     private string currentLobbyId;
     private float pollingTimer;
@@ -149,7 +150,6 @@ public class LobbyUI : NetworkBehaviour
 
         if (currentLobby.HostId == AuthenticationService.Instance.PlayerId)
         {
-            startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Start Match";
             startGame.interactable = true;
         }
         else
@@ -276,6 +276,7 @@ public class LobbyUI : NetworkBehaviour
         var newData = new Dictionary<string, PlayerDataObject>()
         {
             { "ServerStarted", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "1") },
+            { "RandomizeTiles", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, boardMap.RandomizeMap().ToString()) },
             { "AllocationCode", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, allocationCode.ToString()) }
         };
         await LobbyService.Instance.UpdatePlayerAsync(currentLobbyId, currentLobby.HostId, new UpdatePlayerOptions() { Data = newData });
@@ -311,7 +312,7 @@ public class LobbyUI : NetworkBehaviour
 
         if (NetworkManager.ConnectedClients.Count == currentLobby.Players.Count)
         {
-            NetworkManager.SceneManager.LoadScene("DebugBoard", LoadSceneMode.Single);
+            NetworkManager.SceneManager.LoadScene(boardMap.GetCurrentMap(), LoadSceneMode.Single);
         }
     }
     private void DisableListeners()
