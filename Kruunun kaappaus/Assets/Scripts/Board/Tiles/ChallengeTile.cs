@@ -18,6 +18,8 @@ public class ChallengeTile : BoardTile
         // Oisin voinu tehä struct tai jtn mut nyt mun pitää kärsii koska en oo vaihtamas sitä täs vaihees
         tileSprite = GameManager.instance.challengeTile.tileSprite;
         tileName = GameManager.instance.challengeTile.name;
+        minimapSprite = GameManager.instance.challengeTile.minimapSprite;
+
         var challengeTileComponent = GameManager.instance.challengeTile.GetComponent<ChallengeTile>();
         sceneNames1 = challengeTileComponent.sceneNames1;
         sceneNames2 = challengeTileComponent.sceneNames2;

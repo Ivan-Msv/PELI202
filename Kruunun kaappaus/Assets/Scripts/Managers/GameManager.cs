@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -45,6 +46,11 @@ public class GameManager : NetworkBehaviour
     [Header("Tile randomization")]
     public bool randomizeTiles;
     [SerializeField] private TileRandom[] randomTiles;
+
+    [Header("Game Related")]
+    [SerializeField] private int turnsToAddChallengeTile;
+    public int nonChallengeTileCount;
+    [field: SerializeField] public int CrownsToWin { get; private set; }
 
     [Header("Player Related")]
     public BoardPlayerInfo currentPlayer;
@@ -147,17 +153,17 @@ public class GameManager : NetworkBehaviour
                 // if randomization disabled break early, to prevent it being changed
                 if (!tileData.randomize || !FindRandomTile((Tiles)tilesIndex[i]).randomize)
                 {
-                    Debug.Log($"Can't randomize {tileData.tileType}");
                     break;
                 }
 
                 // Replace with empty ? 
+                // So the old tiles don't persist, not sure if it even works to be fair
                 tilesIndex[i] = (int)Tiles.EmptyTile;
 
+                // Attempts to remove tile when it reaches limit
+                // Not sure if this works either LOL
                 if (tileData.limitTiles && availableTiles[randomTile] >= tileData.tileLimit)
                 {
-                    availableTiles.Remove(randomTile);
-                    Debug.Log($"Does this ever work bruh {randomTile}");
                     continue;
                 }
 
@@ -209,22 +215,33 @@ public class GameManager : NetworkBehaviour
         return returnTile;
     }
 
+    // https://stackoverflow.com/questions/1761626/weighted-random-numbers
+    // Took inspiration
     private Tiles GetRandomTile(Dictionary<Tiles, int> givenTiles)
     {
-        var randomIndex = Random.Range(0, givenTiles.Count);
+        var weightedTiles = new Dictionary<Tiles, int>(givenTiles);
 
-        // Replace placed amount into weight instead, since it's useless here
-        //foreach (var tile in givenTiles)
-        //{
-        //    givenTiles[tile.Key] = FindRandomTile(tile.Key).tileWeight;
-        //}
+        foreach (var tile in givenTiles)
+        {
+            weightedTiles[tile.Key] = FindRandomTile(tile.Key).tileWeight;
+        }
 
+        // Get total weight to use for a random gen
+        var totalWeight = weightedTiles.Sum(tiles => tiles.Value);
 
+        var randomWeight = Random.Range(0, totalWeight);
 
+        foreach (var tile in weightedTiles)
+        {
+            randomWeight -= tile.Value;
 
-        Tiles randomTile = givenTiles.Keys.ElementAt(randomIndex);
+            if (randomWeight < 0)
+            {
+                return tile.Key;
+            }
+        }
 
-        return randomTile;
+        return weightedTiles.Keys.First();
     }
 
     private bool RollWithChance(int chancePercent)
@@ -345,6 +362,45 @@ public class GameManager : NetworkBehaviour
         if (TurnTimer.Value <= 0)
         {
             RollDiceServerRpc();
+        }
+    }
+
+    private void TryAddChallengeTile()
+    {
+        if (nonChallengeTileCount >= turnsToAddChallengeTile)
+        {
+            AddRandomTile(Tiles.ChallengeTile, new Tiles[] { Tiles.EmptyTile });
+            nonChallengeTileCount = 0;
+        }
+    }
+
+    private void AddRandomTile(Tiles tileToAdd, Tiles[] replaceableTiles)
+    {
+        bool replaced = false;
+        int tries = 100;
+        while (true)
+        {
+            if (tries <= 0)
+            {
+                Debug.LogError("Couldn't find any tiles to replace, are you using this right?");
+                break;
+            }
+
+            var randomIndex = Random.Range(0, tilesIndex.Count);
+
+            foreach (var tile in replaceableTiles)
+            {
+                if ((int)tile == tilesIndex[randomIndex])
+                {
+                    tilesIndex[randomIndex] = (int)tileToAdd;
+                    replaced = true;
+                    break;
+                }
+            }
+
+            if (replaced) { break; }
+
+            tries--;
         }
     }
 
@@ -506,6 +562,7 @@ public class GameManager : NetworkBehaviour
 
         if (IsServer)
         {
+            TryAddChallengeTile();
             BoardUIManager.instance.shopUI.UpdateItems();
             TurnTimer.Value = playerTurnTime;
             playerTurn.Value++;

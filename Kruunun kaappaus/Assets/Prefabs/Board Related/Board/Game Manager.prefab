@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &643366134683644385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8092550295811019605}
+  - component: {fileID: 5319914245031021491}
+  - component: {fileID: 6830677562915800954}
+  - component: {fileID: 8710425777529797220}
+  m_Layer: 0
+  m_Name: Game Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8092550295811019605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643366134683644385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5319914245031021491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643366134683644385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1841636244
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 1
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &6830677562915800954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643366134683644385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c68c1beab1fdcb44dbc7fa7609f4bbb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  currentState:
+    m_InternalValue: 0
+  randomizeTiles: 1
+  randomTiles:
+  - randomize: 1
+    tileType: 0
+    tileWeight: 50
+    distanceTiles: 0
+    tileDistance: 1
+    distanceRerollStartChance: 0
+    distanceRerollChanceIncrease: 0
+    limitTiles: 0
+    tileLimit: 0
+  - randomize: 1
+    tileType: 1
+    tileWeight: 25
+    distanceTiles: 0
+    tileDistance: 0
+    distanceRerollStartChance: 0
+    distanceRerollChanceIncrease: 0
+    limitTiles: 0
+    tileLimit: 0
+  - randomize: 1
+    tileType: 2
+    tileWeight: 20
+    distanceTiles: 1
+    tileDistance: 2
+    distanceRerollStartChance: 15
+    distanceRerollChanceIncrease: 15
+    limitTiles: 1
+    tileLimit: 3
+  - randomize: 0
+    tileType: 3
+    tileWeight: 0
+    distanceTiles: 0
+    tileDistance: 0
+    distanceRerollStartChance: 0
+    distanceRerollChanceIncrease: 0
+    limitTiles: 0
+    tileLimit: 0
+  - randomize: 0
+    tileType: 4
+    tileWeight: 0
+    distanceTiles: 0
+    tileDistance: 0
+    distanceRerollStartChance: 0
+    distanceRerollChanceIncrease: 0
+    limitTiles: 0
+    tileLimit: 0
+  turnsToAddChallengeTile: 1
+  nonChallengeTileCount: 0
+  <CrownsToWin>k__BackingField: 3
+  currentPlayer: {fileID: 0}
+  currentPlayerInfo: {fileID: 0}
+  playerMovement: {fileID: 0}
+  availablePlayers: []
+  TurnTimer:
+    m_InternalValue: 0
+  playerTurnTime: 25
+  playerTurn:
+    m_InternalValue: 0
+  emptyTile: {fileID: 6369674609150201810, guid: b3d2bd5286faa7142a50d147acb0d892, type: 3}
+  minigameTile: {fileID: 4882977734003989596, guid: f124085a496be6e4e92900bc5adf16af, type: 3}
+  challengeTile: {fileID: 1798204089288071595, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
+  shopTile: {fileID: 6177457955905682811, guid: 5f7e0225f85c1c447aba92d57252aafe, type: 3}
+  teleportTile: {fileID: 0}
+  dice:
+  - {fileID: 11400000, guid: a3920218b8857924ebae020604b9f5c0, type: 2}
+  - {fileID: 11400000, guid: 2f3840f9d5389e848885b14a4f384923, type: 2}
+  - {fileID: 11400000, guid: 9b4e97823e7cae84b86a466a43355054, type: 2}
+  - {fileID: 11400000, guid: bf7b980e2bf991a469135284abb83a59, type: 2}
+  - {fileID: 11400000, guid: 5d92fc3131c18ea409831056b4ec915b, type: 2}
+  - {fileID: 11400000, guid: 44e2f72d9b302b24bafbe85f2cd3e1f4, type: 2}
+  - {fileID: 11400000, guid: aa06cf422fba22842b10d96b774e0d6b, type: 2}
+  - {fileID: 11400000, guid: 4e9457135fb595c4e9c7683c9cd4862a, type: 2}
+  diceAnimator: {fileID: 0}
+  lastRolledNumber:
+    m_InternalValue: 0
+  afterDiceDelaySeconds: 1
+--- !u!114 &8710425777529797220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643366134683644385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 732a41ff825355246bc855bee7d809ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  moveSpeed: 10

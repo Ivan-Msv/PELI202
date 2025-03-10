@@ -16,6 +16,7 @@ public class EmptyTile : BoardTile
     {
         tileSprite = GameManager.instance.emptyTile.tileSprite;
         tileName = GameManager.instance.emptyTile.name;
+        minimapSprite = GameManager.instance.emptyTile.minimapSprite;
 
         // On scene switch it might have crowntile from the start even though it should be empty
         if (!anim.GetCurrentAnimatorStateInfo(0).IsName("EmptyTile_Switch"))

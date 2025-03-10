@@ -13,6 +13,7 @@ public enum Tiles
 public class BoardPath : NetworkBehaviour
 {
     public static BoardPath instance;
+    public LineRenderer pathLineRenderer;
     public List<GameObject> tiles;
 
     private void Awake()
@@ -52,6 +53,15 @@ public class BoardPath : NetworkBehaviour
         foreach (Transform tile in transform)
         {
             tiles.Add(tile.gameObject);
+        }
+
+
+        pathLineRenderer.positionCount = tiles.Count;
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            var adjustedPosition = new Vector2(tiles[i].transform.position.x, tiles[i].transform.position.y - 0.5f);
+            pathLineRenderer.SetPosition(i, adjustedPosition);
         }
     }
 

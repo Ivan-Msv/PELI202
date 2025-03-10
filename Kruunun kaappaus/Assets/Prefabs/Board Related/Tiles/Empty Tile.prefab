@@ -103,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileSprite: {fileID: -2651656876551895629, guid: ce68c58853bd9314d9218679893733ba, type: 3}
   tileName: 
+  minimapSprite: {fileID: 3186115200877668588, guid: 30a099034c6d46644bb797e4949e94e3, type: 3}
+  anim: {fileID: 0}
   vfxPrefab: {fileID: 2300734494371088752, guid: 4d99204278fba31428a3a12e9c3bf582, type: 3}
 --- !u!95 &3471826482464308289
 Animator:

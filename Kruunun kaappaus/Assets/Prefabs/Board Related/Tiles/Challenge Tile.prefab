@@ -103,6 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileSprite: {fileID: 7820641470027995368, guid: 4d0e4373ba5491340aa8cf0c42ca0a1d, type: 3}
   tileName: 
+  minimapSprite: {fileID: 3186115200877668588, guid: 378920d919c8adb439252129be923f5c, type: 3}
+  anim: {fileID: 0}
   sceneNames1:
   - 1PChallengeLevel1
   - 1PChallengeLevel2

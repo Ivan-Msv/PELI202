@@ -65,9 +65,14 @@ public class BoardPlayerMovement : NetworkBehaviour
         GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
         BoardPath.instance.SplitPlayersOnTiles();
 
+        bool challengeTile = GameManager.instance.tilesIndex[player.playerInfo.currentBoardPosition.Value] == (int)Tiles.ChallengeTile;
+
         if (!emptyRoll)
         {
             BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
+
+            // If not a challenge tile, add count
+            GameManager.instance.nonChallengeTileCount += challengeTile ? 0 : 1;
         }
     }
 

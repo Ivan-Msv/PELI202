@@ -14,6 +14,7 @@ public class MinigameTile : BoardTile
     {
         tileSprite = GameManager.instance.minigameTile.tileSprite;
         tileName = GameManager.instance.minigameTile.name;
+        minimapSprite = GameManager.instance.minigameTile.minimapSprite;
 
         var minigameTileComponent = GameManager.instance.minigameTile.GetComponent<MinigameTile>();
 

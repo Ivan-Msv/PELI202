@@ -26,12 +26,15 @@ public class BoardUIManager : MonoBehaviour
     [Header("UI")]
     public BoardShop shopUI;
     public GameObject gameEndUI;
+    public GameObject mapUI;
+    public BoardMap mapComponent;
     public GameObject rollDiceUI;
     public SpecialDiceUI diceUI;
     public BoardCamera boardCamera;
     public Animator diceAnimator;
 
     [Header("Buttons")]
+    [SerializeField] private Button[] mapButtons;
     [SerializeField] private Button rollButton;
     public Button rerollButton;
     public Button confirmRollButton;
@@ -59,6 +62,11 @@ public class BoardUIManager : MonoBehaviour
         rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); AudioManager.instance.PlaySound(SoundType.BoardSelect); });
         rerollButton.onClick.AddListener(() => { GameManager.instance.RerollButtonEventRpc(); });
         confirmRollButton.onClick.AddListener(() => { GameManager.instance.ConfirmButtonEventRpc(); });
+
+        foreach (var button in mapButtons)
+        {
+            button.onClick.AddListener(() => { ToggleMap(); });
+        }
     }
 
     private void OnDisable()
@@ -102,6 +110,13 @@ public class BoardUIManager : MonoBehaviour
         string timerText = string.Format("{0:00}:{1:00}", timeInMinutes, timeInSeconds);
         playerTurnTimer.text = timerText;
     }
+
+    private void ToggleMap()
+    {
+        mapUI.SetActive(!mapUI.activeSelf);
+        mapComponent.ResetMapPosition();
+    }
+
     private void UpdateLocalPlayers()
     {
         localPlayer = GameManager.instance.availablePlayers.Find(player => player.OwnerClientId == NetworkManager.Singleton.LocalClientId);
@@ -158,7 +173,7 @@ public class BoardUIManager : MonoBehaviour
 
     private void CheckForGameEnd()
     {
-        if (localParent.crownAmount.Value >= 3)
+        if (localParent.crownAmount.Value >= GameManager.instance.CrownsToWin)
         {
             GameManager.instance.TriggerGameEndRpc();
         }

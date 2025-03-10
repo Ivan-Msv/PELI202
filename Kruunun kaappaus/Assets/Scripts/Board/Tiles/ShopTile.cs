@@ -7,6 +7,7 @@ public class ShopTile : BoardTile
     {
         tileSprite = GameManager.instance.shopTile.tileSprite;
         tileName = GameManager.instance.shopTile.name;
+        minimapSprite = GameManager.instance.shopTile.minimapSprite;
 
         anim.Play("Shop_Idle");
     }

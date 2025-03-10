@@ -9,6 +9,7 @@ public class TeleportTile : BoardTile
     {
         tileSprite = GameManager.instance.teleportTile.tileSprite;
         tileName = GameManager.instance.teleportTile.name;
+        minimapSprite = GameManager.instance.teleportTile.minimapSprite;
 
         GetAllTeleportTiles();
     }
