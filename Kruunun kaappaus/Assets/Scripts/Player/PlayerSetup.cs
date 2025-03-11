@@ -17,6 +17,7 @@ public class PlayerSetup : NetworkBehaviour
 {
     [SerializeField] private GameObject player2D;
     [SerializeField] private GameObject playerTopDown;
+    public bool randomizeTiles;
     private PlayerState currentState;
     public Dictionary<string, PlayerDataObject> SavedData { get; private set; }
 
@@ -26,6 +27,7 @@ public class PlayerSetup : NetworkBehaviour
         {
             return;
         }
+        randomizeTiles = LobbyUI.instance.boardMap.RandomizeMap();
         currentState = PlayerState.Menu;
         SavedData = TryGetSavedData();
     }

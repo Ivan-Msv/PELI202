@@ -13,7 +13,7 @@ using UnityEngine.UI;
 public class LobbyUI : NetworkBehaviour
 {
     public static LobbyUI instance;
-    [SerializeField] private BoardMaps boardMap;
+    public BoardMaps boardMap;
     private Lobby currentLobby;
     private string currentLobbyId;
     private float pollingTimer;

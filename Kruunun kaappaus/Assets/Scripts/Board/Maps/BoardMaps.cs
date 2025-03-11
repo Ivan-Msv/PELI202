@@ -33,6 +33,7 @@ public class BoardMaps : MonoBehaviour
             var mapObject = Instantiate(mapPrefab, mapSelectionPanel.transform);
             var index = i;
             mapObject.GetComponentInChildren<Button>().onClick.AddListener(() => { UpdateSelectedIndex(index); });
+            mapObject.GetComponent<SpriteRenderer>().sprite = mapList.mapList[i].mapImage;
         }
 
         randomizeTilesToggle.isOn = randomizeMap;

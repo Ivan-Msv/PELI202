@@ -113,9 +113,7 @@ public class GameManager : NetworkBehaviour
             SceneManager.activeSceneChanged += OnSceneChangedServer;
 
             var playerObject = NetworkManager.SpawnManager.GetLocalPlayerObject();
-            Debug.Log(playerObject.name);
-            bool.TryParse(playerObject.GetComponent<PlayerSetup>().SavedData["RandomizeTiles"].Value, out bool randomize);
-            randomizeTiles = randomize;
+            randomizeTiles = playerObject.GetComponent<PlayerSetup>().randomizeTiles;
         }
 
         ComponentInitialization();
