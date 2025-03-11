@@ -136,7 +136,9 @@ public class BoardShop : NetworkBehaviour
         shopPanel.gameObject.SetActive(!shopUI.activeSelf);
         shopUI.SetActive(!shopUI.activeSelf);
 
-        shopViewToggle.isOn = shopUI.activeSelf;
+        // Apparently just changing it's "isOn" causes massive freezes
+        // And I'm not sure why, since it only happens once to my understanding
+        shopViewToggle.SetIsOnWithoutNotify(shopUI.activeSelf);
 
         if (BoardUIManager.instance.LocalPlayerOnShopTile())
         {

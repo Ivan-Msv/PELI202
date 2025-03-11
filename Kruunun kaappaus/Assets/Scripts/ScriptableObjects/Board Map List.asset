@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 0c4478a004c5856438f14f1900ea8cff, type: 3}
   m_Name: Board Map List
-  m_EditorClassIdentifier: Assembly-CSharp::MapList
+  m_EditorClassIdentifier: 
   mapList:
   - sceneName: MainBoard1
     mapImage: {fileID: 21300000, guid: 3e5fa1f282e3a1c42a9f93980344cd47, type: 3}

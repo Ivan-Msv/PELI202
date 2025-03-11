@@ -3,13 +3,6 @@ using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-[CreateAssetMenu(menuName = "Board/Maplist")]
-public class MapList : ScriptableObject
-{
-    public MapSettings[] mapList;
-}
-
 [Serializable]
 public struct MapSettings
 {
@@ -19,7 +12,7 @@ public struct MapSettings
 
 public class BoardMaps : MonoBehaviour
 {
-    [SerializeField] private MapList mapList;
+    [SerializeField] private MapListScriptable mapList;
     [SerializeField] private GameObject mapSelectionPanel;
     [SerializeField] private GameObject mapPrefab;
     [SerializeField] private Toggle randomizeTilesToggle;

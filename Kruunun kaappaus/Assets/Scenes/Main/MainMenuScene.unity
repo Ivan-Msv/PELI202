@@ -1014,7 +1014,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.41055098, y: 0.026594233}
   m_AnchorMax: {x: 0.590521, y: 0.16744569}
-  m_AnchoredPosition: {x: -0.8883362, y: -1.0005493}
+  m_AnchoredPosition: {x: -0.8883362, y: -1.0005798}
   m_SizeDelta: {x: 3, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &246790849
@@ -17419,7 +17419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010914b3140334b47a6211b3d5b851c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapList: {fileID: 11400000, guid: fc1abc82c5cf5e44baea7060f420af57, type: 2}
+  mapList: {fileID: 11400000, guid: 5d91e16c84635bb4bb26e9993446d858, type: 2}
   mapSelectionPanel: {fileID: 939037361619907188}
   mapPrefab: {fileID: 8058621082031733564, guid: 6667933100d3d2042be3c309c3e99d1c, type: 3}
   randomizeTilesToggle: {fileID: 8655704615940055505}
@@ -19064,7 +19064,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -27.84376, y: -0.0000038146973}
+  m_AnchoredPosition: {x: -27.843765, y: -0.0000076293945}
   m_SizeDelta: {x: -96.2551, y: -25.441}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5400983541527560042

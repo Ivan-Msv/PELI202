@@ -53,12 +53,12 @@ public class BoardPlayerMovement : NetworkBehaviour
 
             // Muuten avaa kaupan, ja jatkaa liikkumisen kun kauppa sulkee
             BoardUIManager.instance.shopUI.OpenStore();
-            PlayShopAnimationRpc(index, "Shop_Activate");
+            //PlayShopAnimationRpc(index, "Shop_Activate");
             while (BoardUIManager.instance.shopUI.StoreOpen())
             {
                 yield return null;
             }
-            PlayShopAnimationRpc(index, "Shop_Deactivate");
+            //PlayShopAnimationRpc(index, "Shop_Deactivate");
         }
 
         alreadyMoving = false;

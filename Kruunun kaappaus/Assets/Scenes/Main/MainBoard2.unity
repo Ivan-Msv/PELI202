@@ -38268,6 +38268,10 @@ PrefabInstance:
       propertyPath: invertDrag
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 129123420218876723, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1126095602619818725, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -2.9999695
@@ -38320,9 +38324,21 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 1929901548351156092, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2574570635290099318, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -3.4999695
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595827617930541720, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2741004522224712165, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3022863224899917084, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -38330,6 +38346,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3022863224899917084, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3249391608163936903, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3712913297566011248, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4519516423970916706, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
@@ -38360,6 +38384,10 @@ PrefabInstance:
       propertyPath: BoundingShape2D
       value: 
       objectReference: {fileID: 3601940}
+    - target: {fileID: 8928567166166012338, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
