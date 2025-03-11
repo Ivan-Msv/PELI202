@@ -56,8 +56,6 @@ public class BoardUIManager : MonoBehaviour
         {
             instance = this;
         }
-        GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
-        GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
 
         rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); AudioManager.instance.PlaySound(SoundType.BoardSelect); });
         rerollButton.onClick.AddListener(() => { GameManager.instance.RerollButtonEventRpc(); });
@@ -69,10 +67,10 @@ public class BoardUIManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    public void AddListeners()
     {
-        GameManager.instance.OnPlayerValueChange -= UpdateLocalPlayers;
-        GameManager.instance.OnCurrentPlayerChange -= UpdateCurrentPlayerName;
+        GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
+        GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
     }
 
     private void Update()

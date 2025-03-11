@@ -39079,7 +39079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &911069083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39093,7 +39093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  pathLineRenderer: {fileID: 0}
+  pathLineRenderer: {fileID: 2020467598}
   tiles:
   - {fileID: 2090244991}
   - {fileID: 1280541611}
@@ -39139,7 +39139,7 @@ Transform:
   m_GameObject: {fileID: 911069082}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -56462,7 +56462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1947310052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64120,6 +64120,10 @@ PrefabInstance:
     - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
       propertyPath: randomizeTiles
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: turnsToAddChallengeTile
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8092550295811019605, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
       propertyPath: m_LocalPosition.x

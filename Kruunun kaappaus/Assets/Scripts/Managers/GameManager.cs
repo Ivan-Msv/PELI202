@@ -124,6 +124,7 @@ public class GameManager : NetworkBehaviour
     {
         BoardPath.instance = GameObject.FindGameObjectWithTag("Board Path").GetComponent<BoardPath>();
         diceAnimator = BoardUIManager.instance.diceAnimator;
+        BoardUIManager.instance.AddListeners();
     }
 
 
@@ -313,7 +314,7 @@ public class GameManager : NetworkBehaviour
             GameLoop();
 
             // DEBUG
-            if (Input.GetKeyDown(KeyCode.F5))
+            if (Input.GetKeyDown(KeyCode.F8))
             {
                 TileRandomization();
             }
