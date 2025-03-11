@@ -33,7 +33,13 @@ public abstract class PressurePlate : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (onlyAffectPlayer || !IsServer) { return; }
+        if (!IsServer) { return; }
+
+        collision.TryGetComponent(out PlayerMovement2D playerMovement);
+
+        if (onlyAffectPlayer && playerMovement == null) { return; }
+
+        if (playerMovement.isGhost) { return; }
 
         PressurePlateCallbackRpc();
     }
