@@ -318,6 +318,11 @@ public class GameManager : NetworkBehaviour
             {
                 TileRandomization();
             }
+            if (Input.GetKeyDown(KeyCode.F9))
+            {
+                playerTurnTime = 329494922934;
+                TurnTimer.Value = 329494922934;
+            }
         }
     }
 

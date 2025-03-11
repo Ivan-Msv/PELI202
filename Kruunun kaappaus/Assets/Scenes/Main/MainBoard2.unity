@@ -63099,6 +63099,10 @@ PrefabInstance:
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 1841636244
       objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: turnsToAddChallengeTile
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8092550295811019605, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
