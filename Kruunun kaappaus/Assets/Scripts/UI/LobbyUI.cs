@@ -26,6 +26,7 @@ public class LobbyUI : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI copyCodeVisual;
     [Header("Buttons")]
     [SerializeField] private Button leaveLobby;
+    [SerializeField] private Button gameOptionsButton;
     [SerializeField] private Button startGame;
     [SerializeField] private Button copyCode;
     [Header("Player")]
@@ -38,7 +39,9 @@ public class LobbyUI : NetworkBehaviour
         {
             instance = this;
         }
+
         leaveLobby.onClick.AddListener(() => { MainMenuUI.instance.ReturnToPreviousMenu(); });
+        gameOptionsButton.onClick.AddListener(() => { boardMap.gameObject.SetActive(!boardMap.gameObject.activeSelf); });
         startGame.onClick.AddListener(() => { HostGame(); AudioManager.instance.PlaySound(SoundType.Open); });
         copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); AudioManager.instance.PlaySound(SoundType.Click); });
     }
@@ -150,11 +153,13 @@ public class LobbyUI : NetworkBehaviour
 
         if (currentLobby.HostId == AuthenticationService.Instance.PlayerId)
         {
+            gameOptionsButton.interactable = true;
             startGame.interactable = true;
         }
         else
         {
-            startGame.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Only host can start match";
+            gameOptionsButton.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = "Only host can start match";
+            gameOptionsButton.interactable = false;
             startGame.interactable = false;
         }
         leaveLobby.interactable = true;
