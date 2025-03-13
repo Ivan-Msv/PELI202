@@ -21,6 +21,7 @@ public class VideoSettingsUI : MonoBehaviour
         vsyncToggle.isOn = QualitySettings.vSyncCount > 0;
         vsyncToggle.onValueChanged.AddListener(enabled => { QualitySettings.vSyncCount = enabled ? 1 : 0; });
 
+
         GetNewResolutions();
         targetResolution.onValueChanged.AddListener(index => { UpdateResolution(index); });
 
@@ -42,13 +43,16 @@ public class VideoSettingsUI : MonoBehaviour
         availableResolutions.Reverse();
 
         List<TMP_Dropdown.OptionData> newResolutions = new();
+        var tempList = new List<Resolution>(availableResolutions);
 
-        foreach (var resolution in availableResolutions)
+        foreach (var resolution in tempList)
         {
             TMP_Dropdown.OptionData newResolution = new($"{resolution.width}x{resolution.height}");
 
-            if (newResolutions.Exists(res => newResolution.Equals(res)))
+            // Filters out hz options
+            if (newResolutions.Exists(res => newResolution.text == res.text))
             {
+                availableResolutions.Remove(resolution);
                 continue;
             }
 

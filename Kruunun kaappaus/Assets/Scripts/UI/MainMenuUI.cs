@@ -257,12 +257,26 @@ public class MainMenuUI : MonoBehaviour
     }
     public async void SetNameAndStartMenu(bool tokenExists)
     {
-        string randomName = $"Player_{UnityEngine.Random.Range(1, 100)}";
-
         if (!tokenExists)
         {
-            await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
-            currentName.text = randomName;
+            int tries = 3;
+
+            while (tries > 0)
+            {
+                string randomName = $"Player_{UnityEngine.Random.Range(1, 1000)}";
+
+                try
+                {
+                    await AuthenticationService.Instance.UpdatePlayerNameAsync(randomName);
+                    currentName.text = randomName;
+                }
+                catch (AuthenticationException ex)
+                {
+                    Debug.LogError(ex.HResult);
+                }
+
+                tries--;
+            }
         }
         else
         {
