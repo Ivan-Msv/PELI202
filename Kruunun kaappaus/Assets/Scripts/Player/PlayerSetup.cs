@@ -27,9 +27,13 @@ public class PlayerSetup : NetworkBehaviour
         {
             return;
         }
-        randomizeTiles = LobbyUI.instance.boardMap.RandomizeMap();
+
         currentState = PlayerState.Menu;
         SavedData = TryGetSavedData();
+
+        if (LobbyUI.instance == null) { return; }
+
+        randomizeTiles = LobbyUI.instance.boardMap.RandomizeMap();
     }
 
     private void TryGetEarlyPlayer()

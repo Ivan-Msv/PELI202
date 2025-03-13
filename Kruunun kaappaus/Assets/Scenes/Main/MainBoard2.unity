@@ -38376,6 +38376,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 6055991668335314236, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6207816013262375031, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 3309101494

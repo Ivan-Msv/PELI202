@@ -124,9 +124,8 @@ public class GameManager : NetworkBehaviour
     {
         BoardPath.instance = GameObject.FindGameObjectWithTag("Board Path").GetComponent<BoardPath>();
         diceAnimator = BoardUIManager.instance.diceAnimator;
-        BoardUIManager.instance.AddListeners();
+        instance = this;
     }
-
 
     #region Randomness
 
@@ -288,7 +287,7 @@ public class GameManager : NetworkBehaviour
 
     private void OnSceneChangedServer(Scene oldScene, Scene newScene)
     {
-        if (newScene.name.Contains("level", StringComparison.OrdinalIgnoreCase) && IsServer)
+        if (newScene.name.Contains("level", StringComparison.OrdinalIgnoreCase))
         {
             playersLoaded.Value = 0;
             currentState.Value = BoardState.Idle;

@@ -9,16 +9,19 @@ public class SpecialDiceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI selectedText;
     [SerializeField] private Image diceIcon;
 
-    public void AddEvent()
+    private void Start()
     {
+        StartCoroutine(AddEventCoroutine());
+    }
+
+    public IEnumerator AddEventCoroutine()
+    {
+        while (BoardUIManager.instance.localParent == null) { yield return null; }
+
         UpdateIcon(0, BoardUIManager.instance.localParent.specialDiceIndex.Value);
         BoardUIManager.instance.localParent.specialDiceIndex.OnValueChanged += UpdateIcon;
     }
 
-    private void OnDisable()
-    {
-        BoardUIManager.instance.localParent.specialDiceIndex.OnValueChanged -= UpdateIcon;
-    }
 
     public void OnButtonClick()
     {

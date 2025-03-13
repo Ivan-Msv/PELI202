@@ -67,7 +67,7 @@ public class BoardUIManager : MonoBehaviour
         }
     }
 
-    public void AddListeners()
+    private void Start()
     {
         GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
@@ -121,7 +121,6 @@ public class BoardUIManager : MonoBehaviour
         localParent = localPlayer.GetComponentInParent<MainPlayerInfo>();
 
         CreateEnemyPlayerUI();
-        diceUI.AddEvent();
         CheckForGameEnd();
     }
     private void UpdateCurrentPlayerName(FixedString64Bytes newName)
