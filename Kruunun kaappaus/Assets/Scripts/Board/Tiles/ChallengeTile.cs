@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -7,24 +8,16 @@ using UnityEngine;
 
 public class ChallengeTile : BoardTile
 {
-    [SerializeField] private string[] sceneNames1;
-    [SerializeField] private string[] sceneNames2;
-    [SerializeField] private string[] sceneNames3;
-    [SerializeField] private string[] sceneNames4;
+    [SerializeField] private TileMapListScriptable levelList;
 
     public override void SetupTile()
     {
-        // Tajusin vast nyt kuink huonosti toi on tehty, vihaan sitä 👍 (4/12/2024)
-        // Oisin voinu tehä struct tai jtn mut nyt mun pitää kärsii koska en oo vaihtamas sitä täs vaihees
         tileSprite = GameManager.instance.challengeTile.tileSprite;
         tileName = GameManager.instance.challengeTile.name;
         minimapSprite = GameManager.instance.challengeTile.minimapSprite;
 
         var challengeTileComponent = GameManager.instance.challengeTile.GetComponent<ChallengeTile>();
-        sceneNames1 = challengeTileComponent.sceneNames1;
-        sceneNames2 = challengeTileComponent.sceneNames2;
-        sceneNames3 = challengeTileComponent.sceneNames3;
-        sceneNames4 = challengeTileComponent.sceneNames4;
+        levelList = challengeTileComponent.levelList;
 
         anim.Play("CrownTile_Switch");
     }
@@ -42,7 +35,6 @@ public class ChallengeTile : BoardTile
 
     public void SelectRandomChallenge(int currentIndex)
     {
-        string newScene;
         int playersOnTile = 0;
         List<int> ghosts = new();
         List<int> players = new();
@@ -62,25 +54,24 @@ public class ChallengeTile : BoardTile
 
         GameManager.instance.FromGhostToPlayerServerRpc(ghosts.ToArray(), players.ToArray());
 
-        switch (playersOnTile)
+        string newScene = string.Empty;
+        bool foundMatch = false;
+        foreach (var list in levelList.mapSettings)
         {
-            case 1:
-                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
+            if (list.playerLimit == playersOnTile)
+            {
+                newScene = list.sceneList[Random.Range(0, list.sceneList.Length)];
+                foundMatch = true;
                 break;
-            case 2:
-                newScene = sceneNames2[Random.Range(0, sceneNames2.Length)];
-                break;
-            case 3:
-                newScene = sceneNames3[Random.Range(0, sceneNames3.Length)];
-                break;
-            case 4:
-                newScene = sceneNames4[Random.Range(0, sceneNames4.Length)];
-                break;
-            default:
-                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
-                break;
+            }
         }
 
+        if (!foundMatch)
+        {
+            Debug.LogError("Didn't find any match for current players! Taking last list");
+            var lastList = levelList.mapSettings[levelList.mapSettings.Length];
+            newScene = lastList.sceneList[Random.Range(0, lastList.sceneList.Length)];
+        }
 
         GameManager.instance.LoadSceneRpc(newScene);
     }
@@ -123,24 +114,23 @@ public class ChallengeTile : BoardTile
         GameManager.instance.FromGhostToPlayerServerRpc(ghosts.ToArray(), players.ToArray());
 
 
-        string newScene;
-        switch (playerAmount)
+        string newScene = string.Empty;
+        bool foundMatch = false;
+        foreach (var list in levelList.mapSettings)
         {
-            case 1:
-                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
+            if (list.playerLimit == playerAmount)
+            {
+                newScene = list.sceneList[Random.Range(0, list.sceneList.Length)];
+                foundMatch = true;
                 break;
-            case 2:
-                newScene = sceneNames2[Random.Range(0, sceneNames2.Length)];
-                break;
-            case 3:
-                newScene = sceneNames3[Random.Range(0, sceneNames3.Length)];
-                break;
-            case 4:
-                newScene = sceneNames4[Random.Range(0, sceneNames4.Length)];
-                break;
-            default:
-                newScene = sceneNames1[Random.Range(0, sceneNames1.Length)];
-                break;
+            }
+        }
+
+        if (!foundMatch)
+        {
+            Debug.LogError("Didn't find any match for current players! Taking last list");
+            var lastList = levelList.mapSettings[levelList.mapSettings.Length];
+            newScene = lastList.sceneList[Random.Range(0, lastList.sceneList.Length)];
         }
 
         GameManager.instance.LoadSceneRpc(newScene);

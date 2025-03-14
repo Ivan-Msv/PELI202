@@ -105,17 +105,7 @@ MonoBehaviour:
   tileName: 
   minimapSprite: {fileID: 3186115200877668588, guid: 923d712b656e63b40ba77b925feaf897, type: 3}
   anim: {fileID: 0}
-  sceneNames1:
-  - 1PMinigameLevel1
-  - 1PMinigameLevel2
-  - 1PMinigameLevel3
-  sceneNames2:
-  - 2PMinigameLevel1
-  - 2PMinigameLevel2
-  sceneNames3:
-  - 3PMinigameLevel1
-  sceneNames4:
-  - 4PMinigameLevel1
+  levelList: {fileID: 11400000, guid: 81efc3b968695cf46b676374b44c5299, type: 2}
 --- !u!95 &-7198988929175995483
 Animator:
   serializedVersion: 7

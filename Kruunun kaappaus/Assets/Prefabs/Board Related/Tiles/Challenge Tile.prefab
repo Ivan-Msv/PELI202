@@ -105,24 +105,7 @@ MonoBehaviour:
   tileName: 
   minimapSprite: {fileID: 3186115200877668588, guid: 378920d919c8adb439252129be923f5c, type: 3}
   anim: {fileID: 0}
-  sceneNames1:
-  - 1PChallengeLevel1
-  - 1PChallengeLevel2
-  - 1PChallengeLevel3
-  - 3PChallengeLevel1
-  sceneNames2:
-  - 2PChallengeLevel1
-  - 3PChallengeLevel1
-  - 4PChallengeLevel1
-  - 4PChallengeLevel2
-  sceneNames3:
-  - 3PChallengeLevel1
-  - 4PChallengeLevel1
-  - 4PChallengeLevel2
-  sceneNames4:
-  - 4PChallengeLevel1
-  - '4PChallengeLevel2 '
-  - 4PChallengeLevel3
+  levelList: {fileID: 11400000, guid: a2adcf83c7eaba146aa424c36be7f6e0, type: 2}
 --- !u!95 &8091398222423925700
 Animator:
   serializedVersion: 7

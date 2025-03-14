@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "Board/Maplist")]
+[CreateAssetMenu(menuName = "Maps/Menu Maplist")]
 public class MapListScriptable : ScriptableObject
 {
     public MapSettings[] mapList;
