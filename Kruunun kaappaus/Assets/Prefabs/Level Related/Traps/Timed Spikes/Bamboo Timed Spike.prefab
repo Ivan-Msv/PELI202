@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3098418064921782416}
   - component: {fileID: 4259544084225904682}
   m_Layer: 0
-  m_Name: Timed Spike
+  m_Name: Bamboo Timed Spike
   m_TagString: Death Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2097643280, guid: 81665477a8d2dd04aa5e0771d2dc8bc5, type: 3}
+  m_Sprite: {fileID: 1228464547, guid: d928add2f704cba448c829de9b003a13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1746249043
+  GlobalObjectIdHash: 775592378
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -192,7 +192,7 @@ Animator:
   m_GameObject: {fileID: 2970357288818272671}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7c499400aef8363448afe96c3aed7e9f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 34e3fd86d28ea0b478bd13a74b526453, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
