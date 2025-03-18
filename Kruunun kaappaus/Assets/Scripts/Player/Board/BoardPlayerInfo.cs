@@ -53,7 +53,7 @@ public class BoardPlayerInfo : NetworkBehaviour
             return;
         }
 
-        transform.position = newPos;
+        GetComponent<ClientNetworkTransform>().Teleport(newPos, transform.rotation, transform.localScale);
     }
 
     [Rpc(SendTo.Everyone)]

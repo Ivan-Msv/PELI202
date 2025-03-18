@@ -26,4 +26,10 @@ public abstract class BoardTile : MonoBehaviour
     }
     public abstract void SetupTile();
     public abstract void InvokeTile();
+
+    [Rpc(SendTo.Everyone)]
+    public void PlayAnimationRpc(string givenAnimation)
+    {
+        anim.Play(givenAnimation);
+    }
 }

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1841636244
+  GlobalObjectIdHash: 891301111
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -137,7 +137,7 @@ MonoBehaviour:
   minigameTile: {fileID: 4882977734003989596, guid: f124085a496be6e4e92900bc5adf16af, type: 3}
   challengeTile: {fileID: 1798204089288071595, guid: c2085a33523ed4841aa74cd7b415276f, type: 3}
   shopTile: {fileID: 6177457955905682811, guid: 5f7e0225f85c1c447aba92d57252aafe, type: 3}
-  teleportTile: {fileID: 0}
+  teleportTile: {fileID: 719581522486435827, guid: b72a085e3a2c85748b9a94fb9ef0c4d7, type: 3}
   dice:
   - {fileID: 11400000, guid: a3920218b8857924ebae020604b9f5c0, type: 2}
   - {fileID: 11400000, guid: 2f3840f9d5389e848885b14a4f384923, type: 2}

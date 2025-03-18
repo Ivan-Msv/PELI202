@@ -45,27 +45,41 @@ public class BoardPlayerMovement : NetworkBehaviour
             steps--;
 
 
-            // Jos ei ole kauppa kohalla niin jatka
+            // Keeps moving if not shop tile
             if (!BoardUIManager.instance.LocalPlayerOnShopTile())
             {
                 continue;
             }
 
-            // Muuten avaa kaupan, ja jatkaa liikkumisen kun kauppa sulkee
+            // Otherwise opens store, and keeps "moving" until you close the UI
             BoardUIManager.instance.shopUI.OpenStore();
-            //PlayShopAnimationRpc(index, "Shop_Activate");
+            PlayShopAnimationRpc(index, "Shop_Activate");
             while (BoardUIManager.instance.shopUI.StoreOpen())
             {
                 yield return null;
             }
-            //PlayShopAnimationRpc(index, "Shop_Deactivate");
+            PlayShopAnimationRpc(index, "Shop_Deactivate");
         }
 
         alreadyMoving = false;
-        GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
         BoardPath.instance.SplitPlayersOnTiles();
+        var currentTileIndex = GameManager.instance.tilesIndex[player.playerInfo.currentBoardPosition.Value];
 
-        bool challengeTile = GameManager.instance.tilesIndex[player.playerInfo.currentBoardPosition.Value] == (int)Tiles.ChallengeTile;
+        // In case of a tile being "special" in a way of having ui
+        // Let the UI handle ending the turn
+        bool activateSpecialUI = CheckSpecialTileUI(currentTileIndex);
+
+        switch (activateSpecialUI)
+        {
+            case true:
+                GameManager.instance.ChangeGameStateServerRpc(BoardState.Idle);
+                break;
+            case false:
+                GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
+                break;
+        }
+
+        bool challengeTile = currentTileIndex == (int)Tiles.ChallengeTile;
 
         if (!emptyRoll)
         {
@@ -74,6 +88,17 @@ public class BoardPlayerMovement : NetworkBehaviour
             // If not a challenge tile, add count
             GameManager.instance.nonChallengeTileCount += challengeTile ? 0 : 1;
         }
+    }
+
+    private bool CheckSpecialTileUI(int tileIndex)
+    {
+        switch ((Tiles)tileIndex)
+        {
+            case Tiles.TeleportTile:
+                return true;
+        }
+
+        return false;
     }
 
     [Rpc(SendTo.Everyone)]
@@ -87,10 +112,13 @@ public class BoardPlayerMovement : NetworkBehaviour
     {
         player.transform.position = Vector2.MoveTowards(player.transform.position, nextTilePosition, moveSpeed * Time.deltaTime);
 
-        // Animaatio
+        // Animation
         player.GetComponent<Animator>().SetBool("IsMoving", true);
     }
 
+    // This is such a bad way to make it find next direction...
+    // I even made a better one in TeleportTileUI.cs (Line 113 unless changed)
+    // But I can't be bothered to change it so I will let it rot here
     private int GetIndexDirection(int currentPosition, bool forward)
     {
         int index;

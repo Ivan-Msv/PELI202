@@ -5,6 +5,7 @@ public class TimedAnimation : MonoBehaviour
     [SerializeField] private Animator anim;
     private void Start()
     {
-        Destroy(gameObject, anim.GetCurrentAnimatorClipInfo(0).Length);
+        anim = GetComponent<Animator>();
+        Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
 }

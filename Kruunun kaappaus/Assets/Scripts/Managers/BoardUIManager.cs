@@ -23,8 +23,7 @@ public class BoardUIManager : MonoBehaviour
     [SerializeField] private EnemyPlayerInfo enemyInfoPrefab;
     [SerializeField] private Dictionary<MainPlayerInfo, EnemyPlayerInfo> enemyPlayerDictionary = new();
 
-    [Header("UI")]
-    public BoardShop shopUI;
+    [Header("Main UI")]
     public GameObject gameEndUI;
     public GameObject mapUI;
     public BoardMap mapComponent;
@@ -32,6 +31,10 @@ public class BoardUIManager : MonoBehaviour
     public SpecialDiceUI diceUI;
     public BoardCamera boardCamera;
     public Animator diceAnimator;
+
+    [Header("Event UI")]
+    public BoardShop shopUI;
+    public TeleportTileUI teleportTileUI;
 
     [Header("Buttons")]
     [SerializeField] private Button[] mapButtons;

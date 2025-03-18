@@ -220,6 +220,13 @@ public class BoardPath : NetworkBehaviour
             }
         }
     }
+
+    [Rpc(SendTo.Everyone)]
+    public void SplitPlayersRpc()
+    {
+        SplitPlayersOnTiles();
+    }
+
     private void SplitPlayers(List<MainPlayerInfo> players)
     {
         Vector2[] fourSplit = PlayerTilePositions(tiles[players[0].currentBoardPosition.Value].transform);
