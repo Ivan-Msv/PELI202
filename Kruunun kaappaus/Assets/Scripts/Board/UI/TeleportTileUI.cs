@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -89,6 +90,8 @@ public class TeleportTileUI : MonoBehaviour
         // You "could" add animation but I can't be asked rn
         purchaseTab.SetActive(false);
         selectionTab.SetActive(true);
+
+        GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
     }
 
     private void CancelGateway()
@@ -104,6 +107,8 @@ public class TeleportTileUI : MonoBehaviour
         // Turn off both tabs just in case
         purchaseTab.SetActive(false);
         selectionTab.SetActive(false);
+
+        GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
     }
 
     private void ActivateGateway()

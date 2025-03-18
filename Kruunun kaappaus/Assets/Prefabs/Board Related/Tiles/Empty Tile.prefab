@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22e596b792a02bd43b49b8668310619c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   tileSprite: {fileID: -2651656876551895629, guid: ce68c58853bd9314d9218679893733ba, type: 3}
   tileName: 
   minimapSprite: {fileID: 3186115200877668588, guid: 30a099034c6d46644bb797e4949e94e3, type: 3}

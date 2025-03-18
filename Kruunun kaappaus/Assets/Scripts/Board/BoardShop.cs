@@ -21,9 +21,6 @@ public class BoardShop : NetworkBehaviour
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private GameObject shopInfoPanel;
     [SerializeField] private GameObject shopCatalogueList;
-    [SerializeField] private GameObject shopCheckingPanel;
-    [SerializeField] private TextMeshProUGUI shopCheckingText;
-    [SerializeField] private Toggle shopViewToggle;
     [Space]
     [SerializeField] private Image imagePreview;
     [SerializeField] private TextMeshProUGUI itemNamePreview;
@@ -43,7 +40,6 @@ public class BoardShop : NetworkBehaviour
         InitShop();
         closeButton.onClick.AddListener(() => { OpenStore(); });
         returnButton.onClick.AddListener(() => { OpenInfoTab(); });
-        shopViewToggle.onValueChanged.AddListener((enabled) => { OpenStore(); });
     }
 
     private void InitShop()
@@ -138,7 +134,6 @@ public class BoardShop : NetworkBehaviour
 
         // Apparently just changing it's "isOn" causes massive freezes
         // And I'm not sure why, since it only happens once to my understanding
-        shopViewToggle.SetIsOnWithoutNotify(shopUI.activeSelf);
 
         if (BoardUIManager.instance.LocalPlayerOnShopTile())
         {
@@ -150,11 +145,7 @@ public class BoardShop : NetworkBehaviour
     {
         if (!open && shopUI.activeSelf) { shopUI.SetActive(false); }
 
-        shopViewToggle.interactable = open;
-        BlackScreen.instance.screenFade.StartFade(shopCheckingPanel.transform, open);
-        BlackScreen.instance.screenFade.StartFade(shopViewToggle.transform, open);
-        BlackScreen.instance.screenFade.StartFade(shopCheckingText.transform, open);
-        shopCheckingText.text = string.Format(shopCheckingText.text, BoardUIManager.instance.CurrentTurnPlayerName);
+        BoardUIManager.instance.ShowEventNotification("{0} is checking shop contents...", action => { OpenStore(); });
     }
 
     public bool StoreOpen()

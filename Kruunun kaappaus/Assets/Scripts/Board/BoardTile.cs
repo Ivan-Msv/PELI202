@@ -1,7 +1,7 @@
 ﻿using Unity.Netcode;
 using UnityEngine;
 
-public abstract class BoardTile : MonoBehaviour
+public abstract class BoardTile : NetworkBehaviour
 {
     public Sprite tileSprite;
     public string tileName;

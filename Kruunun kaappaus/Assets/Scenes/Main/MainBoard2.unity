@@ -38414,6 +38414,7 @@ GameObject:
   - component: {fileID: 714405158}
   - component: {fileID: 714405157}
   - component: {fileID: 714405156}
+  - component: {fileID: 714405160}
   - component: {fileID: 714405155}
   m_Layer: 0
   m_Name: VirtualCamera
@@ -38434,6 +38435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 008d7d040be632242923e38a792d9b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   isDisabled: 0
   <VirtualCamera>k__BackingField: {fileID: 714405158}
 --- !u!114 &714405156
@@ -38538,6 +38540,31 @@ Transform:
   - {fileID: 1460873768}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &714405160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714405154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 645398318
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1001 &719105548
 PrefabInstance:
   m_ObjectHideFlags: 0

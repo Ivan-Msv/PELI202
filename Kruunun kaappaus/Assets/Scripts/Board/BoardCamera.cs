@@ -3,7 +3,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class BoardCamera : MonoBehaviour
+public class BoardCamera : NetworkBehaviour
 {
     public bool isDisabled;
     [field:SerializeField] public CinemachineCamera VirtualCamera { get; private set; }

@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class BoardUIManager : MonoBehaviour
     public bool onShopTile;
     public bool localPlayerTurn;
     public bool animationActive;
+    private bool eventNotificationEnabled;
 
     [Header("Enemy Info")]
     [SerializeField] private GameObject enemyInfoPanel;
@@ -29,6 +31,7 @@ public class BoardUIManager : MonoBehaviour
     public BoardMap mapComponent;
     public GameObject rollDiceUI;
     public SpecialDiceUI diceUI;
+    public GameObject eventNotificationUI;
     public BoardCamera boardCamera;
     public Animator diceAnimator;
 
@@ -39,6 +42,7 @@ public class BoardUIManager : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button[] mapButtons;
     [SerializeField] private Button rollButton;
+    [SerializeField] private Toggle eventNotificationToggle;
     public Button rerollButton;
     public Button confirmRollButton;
 
@@ -50,6 +54,7 @@ public class BoardUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameEndHeader;
     [SerializeField] private TextMeshProUGUI gameEndResults;
     [SerializeField] private TextMeshProUGUI rollDiceName;
+    [SerializeField] private TextMeshProUGUI eventNotificationText;
     public string CurrentTurnPlayerName { get; private set; }
 
 
@@ -177,6 +182,26 @@ public class BoardUIManager : MonoBehaviour
         {
             GameManager.instance.TriggerGameEndRpc();
         }
+    }
+
+    public void ShowEventNotification(string notificationText, Action<bool> notificationToggleAction = null)
+    {
+        // Reverse enable
+        eventNotificationEnabled = !eventNotificationEnabled;
+
+        eventNotificationToggle.onValueChanged.RemoveAllListeners();
+        // Give functionality to toggle if functionality isn't null
+        if (notificationToggleAction != null)
+        {
+            eventNotificationToggle.onValueChanged.AddListener((enabled) => { notificationToggleAction(enabled); });
+
+            eventNotificationToggle.interactable = eventNotificationEnabled;
+            BlackScreen.instance.screenFade.StartFade(eventNotificationToggle.transform, eventNotificationEnabled);
+        }
+
+        BlackScreen.instance.screenFade.StartFade(eventNotificationUI.transform, eventNotificationEnabled);
+        BlackScreen.instance.screenFade.StartFade(eventNotificationText.transform, eventNotificationEnabled);
+        eventNotificationText.text = string.Format(notificationText, CurrentTurnPlayerName);
     }
 
     public void UpdateRollDiceUI()

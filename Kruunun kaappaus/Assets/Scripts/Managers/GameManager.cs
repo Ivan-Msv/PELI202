@@ -601,6 +601,13 @@ public class GameManager : NetworkBehaviour
         UpdateEnemyPlayerInfoRpc();
     }
 
+    // For more complex notifications (like having actions) you need to make a different void
+    [Rpc(SendTo.NotMe)]
+    public void EventNotificationTextRpc(string notificationText)
+    {
+        BoardUIManager.instance.ShowEventNotification(notificationText);
+    }
+
     [Rpc(SendTo.Everyone)]
     public void UpdateEnemyPlayerInfoRpc()
     {

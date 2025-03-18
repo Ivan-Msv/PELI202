@@ -164,7 +164,8 @@ public class BoardPath : NetworkBehaviour
         StartCoroutine(TileAnimationCoroutine(thisIndex, newIndex));
     }
 
-    // Sekunnit tässä ovat testien perusteella laitettu, jos kamera toimii oudosti animaation aikana, kato tätä
+    // This has to be the worst thing I've ever coded by far :sob:
+    // Surely I will properly rewrite it later, right!?
     private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex)
     {
         SetCameraPositionAndActiveRpc(true, newIndex);

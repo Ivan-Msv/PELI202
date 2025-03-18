@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 326048588076023362}
   - component: {fileID: 2866543483427628152}
   m_Layer: 5
-  m_Name: Player Shop Check Panel
+  m_Name: Event Notification UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -915,6 +915,7 @@ MonoBehaviour:
   confirmGatewayButton: {fileID: 1521039972567472293}
   leftArrowButton: {fileID: 7787845076685440492}
   rightArrowButton: {fileID: 2436920728040111059}
+  teleportIndexArray: 
 --- !u!1 &970073982921463227
 GameObject:
   m_ObjectHideFlags: 0
@@ -4747,6 +4748,7 @@ MonoBehaviour:
   mapComponent: {fileID: 47838366641287396}
   rollDiceUI: {fileID: 807050322175725697}
   diceUI: {fileID: 5528347073525398159}
+  eventNotificationUI: {fileID: 359709628367034837}
   boardCamera: {fileID: 0}
   diceAnimator: {fileID: 5154952541458051790}
   shopUI: {fileID: 8799432810591522510}
@@ -4755,6 +4757,7 @@ MonoBehaviour:
   - {fileID: 4372461231143784293}
   - {fileID: 3232831715193644896}
   rollButton: {fileID: 6764066446509157352}
+  eventNotificationToggle: {fileID: 1019073924167593092}
   rerollButton: {fileID: 6592149579605393253}
   confirmRollButton: {fileID: 5544367112126719895}
   coinCounter: {fileID: 2213246238125177293}
@@ -4764,6 +4767,7 @@ MonoBehaviour:
   gameEndHeader: {fileID: 7046478899045362828}
   gameEndResults: {fileID: 4880927272990903689}
   rollDiceName: {fileID: 4855703258896065722}
+  eventNotificationText: {fileID: 4247364375753014648}
 --- !u!114 &6207816013262375031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4806,9 +4810,6 @@ MonoBehaviour:
   shopPanel: {fileID: 1126095602619818725}
   shopInfoPanel: {fileID: 1929901548351156092}
   shopCatalogueList: {fileID: 8612537184933805249}
-  shopCheckingPanel: {fileID: 359709628367034837}
-  shopCheckingText: {fileID: 4247364375753014648}
-  shopViewToggle: {fileID: 1019073924167593092}
   imagePreview: {fileID: 8928567166166012338}
   itemNamePreview: {fileID: 8471240050940260568}
   itemDescriptionPreview: {fileID: 8543646100585675795}
@@ -5455,7 +5456,7 @@ GameObject:
   - component: {fileID: 1019073924167593092}
   - component: {fileID: 8406986389830316521}
   m_Layer: 5
-  m_Name: View Store Button
+  m_Name: View Event Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5540,7 +5541,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 0
   m_Interactable: 1
-  m_BlocksRaycasts: 0
+  m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!1 &6903068701369669265
 GameObject:
@@ -7192,7 +7193,7 @@ GameObject:
   - component: {fileID: 4247364375753014648}
   - component: {fileID: 3351334344021324374}
   m_Layer: 5
-  m_Name: Player Shop Check Text
+  m_Name: Player Event Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7245,7 +7246,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player_34 is checking shop contents...
+  m_text: Player_0 EVENT
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f22bf9d9d237f8045a05816434b37ebb, type: 2}
   m_sharedMaterial: {fileID: -7982879981139408437, guid: f22bf9d9d237f8045a05816434b37ebb, type: 2}
@@ -7272,7 +7273,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24.95
+  m_fontSize: 33.65
   m_fontSizeBase: 110
   m_fontWeight: 400
   m_enableAutoSizing: 1
