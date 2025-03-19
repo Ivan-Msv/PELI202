@@ -155,12 +155,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_0
       rect:
         serializedVersion: 2
-        x: 79
-        y: 145
-        width: 37
-        height: 47
+        x: 0
+        y: 128
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.47, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -177,12 +177,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_1
       rect:
         serializedVersion: 2
-        x: 140
-        y: 145
-        width: 42
-        height: 47
+        x: 64
+        y: 128
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.47, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -199,12 +199,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_2
       rect:
         serializedVersion: 2
-        x: 203
-        y: 143
-        width: 43
-        height: 49
+        x: 128
+        y: 128
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.47, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -221,12 +221,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_4
       rect:
         serializedVersion: 2
-        x: 4
-        y: 77
-        width: 53
-        height: 51
+        x: 0
+        y: 64
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -243,12 +243,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_5
       rect:
         serializedVersion: 2
-        x: 65
-        y: 76
-        width: 62
-        height: 52
+        x: 64
+        y: 64
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.47, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -265,12 +265,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_7
       rect:
         serializedVersion: 2
-        x: 139
-        y: 79
-        width: 43
-        height: 49
+        x: 192
+        y: 64
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.47, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -287,12 +287,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_9
       rect:
         serializedVersion: 2
-        x: 203
-        y: 79
-        width: 43
-        height: 49
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.47, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -309,12 +309,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_10
       rect:
         serializedVersion: 2
-        x: 4
-        y: 13
-        width: 53
-        height: 48
+        x: 128
+        y: 0
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.51, y: 0.53}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -331,12 +331,12 @@ TextureImporter:
       name: Crown_To_Empty_VFX_11
       rect:
         serializedVersion: 2
-        x: 68
-        y: 13
-        width: 53
-        height: 48
+        x: 192
+        y: 0
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.51, y: 0.565}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -350,59 +350,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crown_To_Empty_VFX_12
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 15
-        width: 48
-        height: 48
-      alignment: 9
-      pivot: {x: 0.48, y: 0.53}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: daa609e2295a62730800000000000000
-      internalID: 3974045768466066093
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Crown_To_Empty_VFX_13
-      rect:
-        serializedVersion: 2
-        x: 207
-        y: 15
-        width: 34
-        height: 34
-      alignment: 9
-      pivot: {x: 0.47, y: 0.74}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3b507eeae1c633bd0800000000000000
-      internalID: -2651656876551895629
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Crown_To_Empty_VFX_3
       rect:
         serializedVersion: 2
-        x: 11
-        y: 145
-        width: 42
-        height: 47
+        x: 192
+        y: 128
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.47, y: 0.5}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -411,6 +367,50 @@ TextureImporter:
       bones: []
       spriteID: 2ecd940bf0230184cadf03ea5405252e
       internalID: -2950353773073181361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_6
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: becca0f37621a0c468b651ff7b1c1e3c
+      internalID: 6096983421894344821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crown_To_Empty_VFX_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73cb0dace3b2f304da863b3f8ee3346f
+      internalID: 4687208087805790620
       vertices: []
       indices: 
       edges: []
@@ -433,8 +433,6 @@ TextureImporter:
       Crown_To_Empty_VFX_1: 3970209668059964802
       Crown_To_Empty_VFX_10: 6952888202637908124
       Crown_To_Empty_VFX_11: 3492522389069749367
-      Crown_To_Empty_VFX_12: 3974045768466066093
-      Crown_To_Empty_VFX_13: -2651656876551895629
       Crown_To_Empty_VFX_2: -5801855807639808029
       Crown_To_Empty_VFX_3: -2950353773073181361
       Crown_To_Empty_VFX_4: 2861985475833633418

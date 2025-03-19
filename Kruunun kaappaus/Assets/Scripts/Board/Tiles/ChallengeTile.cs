@@ -24,13 +24,18 @@ public class ChallengeTile : BoardTile
 
     public override void InvokeTile()
     {
-        var emptyTiles = BoardPath.instance.tiles.FindAll(tile => tile.GetComponent<EmptyTile>());
+        var emptyTiles = GameManager.instance.GetTileTypeIndexList(new Tiles[] { Tiles.EmptyTile });
         var thisIndex = transform.GetSiblingIndex();
 
         int randomIndex = Random.Range(0, emptyTiles.Count);
-        var newIndex = BoardPath.instance.tiles.IndexOf(emptyTiles[randomIndex]);
+        if (emptyTiles.Count < 1)
+        {
+            BoardPath.instance.TileAnimation(thisIndex, 0, false);
+            return;
+        }
 
-        BoardPath.instance.TileAnimation(thisIndex, newIndex);
+        var newIndex = emptyTiles[randomIndex];
+        BoardPath.instance.TileAnimation(thisIndex, newIndex, true);
     }
 
     public void SelectRandomChallenge(int currentIndex)
@@ -76,6 +81,7 @@ public class ChallengeTile : BoardTile
         GameManager.instance.LoadSceneRpc(newScene);
     }
 
+    // By custom I mean random based on player amount...
     public void SelectCustomChallenge(int playerAmount)
     {
         List<int> ghosts = new();

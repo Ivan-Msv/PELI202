@@ -73,6 +73,7 @@ public class BoardPlayerMovement : NetworkBehaviour
         {
             case true:
                 GameManager.instance.ChangeGameStateServerRpc(BoardState.Idle);
+                BoardUIManager.instance.animationActive = true;
                 break;
             case false:
                 GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);

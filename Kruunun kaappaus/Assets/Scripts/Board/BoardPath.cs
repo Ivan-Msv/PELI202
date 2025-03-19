@@ -158,25 +158,29 @@ public class BoardPath : NetworkBehaviour
         BoardUIManager.instance.boardCamera.ChangeCameraFollow(disable, cameraFollow);
     }
 
-    public void TileAnimation(int thisIndex, int newIndex)
+    public void TileAnimation(int thisIndex, int newIndex, bool replaceEmptyTile)
     {
         GameManager.instance.EnableAnimationRpc(true);
-        StartCoroutine(TileAnimationCoroutine(thisIndex, newIndex));
+        StartCoroutine(TileAnimationCoroutine(thisIndex, newIndex, replaceEmptyTile));
     }
 
     // This has to be the worst thing I've ever coded by far :sob:
     // Surely I will properly rewrite it later, right!?
-    private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex)
+    private IEnumerator TileAnimationCoroutine(int thisIndex, int newIndex, bool replaceEmptyTile)
     {
-        SetCameraPositionAndActiveRpc(true, newIndex);
-        yield return new WaitForSeconds(0.5f);
-        ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
-        yield return new WaitForSeconds(2.2f);
-        SetCameraPositionAndActiveRpc(true, thisIndex);
-        yield return new WaitForSeconds(0.5f);
+        if (replaceEmptyTile)
+        {
+            SetCameraPositionAndActiveRpc(true, newIndex);
+            yield return new WaitForSeconds(0.5f);
+            ChangeTileIndexServerRpc(newIndex, (int)Tiles.ChallengeTile);
+            yield return new WaitForSeconds(2.2f);
+            SetCameraPositionAndActiveRpc(true, thisIndex);
+            yield return new WaitForSeconds(0.5f);
+        }
+
         ChangeTileIndexServerRpc(thisIndex, (int)Tiles.EmptyTile);
         PlayEmptyTileAnimationRpc(thisIndex, "EmptyTile_Switch");
-        yield return new WaitForSeconds(tiles[thisIndex].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + 0.5f);
+        yield return new WaitForSeconds(tiles[thisIndex].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
         GameManager.instance.challengeTile.GetComponent<ChallengeTile>().SelectRandomChallenge(thisIndex);
     }
 
@@ -258,7 +262,8 @@ public class BoardPath : NetworkBehaviour
 
         for (int i = 0; i < tiles.Count; i++)
         {
-            Gizmos.DrawLine(tiles[i].transform.position, tiles[(i + 1) % tiles.Count].transform.position);
+            var centerPos = new Vector3(0, 0.5f);
+            Gizmos.DrawLine(tiles[i].transform.position - centerPos, tiles[(i + 1) % tiles.Count].transform.position - centerPos);
         }
     }
 }

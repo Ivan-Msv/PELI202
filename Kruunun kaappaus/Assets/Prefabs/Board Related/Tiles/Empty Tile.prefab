@@ -78,12 +78,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2651656876551895629, guid: ce68c58853bd9314d9218679893733ba, type: 3}
+  m_Sprite: {fileID: 7820641470027995368, guid: 4d0e4373ba5491340aa8cf0c42ca0a1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.125, y: 2.125}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  tileSprite: {fileID: -2651656876551895629, guid: ce68c58853bd9314d9218679893733ba, type: 3}
+  tileSprite: {fileID: 7820641470027995368, guid: 4d0e4373ba5491340aa8cf0c42ca0a1d, type: 3}
   tileName: 
   minimapSprite: {fileID: 3186115200877668588, guid: 30a099034c6d46644bb797e4949e94e3, type: 3}
   anim: {fileID: 0}

@@ -91,6 +91,8 @@ public class TeleportTileUI : MonoBehaviour
         purchaseTab.SetActive(false);
         selectionTab.SetActive(true);
 
+        confirmGatewayButton.interactable = teleportIndexArray[selectedIndex] != BoardUIManager.instance.localParent.currentBoardPosition.Value;
+
         GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
     }
 
@@ -108,6 +110,8 @@ public class TeleportTileUI : MonoBehaviour
         purchaseTab.SetActive(false);
         selectionTab.SetActive(false);
 
+        BoardUIManager.instance.animationActive = false;
+        // The text here is useless since it "should" disable the notification at this point
         GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
     }
 
@@ -126,6 +130,9 @@ public class TeleportTileUI : MonoBehaviour
     private void ChooseTeleportIndex(int indexForward)
     {
         selectedIndex = (selectedIndex + indexForward + teleportIndexArray.Count) % teleportIndexArray.Count;
-        BoardUIManager.instance.boardCamera.TeleportTileCameraRpc(teleportIndexArray[selectedIndex]);
+        var nextIndex = teleportIndexArray[selectedIndex];
+        BoardUIManager.instance.boardCamera.TeleportTileCameraRpc(nextIndex);
+
+        confirmGatewayButton.interactable = nextIndex != BoardUIManager.instance.localParent.currentBoardPosition.Value;
     }
 }

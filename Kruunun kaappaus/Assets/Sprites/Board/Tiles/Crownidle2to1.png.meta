@@ -119,12 +119,12 @@ TextureImporter:
       name: Crownidle2to1_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 14
-        width: 36
-        height: 36
+        x: 0
+        y: 0
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.5, y: 0.75}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -141,12 +141,12 @@ TextureImporter:
       name: Crownidle2to1_1
       rect:
         serializedVersion: 2
-        x: 78
-        y: 14
-        width: 36
-        height: 36
+        x: 64
+        y: 0
+        width: 64
+        height: 64
       alignment: 9
-      pivot: {x: 0.5, y: 0.75}
+      pivot: {x: 0.5, y: 0.625}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

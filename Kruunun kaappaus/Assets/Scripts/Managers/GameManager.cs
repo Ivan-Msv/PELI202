@@ -382,34 +382,36 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    private void AddRandomTile(Tiles tileToAdd, Tiles[] replaceableTiles)
+    public List<int> GetTileTypeIndexList(Tiles[] tileTypes)
     {
-        bool replaced = false;
-        int tries = 100;
-        while (true)
+        List<int> availableTileIndexes = new();
+
+        for (int i = 0; i < tilesIndex.Count; i++)
         {
-            if (tries <= 0)
+            foreach (var tile in tileTypes)
             {
-                Debug.LogError("Couldn't find any tiles to replace, are you using this right?");
-                break;
-            }
-
-            var randomIndex = Random.Range(0, tilesIndex.Count);
-
-            foreach (var tile in replaceableTiles)
-            {
-                if ((int)tile == tilesIndex[randomIndex])
+                if ((int)tile == tilesIndex[i])
                 {
-                    tilesIndex[randomIndex] = (int)tileToAdd;
-                    replaced = true;
-                    break;
+                    availableTileIndexes.Add(i);
                 }
             }
-
-            if (replaced) { break; }
-
-            tries--;
         }
+
+        return availableTileIndexes;
+    }
+
+    public void AddRandomTile(Tiles tileToAdd, Tiles[] replaceableTiles)
+    {
+        var availableTiles = GetTileTypeIndexList(replaceableTiles);
+
+        if (availableTiles.Count < 1)
+        {
+            Debug.LogError("Couldn't find any tiles to replace, are you using this right?");
+            return;
+        }
+
+        var randomIndex = Random.Range(0, availableTiles.Count);
+        tilesIndex[randomIndex] = (int)tileToAdd;
     }
 
     #endregion
