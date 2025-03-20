@@ -31,14 +31,22 @@ public class BoardMap : MonoBehaviour
 
     void Update()
     {
+        if (!RectTransformUtility.RectangleContainsScreenPoint(mapImage, mouseScreenPos)) { return; }
+
+        if (!mapImage.gameObject.activeInHierarchy) { return; }
+
+        Zoom(Input.GetAxis("Mouse ScrollWheel"));
+    }
+
+    private void LateUpdate()
+    {
         mouseScreenPos = Input.mousePosition;
 
         if (!RectTransformUtility.RectangleContainsScreenPoint(mapImage, mouseScreenPos)) { return; }
 
         if (!mapImage.gameObject.activeInHierarchy) { return; }
 
-        //MapDrag();
-        Zoom(Input.GetAxis("Mouse ScrollWheel"));
+        MapDrag();
     }
 
     public void ResetMapPosition()
@@ -51,12 +59,14 @@ public class BoardMap : MonoBehaviour
 
     private void MapDrag()
     {
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(mapImage, mouseScreenPos, Camera.main, out Vector3 worldMousePoint);
+
         if (Input.GetMouseButtonDown(0))
         {
-            dragMousePos = mouseScreenPos;
             dragging = true;
+            dragMousePos = worldMousePoint;
         }
-        
+
         if (Input.GetMouseButtonUp(0))
         {
             dragging = false;
@@ -64,16 +74,16 @@ public class BoardMap : MonoBehaviour
 
         if (dragging)
         {
-            Vector2 posDiff = mouseScreenPos - dragMousePos;
+            var difference = worldMousePoint - virtualCam.transform.position;
+            var newPos = dragMousePos - (Vector2)difference;
+            virtualCam.transform.position = new(newPos.x, newPos.y, virtualCam.transform.position.z);
 
-            RectTransformUtility.ScreenPointToWorldPointInRectangle(mapImage, posDiff, null, out Vector3 newPoint);
-
-            posDiff = new Vector3(newPoint.x, newPoint.y, virtualCam.transform.position.z) - virtualCam.transform.position;
-
-            transform.position += (Vector3)posDiff;
-
-            dragMousePos = mouseScreenPos;
+            dragMousePos = worldMousePoint;
         }
+
+        // This is created because virtual camera doesn't get confined the same way main cam does (???)
+        // Cinemachine stuff I suppose
+        virtualCam.transform.position = zoomCam.transform.position;
     }
 
     private void Zoom(float zoomAxis)

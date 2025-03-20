@@ -38779,6 +38779,10 @@ PrefabInstance:
       value: -1.296875
       objectReference: {fileID: 0}
     - target: {fileID: 7314792234928139438, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314792234928139438, guid: c79860ecb9f58aa45be98061b8be8ef2, type: 3}
       propertyPath: BoundingShape2D
       value: 
       objectReference: {fileID: 3601940}
