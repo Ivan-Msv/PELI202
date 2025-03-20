@@ -41,11 +41,6 @@ public class BoardMap : MonoBehaviour
     private void LateUpdate()
     {
         mouseScreenPos = Input.mousePosition;
-
-        if (!RectTransformUtility.RectangleContainsScreenPoint(mapImage, mouseScreenPos)) { return; }
-
-        if (!mapImage.gameObject.activeInHierarchy) { return; }
-
         MapDrag();
     }
 
@@ -59,18 +54,14 @@ public class BoardMap : MonoBehaviour
 
     private void MapDrag()
     {
-        RectTransformUtility.ScreenPointToWorldPointInRectangle(mapImage, mouseScreenPos, Camera.main, out Vector3 worldMousePoint);
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            dragging = true;
-            dragMousePos = worldMousePoint;
-        }
+        if (!mapImage.gameObject.activeInHierarchy) { return; }
 
         if (Input.GetMouseButtonUp(0))
         {
             dragging = false;
         }
+
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(mapImage, mouseScreenPos, Camera.main, out Vector3 worldMousePoint);
 
         if (dragging)
         {
@@ -84,6 +75,14 @@ public class BoardMap : MonoBehaviour
         // This is created because virtual camera doesn't get confined the same way main cam does (???)
         // Cinemachine stuff I suppose
         virtualCam.transform.position = zoomCam.transform.position;
+
+        if (!RectTransformUtility.RectangleContainsScreenPoint(mapImage, mouseScreenPos)) { return; }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            dragging = true;
+            dragMousePos = worldMousePoint;
+        }
     }
 
     private void Zoom(float zoomAxis)
