@@ -39551,7 +39551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1306179556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56258,7 +56258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1947310052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64066,12 +64066,48 @@ PrefabInstance:
       value: 1841636244
       objectReference: {fileID: 0}
     - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
-      propertyPath: randomizeTiles
-      value: 0
+      propertyPath: randomTiles.Array.data[4].tileLimit
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
-      propertyPath: turnsToAddChallengeTile
+      propertyPath: randomTiles.Array.data[0].tileWeight
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[1].tileWeight
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[4].tileWeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[2].maxTileAmount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[2].minTileAmount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[4].maxTileAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[4].minTileAmount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[4].maxTileDistance
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[4].minTileDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830677562915800954, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
+      propertyPath: randomTiles.Array.data[1].distanceRerollStartChance
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8092550295811019605, guid: 8acdd14bee125cf42b80803cf8ff873f, type: 3}
       propertyPath: m_LocalPosition.x

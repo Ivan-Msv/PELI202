@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 891301111
+  GlobalObjectIdHash: 1841636244
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -74,54 +74,64 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   currentState:
     m_InternalValue: 0
-  randomizeTiles: 1
+  randomizeTiles: 0
   randomTiles:
   - randomize: 1
     tileType: 0
-    tileWeight: 50
+    tileWeight: 30
     distanceTiles: 0
-    tileDistance: 1
+    minTileDistance: 0
+    maxTileDistance: 0
     distanceRerollStartChance: 0
     distanceRerollChanceIncrease: 0
     limitTiles: 0
-    tileLimit: 0
+    minTileAmount: 0
+    maxTileAmount: 0
   - randomize: 1
     tileType: 1
-    tileWeight: 25
-    distanceTiles: 0
-    tileDistance: 0
-    distanceRerollStartChance: 0
+    tileWeight: 40
+    distanceTiles: 1
+    minTileDistance: 0
+    maxTileDistance: 1
+    distanceRerollStartChance: 35
     distanceRerollChanceIncrease: 0
     limitTiles: 0
-    tileLimit: 0
+    minTileAmount: 0
+    maxTileAmount: 0
   - randomize: 1
     tileType: 2
     tileWeight: 20
     distanceTiles: 1
-    tileDistance: 2
+    minTileDistance: 0
+    maxTileDistance: 3
     distanceRerollStartChance: 15
     distanceRerollChanceIncrease: 15
     limitTiles: 1
-    tileLimit: 3
+    minTileAmount: 2
+    maxTileAmount: 3
   - randomize: 0
     tileType: 3
     tileWeight: 0
     distanceTiles: 0
-    tileDistance: 0
+    minTileDistance: 0
+    maxTileDistance: 0
     distanceRerollStartChance: 0
     distanceRerollChanceIncrease: 0
     limitTiles: 0
-    tileLimit: 0
-  - randomize: 0
+    minTileAmount: 0
+    maxTileAmount: 0
+  - randomize: 1
     tileType: 4
-    tileWeight: 0
-    distanceTiles: 0
-    tileDistance: 0
+    tileWeight: 10
+    distanceTiles: 1
+    minTileDistance: 5
+    maxTileDistance: 7
     distanceRerollStartChance: 0
-    distanceRerollChanceIncrease: 0
-    limitTiles: 0
-    tileLimit: 0
-  turnsToAddChallengeTile: 1
+    distanceRerollChanceIncrease: 10
+    limitTiles: 1
+    minTileAmount: 2
+    maxTileAmount: 3
+  turnsToAddChallengeTile: 3
   nonChallengeTileCount: 0
   <CrownsToWin>k__BackingField: 3
   currentPlayer: {fileID: 0}

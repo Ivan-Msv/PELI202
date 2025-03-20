@@ -42,10 +42,11 @@ public class BoardPath : NetworkBehaviour
         if (IsServer && GameManager.instance.randomizeTiles)
         {
             GameManager.instance.TileRandomization();
+
+            // To prevent boardpath randomizing every time scene changes
+            GameManager.instance.randomizeTiles = false;
         }
     }
-
-
 
     public void InitTiles()
     {
@@ -54,7 +55,6 @@ public class BoardPath : NetworkBehaviour
         {
             tiles.Add(tile.gameObject);
         }
-
 
         pathLineRenderer.positionCount = tiles.Count;
 

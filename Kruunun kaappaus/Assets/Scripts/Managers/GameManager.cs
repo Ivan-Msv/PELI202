@@ -19,18 +19,22 @@ public enum BoardState
 [Serializable]
 public struct TileRandom
 {
-    [Space]
+    [Header("Main")]
     public bool randomize;
     public Tiles tileType;
     public int tileWeight;
     [Space]
+    [Header("Distancing")]
     public bool distanceTiles;
-    public int tileDistance;
+    public int minTileDistance;
+    public int maxTileDistance;
     public int distanceRerollStartChance;
     public int distanceRerollChanceIncrease;
     [Space]
+    [Header("Tile Limits")]
     public bool limitTiles;
-    public int tileLimit;
+    public int minTileAmount;
+    public int maxTileAmount;
 }
 
 public class GameManager : NetworkBehaviour
@@ -123,8 +127,8 @@ public class GameManager : NetworkBehaviour
     private void ComponentInitialization()
     {
         BoardPath.instance = GameObject.FindGameObjectWithTag("Board Path").GetComponent<BoardPath>();
+        BoardUIManager.instance.AddListeners();
         diceAnimator = BoardUIManager.instance.diceAnimator;
-        instance = this;
     }
 
     #region Randomness
@@ -138,79 +142,167 @@ public class GameManager : NetworkBehaviour
         // Shop tiles should be static (so already placed in scene), or experimentally enabled via [experimentalShopRandomization] boolean
         // The problem is that shop tiles look ugly if misplaced and not rotated accordingly
 
+        // ^ The rules might already be outdated since I only change the code, not the rules afterwards
+        // That was just theory craft before actual code writing
+
         // This was weird, just getting values will return array
         // And for this I needed to turn them into IEnumerable first, and then to dictionary
+        Debug.Log("?");
         var availableTiles = Enum.GetValues(typeof(Tiles)).Cast<Tiles>().ToDictionary(tile => tile, tile => 0);
 
-        // This takes the tile count itself, so if you want to make a new board
-        // All you have to do is place empty tiles however you like
-        // This only randomizes tiles itself, not the "placement"
+        // Since we randomize, let's clear the board from unnecessary in-scene tiles.
+
         for (int i = 0; i < tilesIndex.Count; i++)
         {
-            while (true)
-            {
-                // Roll between currently available tiles
-                Tiles randomTile = GetRandomTile(availableTiles);
-                TileRandom tileData = FindRandomTile(randomTile);
+            TileRandom currentTileData = FindRandomTile((Tiles)tilesIndex[i]);
 
-                // if randomization disabled break early, to prevent it being changed
-                if (!tileData.randomize || !FindRandomTile((Tiles)tilesIndex[i]).randomize)
+            if (!currentTileData.randomize)
+            {
+                continue;
+            }
+
+            tilesIndex[i] = (int)Tiles.EmptyTile;
+        }
+
+        // While there's still available tiles, keep randomizing.
+        // The tiles that don't have "minimum" get removed at the end of first iteration
+        while (availableTiles.Count > 0)
+        {
+            for (int i = 0; i < tilesIndex.Count; i++)
+            {
+                // To prevent errors in while (true)
+                if (availableTiles.Count < 1)
                 {
                     break;
                 }
 
-                // Replace with empty ? 
-                // So the old tiles don't persist, not sure if it even works to be fair
-                tilesIndex[i] = (int)Tiles.EmptyTile;
+                // This is a fail save for rerolls, in case of 1-2 availabletiles left which 
+                // Could result in an infinite loops
+                int rerollTries = 3;
 
-                // Attempts to remove tile when it reaches limit
-                // Not sure if this works either LOL
-                if (tileData.limitTiles && availableTiles[randomTile] >= tileData.tileLimit)
+                // A new while loop where you can "reroll" by just continuing the given iteration
+                // And break the while loop once the tile is good to go
+                while (true)
                 {
-                    continue;
-                }
-
-                var tileDistance = tileData.tileDistance;
-                var rerollStartChance = tileData.distanceRerollStartChance;
-                var rerollChanceIncrease = tileData.distanceRerollChanceIncrease;
-
-                var tileBehindIncreasedChance = 0;
-                bool rerollTile = false;
-                for (int j = 1; j < tileDistance + 1; j++)
-                {
-                    // If disabled, just break
-                    if (!tileData.distanceTiles) { break; }
-
-                    // i is the current tile index
-                    // j here is the amount of tiles behind
-                    var previousIndex = (i - j + BoardPath.instance.tiles.Count) % BoardPath.instance.tiles.Count;
-                    var previousTile = BoardPath.instance.tiles[previousIndex].GetComponent<BoardTile>();
-
-                    if ((Tiles)BoardPath.instance.GetTileIndex(previousTile) == randomTile)
+                    if (rerollTries <= 0)
                     {
-                        // Rolls with start + increasing chance
-                        // On success it continues, otherwise it rerolls a tile
-                        if (!RollWithChance(rerollStartChance + tileBehindIncreasedChance))
+                        break;
+                    }
+
+                    if (availableTiles.Count < 1)
+                    {
+                        break;
+                    }
+
+                    // Roll between currently available tiles
+                    Tiles randomTile = GetRandomTile(availableTiles);
+                    // Get the Random Tile data and also currently placed tile data
+                    TileRandom randomTileData = FindRandomTile(randomTile);
+                    TileRandom currentTileData = FindRandomTile((Tiles)tilesIndex[i]);
+
+                    // if randomization disabled break early, and remove from future available tiles.
+                    if (!randomTileData.randomize)
+                    {
+                        availableTiles.Remove(randomTile);
+                        continue;
+                    }
+
+                    // But if it's current tile data that has randomization disabled
+                    // Probably means it's static in-scene tile that should NOT be replaced
+                    // In that case continue on to the next tile
+                    if (!currentTileData.randomize)
+                    {
+                        break;
+                    }
+
+                    // In case random tile has it's limits and reached them, also remove them from pool
+                    // And reroll current tile
+                    if (randomTileData.limitTiles && availableTiles[randomTile] >= randomTileData.maxTileAmount)
+                    {
+                        availableTiles.Remove(randomTile);
+                        continue;
+                    }
+
+                    // This basically checks if there are any identical tiles behind it
+                    // and rerolls based on given settings
+                    // Start with 0, increase once it reaches minimum distance
+                    var tileBehindIncreasedChance = 0;
+                    bool rerollTile = false;
+                    for (int j = 1; j <= randomTileData.maxTileDistance; j++)
+                    {
+                        // If disabled, just break
+                        if (!randomTileData.distanceTiles) { break; }
+
+                        // i is the current tile index
+                        // j here is the amount of tiles behind
+                        var backwardIndex = (i - j + tilesIndex.Count) % tilesIndex.Count;
+                        var forwardIndex = (i + j + tilesIndex.Count) % tilesIndex.Count;
+
+                        if (j >= randomTileData.minTileDistance)
                         {
-                            rerollTile = true;
-                            break;
+                            tileBehindIncreasedChance += randomTileData.distanceRerollChanceIncrease;
+                        }
+
+                        bool isIdenticalTile = (Tiles)tilesIndex[backwardIndex] == randomTile || (Tiles)tilesIndex[forwardIndex] == randomTile;
+                        if (isIdenticalTile)
+                        {
+                            // Rolls with start + increasing chance
+                            // On success it continues, otherwise it rerolls a tile
+                            if (!RollWithChance(randomTileData.distanceRerollStartChance + tileBehindIncreasedChance))
+                            {
+                                rerollTile = true;
+                                break;
+                            }
                         }
                     }
 
-                    tileBehindIncreasedChance += rerollChanceIncrease;
+                    if (rerollTile)
+                    {
+                        rerollTries--;
+                        continue;
+                    }
+
+                    availableTiles[randomTile]++;
+                    tilesIndex[i] = (int)randomTile;
+
+                    // Breaks the while true if everything went right, continues the loop
+                    break;
+                }
+            }
+
+            // Handles minimum tile amount limit
+            // And edge cases on iteration end
+            var tilesToRemove = new List<Tiles>();
+            foreach (var tile in availableTiles)
+            {
+                var tileStruct = FindRandomTile(tile.Key);
+
+                if (tileStruct.minTileDistance > tilesIndex.Count)
+                {
+                    Debug.LogError("Minimum Tile Distance larger than available tile count. Removing to prevent further issues.");
+                    tilesToRemove.Add(tile.Key);
                 }
 
-                if (rerollTile) { continue; }
+                if (tileStruct.minTileAmount > tilesIndex.Count)
+                {
+                    Debug.LogError("Minimum Tile Amount larger than available tile count. Removing to prevent further issues.");
+                    tilesToRemove.Add(tile.Key);
+                }
 
-                availableTiles[randomTile]++;
-                tilesIndex[i] = (int)randomTile;
+                if (tile.Value >= tileStruct.minTileAmount)
+                {
+                    tilesToRemove.Add(tile.Key);
+                }
+            }
 
-                // Breaks the while true if everything went right, continues the loop
-                break;
+            foreach (var removableTile in tilesToRemove)
+            {
+                availableTiles.Remove(removableTile);
             }
         }
     }
 
+    // The random here refers to the struct... its not random I just have naming issues
     private TileRandom FindRandomTile(Tiles givenTile)
     {
         TileRandom returnTile = randomTiles.FirstOrDefault(rngTile => rngTile.tileType == givenTile);

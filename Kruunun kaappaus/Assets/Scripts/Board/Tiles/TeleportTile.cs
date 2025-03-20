@@ -12,6 +12,10 @@ public class TeleportTile : BoardTile
         tileSprite = GameManager.instance.teleportTile.tileSprite;
         tileName = GameManager.instance.teleportTile.name;
         minimapSprite = GameManager.instance.teleportTile.minimapSprite;
+        teleportTileSFX = GameManager.instance.teleportTile.GetComponent<TeleportTile>().teleportTileSFX;
+
+
+        anim.Play("TeleportTile_Idle");
     }
 
     public void TeleportationEvent(int teleportTowardTile)

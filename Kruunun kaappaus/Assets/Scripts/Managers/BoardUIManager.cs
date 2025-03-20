@@ -75,7 +75,7 @@ public class BoardUIManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void AddListeners()
     {
         GameManager.instance.OnPlayerValueChange += UpdateLocalPlayers;
         GameManager.instance.OnCurrentPlayerChange += UpdateCurrentPlayerName;
