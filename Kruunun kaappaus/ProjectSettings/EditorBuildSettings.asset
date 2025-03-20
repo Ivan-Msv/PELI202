@@ -78,13 +78,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Minigame Levels/2PMinigameLevel3.unity
     guid: e391452b58df62642b0f234d4150485a
   - enabled: 1
-    path: Assets/Scenes/Challenge Levels/2PChallengeLevel4.unity
+    path: Assets/Scenes/Challenge Levels/2PChallengelevel4.unity
     guid: 393a8cfec73a9724e888762857bba5b7
   - enabled: 1
-    path: Assets/Scenes/Minigame Levels/3PMinigameLevel2.unity
+    path: Assets/Scenes/Minigame Levels/3Pminigamelevel2.unity
     guid: c3893ee03d618f34ea221cdf8540278a
   - enabled: 1
-    path: Assets/Scenes/Minigame Levels/1PMinigameLevel4.unity
+    path: Assets/Scenes/Minigame Levels/1PMinigamelevel4.unity
     guid: f2b51e6e78350f44eaad3679f3fa917f
   - enabled: 1
     path: Assets/Scenes/Minigame Levels/1PMinigameLevel5.unity
@@ -92,6 +92,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Challenge Levels/1PChallengeLevel4.unity
     guid: c6da314453b95fa44a76d76583063d97
+  - enabled: 1
+    path: Assets/Scenes/Challenge Levels/1Pchallengelevel5.unity
+    guid: 1963cc1c123a6434ebce31c0e4994096
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 882a6c2d6b9e65d43925f2a00387fd8e, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: fecdc2ec3b8b0144b88294ef1e89ee82, type: 3}
