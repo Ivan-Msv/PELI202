@@ -65,7 +65,7 @@ public class BoardUIManager : MonoBehaviour
             instance = this;
         }
 
-        rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); AudioManager.instance.PlaySound(SoundType.BoardSelect); });
+        rollButton.onClick.AddListener(() => { GameManager.instance.RollDiceServerRpc(); });
         rerollButton.onClick.AddListener(() => { GameManager.instance.RerollButtonEventRpc(); });
         confirmRollButton.onClick.AddListener(() => { GameManager.instance.ConfirmButtonEventRpc(); });
 

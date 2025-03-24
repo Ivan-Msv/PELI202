@@ -10,18 +10,17 @@ using UnityEngine.Playables;
 
 public enum SoundType
 {
-    Open,
-    Click,
-    Close,
-    Error,
-    Rolldice,
-    Jump,
-    CoinPickUp,
-    CrownPickUp,
-    FootSteps,
-    BoardSelect,
-    Explosion,
-    Cannon
+    MenuButtonHover,
+    MenuButtonClick,
+    MenuError,
+    BoardRollDice,
+    BoardShopPurchase,
+    PlayerDeath,
+    PlayerJump,
+    CrownPickup,
+    CoinPickup,
+    Cannon,
+    Explosion
 }
 public enum MusicType
 {

@@ -80,12 +80,12 @@ public class MainMenuUI : MonoBehaviour
         BlackScreen.instance.screenFade.StartFade(BlackScreen.instance.transform, false, 1);
 
         // Main Menu & overall
-        returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); AudioManager.instance.PlaySound(SoundType.Close); });
-        playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); AudioManager.instance.PlaySound(SoundType.Open); });
-        settingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); AudioManager.instance.PlaySound(SoundType.Open); });
-        debugButton.onClick.AddListener(() => { OpenNewMenu(MenuState.DebugMenu); AudioManager.instance.PlaySound(SoundType.Open); });
-        exitButton.onClick.AddListener(() => { Application.Quit(); AudioManager.instance.PlaySound(SoundType.Close); });
-        changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); AudioManager.instance.PlaySound(SoundType.Click); });
+        returnButton.onClick.AddListener(() => { ReturnToPreviousMenu(); });
+        playButton.onClick.AddListener(() => { OpenNewMenu(MenuState.LobbySelectionMenu); });
+        settingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.SettingsMenu); });
+        debugButton.onClick.AddListener(() => { OpenNewMenu(MenuState.DebugMenu); });
+        exitButton.onClick.AddListener(() => { Application.Quit(); });
+        changeNameInput.onEndEdit.AddListener((text) => { AttemptChangeName(text); });
 
         // Settings Menu
         generalSettingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.GeneralSettingsMenu); });
@@ -93,9 +93,9 @@ public class MainMenuUI : MonoBehaviour
         audioSettingsButton.onClick.AddListener(() => { OpenNewMenu(MenuState.AudioSettingsMenu); });
 
         // Lobby Selection Menu
-        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; AudioManager.instance.PlaySound(SoundType.Open); });
+        createLobby.onClick.AddListener(() => { LobbyManager.instance.CreateLobby("New Lobby"); createLobby.interactable = false; });
         joinLobby.onClick.AddListener(() => { OpenSubMenu(joinMenu);  });
-        confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); AudioManager.instance.PlaySound(SoundType.Open); });
+        confirmJoinLobby.onClick.AddListener(() => { AttemptJoinLobby(); });
 
         // Debug Menu
         loadCustomScene.onClick.AddListener(() => { OpenSubMenu(customSceneMenu); });
@@ -177,6 +177,7 @@ public class MainMenuUI : MonoBehaviour
                 break;
         }
     }
+
     private void DisableAllMenus()
     {
         foreach (Transform child in transform)
@@ -184,11 +185,12 @@ public class MainMenuUI : MonoBehaviour
             child.gameObject.SetActive(false);
         }
     }
+
     private void OpenSubMenu(GameObject menu)
     {
-        AudioManager.instance.PlaySound(SoundType.Click);
         menu.SetActive(!menu.activeSelf);
     }
+
     private void ResetSubMenus()
     {
         // teen manuaalisesti kosk ei jaksa tehä kunnon funktion
@@ -198,6 +200,7 @@ public class MainMenuUI : MonoBehaviour
 
         createLobby.interactable = true;
     }
+
     private async void AttemptJoinLobby()
     {
         JoinLobbyByCodeOptions joinOptions = new JoinLobbyByCodeOptions()
@@ -212,23 +215,20 @@ public class MainMenuUI : MonoBehaviour
         }
         catch (LobbyServiceException e)
         {
+            AudioManager.instance.PlaySound(SoundType.MenuError);
             switch (e.Reason)
             {
                 case LobbyExceptionReason.InvalidJoinCode:
                     ShowErrorMessage($"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})", 3);
-                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
                 case LobbyExceptionReason.LobbyNotFound:
                     ShowErrorMessage($"Lobby not found (Recently deleted)", 3);
-                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
                 case LobbyExceptionReason.LobbyFull:
                     ShowErrorMessage($"Lobby is already full", 3);
-                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
                 default:
                     Debug.LogWarning(e.Reason);
-                    AudioManager.instance.PlaySound(SoundType.Error);
                     break;
             }
         }
@@ -237,6 +237,7 @@ public class MainMenuUI : MonoBehaviour
             Debug.LogError(ae);
         }
     }
+
     private async void AttemptChangeName(string newName)
     {
         try
@@ -250,11 +251,12 @@ public class MainMenuUI : MonoBehaviour
             // switch ei toimi error koodeissa jostain syystä (ei oo constant int)
             if (e.ErrorCode == AuthenticationErrorCodes.InvalidParameters)
             {
-                AudioManager.instance.PlaySound(SoundType.Error);
+                AudioManager.instance.PlaySound(SoundType.MenuError);
                 ShowErrorMessage(e.Message, 5);
             }
         }
     }
+
     public async void SetNameAndStartMenu(bool tokenExists)
     {
         if (!tokenExists)
@@ -286,6 +288,7 @@ public class MainMenuUI : MonoBehaviour
         // Laittaa näkyviin vasta sen jälkeen kun asettaa nimen
         OpenNewMenu(MenuState.MainMenu);
     }
+
     public static Color GetColor(int colorIndex)
     {
         var newColor = (Colors)colorIndex;

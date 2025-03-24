@@ -125,6 +125,8 @@ public class TeleportTileUI : MonoBehaviour
 
         purchaseTab.SetActive(false);
         selectionTab.SetActive(false);
+        // The text here is useless here as well
+        GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
     }
 
     private void ChooseTeleportIndex(int indexForward)

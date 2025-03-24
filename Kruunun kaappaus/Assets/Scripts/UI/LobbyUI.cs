@@ -42,8 +42,8 @@ public class LobbyUI : NetworkBehaviour
 
         leaveLobby.onClick.AddListener(() => { MainMenuUI.instance.ReturnToPreviousMenu(); });
         gameOptionsButton.onClick.AddListener(() => { boardMap.gameObject.SetActive(!boardMap.gameObject.activeSelf); });
-        startGame.onClick.AddListener(() => { HostGame(); AudioManager.instance.PlaySound(SoundType.Open); });
-        copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); AudioManager.instance.PlaySound(SoundType.Click); });
+        startGame.onClick.AddListener(() => { HostGame(); });
+        copyCode.onClick.AddListener(() => { CopyToClipboard(currentLobby.LobbyCode); });
     }
     async void OnEnable()
     {

@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -8,6 +9,8 @@ public class BoardMap : MonoBehaviour
     [SerializeField] private Camera zoomCam;
     [SerializeField] private RectTransform mapImage;
     [SerializeField] private bool resetPosOnEnable;
+    [SerializeField] private TextMeshProUGUI resetMapTooltip;
+    [SerializeField] private TextMeshProUGUI centerPlayerTooltip;
     [SerializeField] private bool invertDrag;
     [SerializeField] private float minZoom;
     [SerializeField] private float maxZoom;
@@ -38,10 +41,40 @@ public class BoardMap : MonoBehaviour
         Zoom(Input.GetAxis("Mouse ScrollWheel"));
     }
 
+    private void Hotkeys()
+    {
+        if (Input.GetAxisRaw("Map_Reset") != 0)
+        {
+            ResetMapPosition();
+        }
+
+        if (Input.GetAxisRaw("Map_Focus") != 0)
+        {
+            var playerPos = BoardUIManager.instance.localPlayer.transform.position;
+            virtualCam.transform.position = new(playerPos.x, playerPos.y, virtualCam.transform.position.z);
+        }
+    }
+
     private void LateUpdate()
     {
         mouseScreenPos = Input.mousePosition;
+
+        if (!mapImage.gameObject.activeInHierarchy) { return; }
+
         MapDrag();
+        Hotkeys();
+    }
+
+    public void ToggleMap()
+    {
+        ResetMapPosition();
+        //UpdateTooltips();
+    }
+
+    private void UpdateTooltips()
+    {
+        // Do this once you create rebind stuff
+        //resetMapTooltip.text = string.Format(resetMapTooltip.text, )
     }
 
     public void ResetMapPosition()
@@ -54,8 +87,6 @@ public class BoardMap : MonoBehaviour
 
     private void MapDrag()
     {
-        if (!mapImage.gameObject.activeInHierarchy) { return; }
-
         if (Input.GetMouseButtonUp(0))
         {
             dragging = false;

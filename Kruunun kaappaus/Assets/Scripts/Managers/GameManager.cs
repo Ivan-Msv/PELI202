@@ -147,7 +147,6 @@ public class GameManager : NetworkBehaviour
 
         // This was weird, just getting values will return array
         // And for this I needed to turn them into IEnumerable first, and then to dictionary
-        Debug.Log("?");
         var availableTiles = Enum.GetValues(typeof(Tiles)).Cast<Tiles>().ToDictionary(tile => tile, tile => 0);
 
         // Since we randomize, let's clear the board from unnecessary in-scene tiles.
@@ -414,6 +413,10 @@ public class GameManager : NetworkBehaviour
                 playerTurnTime = 329494922934;
                 TurnTimer.Value = 329494922934;
             }
+            if (Input.GetKeyDown(KeyCode.F10))
+            {
+                BoardUIManager.instance.localParent.coinAmount.Value = 9000;
+            }
         }
     }
 
@@ -502,7 +505,7 @@ public class GameManager : NetworkBehaviour
             return;
         }
 
-        var randomIndex = Random.Range(0, availableTiles.Count);
+        var randomIndex = availableTiles[Random.Range(0, availableTiles.Count)];
         tilesIndex[randomIndex] = (int)tileToAdd;
     }
 

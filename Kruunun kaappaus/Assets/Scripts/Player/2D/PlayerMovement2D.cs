@@ -256,6 +256,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     private void PlayDeathAnimationRpc()
     {
+        AudioManager.instance.PlaySoundAtPositionRpc(SoundType.PlayerDeath, transform.position);
         Instantiate(deathSprite, transform.position, deathSprite.transform.rotation);
     }
 
@@ -300,7 +301,7 @@ public class PlayerMovement2D : NetworkBehaviour
 
         if (jumpBufferTimer > 0 && canJump)
         {
-            AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.Jump, NetworkObjectId, true);
+            AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.PlayerJump, NetworkObjectId, true);
             rb.linearVelocityY = totalVelocity;
             jumpBufferTimer = -1;
             jumpAirTime = 0;
@@ -569,7 +570,7 @@ public class PlayerMovement2D : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void DestroyCrownServerRpc(ulong collisionObjectId)
     {
-        AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.CrownPickUp, NetworkObjectId, false);
+        AudioManager.instance.PlaySoundAtObjectPositionRpc(SoundType.CrownPickup, NetworkObjectId, false);
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
         // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
