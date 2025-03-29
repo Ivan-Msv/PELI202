@@ -111,8 +111,8 @@ public class TeleportTileUI : MonoBehaviour
         selectionTab.SetActive(false);
 
         BoardUIManager.instance.animationActive = false;
-        // The text here is useless since it "should" disable the notification at this point
-        GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
+
+        GameManager.instance.ToggleEventNotificationRpc(false);
     }
 
     private void ActivateGateway()
@@ -126,7 +126,7 @@ public class TeleportTileUI : MonoBehaviour
         purchaseTab.SetActive(false);
         selectionTab.SetActive(false);
         // The text here is useless here as well
-        GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
+        GameManager.instance.ToggleEventNotificationRpc(false);
     }
 
     private void ChooseTeleportIndex(int indexForward)

@@ -550,7 +550,7 @@ public class GameManager : NetworkBehaviour
 
     public BoardDice GetDiceFromIndex(int index)
     {
-        var returnDice = dice.FirstOrDefault(dice => dice.networkIndex == index);
+        var returnDice = dice.First(dice => dice.networkIndex == index);
         if (returnDice == null)
         {
             return dice[0];
@@ -703,6 +703,12 @@ public class GameManager : NetworkBehaviour
     public void EventNotificationTextRpc(string notificationText)
     {
         BoardUIManager.instance.ShowEventNotification(notificationText);
+    }
+
+    [Rpc(SendTo.NotMe)]
+    public void ToggleEventNotificationRpc(bool toggle)
+    {
+        BoardUIManager.instance.ToggleEventNotification(toggle);
     }
 
     [Rpc(SendTo.Everyone)]

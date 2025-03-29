@@ -108,6 +108,8 @@ public class PlayerMovement2D : NetworkBehaviour
 
     void Update()
     {
+        // DEBUG DELETE LATER
+
         if (Input.GetKeyDown(KeyCode.F1))
         {
             Time.timeScale = 0.1f;
@@ -133,9 +135,16 @@ public class PlayerMovement2D : NetworkBehaviour
             return;
         }
 
+        // These two debug as well
+
         if (Input.GetKeyDown(KeyCode.F5))
         {
             playerInfo.playerIsGhost.Value = !playerInfo.playerIsGhost.Value;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            spawnPoint = transform.position;
         }
 
         if (isGhost)

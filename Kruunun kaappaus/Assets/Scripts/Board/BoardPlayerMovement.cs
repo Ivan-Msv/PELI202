@@ -67,7 +67,7 @@ public class BoardPlayerMovement : NetworkBehaviour
 
         // In case of a tile being "special" in a way of having ui
         // Let the UI handle ending the turn
-        bool activateSpecialUI = CheckSpecialTileUI(currentTileIndex);
+        bool activateSpecialUI = CheckSpecialTileUI(currentTileIndex) && !emptyRoll;
 
         switch (activateSpecialUI)
         {

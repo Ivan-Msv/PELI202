@@ -141,6 +141,7 @@ public class BoardUIManager : MonoBehaviour
     {
         foreach (var enemyPlayer in enemyPlayerDictionary)
         {
+            // I dont remember making this
             enemyPlayer.Value.UpdatePlayerInfo(enemyPlayer.Key.playerName.Value.ToString(), enemyPlayer.Key.coinAmount.Value, enemyPlayer.Key.crownAmount.Value, GameManager.instance.GetDiceFromIndex(enemyPlayer.Key.specialDiceIndex.Value).image);
         }
     }
@@ -202,6 +203,14 @@ public class BoardUIManager : MonoBehaviour
         BlackScreen.instance.screenFade.StartFade(eventNotificationUI.transform, eventNotificationEnabled);
         BlackScreen.instance.screenFade.StartFade(eventNotificationText.transform, eventNotificationEnabled);
         eventNotificationText.text = string.Format(notificationText, CurrentTurnPlayerName);
+    }
+
+    public void ToggleEventNotification(bool enable)
+    {
+        eventNotificationEnabled = enable;
+
+        BlackScreen.instance.screenFade.StartFade(eventNotificationUI.transform, eventNotificationEnabled);
+        BlackScreen.instance.screenFade.StartFade(eventNotificationText.transform, eventNotificationEnabled);
     }
 
     public void UpdateRollDiceUI()
