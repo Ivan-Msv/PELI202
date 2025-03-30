@@ -20,7 +20,7 @@ public class TeleportTileUI : MonoBehaviour
     [SerializeField] private Button leftArrowButton;
     [SerializeField] private Button rightArrowButton;
 
-    public List<int> teleportIndexArray = new();
+    public List<int> teleportIndexList = new();
     private int selectedIndex;
 
     private string defaultText = "Would you like to spend {0} coins to instantly travel between selected gateways?";
@@ -38,13 +38,11 @@ public class TeleportTileUI : MonoBehaviour
         rightArrowButton.onClick.AddListener(() => { ChooseTeleportIndex(1); });
     }
 
-    private void Start()
+    public void GetTeleportTiles()
     {
-        GameManager.instance.OnPlayerValueChange += GetTeleportTiles;
-    }
+        // Clears previous in case you debug randomize new tiles
+        teleportIndexList.Clear();
 
-    private void GetTeleportTiles()
-    {
         // Get all available teleport tiles, and add it to array to cycle through later
         for (int i = 0; i < GameManager.instance.tilesIndex.Count; i++)
         {
@@ -52,7 +50,7 @@ public class TeleportTileUI : MonoBehaviour
 
             if (currentTileIndex == (int)Tiles.TeleportTile)
             {
-                teleportIndexArray.Add(i);
+                teleportIndexList.Add(i);
             }
         }
     }
@@ -61,9 +59,9 @@ public class TeleportTileUI : MonoBehaviour
     {
         // Find which teleport tile called, to properly get selected index
 
-        for (int i = 0; i < teleportIndexArray.Count; i++)
+        for (int i = 0; i < teleportIndexList.Count; i++)
         {
-            if (teleportIndexArray[i] == teleportTileIndex)
+            if (teleportIndexList[i] == teleportTileIndex)
             {
                 selectedIndex = i;
             }
@@ -91,7 +89,7 @@ public class TeleportTileUI : MonoBehaviour
         purchaseTab.SetActive(false);
         selectionTab.SetActive(true);
 
-        confirmGatewayButton.interactable = teleportIndexArray[selectedIndex] != BoardUIManager.instance.localParent.currentBoardPosition.Value;
+        confirmGatewayButton.interactable = teleportIndexList[selectedIndex] != BoardUIManager.instance.localParent.currentBoardPosition.Value;
 
         GameManager.instance.EventNotificationTextRpc("{0} is selecting teleportation gateway...");
     }
@@ -119,20 +117,20 @@ public class TeleportTileUI : MonoBehaviour
     {
         BoardUIManager.instance.boardCamera.UpdateCameraFollowRpc();
         var currentTileIndex = BoardUIManager.instance.localParent.currentBoardPosition.Value;
-        var selectedTileIndex = teleportIndexArray[selectedIndex];
+        var selectedTileIndex = teleportIndexList[selectedIndex];
         BoardPath.instance.tiles[currentTileIndex].GetComponent<TeleportTile>().TeleportationEvent(selectedTileIndex);
         BoardUIManager.instance.localParent.currentBoardPosition.Value = selectedTileIndex;
 
         purchaseTab.SetActive(false);
         selectionTab.SetActive(false);
-        // The text here is useless here as well
+
         GameManager.instance.ToggleEventNotificationRpc(false);
     }
 
     private void ChooseTeleportIndex(int indexForward)
     {
-        selectedIndex = (selectedIndex + indexForward + teleportIndexArray.Count) % teleportIndexArray.Count;
-        var nextIndex = teleportIndexArray[selectedIndex];
+        selectedIndex = (selectedIndex + indexForward + teleportIndexList.Count) % teleportIndexList.Count;
+        var nextIndex = teleportIndexList[selectedIndex];
         BoardUIManager.instance.boardCamera.TeleportTileCameraRpc(nextIndex);
 
         confirmGatewayButton.interactable = nextIndex != BoardUIManager.instance.localParent.currentBoardPosition.Value;

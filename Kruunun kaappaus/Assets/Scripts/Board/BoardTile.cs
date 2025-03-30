@@ -27,8 +27,12 @@ public abstract class BoardTile : NetworkBehaviour
     public abstract void SetupTile();
     public abstract void InvokeTile();
 
-    [Rpc(SendTo.Everyone)]
-    public void PlayAnimationRpc(string givenAnimation)
+    public int GetTilePosition()
+    {
+        return BoardPath.instance.tiles.FindIndex(tile => tile == gameObject);
+    }
+
+    public void PlayAnimation(string givenAnimation)
     {
         anim.Play(givenAnimation);
     }

@@ -31,8 +31,8 @@ public class TeleportTileAnimation : TimedAnimation
     {
         if (teleportedFromTile == null) { return; }
 
-        teleportedFromTile.PlayAnimationRpc("Teleport_Tile_Deactivate");
-        teleportedToTile.PlayAnimationRpc("Teleport_Tile_Deactivate");
+        teleportedFromTile.PlayAnimation("Teleport_Tile_Deactivate");
+        teleportedToTile.PlayAnimation("Teleport_Tile_Deactivate");
 
         GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
         BoardUIManager.instance.animationActive = false;

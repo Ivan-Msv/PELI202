@@ -39,6 +39,12 @@ public class BoardPath : NetworkBehaviour
 
         GameManager.instance.tilesIndex.OnListChanged += UpdateTiles;
 
+        if (!GameManager.instance.randomizeTiles)
+        {
+            // This also exists in tilerandomization
+            BoardUIManager.instance.teleportTileUI.GetTeleportTiles();
+        }
+
         if (IsServer && GameManager.instance.randomizeTiles)
         {
             GameManager.instance.TileRandomization();
@@ -156,6 +162,12 @@ public class BoardPath : NetworkBehaviour
     {
         Transform cameraFollow = tileIndex == -5 ? null : tiles[tileIndex].transform;
         BoardUIManager.instance.boardCamera.ChangeCameraFollow(disable, cameraFollow);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void PlayTileAnimationRpc(int tileIndex, string animationString)
+    {
+        tiles[tileIndex].GetComponent<BoardTile>().PlayAnimation(animationString);
     }
 
     public void TileAnimation(int thisIndex, int newIndex, bool replaceEmptyTile)

@@ -299,6 +299,9 @@ public class GameManager : NetworkBehaviour
                 availableTiles.Remove(removableTile);
             }
         }
+
+        // After everything is done, find new teleport tiles.
+        BoardUIManager.instance.teleportTileUI.GetTeleportTiles();
     }
 
     // The random here refers to the struct... its not random I just have naming issues

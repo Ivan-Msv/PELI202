@@ -22,23 +22,20 @@ public class TeleportTile : BoardTile
     {
         selectedTeleportTile = BoardPath.instance.tiles[teleportTowardTile].GetComponent<TeleportTile>();
 
-        PlayAnimationRpc("Teleport_Tile_Activate");
-        selectedTeleportTile.PlayAnimationRpc("Teleport_Tile_Activate");
+        BoardPath.instance.PlayTileAnimationRpc(GetTilePosition(), "Teleport_Tile_Activate");
+        BoardPath.instance.PlayTileAnimationRpc(selectedTeleportTile.GetTilePosition(), "Teleport_Tile_Activate");
     }
 
     // This gets used in "Teleport_Tile_Activate"
     private void AnimationEvent()
     {
-        if (selectedTeleportTile == null) { return; }
-
-        InstantiateSFXRpc(selectedTeleportTile.transform.position);
-        InstantiateSFXRpc(transform.position);
+        InstantiateSFX();
     }
 
-    [Rpc(SendTo.Everyone)]
-    private void InstantiateSFXRpc(Vector2 position)
+    private void InstantiateSFX()
     {
-        var sfx = Instantiate(teleportTileSFX, position, teleportTileSFX.transform.rotation);
+        // Will instantiate on transform.position
+        var sfx = Instantiate(teleportTileSFX, transform.position, teleportTileSFX.transform.rotation);
 
         if (selectedTeleportTile != null)
         {
