@@ -178,6 +178,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Wood_Platform_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 363d64692942b1c40b421e6a86f4e1b4
+      internalID: 1061887045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -195,6 +217,7 @@ TextureImporter:
       Wood_Platform_0: -5927719065370144037
       Wood_Platform_1: 379097223
       Wood_Platform_2: -1499212294
+      Wood_Platform_3: 1061887045
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

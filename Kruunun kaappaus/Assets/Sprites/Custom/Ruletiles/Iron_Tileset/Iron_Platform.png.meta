@@ -178,6 +178,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Iron_Platform_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62adfd9728af76e4496c38c0a1a25762
+      internalID: 976717010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -195,6 +217,7 @@ TextureImporter:
       Iron_Platform_0: 7395342520245636250
       Iron_Platform_1: -1440884934
       Iron_Platform_2: -1298608593
+      Iron_Platform_3: 976717010
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

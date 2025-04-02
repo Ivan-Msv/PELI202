@@ -178,6 +178,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Snow_Stone_Platform_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7af13b3d382331741a1a1eb03dc3a6ce
+      internalID: -669671882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -195,6 +217,7 @@ TextureImporter:
       Snow_Stone_Platform_0: 8842161282530514720
       Snow_Stone_Platform_1: 1748363431
       Snow_Stone_Platform_2: 1356458813
+      Snow_Stone_Platform_3: -669671882
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

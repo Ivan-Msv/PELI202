@@ -178,6 +178,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Snow_Grass_Platform_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4f19db62d3f6f54ca1a843af18bcc07
+      internalID: -1510858419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -195,6 +217,7 @@ TextureImporter:
       Snow_Grass_Platform_0: -739931785937465340
       Snow_Grass_Platform_1: 889801707
       Snow_Grass_Platform_2: -1119010753
+      Snow_Grass_Platform_3: -1510858419
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

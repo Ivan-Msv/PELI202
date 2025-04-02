@@ -178,6 +178,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Grass_Platform_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36ba64d2c27c078438119cb95edd7edf
+      internalID: 663002713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -195,6 +217,7 @@ TextureImporter:
       Grass_Platform_0: -7439676536062607783
       Grass_Platform_1: 616969824
       Grass_Platform_2: 114380755
+      Grass_Platform_3: 663002713
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

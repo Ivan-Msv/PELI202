@@ -178,6 +178,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Default_Stone_Platform_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c590b9f75a84e9d42af76e957a2c1833
+      internalID: 1183420236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -195,6 +217,7 @@ TextureImporter:
       Default_Stone_Platform_0: 1275998773530921941
       Default_Stone_Platform_1: 941434834
       Default_Stone_Platform_2: -611508214
+      Default_Stone_Platform_3: 1183420236
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
