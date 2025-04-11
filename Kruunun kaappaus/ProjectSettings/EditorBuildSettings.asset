@@ -101,6 +101,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Minigame Levels/4PMinigameLevel4.unity
     guid: abe85c23088594d4bb673e66e2dcb0be
+  - enabled: 1
+    path: Assets/Scenes/Challenge Levels/4PchallengeLevel5.unity
+    guid: 4212bb710fb793f47b16fadec6ca8e3c
+  - enabled: 1
+    path: Assets/Scenes/Challenge Levels/1PChallengeLevel6.unity
+    guid: 2bbd54c87b19f4d418eb090aab22e148
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 882a6c2d6b9e65d43925f2a00387fd8e, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: fecdc2ec3b8b0144b88294ef1e89ee82, type: 3}
