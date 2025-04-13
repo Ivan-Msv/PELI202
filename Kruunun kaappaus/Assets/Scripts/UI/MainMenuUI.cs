@@ -34,8 +34,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button debugButton;
-    [SerializeField] private GameObject errorMessageLog;
-    [SerializeField] private GameObject errorMessagePrefab;
     [SerializeField] private TextMeshProUGUI currentName;
     [SerializeField] private TMP_InputField changeNameInput;
     [Space]
@@ -125,15 +123,6 @@ public class MainMenuUI : MonoBehaviour
         currentState = givenState;
         MenuScreen();
     }
-    public void ShowErrorMessage(string message, int timeToExpire = 3)
-    {
-        errorMessageLog.SetActive(true);
-
-        var messageObject = Instantiate(errorMessagePrefab, errorMessageLog.transform);
-        var messageComponent = messageObject.GetComponent<ErrorMessage>();
-        messageComponent.errorMessage = message;
-        messageComponent.lifeTimeSeconds = timeToExpire;
-    }
     private void MenuScreen()
     {
         DisableAllMenus();
@@ -219,13 +208,13 @@ public class MainMenuUI : MonoBehaviour
             switch (e.Reason)
             {
                 case LobbyExceptionReason.InvalidJoinCode:
-                    ShowErrorMessage($"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})", 3);
+                    ChatManager.instance.SendChatMessage(ChatType.Error, $"Couldn't find a lobby using the code ({lobbyCode.text.ToUpper()})", "[Error]");
                     break;
                 case LobbyExceptionReason.LobbyNotFound:
-                    ShowErrorMessage($"Lobby not found (Recently deleted)", 3);
+                    ChatManager.instance.SendChatMessage(ChatType.Error, $"Lobby not found", "[Error]");
                     break;
                 case LobbyExceptionReason.LobbyFull:
-                    ShowErrorMessage($"Lobby is already full", 3);
+                    ChatManager.instance.SendChatMessage(ChatType.Error, $"Lobby is already full", "[Error]");
                     break;
                 default:
                     Debug.LogWarning(e.Reason);
@@ -252,7 +241,7 @@ public class MainMenuUI : MonoBehaviour
             if (e.ErrorCode == AuthenticationErrorCodes.InvalidParameters)
             {
                 AudioManager.instance.PlaySound(SoundType.MenuError);
-                ShowErrorMessage(e.Message, 5);
+                ChatManager.instance.SendChatMessage(ChatType.Error, e.Message, "[Error]");
             }
         }
     }

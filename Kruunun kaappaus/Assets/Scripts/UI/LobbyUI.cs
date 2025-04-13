@@ -115,7 +115,7 @@ public class LobbyUI : NetworkBehaviour
                     {
                         case LobbyExceptionReason.LobbyNotFound:
                             MainMenuUI.instance.ReturnToPreviousMenu();
-                            MainMenuUI.instance.ShowErrorMessage("Lobby not found (Host Left?)");
+                            ChatManager.instance.SendChatMessage(ChatType.Error, "Lobby not found (Host Left?)", "[Error]");
                             break;
                     }
                 }

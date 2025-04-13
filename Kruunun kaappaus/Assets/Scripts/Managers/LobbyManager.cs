@@ -72,7 +72,7 @@ public class LobbyManager : NetworkBehaviour
             {
 
                 Debug.Log(ex.ErrorCode);
-                MainMenuUI.instance.ShowErrorMessage($"Failed to sign in. retrying... ({ex.ErrorCode})");
+                ChatManager.instance.SendChatMessage(ChatType.Error, $"Failed to sign in. retrying... ({ex.ErrorCode})", "[Error]");
 
                 await Task.Delay(1000);
             }
@@ -80,7 +80,7 @@ public class LobbyManager : NetworkBehaviour
             retryCount++;
         }
 
-        MainMenuUI.instance.ShowErrorMessage("Failed to sign in. Please check your internet connection.", 30);
+        ChatManager.instance.SendChatMessage(ChatType.Error, "Failed to sign in. Please check your internet connection.", "[Error]");
     }
 
     public async void CreateLobby(string lobbyName, int maxPlayers = 4)
@@ -100,15 +100,15 @@ public class LobbyManager : NetworkBehaviour
             {
                 case LobbyExceptionReason.RequestTimeOut:
                     MainMenuUI.instance.ReturnToPreviousMenu();
-                    MainMenuUI.instance.ShowErrorMessage($"Request timeout");
+                    ChatManager.instance.SendChatMessage(ChatType.Error, $"Request timeout", "[Error]");
                     break;
                 case LobbyExceptionReason.RateLimited:
                     MainMenuUI.instance.ReturnToPreviousMenu();
-                    MainMenuUI.instance.ShowErrorMessage($"Creating lobbies too quickly!");
+                    ChatManager.instance.SendChatMessage(ChatType.Error, $"Creating lobbies too quickly!", "[Error]");
                     break;
                 default:
                     MainMenuUI.instance.ReturnToPreviousMenu();
-                    MainMenuUI.instance.ShowErrorMessage($"{e.Reason}");
+                    ChatManager.instance.SendChatMessage(ChatType.Error, $"{e.Reason}", "[Error]");
                     break;
             }
         }
