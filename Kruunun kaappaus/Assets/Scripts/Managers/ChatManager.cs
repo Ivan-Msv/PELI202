@@ -84,12 +84,14 @@ public class ChatManager : NetworkBehaviour
     {
         base.OnNetworkSpawn();
         messageInput.interactable = true;
+        messageInput.placeholder.GetComponent<TextMeshProUGUI>().text = ". . .";
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
         messageInput.interactable = false;
+        messageInput.placeholder.GetComponent<TextMeshProUGUI>().text = "";
     }
 
     private void ToggleChat()

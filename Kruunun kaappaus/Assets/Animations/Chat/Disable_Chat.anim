@@ -681,7 +681,17 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 3829702144110102710, guid: df43675c57573254ea996123b1514f97, type: 3}
+      value: {fileID: -2242573391696729828, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - time: 0.083333336
+      value: {fileID: -3325260600213914122, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - time: 0.16666667
+      value: {fileID: 3622880914017222519, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - time: 0.25
+      value: {fileID: 4065021191768605767, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - time: 0.33333334
+      value: {fileID: 8429930893217128536, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - time: 0.41666666
+      value: {fileID: -6631229540836493354, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
     attribute: m_Sprite
     path: Toggle Chat Button/Toggle Chat Icon
     classID: 114
@@ -902,7 +912,12 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 3829702144110102710, guid: df43675c57573254ea996123b1514f97, type: 3}
+    - {fileID: -2242573391696729828, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - {fileID: -3325260600213914122, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - {fileID: 3622880914017222519, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - {fileID: 4065021191768605767, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - {fileID: 8429930893217128536, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
+    - {fileID: -6631229540836493354, guid: 414ab7f7eeae95a4ab7e7f9cfb0a47f3, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
