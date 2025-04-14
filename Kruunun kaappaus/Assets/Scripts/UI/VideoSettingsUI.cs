@@ -19,10 +19,15 @@ public class VideoSettingsUI : MonoBehaviour
         fullscreenToggle.onValueChanged.AddListener(enabled => { Screen.fullScreen = enabled; });
 
         vsyncToggle.isOn = QualitySettings.vSyncCount > 0;
-        vsyncToggle.onValueChanged.AddListener(enabled => { QualitySettings.vSyncCount = enabled ? 1 : 0; });
+        vsyncToggle.onValueChanged.AddListener(enabled =>
+        {
+            QualitySettings.vSyncCount = enabled ? 1 : 0;
+            DataSaving.instance.SetData("Vsync", QualitySettings.vSyncCount);
+        });
 
 
         GetNewResolutions();
+        UpdateResolutionVisual();
         targetResolution.onValueChanged.AddListener(index => { UpdateResolution(index); });
 
         UpdateFramerateVisual();
@@ -70,6 +75,13 @@ public class VideoSettingsUI : MonoBehaviour
         GetNewResolutions();
     }
 
+    private void UpdateResolutionVisual()
+    {
+        // Tries to update resolution text within given values
+        var currentResolution = $"{Screen.width}x{Screen.height}";
+        targetResolution.value = targetResolution.options.FindIndex(targetRes => targetRes.text == currentResolution);
+    }
+
     private void UpdateFramerateVisual()
     {
         var index = framerateLimit.options.FindIndex(option => option.text.Contains(Application.targetFrameRate.ToString()));
@@ -81,11 +93,11 @@ public class VideoSettingsUI : MonoBehaviour
         if (!int.TryParse(framerateLimit.options[index].text, out int result))
         {
             Application.targetFrameRate = -1;
-            DataSaving.instance.dataSettings.fpsValue = -1;
+            DataSaving.instance.SetData("FpsValue", -1);
             return;
         }
 
-        DataSaving.instance.dataSettings.fpsValue = result;
+        DataSaving.instance.SetData("FpsValue", result);
         Application.targetFrameRate = result;
     }
 }

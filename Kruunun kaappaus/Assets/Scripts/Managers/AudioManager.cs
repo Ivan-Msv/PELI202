@@ -7,6 +7,7 @@ using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 public enum SoundType
 {
@@ -83,13 +84,25 @@ public class AudioManager : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
+    private void Start()
+    {
+        InitializeSettings();
         CreateAndStartMusic();
     }
 
     private void Update()
     {
         BlendMusic();
+    }
+
+    private void InitializeSettings()
+    {
+        MusicMute = DataSaving.instance.GetData<bool>("MusicMute");
+        SoundMute = DataSaving.instance.GetData<bool>("SoundMute");
+        MusicVolume = DataSaving.instance.GetData<float>("MusicVolume");
+        SoundVolume = DataSaving.instance.GetData<float>("SoundVolume");
     }
 
     public void ChangeMusic(MusicType type, bool preserveTiming = false)
@@ -287,20 +300,24 @@ public class AudioManager : NetworkBehaviour
     public void SetSoundVolume(float volume)
     {
         SoundVolume = volume;
+        DataSaving.instance.SetData("SoundVolume", volume);
     }
 
     public void SetMusicVolume(float volume)
     {
         MusicVolume = volume;
+        DataSaving.instance.SetData("MusicVolume", volume);
     }
 
     public void MuteSound(bool enable)
     {
         SoundMute = enable;
+        DataSaving.instance.SetData("SoundMute", enable);
     }
 
     public void MuteMusic(bool enable)
     {
         MusicMute = enable;
+        DataSaving.instance.SetData("MusicMute", enable);
     }
 }

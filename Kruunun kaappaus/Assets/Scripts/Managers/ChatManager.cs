@@ -69,6 +69,7 @@ public class ChatManager : NetworkBehaviour
 
     private void Update()
     {
+        // Debug delete later
         if (Input.GetKeyDown(KeyCode.X))
         {
             SendChatMessage(ChatType.Server, "Test", ownerColor: Color.red);
