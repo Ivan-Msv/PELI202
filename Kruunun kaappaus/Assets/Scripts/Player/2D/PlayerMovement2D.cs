@@ -583,6 +583,7 @@ public class PlayerMovement2D : NetworkBehaviour
         var collision = NetworkManager.SpawnManager.SpawnedObjectsList.FirstOrDefault(collision => collision.NetworkObjectId == collisionObjectId);
         // Jotta se katoisi kaikilla pelaajilla, poistetaan sen networkobjectin kautta
         collision.gameObject.GetComponent<NetworkObject>().Despawn(true);
+        ChatManager.instance.SendMessageRpc(ChatType.Server, $"{playerInfo.playerName.Value} has caught the Crown!");
         LevelManager.instance.CurrentGameState.Value = LevelState.Ending;
     }
 

@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 1131a8e3e37b5824598b1ee48b3c25be
+guid: 6912be8ac9734de4bbb93885345160c9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3258607070453638197
-    second: Sacrificial_Tile_0
+      213: 7391473186204478381
+    second: RNG_Event_Panel_Deactivate_0
+  - first:
+      213: -3950755771389531467
+    second: RNG_Event_Panel_Deactivate_1
+  - first:
+      213: 5987358111826227283
+    second: RNG_Event_Panel_Deactivate_2
+  - first:
+      213: -7998591987700455191
+    second: RNG_Event_Panel_Deactivate_3
+  - first:
+      213: -2286400856543450446
+    second: RNG_Event_Panel_Deactivate_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,11 +58,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.75}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -113,23 +125,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sacrificial_Tile_0
+      name: RNG_Event_Panel_Deactivate_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 17, y: 16, z: 17, w: 16}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 53427f0add5e83d20800000000000000
-      internalID: 3258607070453638197
+      spriteID: dabea8e73b9c39660800000000000000
+      internalID: 7391473186204478381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RNG_Event_Panel_Deactivate_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 17, y: 16, z: 17, w: 16}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5baa004de881c29c0800000000000000
+      internalID: -3950755771389531467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RNG_Event_Panel_Deactivate_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 17, y: 16, z: 17, w: 16}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350b476fa7e571350800000000000000
+      internalID: 5987358111826227283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RNG_Event_Panel_Deactivate_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 17, y: 16, z: 17, w: 16}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e824dd27fa4ff090800000000000000
+      internalID: -7998591987700455191
       vertices: []
       indices: 
       edges: []
@@ -138,7 +216,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 5f794a52afa1bd4489e04bb19e2ca42c
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +226,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sacrificial_Tile_0: 3258607070453638197
+      RNG_Event_Panel_Deactivate_0: 7391473186204478381
+      RNG_Event_Panel_Deactivate_1: -3950755771389531467
+      RNG_Event_Panel_Deactivate_2: 5987358111826227283
+      RNG_Event_Panel_Deactivate_3: -7998591987700455191
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

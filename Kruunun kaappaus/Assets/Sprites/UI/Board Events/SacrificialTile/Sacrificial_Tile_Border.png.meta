@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1131a8e3e37b5824598b1ee48b3c25be
+guid: 783ecb6caaea4334789ec9c36a4ef362
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3258607070453638197
-    second: Sacrificial_Tile_0
+      213: 2931933286961866535
+    second: Sacrificial_Tile_Border_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,11 +46,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.75}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -113,23 +113,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sacrificial_Tile_0
+      name: Sacrificial_Tile_Border_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 48
+        height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 16, y: 24, z: 16, w: 24}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 53427f0add5e83d20800000000000000
-      internalID: 3258607070453638197
+      spriteID: 727618a5ac150b820800000000000000
+      internalID: 2931933286961866535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sacrificial_Tile_Border_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 16, y: 24, z: 16, w: 24}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a342ecdc3af524d4e9b0954aa23b3afc
+      internalID: 1719292813
       vertices: []
       indices: 
       edges: []
@@ -138,7 +160,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 04ca74f1719bbfd42881a01e6413920e
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +170,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sacrificial_Tile_0: 3258607070453638197
+      Sacrificial_Tile_Border_0: 2931933286961866535
+      Sacrificial_Tile_Border_1: 1719292813
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

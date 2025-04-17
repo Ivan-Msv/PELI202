@@ -406,7 +406,7 @@ public class GameManager : NetworkBehaviour
         {
             GameLoop();
 
-            // DEBUG
+            // DEBUG DELETE LATER
             if (Input.GetKeyDown(KeyCode.F8))
             {
                 TileRandomization();
@@ -477,6 +477,8 @@ public class GameManager : NetworkBehaviour
         {
             AddRandomTile(Tiles.ChallengeTile, new Tiles[] { Tiles.EmptyTile });
             nonChallengeTileCount = 0;
+
+            ChatManager.instance.SendMessageRpc(ChatType.Server, $"A new Challenge Tile has appeared...");
         }
     }
 

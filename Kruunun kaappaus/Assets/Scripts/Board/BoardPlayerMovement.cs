@@ -84,10 +84,16 @@ public class BoardPlayerMovement : NetworkBehaviour
 
         if (!emptyRoll)
         {
-            BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>().InvokeTile();
+            var tileToInvoke = BoardPath.instance.tiles[player.playerInfo.currentBoardPosition.Value].GetComponent<BoardTile>();
+            tileToInvoke.InvokeTile();
 
             // If not a challenge tile, add count
             GameManager.instance.nonChallengeTileCount += challengeTile ? 0 : 1;
+
+            // If empty tile, there is nothing to invoke, so no need to send useless message
+            if (tileToInvoke is EmptyTile) { yield break; }
+
+            ChatManager.instance.SendMessageRpc(ChatType.Server, $"{player.playerName.Value} has activated {tileToInvoke.name}!");
         }
     }
 

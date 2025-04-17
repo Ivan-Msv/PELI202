@@ -41,6 +41,7 @@ public class BoardPlayerInfo : NetworkBehaviour
 
         var playerData = GetComponentInParent<PlayerSetup>().SavedData;
 
+        playerName.Value = playerData["PlayerName"].Value;
         playerSpriteIndex.Value = int.Parse(playerData["PlayerIconIndex"].Value);
         playerColor.Value = int.Parse(playerData["PlayerColor"].Value);
     }

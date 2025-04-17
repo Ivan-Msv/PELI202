@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class TeleportTileUI : MonoBehaviour
 {
     [Header("Tabs")]
-    [SerializeField] private GameObject purchaseTab;
-    [SerializeField] private GameObject selectionTab;
+    [SerializeField] private BasicAnimationUI purchaseTab;
+    [SerializeField] private BasicAnimationUI selectionTab;
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI mainText;
     [SerializeField] private int gatewayCost;
@@ -70,7 +70,7 @@ public class TeleportTileUI : MonoBehaviour
         confirmPurchaseButton.interactable = BoardUIManager.instance.localParent.coinAmount.Value >= gatewayCost;
         mainText.text = string.Format(defaultText, gatewayCost);
 
-        purchaseTab.SetActive(true);
+        purchaseTab.gameObject.SetActive(true);
     }
 
     private void BuyGatewayPass()
@@ -85,9 +85,8 @@ public class TeleportTileUI : MonoBehaviour
 
         player.coinAmount.Value -= gatewayCost;
 
-        // You "could" add animation but I can't be asked rn
-        purchaseTab.SetActive(false);
-        selectionTab.SetActive(true);
+        purchaseTab.DisableUI();
+        selectionTab.gameObject.SetActive(true);
 
         confirmGatewayButton.interactable = teleportIndexList[selectedIndex] != BoardUIManager.instance.localParent.currentBoardPosition.Value;
 
@@ -97,16 +96,15 @@ public class TeleportTileUI : MonoBehaviour
     private void CancelGateway()
     {
         // If false, the purchase went through, so just refund the money
-        if (!purchaseTab.activeSelf)
+        if (!purchaseTab.gameObject.activeSelf)
         {
             BoardUIManager.instance.localParent.coinAmount.Value += gatewayCost;
         }
 
         GameManager.instance.ChangeGameStateServerRpc(BoardState.SelectingPlayer);
 
-        // Turn off both tabs just in case
-        purchaseTab.SetActive(false);
-        selectionTab.SetActive(false);
+        purchaseTab.DisableUI();
+        selectionTab.DisableUI();
 
         BoardUIManager.instance.animationActive = false;
 
@@ -121,8 +119,8 @@ public class TeleportTileUI : MonoBehaviour
         BoardPath.instance.tiles[currentTileIndex].GetComponent<TeleportTile>().TeleportationEvent(selectedTileIndex);
         BoardUIManager.instance.localParent.currentBoardPosition.Value = selectedTileIndex;
 
-        purchaseTab.SetActive(false);
-        selectionTab.SetActive(false);
+        purchaseTab.DisableUI();
+        selectionTab.DisableUI();
 
         GameManager.instance.ToggleEventNotificationRpc(false);
     }

@@ -40,6 +40,9 @@ public class DataSaving : MonoBehaviour
         defaultSettings["MusicVolume"] = 0.5f;
         defaultSettings["MusicMute"] = false;
         defaultSettings["SoundMute"] = false;
+        defaultSettings["ResetMinimap"] = true; 
+        defaultSettings["ChatForegroundColor"] = new Color(200, 200, 200);
+        defaultSettings["ChatBackgroundColor"] = new Color(100, 100, 100);
 
         // Video
         defaultSettings["Vsync"] = 0; // Disabled
